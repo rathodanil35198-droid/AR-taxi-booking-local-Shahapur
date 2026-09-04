@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="kn" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR Taxi Shahapur</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            padding: 10px;
+        }
+        .container {
+            max-width: 450px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            padding: 15px;
+            overflow: hidden;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .logo-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #8b0000;
+        }
+        .lang-btn {
+            background: #0066cc;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        .tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 15px;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 10px 5px;
+            border: none;
+            background: #e0e0e0;
+            color: #333;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            text-align: center;
+            transition: all 0.2s;
+        }
+        .tab-btn.active {
+            background: #a30000;
+            color: white;
+        }
+        .section {
+            display: none;
+        }
+        .section.active {
+            display: block;
+        }
+        h2 {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            color: #222;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .form-group {
+            margin-bottom: 12px;
+        }
+        label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #444;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            background: #fff;
+        }
+        input:focus, select:focus {
+            border-color: #0066cc;
+            outline: none;
+        }
+        .gps-btn {
+            width: 100%;
+            background: #f39c12;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+        }
+        .action-btn {
+            width: 100%;
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+        .action-btn.whatsapp-blue {
+            background: #007bff;
+        }
+        .live-meter {
+            background: #f8f9fa;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 15px;
+            text-align: center;
+        }
+        .live-meter h3 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+        .meter-stats {
+            display: flex;
+            justify-content: space-around;
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: #e67e22;
+        }
+        .admin-box {
+            background: #fffdf0;
+            border: 1px solid #f1c40f;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .admin-box p {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        .reset-btn {
+            width: 100%;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .footer {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #777;
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="logo-title">
+            <span>🛺</span>
+            <span id="appTitle">AR Taxi Shahapur</span>
+        </div>
+        <button class="lang-btn" onclick="toggleLanguage()" id="langToggleBtn">English / ಕನ್ನಡ</button>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('customer')" id="tabCustBtn">👥 ಕಸ್ಟಮರ್<br>(Customer)</button>
+        <button class="tab-btn" onclick="switchTab('driver')" id="tabDriverBtn">🛺 ಡ್ರೈವರ್<br>(Driver Reg)</button>
+        <button class="tab-btn" onclick="switchTab('admin')" id="tabAdminBtn">📊 ಅಡ್ಮಿನ್<br>(Admin)</button>
+    </div>
+
+    <!-- Customer Section -->
+    <div id="customerSection" class="section active">
+        <h2 id="custFormTitle">👥 ಕಸ್ಟಮರ್ ಬುಕಿಂಗ್ ಫಾರ್ಮ್</h2>
+        
+        <div class="form-group">
+            <label id="lblCustName">ಕಸ್ಟಮರ್ ಹೆಸರು (Customer Name):</label>
+            <input type="text" id="custName" placeholder="ನಿಮ್ಮ ಹೆಸರು ಹಾಕಿ">
+        </div>
+
+        <div class="form-group">
+            <label id="lblCustMobile">ಮೊಬೈಲ್ ನಂಬರ್ (Mobile Number):</label>
+            <input type="tel" id="custMobile" placeholder="ಡ್ರೈವರ್ ಕರೆ ಮಾಡಲು ನಂಬರ್">
+        </div>
+
+        <div class="form-group">
+            <label id="lblVehicleType">ವಾಹನದ ಪ್ರಕಾರ (Vehicle Type):</label>
+            <select id="vehicleType" onchange="updateMeterRate()">
+                <option value="auto">🛺 ಆಟೋ (Auto) - ಮೊದಲ 4 ಕಿ.ಮೀ ₹50</option>
+                <option value="car">🚗 ಕಾರು (Car) - ಮೊದಲ 4 ಕಿ.ಮೀ ₹100</option>
+                <option value="metro">🚐 ಮೆಟ್ರೋ / ಇತರೆ (Metro) - ಮೊದಲ 4 ಕಿ.ಮೀ ₹150</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label id="lblPickup">ಪ್ರಯಾಣ ಆರಂಭಿಸುವ ಸ್ಥಳ (Pickup Location):</label>
+            <input type="text" id="pickupLoc" placeholder="ಉದಾ: ಬಸ್ ಸ್ಟ್ಯಾಂಡ್ ಶಹಾಪುರ">
+        </div>
+
+        <button class="gps-btn" onclick="getLiveLocation()" id="gpsBtn">📍 ನನ್ನ ಲೈವ್ GPS ಲೋಕೇಶನ್ ಹಾಕಿ</button>
+
+        <div class="form-group">
+            <label id="lblDrop">ತಲುಪಬೇಕಾದ ಸ್ಥಳ (Drop Location):</label>
+            <input type="text" id="dropLoc" placeholder="ಉದಾ: ಸುರಪುರ ರಸ್ತೆ ಅಥವಾ ಆಸ್ಪತ್ರೆ">
+        </div>
+
+        <button class="action-btn whatsapp-blue" onclick="sendCustomerBooking()" id="bookSendBtn">🚀 ವಾಟ್ಸಾಪ್‌ಗೆ ಬುಕ್ ಕಳುಹಿಸಿ</button>
+
+        <!-- Slow Live Meter Simulation -->
+        <div class="live-meter">
+            <h3 id="meterTitle">⏱️ ಲೈವ್ ಮೀಟರ್ (Live Meter)</h3>
+            <div class="meter-stats">
+                <span id="meterDist">ದೂರ: 0.00 ಕಿ.ಮೀ</span>
+                <span id="meterPrice">ಬೆಲೆ: ₹ 50</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Driver Section -->
+    <div id="driverSection" class="section">
+        <h2 id="driverFormTitle">🛺 ಡ್ರೈವರ್ ನೊಂದಣಿ ಫಾರ್ಮ್ (Driver Registration)</h2>
+        
+        <div class="form-group">
+            <label id="lblDriverName">ಪೂರ್ಣ ಹೆಸರು (Full Name):</label>
+            <input type="text" id="driverName" placeholder="ನಿಮ್ಮ ಪೂರ್ಣ ಹೆಸರು">
+        </div>
+
+        <div class="form-group">
+            <label id="lblDriverMobile">ಮೊಬೈಲ್ ನಂಬರ್ (Mobile Number):</label>
+            <input type="tel" id="driverMobile" placeholder="ನಿಮ್ಮ ಮೊಬೈಲ್ ನಂಬರ್">
+        </div>
+
+        <div class="form-group">
+            <label id="lblDriverVehicle">ವಾಹನದ ಪ್ರಕಾರ (Vehicle Type):</label>
+            <select id="driverVehicleType">
+                <option value="auto">🛺 ಆಟೋ (Auto)</option>
+                <option value="car">🚗 ಕಾರು (Car)</option>
+                <option value="metro">🚐 ಮೆಟ್ರೋ / ಇತರೆ (Metro)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label id="lblDriverNumber">ವಾಹನ ನಂಬರ್ (Vehicle Number):</label>
+            <input type="text" id="driverVehicleNo" placeholder="ಉದಾ: KA-33-E-1234">
+        </div>
+
+        <button class="action-btn" onclick="sendDriverRegistration()" id="driverRegBtn">✅ ಡ್ರೈವರ್ ನೊಂದಣಿ ಪೂರ್ಣಗೊಳಿಸಿ & ಗ್ರೂಪ್‌ಗೆ ಜಾಯಿನ್ ಆಗಿ</button>
+    </div>
+
+    <!-- Admin Section -->
+    <div id="adminSection" class="section">
+        <h2 id="adminTitle">📊 ಇಂದಿನ ವರದಿ (Admin Dashboard)</h2>
+        
+        <div class="admin-box">
+            <p id="adminDate">📅 ದಿನಾಂಕ: 04/09/2026</p>
+            <p id="adminTotalBookings">🚗 ಒಟ್ಟು ಬುಕಿಂಗ್ಸ್: 1</p>
+            <p id="adminSuccessRides">✅ ಯಶಸ್ವಿ ರೈಡ್ಸ್: 0</p>
+            <p id="adminCancelledRides">❌ ರದ್ದಾದ ರೈಡ್ಸ್: 0</p>
+        </div>
+
+        <button class="reset-btn" onclick="resetData()" id="resetBtn">ಡೇಟಾ ರಿಸೆಟ್ ಮಾಡಿ (Reset Data)</button>
+    </div>
+
+    <div class="footer" id="footerText">
+        © 2026 AR Taxi Shahapur. All Rights Reserved.
+    </div>
+</div>
+
+<script>
+    // Updated WhatsApp Group & Mobile Number configuration
+    const WHATSAPP_GROUP_LINK = "https://chat.whatsapp.com/IA8IgVgA1iUK00rs3wmMcN";
+    const FALLBACK_MOBILE = "918105010768";
+
+    let currentLang = 'kn';
+
+    function toggleLanguage() {
+        currentLang = currentLang === 'kn' ? 'en' : 'kn';
+        updateTexts();
+    }
+
+    function updateTexts() {
+        if(currentLang === 'en') {
+            document.getElementById('langToggleBtn').innerText = 'ಕನ್ನಡ / English';
+            document.getElementById('tabCustBtn').innerHTML = '👥 Customer';
+            document.getElementById('tabDriverBtn').innerHTML = '🛺 Driver Reg';
+            document.getElementById('tabAdminBtn').innerHTML = '📊 Admin';
+            document.getElementById('custFormTitle').innerText = '👥 Customer Booking Form';
+            document.getElementById('lblCustName').innerText = 'Customer Name:';
+            document.getElementById('lblCustMobile').innerText = 'Mobile Number (For driver call):';
+            document.getElementById('lblVehicleType').innerText = 'Vehicle Type:';
+            document.getElementById('lblPickup').innerText = 'Pickup Location:';
+            document.getElementById('gpsBtn').innerText = '📍 Get Live GPS Location';
+            document.getElementById('lblDrop').innerText = 'Drop Location:';
+            document.getElementById('bookSendBtn').innerText = '🚀 Send Booking to WhatsApp';
+            document.getElementById('meterTitle').innerText = '⏱️ Live Meter';
+            
+            document.getElementById('driverFormTitle').innerText = '🛺 Driver Registration Form';
+            document.getElementById('lblDriverName').innerText = 'Full Name:';
+            document.getElementById('lblDriverMobile').innerText = 'Mobile Number:';
+            document.getElementById('lblDriverVehicle').innerText = 'Vehicle Type:';
+            document.getElementById('lblDriverNumber').innerText = 'Vehicle Number (e.g. KA-33):';
+            document.getElementById('driverRegBtn').innerText = '✅ Complete Registration & Join Group';
+
+            document.getElementById('adminTitle').innerText = '📊 Admin Dashboard';
+            document.getElementById('resetBtn').innerText = 'Reset Data';
+        } else {
+            document.getElementById('langToggleBtn').innerText = 'English / ಕನ್ನಡ';
+            document.getElementById('tabCustBtn').innerHTML = '👥 ಕಸ್ಟಮರ್';
+            document.getElementById('tabDriverBtn').innerHTML = '🛺 ಡ್ರೈವರ್';
+            document.getElementById('tabAdminBtn').innerHTML = '📊 ಅಡ್ಮಿನ್';
+            document.getElementById('custFormTitle').innerText = '👥 ಕಸ್ಟಮರ್ ಬುಕಿಂಗ್ ಫಾರ್ಮ್';
+            document.getElementById('lblCustName').innerText = 'ಕಸ್ಟಮರ್ ಹೆಸರು (Customer Name):';
+            document.getElementById('lblCustMobile').innerText = 'ಮೊಬೈಲ್ ನಂಬರ್ (ಡ್ರೈವರ್ ಕರೆ ಮಾಡಲು):';
+            document.getElementById('lblVehicleType').innerText = 'ವಾಹನದ ಪ್ರಕಾರ (Vehicle Type):';
+            document.getElementById('lblPickup').innerText = 'ಪ್ರಯಾಣ ಆರಂಭಿಸುವ ಸ್ಥಳ (Pickup Location):';
+            document.getElementById('gpsBtn').innerText = '📍 ನನ್ನ ಲೈವ್ GPS ಲೋಕೇಶನ್ ಹಾಕಿ';
+            document.getElementById('lblDrop').innerText = 'ತಲುಪಬೇಕಾದ ಸ್ಥಳ (Drop Location):';
+            document.getElementById('bookSendBtn').innerText = '🚀 ವಾಟ್ಸಾಪ್‌ಗೆ ಬುಕ್ ಕಳುಹಿಸಿ';
+            document.getElementById('meterTitle').innerText = '⏱️ ಲೈವ್ ಮೀಟರ್ (Live Meter)';
+            
+            document.getElementById('driverFormTitle').innerText = '🛺 ಡ್ರೈವರ್ ನೊಂದಣಿ ಫಾರ್ಮ್ (Driver Registration)';
+            document.getElementById('lblDriverName').innerText = 'ಪೂರ್ಣ ಹೆಸರು (Full Name):';
+            document.getElementById('lblDriverMobile').innerText = 'ಮೊಬೈಲ್ ನಂಬರ್ (Mobile Number):';
+            document.getElementById('lblDriverVehicle').innerText = 'ವಾಹನದ ಪ್ರಕಾರ (Vehicle Type):';
+            document.getElementById('lblDriverNumber').innerText = 'ವಾಹನ ನಂಬರ್ (Vehicle Number):';
+            document.getElementById('driverRegBtn').innerText = '✅ ಡ್ರೈವರ್ ನೊಂದಣಿ ಪೂರ್ಣಗೊಳಿಸಿ & ಗ್ರೂಪ್‌ಗೆ ಜಾಯಿನ್ ಆಗಿ';
+
+            document.getElementById('adminTitle').innerText = '📊 ಇಂದಿನ ವರದಿ (Admin Dashboard)';
+            document.getElementById('resetBtn').innerText = 'ಡೇಟಾ ರಿಸೆಟ್ ಮಾಡಿ (Reset Data)';
+        }
+    }
+
+    function switchTab(tabName) {
+        document.getElementById('customerSection').classList.remove('active');
+        document.getElementById('driverSection').classList.remove('active');
+        document.getElementById('adminSection').classList.remove('active');
+
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+        if(tabName === 'customer') {
+            document.getElementById('customerSection').classList.add('active');
+            document.querySelectorAll('.tab-btn')[0].classList.add('active');
+        } else if(tabName === 'driver') {
+            document.getElementById('driverSection').classList.add('active');
+            document.querySelectorAll('.tab-btn')[1].classList.add('active');
+        } else if(tabName === 'admin') {
+            document.getElementById('adminSection').classList.add('active');
+            document.querySelectorAll('.tab-btn')[2].classList.add('active');
+        }
+    }
+
+    let distance = 0.00;
+    let basePrice = 50;
+    function updateMeterRate() {
+        let vType = document.getElementById('vehicleType').value;
+        if(vType === 'auto') basePrice = 50;
+        else if(vType === 'car') basePrice = 100;
+        else if(vType === 'metro') basePrice = 150;
+        document.getElementById('meterPrice').innerText = 'ಬೆಲೆ: ₹ ' + basePrice;
+    }
+
+    // Slow live meter progression
+    setInterval(() => {
+        distance += 0.01;
+        document.getElementById('meterDist').innerText = 'ದೂರ: ' + distance.toFixed(2) + ' ಕಿ.ಮೀ';
+    }, 3000);
+
+    function getLiveLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(position => {
+                let lat = position.coords.latitude;
+                let lon = position.coords.longitude;
+                document.getElementById('pickupLoc').value = `GPS Lat: ${lat.toFixed(4)}, Lon: ${lon.toFixed(4)}`;
+                alert(currentLang === 'kn' ? "ಲೈವ್ ಜಿಪಿಎಸ್ ಲೋಕೇಶನ್ ಪಡೆಯಲಾಗಿದೆ!" : "Live GPS Location captured successfully!");
+            }, error => {
+                alert(currentLang === 'kn' ? "ಜಿಪಿಎಸ್ ಪಡೆಯಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ. ದಯವಿಟ್ಟು ಕೈಯಿಂದ ಟೈಪ್ ಮಾಡಿ." : "Could not get location. Please type manually.");
+            });
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+
+    function sendCustomerBooking() {
+        let name = document.getElementById('custName').value.trim();
+        let mobile = document.getElementById('custMobile').value.trim();
+        let vehicle = document.getElementById('vehicleType').value;
+        let pickup = document.getElementById('pickupLoc').value.trim();
+        let drop = document.getElementById('dropLoc').value.trim();
+
+        if(!name || !mobile || !pickup || !drop) {
+            alert(currentLang === 'kn' ? "ದಯವಿಟ್ಟು ಎಲ್ಲಾ ಖಾಲಿ ಜಾಗಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ!" : "Please fill in all required fields!");
+            return;
+        }
+
+        let message = `🛺 *AR TAXI SHAHAPUR - NEW BOOKING* 🛺\n` +
+                      `👤 ಕಸ್ಟಮರ್ ಹೆಸರು: ${name}\n` +
+                      `📞 ಮೊಬೈಲ್: ${mobile}\n` +
+                      `🚗 ವಾಹನ: ${vehicle.toUpperCase()}\n` +
+                      `📍 ಎಲ್ಲಿಂದ: ${pickup}\n` +
+                      `🏁 ಎಲ್ಲಿಗೆ: ${drop}\n` +
+                      `💰 ಅಂದಾಜು ಬೆಲೆ: ₹${basePrice}`;
+
+        let url = `https://wa.me/${FALLBACK_MOBILE}?text=` + encodeURIComponent(message);
+        window.open(url, '_blank');
+    }
+
+    function sendDriverRegistration() {
+        let name = document.getElementById('driverName').value.trim();
+        let mobile = document.getElementById('driverMobile').value.trim();
+        let vehicle = document.getElementById('driverVehicleType').value;
+        let vNo = document.getElementById('driverVehicleNo').value.trim();
+
+        if(!name || !mobile || !vNo) {
+            alert(currentLang === 'kn' ? "ದಯವಿಟ್ಟು ಡ್ರೈವರ್ ವಿವರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ!" : "Please fill in all driver details!");
+            return;
+        }
+
+        let message = `📝 *AR TAXI SHAHAPUR - NEW DRIVER REGISTRATION* 📝\n` +
+                      `👤 ಹೆಸರು: ${name}\n` +
+                      `📞 ಮೊಬೈಲ್: ${mobile}\n` +
+                      `🛺 ವಾಹನ: ${vehicle.toUpperCase()}\n` +
+                      `🔢 ವಾಹನ ನಂಬರ್: ${vNo}`;
+
+        let url = `https://wa.me/${FALLBACK_MOBILE}?text=` + encodeURIComponent(message);
+        window.open(url, '_blank');
+
+        setTimeout(() => {
+            if(confirm(currentLang === 'kn' ? "ಈಗ ವಾಟ್ಸಾಪ್ ಡ್ರೈವರ್ ಗ್ರೂಪ್‌ಗೆ ಜಾಯಿನ್ ಆಗಲು ಲಿಂಕ್ ತೆರೆಯಬೇಕೆ?" : "Open WhatsApp group join link now?")) {
+                window.open(WHATSAPP_GROUP_LINK, "_blank");
+            }
+        }, 1000);
+    }
+
+    function resetData() {
+        if(confirm("Are you sure you want to reset data?")) {
+            localStorage.clear();
+            alert("Data reset successfully!");
+            location.reload();
+        }
+    }
+</script>
+
+</body>
+</html>
