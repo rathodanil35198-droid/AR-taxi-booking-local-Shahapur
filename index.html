@@ -6,191 +6,217 @@
     <title>AR Taxi Shahapur</title>
     <style>
         :root {
-            --primary: #2e7d32;
-            --primary-dark: #1b5e20;
-            --accent: #ffc107;
-            --bg-color: #f4f6f9;
+            --primary: #00c853;
+            --primary-dark: #009624;
+            --accent: #ffab00;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             --card-bg: #ffffff;
-            --text-color: #333333;
+            --text-color: #2d3748;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
+            background: var(--bg-gradient);
             color: var(--text-color);
             padding: 10px;
+            min-height: 100vh;
         }
         .container {
             max-width: 450px;
             margin: 0 auto;
             background: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            padding: 15px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+            padding: 20px;
             overflow: hidden;
+            border: 3px solid #ffffff;
         }
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 12px;
             margin-bottom: 15px;
         }
         .logo-title {
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #1b5e20;
+            gap: 10px;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #1a202c;
         }
         .lang-btn {
-            background: #0066cc;
+            background: linear-gradient(45deg, #2193b0, #6dd5ed);
             color: white;
             border: none;
             padding: 6px 12px;
-            border-radius: 6px;
+            border-radius: 20px;
             font-weight: bold;
             cursor: pointer;
             font-size: 0.8rem;
+            box-shadow: 0 4px 10px rgba(33, 147, 176, 0.3);
         }
         .tabs {
             display: flex;
-            gap: 6px;
-            margin-bottom: 15px;
+            gap: 8px;
+            margin-bottom: 18px;
         }
         .tab-btn {
             flex: 1;
-            padding: 10px 5px;
+            padding: 10px 6px;
             border: none;
-            background: #e0e0e0;
-            color: #333;
+            background: #e2e8f0;
+            color: #4a5568;
             font-weight: bold;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
             font-size: 0.85rem;
             text-align: center;
-            transition: all 0.2s;
+            transition: all 0.3s ease;
         }
         .tab-btn.active {
-            background: var(--primary);
+            background: linear-gradient(45deg, #00b09b, #96c93d);
             color: white;
+            box-shadow: 0 4px 15px rgba(0, 176, 155, 0.4);
         }
-        .section {
-            display: none;
-        }
-        .section.active {
-            display: block;
-        }
+        .section { display: none; }
+        .section.active { display: block; animation: fadeIn 0.4s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        
         h2 {
-            font-size: 1.1rem;
-            margin-bottom: 12px;
-            color: var(--primary-dark);
+            font-size: 1.15rem;
+            margin-bottom: 15px;
+            color: #2d3748;
+            font-weight: 700;
+            border-left: 4px solid var(--primary);
+            padding-left: 8px;
         }
-        .form-group {
-            margin-bottom: 12px;
-        }
+        .form-group { margin-bottom: 14px; }
         label {
             display: block;
-            font-size: 0.9rem;
-            font-weight: 600;
+            font-size: 0.88rem;
+            font-weight: 700;
             margin-bottom: 5px;
+            color: #4a5568;
         }
         input, select {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
+            padding: 11px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
             font-size: 0.95rem;
+            background: #f8fafc;
+            transition: all 0.3s;
+        }
+        input:focus, select:focus {
+            border-color: var(--primary);
+            background: #fff;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 200, 83, 0.15);
         }
         .btn-gps {
-            background: var(--accent);
+            background: linear-gradient(45deg, #f7971e, #ffd200);
             color: #000;
             border: none;
             width: 100%;
-            padding: 10px;
-            border-radius: 8px;
+            padding: 11px;
+            border-radius: 12px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 5px;
+            margin-top: 6px;
+            box-shadow: 0 4px 12px rgba(247, 151, 30, 0.3);
         }
         .btn-submit {
-            background: var(--primary);
+            background: linear-gradient(45deg, #11998e, #38ef7d);
             color: white;
             border: none;
             width: 100%;
-            padding: 12px;
-            border-radius: 8px;
+            padding: 13px;
+            border-radius: 14px;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 1.05rem;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 12px;
+            box-shadow: 0 6px 20px rgba(17, 153, 142, 0.4);
+            transition: transform 0.2s;
         }
+        .btn-submit:active { transform: scale(0.98); }
+        
         .whatsapp-join-box {
-            background: #e8f5e9;
-            border: 2px dashed #4caf50;
+            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+            border: 2px dashed #28a745;
             padding: 12px;
-            border-radius: 8px;
+            border-radius: 14px;
             text-align: center;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.15);
         }
         .whatsapp-join-btn {
             display: inline-block;
             background: #25D366;
             color: white;
             text-decoration: none;
-            padding: 8px 15px;
-            border-radius: 20px;
+            padding: 8px 18px;
+            border-radius: 25px;
             font-weight: bold;
             margin-top: 8px;
             font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
         }
         .meter-box {
-            background: #f9f9f9;
-            border: 2px dashed var(--primary);
-            padding: 15px;
-            border-radius: 10px;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border: 2px solid #ff9a8b;
+            padding: 16px;
+            border-radius: 16px;
             text-align: center;
             margin-bottom: 15px;
+            box-shadow: 0 6px 20px rgba(252, 182, 159, 0.3);
         }
         .meter-val {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--primary-dark);
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #d32f2f;
             margin: 5px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
         .meter-btns {
             display: flex;
             gap: 10px;
-            margin-top: 10px;
+            margin-top: 12px;
         }
         .meter-btns button {
             flex: 1;
-            padding: 10px;
+            padding: 12px;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-weight: bold;
             color: white;
             cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
-        .btn-start { background: #2e7d32; }
-        .btn-stop { background: #c62828; }
+        .btn-start { background: linear-gradient(45deg, #00b09b, #96c93d); }
+        .btn-stop { background: linear-gradient(45deg, #cb356b, #bd3f32); }
+        
         .footer {
             text-align: center;
             font-size: 0.75rem;
-            color: #777;
-            margin-top: 15px;
-            border-top: 1px solid #eee;
+            color: #718096;
+            margin-top: 18px;
+            border-top: 1px solid #edf2f7;
             padding-top: 10px;
         }
         .live-booking-card {
-            background: #fff3e0;
-            border: 1px solid #ffb74d;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            font-size: 0.85rem;
+            background: #fff;
+            border-left: 5px solid #ff9800;
+            border-top: 1px solid #eee;
+            border-right: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            font-size: 0.88rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
         }
     </style>
 </head>
@@ -203,13 +229,13 @@
             <span>🛺</span>
             <div>
                 <div id="mainTitle">AR Taxi Shahapur</div>
-                <div style="font-size: 0.7rem; color: #666;" id="subTitle">ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಸೇವೆ</div>
+                <div style="font-size: 0.7rem; color: #718096;" id="subTitle">ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್</div>
             </div>
         </div>
         <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">English / ಕನ್ನಡ</button>
     </div>
 
-    <!-- WhatsApp Group Joining Banner for Drivers -->
+    <!-- WhatsApp Group Banner -->
     <div class="whatsapp-join-box">
         <div id="waBannerText" style="font-size: 0.85rem; font-weight: bold; color: #1b5e20;">ಡ್ರೈವರ್‌ಗಳು ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್‌ಗೆ ಸೇರಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ:</div>
         <a href="https://chat.whatsapp.com/IA8IgVgA1iUK00rs3wmMcN?s=cl&p=a&mlu=4&ilr=4" target="_blank" class="whatsapp-join-btn" id="waJoinBtn">💬 WhatsApp Group Join</a>
@@ -243,18 +269,23 @@
                 </select>
             </div>
             <div class="form-group">
+                <label id="lblPickup">ಎಲ್ಲಿಂದ ಹೋಗಬೇಕು? (Pickup Address):</label>
+                <input type="text" id="pickupLocation" placeholder="ಉದಾ: ಗಾಂಧಿ ವೃತ್ತ ಶಹಾಪುರ" required>
+            </div>
+            <div class="form-group">
                 <label id="lblGps">ಪ್ರಸ್ತುತ ಸ್ಥಳ (GPS): <span style="color:red">*ಕಡ್ಡಾಯ</span></label>
                 <button type="button" class="btn-gps" onclick="getGPSLocation()" id="btnGpsText">📍 ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಪಡೆಯಿರಿ</button>
                 <input type="text" id="gpsLocation" placeholder="ಸ್ಥಳ ಲಭ್ಯವಿಲ್ಲ" readonly style="margin-top:5px; background:#f0f0f0;" required>
             </div>
             <div class="form-group">
-                <label id="lblDrop">ಎಲ್ಲಿಗೆ ಹೋಗಬೇಕು?:</label>
+                <label id="lblDrop">ಎಲ್ಲಿಗೆ ಹೋಗಬೇಕು? (Drop Address):</label>
                 <input type="text" id="dropLocation" placeholder="ಉದಾ: ಶಹಾಪುರ ಬಸ್ ನಿಲ್ದಾಣ" required>
             </div>
-            <div class="form-group">
-                <label id="lblPrice">ಅಂದಾಜು ಬೆಲೆ (₹):</label>
-                <input type="number" id="estPrice" value="50" required>
+            
+            <div style="background:#e8f5e9; padding:10px; border-radius:10px; margin-bottom:12px; font-size:0.83rem; color:#1b5e20; border:1px solid #c8e6c9;">
+                ℹ️ <b>ದರ ನಿಯಮ:</b> ಮೊದಲ 4 ಕಿ.ಮೀಗೆ ರೂ. 50 ಫಿಕ್ಸ್. ಆಮೇಲೆ ಪ್ರತಿ 1 ಕಿ.ಮೀಗೆ ರೂ. 12 ಹೆಚ್ಚುವರಿ ಚಾರ್ಜ್.
             </div>
+
             <button type="submit" class="btn-submit" id="btnSubmitWp">🚀 ವಾಟ್ಸಾಪ್ ಮೂಲಕ ಬುಕ್ ಮಾಡಿ</button>
         </form>
     </div>
@@ -263,10 +294,10 @@
     <div class="section" id="sec1">
         <h2 id="hMeter">🛺 ಡ್ರೈವರ್ ಲೈವ್ ಮೀಟರ್ & ಆರ್ಡರ್‌ಗಳು</h2>
         <div class="meter-box">
-            <div style="font-size: 0.85rem;" id="lblDist">ಚಲಿಸಿದ ದೂರ:</div>
+            <div style="font-size: 0.85rem; font-weight:700; color:#5c4033;" id="lblDist">ಚಲಿಸಿದ ದೂರ:</div>
             <div class="meter-val" id="distVal">0.00 ಕಿ.ಮೀ</div>
-            <div style="font-size: 0.85rem;" id="lblFare">ಒಟ್ಟು ಅಂದಾಜು ಹಣ:</div>
-            <div class="meter-val" style="color: #2e7d32;" id="fareVal">₹ 30</div>
+            <div style="font-size: 0.82rem; font-weight:700; color:#5c4033;" id="lblFare">ಒಟ್ಟು ಅಂದಾಜು ಹಣ (4km=₹50, 1km=₹12):</div>
+            <div class="meter-val" style="color: #009624; font-size: 1.8rem;" id="fareVal">₹ 50</div>
             <div class="meter-btns">
                 <button type="button" class="btn-start" onclick="startMeter()" id="btnStart">ಚಾಲುಮಾಡಿ (Start)</button>
                 <button type="button" class="btn-stop" onclick="stopMeter()" id="btnStop">ನಿಲ್ಲಿಸಿ (Stop)</button>
@@ -276,13 +307,15 @@
         <h2 style="font-size: 0.95rem; margin-top:10px;" id="hLiveOrders">📢 ಲೈವ್ ಬುಕಿಂಗ್ ಲಿಸ್ಟ್ (ಡ್ರೈವರ್‌ಗಳಿಗೆ):</h2>
         <div id="liveOrdersContainer">
             <div class="live-booking-card">
-                <div><b>ಸ್ಥಳ:</b> ಶಹಾಪುರ ಬಸ್ ನಿಲ್ದಾಣದಿಂದ ಗಾಂಧಿ ವೃತ್ತ</div>
+                <div><b>ಪಿಕಪ್:</b> ಗಾಂಧಿ ವೃತ್ತ ಶಹಾಪುರ</div>
+                <div><b>ಡ್ರಾಪ್:</b> ಬಸ್ ನಿಲ್ದಾಣ</div>
                 <div><b>ಗ್ರಾಹಕ:</b> 81050XXXXX</div>
-                <button onclick="acceptOrder(this)" style="background:#2e7d32; color:white; border:none; padding:5px 10px; border-radius:5px; margin-top:5px; font-weight:bold; cursor:pointer;" class="accept-btn">✅ ಬುಕ್ ಓಕೆ ಮಾಡಿ (Accept)</button>
+                <div style="color: #c62828; font-weight: bold; font-size: 0.8rem; margin-top: 4px;">⚠️ ಬೇಗ ಬುಕಿಂಗ್ ತಗೊಳ್ಳಿ, ಇಲ್ಲವಾದರೆ ಬೇರೆ ಡ್ರೈವರ್ ತೆಗೆದುಕೊಳ್ಳುತ್ತಾರೆ!</div>
+                <button onclick="acceptOrder(this)" style="background:#00c853; color:white; border:none; padding:6px 12px; border-radius:8px; margin-top:6px; font-weight:bold; cursor:pointer;" class="accept-btn">✅ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ (Accept)</button>
             </div>
         </div>
 
-        <button type="button" class="btn-gps" style="background:#ffc107; margin-top:10px;" onclick="sendMeterToWhatsApp()" id="btnWpMeter">ವಾಟ್ಸಾಪ್‌ಗೆ ಮೀಟರ್ ವರದಿ ಕಳುಹಿಸಿ</button>
+        <button type="button" class="btn-gps" style="background: linear-gradient(45deg, #36d1dc, #5b86e5); color:white; margin-top:10px;" onclick="sendMeterToWhatsApp()" id="btnWpMeter">ವಾಟ್ಸಾಪ್‌ಗೆ ಮೀಟರ್ ವರದಿ ಕಳುಹಿಸಿ</button>
     </div>
 
     <!-- TAB 3: Driver Registration -->
@@ -322,8 +355,6 @@
     let gpsCoords = "";
     let watchId = null;
     let distanceKm = 0;
-    let baseFare = 30;
-    let perKmRate = 15;
 
     function switchTab(index) {
         const sections = document.querySelectorAll('.section');
@@ -356,13 +387,21 @@
         }
     }
 
+    function calculateFare(km) {
+        if (km <= 4) {
+            return 50;
+        } else {
+            return 50 + Math.ceil(km - 4) * 12;
+        }
+    }
+
     function submitBooking(event) {
         event.preventDefault();
         let name = document.getElementById('cusName').value;
         let phone = document.getElementById('cusPhone').value;
         let vehicle = document.getElementById('vehicleType').value;
+        let pickup = document.getElementById('pickupLocation').value;
         let drop = document.getElementById('dropLocation').value;
-        let price = document.getElementById('estPrice').value;
 
         if (!gpsCoords) {
             alert("ದಯವಿಟ್ಟು ಮೊದಲು 'ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಪಡೆಯಿರಿ' ಬಟನ್ ಒತ್ತಿ ಕಡ್ಡಾಯವಾಗಿ ಲೊಕೇಶನ್ ಆನ್ ಮಾಡಿ!");
@@ -373,21 +412,21 @@
                   `👤 ಹೆಸರು: ${name}%0A` +
                   `📞 ಫೋನ್: ${phone}%0A` +
                   `🚗 ವಾಹನ: ${vehicle}%0A` +
-                  `📍 ಪಿಕಪ್ ಲೊಕೇಶನ್ (GPS): ${gpsCoords}%0A` +
-                  `🏁 ಗಮ್ಯಸ್ಥಾನ: ${drop}%0A` +
-                  `💰 ಅಂದಾಜು ಬೆಲೆ: ₹${price}%0A%0A` +
-                  `💬 ಡ್ರೈವರ್‌ಗಳೇ, ಈ ಬುಕ್ ಸ್ವೀಕರಿಸಲು ನಮ್ಮ ಅಧಿಕೃತ ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್ ಲಿಂಕ್ ಬಳಸಿ: https://chat.whatsapp.com/IA8IgVgA1iUK00rs3wmMcN`;
+                  `📍 ಪಿಕಪ್ ಸ್ಥಳ: ${pickup}%0A` +
+                  `🗺️ GPS ಲೊಕೇಶನ್: ${gpsCoords}%0A` +
+                  `🏁 ಗಮ್ಯಸ್ಥಾನ (Drop): ${drop}%0A` +
+                  `⚠️ *ಎಚ್ಚರಿಕೆ ಡ್ರೈವರ್‌ಗಳೇ:* ಈ ಬುಕಿಂಗ್ ಬಂದಿದೆ, ಯಾರು ಮೊದಲು ಸ್ವೀಕರಿಸುತ್ತೀರೋ ಅವರಿಗೆ ಅವಕಾಶ! ಬೇಗ ಒಪ್ಪಿಕೊಳ್ಳಿ.%0A%0A` +
+                  `💬 ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್ ಲಿಂಕ್: https://chat.whatsapp.com/IA8IgVgA1iUK00rs3wmMcN`;
 
-        // Owner/Driver WhatsApp link (Targeting your WhatsApp group / number routing)
         let wpUrl = `https://api.whatsapp.com/send?phone=918105010768&text=${msg}`;
         window.open(wpUrl, '_blank');
     }
 
     function acceptOrder(btn) {
-        btn.innerText = "🔒 ಈಗಾಗಲೇ ಬೇರೆ ಡ್ರೈವರ್‌ರಿಂದ ಬುಕ್ ಆಗಿದೆ (Booked)";
-        btn.style.background = "#9e9e9e";
+        btn.innerText = "🔒 ಬುಕ್ ಆಗಿದೆ (Already Taken)";
+        btn.style.background = "#718096";
         btn.disabled = true;
-        alert("ಈ ಬುಕಿಂಗ್ ಅನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಸ್ವೀಕರಿಸಲಾಗಿದೆ. ಮ್ಯಾಪ್ ಲೊಕೇಶನ್ ತೆರೆಯಲಾಗುತ್ತಿದೆ...");
+        alert("ನೀವು ಈ ಬುಕಿಂಗ್ ಅನ್ನು ಸ್ವೀಕರಿಸಿದ್ದೀರಿ! ಮ್ಯಾಪ್ ಲೊಕೇಶನ್ ತೆರೆಯಲಾಗುತ್ತಿದೆ...");
         if(gpsCoords) {
             window.open(gpsCoords, '_blank');
         } else {
@@ -396,13 +435,15 @@
     }
 
     function startMeter() {
-        alert("ಲೈವ್ ಮೀಟರ್ ಚಾಲೂ ಆಗಿದೆ!");
-        distanceKm = 0.1;
+        alert("ಲೈವ್ ಮೀಟರ್ ಚಾಲೂ ಆಗಿದೆ! (ತುಂಬಾ ನಿಧಾನವಾಗಿ ಚಲಿಸುತ್ತದೆ)");
+        distanceKm = 0.0;
         updateMeterDisplay();
+        if (watchId) clearInterval(watchId);
+        // Extremely smooth and slow increment (every 4.5 seconds by 0.01 km)
         watchId = setInterval(() => {
-            distanceKm += 0.05;
+            distanceKm += 0.01;
             updateMeterDisplay();
-        }, 3000);
+        }, 4500);
     }
 
     function stopMeter() {
@@ -412,7 +453,7 @@
 
     function updateMeterDisplay() {
         document.getElementById('distVal').innerText = distanceKm.toFixed(2) + " ಕಿ.ಮೀ";
-        let totalFare = baseFare + Math.floor(distanceKm * perKmRate);
+        let totalFare = calculateFare(distanceKm);
         document.getElementById('fareVal').innerText = "₹ " + totalFare;
     }
 
@@ -438,7 +479,7 @@
         currentLang = currentLang === 'kn' ? 'en' : 'kn';
         if(currentLang === 'en') {
             document.getElementById('mainTitle').innerText = "AR Taxi Shahapur";
-            document.getElementById('subTitle').innerText = "Local Auto & Taxi Booking Service";
+            document.getElementById('subTitle').innerText = "Local Auto & Taxi Booking";
             document.getElementById('tab1').innerText = "Booking";
             document.getElementById('tab2').innerText = "Live Meter";
             document.getElementById('tab3').innerText = "Registration";
@@ -446,16 +487,16 @@
             document.getElementById('lblCusName').innerText = "Your Name:";
             document.getElementById('lblCusPhone').innerText = "Mobile Number:";
             document.getElementById('lblVehicle').innerText = "Vehicle Type:";
+            document.getElementById('lblPickup').innerText = "Pickup Address:";
             document.getElementById('lblGps').innerText = "Current Location (GPS): Mandatory";
             document.getElementById('btnGpsText').innerText = "📍 Get GPS Location";
-            document.getElementById('lblDrop').innerText = "Drop Location:";
-            document.getElementById('lblPrice').innerText = "Estimated Price (₹):";
+            document.getElementById('lblDrop').innerText = "Drop Address:";
             document.getElementById('btnSubmitWp').innerText = "🚀 Book via WhatsApp";
             document.getElementById('waBannerText').innerText = "Drivers click here to join WhatsApp Group:";
             document.getElementById('waJoinBtn').innerText = "💬 WhatsApp Group Join";
         } else {
             document.getElementById('mainTitle').innerText = "AR Taxi Shahapur";
-            document.getElementById('subTitle').innerText = "ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಸೇವೆ";
+            document.getElementById('subTitle').innerText = "ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್";
             document.getElementById('tab1').innerText = "ಬುಕಿಂಗ್";
             document.getElementById('tab2').innerText = "ಲೈವ್ ಮೀಟರ್";
             document.getElementById('tab3').innerText = "ನೋಂದಣಿ";
@@ -463,10 +504,10 @@
             document.getElementById('lblCusName').innerText = "ನಿಮ್ಮ ಹೆಸರು:";
             document.getElementById('lblCusPhone').innerText = "ಮೊಬೈಲ್ ನಂಬರ್:";
             document.getElementById('lblVehicle').innerText = "ವಾಹನದ ಪ್ರಕಾರ:";
+            document.getElementById('lblPickup').innerText = "ಎಲ್ಲಿಂದ ಹೋಗಬೇಕು? (Pickup Address):";
             document.getElementById('lblGps').innerText = "ಪ್ರಸ್ತುತ ಸ್ಥಳ (GPS): ಕಡ್ಡಾಯ";
             document.getElementById('btnGpsText').innerText = "📍 ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಪಡೆಯಿರಿ";
-            document.getElementById('lblDrop').innerText = "ಎಲ್ಲಿಗೆ ಹೋಗಬೇಕು?:";
-            document.getElementById('lblPrice').innerText = "ಅಂದಾಜು ಬೆಲೆ (₹):";
+            document.getElementById('lblDrop').innerText = "ಎಲ್ಲಿಗೆ ಹೋಗಬೇಕು? (Drop Address):";
             document.getElementById('btnSubmitWp').innerText = "🚀 ವಾಟ್ಸಾಪ್ ಮೂಲಕ ಬುಕ್ ಮಾಡಿ";
             document.getElementById('waBannerText').innerText = "ಡ್ರೈವರ್‌ಗಳು ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್‌ಗೆ ಸೇರಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ:";
             document.getElementById('waJoinBtn').innerText = "💬 WhatsApp Group Join";
