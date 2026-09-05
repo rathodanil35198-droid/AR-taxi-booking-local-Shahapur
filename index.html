@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR Taxi Shahapur</title>
+    <title>AR Taxi Shahapur - Pro Edition</title>
     <style>
         :root { --primary: #00b09b; --secondary: #96c93d; --bg: #f4f7f6; --text: #333; }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
@@ -22,12 +22,14 @@
         .support-box { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); border: 2px solid #ff7675; padding: 12px; border-radius: 14px; text-align: center; margin-bottom: 15px; }
         .support-btn { display: inline-block; background: #d63031; color: white; text-decoration: none; padding: 8px 18px; border-radius: 25px; font-weight: bold; margin-top: 8px; font-size: 0.9rem; box-shadow: 0 4px 12px rgba(214, 48, 49, 0.4); }
 
-        .tabs { display: flex; background: #e2e8f0; border-radius: 12px; padding: 4px; margin-bottom: 15px; gap: 4px; }
-        .tab-btn { flex: 1; border: none; padding: 10px 5px; background: transparent; font-weight: bold; border-radius: 9px; cursor: pointer; font-size: 0.8rem; text-align: center; transition: all 0.2s ease; }
+        .tabs { display: flex; background: #e2e8f0; border-radius: 12px; padding: 4px; margin-bottom: 15px; gap: 2px; flex-wrap: wrap; }
+        .tab-btn { flex: 1; min-width: 30%; border: none; padding: 8px 4px; background: transparent; font-weight: bold; border-radius: 9px; cursor: pointer; font-size: 0.75rem; text-align: center; transition: all 0.2s ease; }
         .tab-btn.active { background: linear-gradient(45deg, #00b09b, #96c93d); color: white; box-shadow: 0 4px 15px rgba(0, 156, 155, 0.4); }
+        
         .section { display: none; }
-        .section.active { display: block; animation: fadeIn 0.4s ease-in-out; }
+        .section.active { display: block; animation: fadeIn 0.3s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        
         h2 { font-size: 1.05rem; margin-bottom: 12px; color: #2d3748; font-weight: 700; border-left: 4px solid var(--primary); padding-left: 8px; }
         .form-group { margin-bottom: 12px; }
         label { display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 4px; color: #4a5568; }
@@ -36,12 +38,15 @@
         .btn-gps, .btn-submit { width: 100%; padding: 12px; border: none; border-radius: 10px; font-weight: bold; font-size: 0.95rem; cursor: pointer; margin-top: 5px; }
         .btn-gps { background: linear-gradient(45deg, #3Edfdc, #5b86e5); color: white; }
         .btn-submit { background: linear-gradient(45deg, #00b09b, #96c93d); color: white; box-shadow: 0 4px 15px rgba(0, 176, 155, 0.3); }
+        
         .meter-box { background: linear-gradient(135deg, #ffeaa7 0%, #dfe6e9 100%); border: 2px solid #fffa65; padding: 14px; border-radius: 14px; text-align: center; margin-bottom: 15px; }
         .meter-val { font-size: 2rem; font-weight: 800; color: #d32f27; margin: 4px 0; }
         .meter-btns { display: flex; gap: 10px; margin-top: 10px; }
         .meter-btns button { flex: 1; padding: 10px; border: none; border-radius: 10px; font-weight: bold; color: white; cursor: pointer; }
         .btn-start { background: linear-gradient(45deg, #00b09b, #96c93d); }
         .btn-stop { background: linear-gradient(45deg, #cb356b, #bd3f32); }
+        
+        .card { background: #fff; border: 1px solid #e2e8f0; padding: 12px; border-radius: 12px; margin-bottom: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); font-size: 0.85rem; }
         .footer { text-align: center; font-size: 0.75rem; color: #718096; margin-top: 15px; border-top: 1px solid #edf2f7; padding-top: 10px; }
     </style>
 </head>
@@ -59,13 +64,11 @@
         <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">English / ಕನ್ನಡ</button>
     </div>
 
-    <!-- ಡ್ರೈವರ್ ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್ ಜಾಯಿನ್ ಆಗುವ ಬಾಕ್ಸ್ -->
     <div class="whatsapp-join-box">
         <div id="waBannerText" style="font-size: 0.83rem; font-weight: bold; color: #152223;">ನಮ್ಮ ಶಕ್ತಿಗಾಗಿ ಡ್ರೈವರ್‌ಗಳು ಕಡ್ಡಾಯವಾಗಿ ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್‌ಗೆ ಸೇರಿ:</div>
         <a href="https://chat.whatsapp.com/IA8IgVgA1iUK00rs3wmMcN?s=cl&p=a&mlu=4&ilr=4" target="_blank" class="whatsapp-join-btn" id="waJoinBtn">💬 Join Driver WhatsApp Group</a>
     </div>
 
-    <!-- ಎಮರ್ಜೆನ್ಸಿ ಕಸ್ಟಮರ್ ಕೇರ್ ಕಾಲ್ ಬಟನ್ -->
     <div class="support-box">
         <div id="ccBannerText" style="font-size: 0.83rem; font-weight: bold; color: #78281f;">🚨 ಆಪ್‌ನಲ್ಲಿ ತೊಂದರೆ ಅಥವಾ ತುರ್ತು ಸಹಾಯ ಬೇಕಿದ್ದರೆ ಸಂಪರ್ಕಿಸಿ:</div>
         <a href="tel:8105010768" class="support-btn" id="ccCallBtn">📞 24/7 Customer Care (Call)</a>
@@ -75,9 +78,10 @@
         <button class="tab-btn active" onclick="switchTab(0)" id="tab1">ಬುಕಿಂಗ್</button>
         <button class="tab-btn" onclick="switchTab(1)" id="tab2">ಲೈವ್ ಮೀಟರ್</button>
         <button class="tab-btn" onclick="switchTab(2)" id="tab3">ನೋಂದಣಿ</button>
+        <button class="tab-btn" onclick="switchTab(3)" id="tab4">ಡ್ರೈವರ್ ಲಿಸ್ಟ್</button>
+        <button class="tab-btn" onclick="switchTab(4)" id="tab5">ಅಡ್ಮಿನ್ ಪೇಜ್</button>
     </div>
 
-    <!-- TAB 1: Booking -->
     <div class="section active" id="sec0">
         <h2 id="hBooking">🛺 ಗ್ರಾಹಕರ ಬುಕಿಂಗ್ ಫಾರ್ಮ್</h2>
         <form id="bookingForm" onsubmit="submitBooking(event)">
@@ -114,11 +118,15 @@
             </div>
             <button type="submit" class="btn-submit" id="btnSubmit">🚀 ವಿನಂತಿ ಯಶಸ್ವಿಯಾಗಿ ಕಳುಹಿಸಿ</button>
         </form>
+
+        <h2 style="font-size: 0.95rem; margin-top: 15px;" id="hLiveOrders">📢 ಲೈವ್ ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು:</h2>
+        <div id="liveOrdersContainer">
+            <p style="font-size: 0.85rem; color: #718096; text-align: center; padding: 15px;" id="noOrdersText">ಸದ್ಯ ಯಾವುದೇ ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ. ಕಸ್ಟಮರ್ ಬುಕ್ ಮಾಡಿದಾಗ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ.</p>
+        </div>
     </div>
 
-    <!-- TAB 2: Driver Live Meter & Orders -->
     <div class="section" id="sec1">
-        <h2 id="hMeter">🛺 ಡ್ರೈವರ್ ಲೈವ್ ಮೀಟರ್ & ಆರ್ಡರ್‌ಗಳು</h2>
+        <h2 id="hMeter">🛺 ಡ್ರೈವರ್ ಲೈವ್ ಮೀಟರ್</h2>
         <div class="meter-box">
             <div style="font-size: 0.85rem; font-weight: 700; color: #5c4033;" id="lblDist">ಚಲಿಸಿದ ದೂರ: 0.00 ಕಿ.ಮೀ</div>
             <div style="font-size: 0.82rem; font-weight: 700; color: #5c4033;" id="lblFare">ಒಟ್ಟು ಅಂದಾಜು ಹಣ: ₹ 50</div>
@@ -128,21 +136,15 @@
                 <button type="button" class="btn-stop" onclick="stopMeter()">ನಿಲ್ಲಿಸಿ (Stop)</button>
             </div>
         </div>
-
-        <h2 style="font-size: 0.95rem; margin-top: 10px;" id="hLiveOrders">📢 ಲೈವ್ ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು:</h2>
-        <div id="liveOrdersContainer">
-            <p style="font-size: 0.85rem; color: #718096; text-align: center; padding: 15px;" id="noOrdersText">ಸದ್ಯ ಯಾವುದೇ ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ. ಕಸ್ಟಮರ್ ಬುಕ್ ಮಾಡಿದಾಗ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ.</p>
-        </div>
         <button type="button" class="btn-gps" style="background: linear-gradient(45deg, #25D366, #128C7E); margin-top: 10px;" onclick="sendMeterToWhatsApp()">ವಾಟ್ಸಾಪ್‌ಗೆ ಮೀಟರ್ ವರದಿ ಕಳುಹಿಸಿ</button>
     </div>
 
-    <!-- TAB 3: Driver Registration -->
     <div class="section" id="sec2">
-        <h2 id="hReg">🚗 ಡ್ರೈವರ್ ನೋಂದಣಿ ಫಾರ್ಮ್</h2>
+        <h2 id="hReg">🚗 ಡ್ರೈವರ್ ನೋಂದಣಿ ಫಾರ್ಮ್ (ಪ್ರಾಮಾಣಿಕ ಐಡಿ)</h2>
         <form onsubmit="submitRegistration(event)">
             <div class="form-group">
-                <label id="lblRegName">ನಿಮ್ಮ ಹೆಸರು:</label>
-                <input type="text" id="regName" placeholder="ನಿಮ್ಮ ಹೆಸರು" required>
+                <label id="lblRegName">ಡ್ರೈವರ್ ಹೆಸರು:</label>
+                <input type="text" id="regName" placeholder="ನಿಮ್ಮ ಪೂರ್ಣ ಹೆಸರು" required>
             </div>
             <div class="form-group">
                 <label id="lblRegPhone">ಮೊಬೈಲ್ ನಂಬರ್:</label>
@@ -159,8 +161,34 @@
                 <label id="lblRegVehNo">ವಾಹನ ನಂಬರ್ (Vehicle No):</label>
                 <input type="text" id="regVehNo" placeholder="KA 33 ..." required>
             </div>
-            <button type="submit" class="btn-submit" id="btnRegSubmit">✍️ ಡ್ರೈವರ್ ನೋಂದಣಿ ಮಾಡಿ</button>
+            <div class="form-group">
+                <label>📸 ಡ್ರೈವರ್ ಸೆಲ್ಫಿ ಫೋಟೋ (Selfie):</label>
+                <input type="file" id="regSelfie" accept="image/*" required style="padding:6px;">
+            </div>
+            <div class="form-group">
+                <label>🚙 ವಾಹನದ ಫೋಟೋ (Vehicle Photo):</label>
+                <input type="file" id="regVehPhoto" accept="image/*" required style="padding:6px;">
+            </div>
+            <button type="submit" class="btn-submit" id="btnRegSubmit">✍️ ಡ್ರೈವರ್ ನೋಂದಣಿ ಮಾಡಿ (ID ಪಡೆಯಿರಿ)</button>
         </form>
+    </div>
+
+    <div class="section" id="sec3">
+        <h2>📋 ನೋಂದಾಯಿತ ಡ್ರೈವರ್‌ಗಳ ಲಿಸ್ಟ್</h2>
+        <div id="driverListContainer">
+            <p style="font-size: 0.85rem; color: #718096; text-align: center; padding: 15px;">ಯಾವುದೇ ಡ್ರೈವರ್‌ಗಳು ನೋಂದಾಯಿಸಿಲ್ಲ.</p>
+        </div>
+    </div>
+
+    <div class="section" id="sec4">
+        <h2>⚙️ ಅಡ್ಮಿನ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ & ರಿಪೋರ್ಟ್</h2>
+        <div class="card" style="background:#e3f2fd; border-color:#90caf9;">
+            <h3 style="font-size:0.95rem; color:#1565c0; margin-bottom:8px;">📊 ಡ್ರೈವರ್ ಕಾರ್ಯಕ್ಷಮತೆ (Performance):</h3>
+            <div id="adminReportContainer">
+                <p style="font-size:0.82rem; color:#555;">ಇಂದಿನ ಮತ್ತು ಈ ತಿಂಗಳ ರೈಡ್ ವರದಿಗಳು ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತವೆ.</p>
+            </div>
+        </div>
+        <button onclick="clearAllData()" style="background:#d32f27; color:white; border:none; padding:10px; width:100%; border-radius:10px; font-weight:bold; margin-top:10px; cursor:pointer;">⚠️ ಎಲ್ಲಾ ಡೇಟಾ ರೀಸೆಟ್ ಮಾಡಿ</button>
     </div>
 
     <div class="footer">
@@ -173,6 +201,10 @@
     let gpsCoords = null;
     let matchId = null;
     let distance = 0.0;
+
+    // ಲೋಕಲ್ ಸ್ಟೋರೇಜ್ ನಿಂದ ಡೇಟಾ ಲೋಡ್ ಮಾಡಿಕೊಳ್ಳುವುದು
+    let drivers = JSON.parse(localStorage.getItem('ar_drivers')) || [];
+    let orders = JSON.parse(localStorage.getItem('ar_orders')) || [];
 
     function playBookingAlert() {
         try {
@@ -193,6 +225,8 @@
             sec.classList.toggle('active', idx === index);
             tabs[idx].classList.toggle('active', idx === index);
         });
+        if(index === 3) renderDriverList();
+        if(index === 4) renderAdminReport();
     }
 
     function getGPSLocation() {
@@ -235,51 +269,187 @@
             return;
         }
 
+        let newOrder = {
+            id: 'order_' + Date.now(),
+            name: name,
+            phone: phone,
+            vehicle: vehicle,
+            pickup: pickup,
+            drop: drop,
+            gps: gpsCoords,
+            status: 'Pending',
+            acceptedBy: null,
+            date: new Date().toLocaleDateString()
+        };
+
+        orders.unshift(newOrder);
+        localStorage.setItem('ar_orders', JSON.stringify(orders));
+
         playBookingAlert();
+        renderOrders();
 
-        let container = document.getElementById('liveOrdersContainer');
-        let noOrdersText = document.getElementById('noOrdersText');
-        if (noOrdersText) { noOrdersText.remove(); }
-
-        let cardId = 'order_' + Date.now();
-        let cardHtml = `
-            <div class="live-booking-card" id="${cardId}" style="background: #fff; border-left: 5px solid #ff9800; border: 1px solid #eee; padding: 12px; border-radius: 12px; margin-bottom: 12px; font-size: 0.88rem; box-shadow: 0 3px 10px rgba(0,0,0,0.05);">
-                <div><b>👤 ಹೆಸರು:</b> ${name}</div>
-                <div><b>📞 ಫೋನ್:</b> <a href="tel:${phone}" style="color: #007bff; font-weight: bold;">${phone}</a></div>
-                <div><b>🚗 ವಾಹನ:</b> ${vehicle}</div>
-                <div><b>📍 ಪಿಕಪ್ ಸ್ಥಳ:</b> ${pickup}</div>
-                <div><b>🗺️ ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್:</b> <a href="${gpsCoords}" target="_blank" style="color: #007bff; text-decoration: underline;">ಮ್ಯಾಪ್‌ನಲ್ಲಿ ನೋಡಿ</a></div>
-                <div><b>🏁 ಗಮ್ಯಸ್ಥಾನ (Drop):</b> ${drop}</div>
-                <div style="color: #d32f27; font-weight: bold; font-size: 0.8rem; margin-top: 4px;">⚠️ ಡ್ರೈವರ್‌ಗಳೇ ಬೇಗ ಬುಕಿಂಗ್ ತೆಗೆದುಕೊಳ್ಳಿ!</div>
-                <button onclick="acceptOrder(this)" style="background: #00c853; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; font-size: 0.8rem; margin-top: 8px; cursor: pointer;">✅ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ (Accept)</button>
-            </div>
-        `;
-        container.innerHTML = cardHtml + container.innerHTML;
-
-        // ನೇರವಾಗಿ ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್‌ಗೆ ಸೆಂಡ್ ಆಗಲು ಸರಿಯಾದ ಲಿಂಕ್ ಫಾರ್ಮ್ಯಾಟ್
-        let msg = `🛺 *AR Taxi Shahapur - ಹೊಸ ಬುಕಿంగ్* 🛺\n\n` +
+        // ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್‌ಗೆ ಶೇರ್ ಮಾಡಲು ಲಿಂಕ್
+        let msg = `🛺 *AR Taxi Shahapur - ಹೊಸ ಬುಕಿಂಗ್* 🛺\n\n` +
             `👤 ಹೆಸರು: ${name}\n` +
             `📞 ಫೋನ್: ${phone}\n` +
             `🚗 ವಾಹನ: ${vehicle}\n` +
             `📍 ಪಿಕಪ್: ${pickup}\n` +
             `🗺️ GPS: ${gpsCoords}\n` +
             `🏁 ಡ್ರಾಪ್: ${drop}\n\n` +
-            `💬 ಗ್ರೂಪ್‌ಗೆ ಬಂದು ರೈಡ್ ತೆಗೆದುಕೊಳ್ಳಿ!`;
-        
+            `💬 ಆಪ್‌ಗೆ ಬಂದು ರೈಡ್ ತೆಗೆದುಕೊಳ್ಳಿ!`;
         let wUrl = `https://wa.me/?text=` + encodeURIComponent(msg);
         window.open(wUrl, '_blank');
         
         alert("ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸಬ್ಮಿಟ್ ಆಗಿದೆ!");
         document.getElementById('bookingForm').reset();
+        gpsCoords = null;
+        document.getElementById('gpsLocation').value = "";
+        document.getElementById('btnGpsText').innerText = "📍 ಲೊಕೇಶನ್ ಪಡೆದುಕೊಳ್ಳಿ";
     }
 
-    function acceptOrder(btn) {
-        btn.innerText = "✅ ರೈಡ್ ತೆಗೆದುಕೊಂಡಿದ್ದೀರಿ (Taken)";
-        btn.style.background = "#718096";
-        btn.disabled = true;
-        alert("ಈ ರೈಡ್ ಅನ್ನು ನೀವು ಸ್ವೀಕರಿಸಿದ್ದೀರಿ!");
-        if(gpsCoords) {
-            window.open(gpsCoords, '_blank');
+    function renderOrders() {
+        let container = document.getElementById('liveOrdersContainer');
+        if (orders.length === 0) {
+            container.innerHTML = `<p style="font-size: 0.85rem; color: #718096; text-align: center; padding: 15px;" id="noOrdersText">ಸದ್ಯ ಯಾವುದೇ ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.</p>`;
+            return;
+        }
+
+        let html = '';
+        orders.forEach(ord => {
+            let statusStyle = ord.status === 'Accepted' ? 'background:#e2e8f0; border-left: 5px solid #718096;' : 'background:#fff; border-left: 5px solid #ff9800;';
+            let btnHtml = ord.status === 'Pending' 
+                ? `<button onclick="acceptOrder('${ord.id}')" style="background: #00c853; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; font-size: 0.8rem; margin-top: 8px; cursor: pointer;">✅ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ (Accept)</button>`
+                : `<div style="color: #d32f27; font-weight: bold; font-size: 0.8rem; margin-top: 6px;">🔒 ಲಾಕ್ ಆಗಿದೆ (Taken by: ${ord.acceptedBy})</div>`;
+
+            html += `
+                <div class="card" style="${statusStyle}">
+                    <div><b>👤 ಹೆಸರು:</b> ${ord.name}</div>
+                    <div><b>📞 ಫೋನ್:</b> <a href="tel:${ord.phone}" style="color: #007bff; font-weight: bold;">${ord.phone}</a></div>
+                    <div><b>🚗 ವಾಹನ:</b> ${ord.vehicle}</div>
+                    <div><b>📍 ಪಿಕಪ್ ಸ್ಥಳ:</b> ${ord.pickup}</div>
+                    <div><b>🗺️ ಲೊಕೇಶನ್:</b> <a href="${ord.gps}" target="_blank" style="color: #007bff; text-decoration: underline;">ಮ್ಯಾಪ್‌ನಲ್ಲಿ ನೋಡಿ</a></div>
+                    <div><b>🏁 ಗಮ್ಯಸ್ಥಾನ:</b> ${ord.drop}</div>
+                    ${btnHtml}
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    function acceptOrder(orderId) {
+        let driverName = prompt("ನಿಮ್ಮ ಹೆಸರು ಅಥವಾ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ (Confirm Accept):");
+        if (!driverName) return;
+
+        let ord = orders.find(o => o.id === orderId);
+        if (ord && ord.status === 'Pending') {
+            ord.status = 'Accepted';
+            ord.acceptedBy = driverName;
+            localStorage.setItem('ar_orders', JSON.stringify(orders));
+            renderOrders();
+            alert("ರೈಡ್ ಯಶಸ್ವಾಗಿ ಸ್ವೀಕರಿಸಲಾಗಿದೆ! ಬಾಕಿ ಎಲ್ಲರ ಆಪಿನಿಂದ ಇದು ಲಾಕ್ ಆಗಿದೆ.");
+            if(ord.gps) window.open(ord.gps, '_blank');
+        }
+    }
+
+    function submitRegistration(event) {
+        event.preventDefault();
+        let name = document.getElementById('regName').value;
+        let phone = document.getElementById('regPhone').value;
+        let vehicle = document.getElementById('regVehicle').value;
+        let vehNo = document.getElementById('regVehNo').value;
+        
+        let selfieInput = document.getElementById('regSelfie');
+        let vehPhotoInput = document.getElementById('regVehPhoto');
+
+        let reader1 = new FileReader();
+        let reader2 = new FileReader();
+
+        reader1.onload = function(e1) {
+            let selfieData = e1.target.result;
+            reader2.onload = function(e2) {
+                let vehPhotoData = e2.target.result;
+                
+                let driverId = 'AR-DRV-' + Math.floor(1000 + Math.random() * 9000);
+                let newDriver = {
+                    id: driverId,
+                    name: name,
+                    phone: phone,
+                    vehicle: vehicle,
+                    vehNo: vehNo,
+                    selfie: selfieData,
+                    vehPhoto: vehPhotoData,
+                    date: new Date().toLocaleDateString()
+                };
+
+                drivers.push(newDriver);
+                localStorage.setItem('ar_drivers', JSON.stringify(drivers));
+
+                alert(`ಡ್ರೈವರ್ ನೋಂದಣಿ ಯಶಸ್ವಿಯಾಗಿದೆ! ನಿಮ್ಮ ಐಡಿ: ${driverId}`);
+                event.target.reset();
+                switchTab(3); // Driver list tab
+            }
+            reader2.readAsDataURL(vehPhotoInput.files[0]);
+        }
+        reader1.readAsDataURL(selfieInput.files[0]);
+    }
+
+    function renderDriverList() {
+        let container = document.getElementById('driverListContainer');
+        if (drivers.length === 0) {
+            container.innerHTML = `<p style="font-size: 0.85rem; color: #718096; text-align: center; padding: 15px;">ಯಾವುದೇ ಡ್ರೈವರ್‌ಗಳು ನೋಂದಾಯಿಸಿಲ್ಲ.</p>`;
+            return;
+        }
+
+        let html = '';
+        drivers.forEach((drv, index) => {
+            html += `
+                <div class="card" style="display: flex; gap: 10px; align-items: center;">
+                    <img src="${drv.selfie}" alt="Selfie" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #00b09b;">
+                    <div style="flex: 1; font-size: 0.82rem;">
+                        <div><b>ID:</b> <span style="color:#d32f27;">${drv.id}</span></div>
+                        <div><b>ಹೆಸರು:</b> ${drv.name}</div>
+                        <div><b>ಫೋನ್:</b> <a href="tel:${drv.phone}">${drv.phone}</a></div>
+                        <div><b>ವಾಹನ:</b> ${drv.vehicle} (${drv.vehNo})</div>
+                    </div>
+                    <button onclick="deleteDriver(${index})" style="background:#ff5252; color:white; border:none; padding:5px 8px; border-radius:6px; cursor:pointer; font-size:0.75rem;">ಅಳಿ</button>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    function deleteDriver(index) {
+        if(confirm("ಈ ಡ್ರೈವರ್ ಅನ್ನು ಡಿಲೀಟ್ ಮಾಡಲು ಬಯಸುವಿರಾ?")) {
+            drivers.splice(index, 1);
+            localStorage.setItem('ar_drivers', JSON.stringify(drivers));
+            renderDriverList();
+        }
+    }
+
+    function renderAdminReport() {
+        let container = document.getElementById('adminReportContainer');
+        let totalDrivers = drivers.length;
+        let totalOrders = orders.length;
+        let acceptedOrders = orders.filter(o => o.status === 'Accepted').length;
+
+        container.innerHTML = `
+            <div style="font-size: 0.85rem; line-height: 1.6;">
+                <div>👥 ಒಟ್ಟು ನೋಂದಾಯಿತ ಡ್ರೈವರ್‌ಗಳು: <b>${totalDrivers}</b></div>
+                <div>📦 ಒಟ್ಟು ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು: <b>${totalOrders}</b></div>
+                <div>✅ ಯಶಸ್ವಿಯಾಗಿ ಸ್ವೀಕರಿಸಿದ ರೈಡ್‌ಗಳು: <b>${acceptedOrders}</b></div>
+            </div>
+        `;
+    }
+
+    function clearAllData() {
+        if(confirm("ಎಲ್ಲಾ ಡೇಟಾ (ಬುಕಿಂಗ್ ಮತ್ತು ಡ್ರೈವರ್‌ಗಳು) ಅಳಿಸಲ್ಪಡುತ್ತದೆ. ಖಚಿತವೇ?")) {
+            localStorage.clear();
+            drivers = [];
+            orders = [];
+            renderOrders();
+            renderDriverList();
+            renderAdminReport();
+            alert("ಡೇಟಾ ರೀಸೆಟ್ ಮಾಡಲಾಗಿದೆ.");
         }
     }
 
@@ -313,21 +483,6 @@
         window.open(wUrl, '_blank');
     }
 
-    function submitRegistration(event) {
-        event.preventDefault();
-        let name = document.getElementById('regName').value;
-        let phone = document.getElementById('regPhone').value;
-        let vehicle = document.getElementById('regVehicle').value;
-        let vehNo = document.getElementById('regVehNo').value;
-        
-        let msg = `🚗 *ಡ್ರೈವರ್ ಹೊಸ ನೋಂದಣಿ* 🚗\n👤 ಹೆಸರು: ${name}\n📞 ಫೋನ್: ${phone}\n🚗 ವಾಹನ: ${vehicle}\n🔢 ನಂಬರ್: ${vehNo}`;
-        let wUrl = `https://wa.me/?text=` + encodeURIComponent(msg);
-        window.open(wUrl, '_blank');
-        
-        alert("ಡ್ರೈವರ್ ನೋಂದಣಿ ಯಶಸ್ವಿಯಾಗಿದೆ!");
-        event.target.reset();
-    }
-
     function toggleLanguage() {
         currentLang = currentLang === 'kn' ? 'en' : 'kn';
         if (currentLang === 'en') {
@@ -335,59 +490,22 @@
             document.getElementById('subTitle').innerText = "Local Auto & Taxi Booking";
             document.getElementById('tab1').innerText = "Booking";
             document.getElementById('tab2').innerText = "Live Meter";
-            document.getElementById('tab3').innerText = "Registration";
-            document.getElementById('hBooking').innerText = "🛺 Customer Booking Form";
-            document.getElementById('lblCusName').innerText = "Your Name:";
-            document.getElementById('lblCusPhone').innerText = "Mobile Number:";
-            document.getElementById('lblVehicle').innerText = "Vehicle Type:";
-            document.getElementById('lblPickup').innerText = "Pickup Address:";
-            document.getElementById('lblGps').innerText = "Current Location (GPS):";
-            document.getElementById('btnGpsText').innerText = "📍 Get GPS Location";
-            document.getElementById('lblDrop').innerText = "Drop Address:";
-            document.getElementById('btnSubmit').innerText = "🚀 Submit Booking Request";
-            document.getElementById('hMeter').innerText = "🛺 Driver Live Meter & Orders";
-            document.getElementById('hLiveOrders').innerText = "📢 Live Booking Orders:";
-            document.getElementById('noOrdersText').innerText = "No new bookings available right now.";
-            document.getElementById('hReg').innerText = "🚗 Driver Registration Form";
-            document.getElementById('lblRegName').innerText = "Your Name:";
-            document.getElementById('lblRegPhone').innerText = "Mobile Number:";
-            document.getElementById('lblRegVehicle').innerText = "Vehicle Type:";
-            document.getElementById('lblRegVehNo').innerText = "Vehicle Number:";
-            document.getElementById('btnRegSubmit').innerText = "✍️ Register as Driver";
-            document.getElementById('waBannerText').innerText = "Drivers must join our WhatsApp group for our strength:";
-            document.getElementById('waJoinBtn').innerText = "💬 Join Driver WhatsApp Group";
-            document.getElementById('ccBannerText').innerText = "🚨 For any issue or emergency help, contact us:";
-            document.getElementById('ccCallBtn').innerText = "📞 24/7 Customer Care (Call)";
+            document.getElementById('tab3').innerText = "Register";
+            document.getElementById('tab4').innerText = "Drivers";
+            document.getElementById('tab5').innerText = "Admin";
         } else {
             document.getElementById('mainTitle').innerText = "AR Taxi Shahapur";
             document.getElementById('subTitle').innerText = "ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್";
             document.getElementById('tab1').innerText = "ಬುಕಿಂಗ್";
             document.getElementById('tab2').innerText = "ಲೈವ್ ಮೀಟರ್";
             document.getElementById('tab3').innerText = "ನೋಂದಣಿ";
-            document.getElementById('hBooking').innerText = "🛺 ಗ್ರಾಹಕರ ಬುಕಿಂಗ್ ಫಾರ್ಮ್";
-            document.getElementById('lblCusName').innerText = "ನಿಮ್ಮ ಹೆಸರು:";
-            document.getElementById('lblCusPhone').innerText = "ಮೊಬೈಲ್ ನಂಬರ್:";
-            document.getElementById('lblVehicle').innerText = "ವಾಹನದ ಪ್ರಕಾರ:";
-            document.getElementById('lblPickup').innerText = "ಎಲ್ಲಿಂದ ಹೋಗಬೇಕು? (Pickup Address):";
-            document.getElementById('lblGps').innerText = "ಪ್ರಸ್ತುತ ಸ್ಥಳ (GPS):";
-            document.getElementById('btnGpsText').innerText = "📍 ಲೊಕೇಶನ್ ಪಡೆದುಕೊಳ್ಳಿ";
-            document.getElementById('lblDrop').innerText = "ಎಲ್ಲಿಗೆ ತಲುಪಬೇಕು? (Drop Address):";
-            document.getElementById('btnSubmit').innerText = "🚀 ವಿನಂತಿ ಯಶಸ್ವಿಯಾಗಿ ಕಳುಹಿಸಿ";
-            document.getElementById('hMeter').innerText = "🛺 ಡ್ರೈವರ್ ಲೈವ್ ಮೀಟರ್ & ಆರ್ಡರ್‌ಗಳು";
-            document.getElementById('hLiveOrders').innerText = "📢 ಲೈವ್ ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು:";
-            document.getElementById('noOrdersText').innerText = "ಸದ್ಯ ಯಾವುದೇ ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ. ಕಸ್ಟಮರ್ ಬುಕ್ ಮಾಡಿದಾಗ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ.";
-            document.getElementById('hReg').innerText = "🚗 ಡ್ರೈವರ್ ನೋಂದಣಿ ಫಾರ್ಮ್";
-            document.getElementById('lblRegName').innerText = "ನಿಮ್ಮ ಹೆಸರು:";
-            document.getElementById('lblRegPhone').innerText = "ಮೊಬೈಲ್ ನಂಬರ್:";
-            document.getElementById('lblRegVehicle').innerText = "ವಾಹನದ ಪ್ರಕಾರ:";
-            document.getElementById('lblRegVehNo').innerText = "ವಾಹನ ನಂಬರ್ (Vehicle No):";
-            document.getElementById('btnRegSubmit').innerText = "✍️ ಡ್ರೈವರ್ ನೋಂದಣಿ ಮಾಡಿ";
-            document.getElementById('waBannerText').innerText = "ನಮ್ಮ ಶಕ್ತಿಗಾಗಿ ಡ್ರೈವರ್‌ಗಳು ಕಡ್ಡಾಯವಾಗಿ ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್‌ಗೆ ಸೇರಿ:";
-            document.getElementById('waJoinBtn').innerText = "💬 Join Driver WhatsApp Group";
-            document.getElementById('ccBannerText').innerText = "🚨 ಆಪ್‌ನಲ್ಲಿ ತೊಂದರೆ ಅಥವಾ ತುರ್ತು ಸಹಾಯ ಬೇಕಿದ್ದರೆ ಸಂಪರ್ಕಿಸಿ:";
-            document.getElementById('ccCallBtn').innerText = "📞 24/7 Customer Care (Call)";
+            document.getElementById('tab4').innerText = "ಡ್ರೈವರ್ ಲಿಸ್ಟ್";
+            document.getElementById('tab5').innerText = "ಅಡ್ಮಿನ್ ಪೇಜ್";
         }
     }
+
+    // ಇನಿಷಿಯಲ್ ಲೋಡ್
+    renderOrders();
 </script>
 </body>
 </html>
