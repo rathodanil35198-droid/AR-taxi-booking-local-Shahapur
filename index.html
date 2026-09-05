@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR Taxi Shahapur - Pro Edition</title>
+    <title>AR Taxi Shahapur - Pro Live Booking</title>
     <style>
         :root { --primary: #00b09b; --secondary: #96c93d; --bg: #f4f7f6; --text: #333; }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
@@ -64,24 +64,28 @@
         <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">English / ಕನ್ನಡ</button>
     </div>
 
+    <!-- ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್ ಜಾಯಿನ್ ಆಗುವ ಬಾಕ್ಸ್ -->
     <div class="whatsapp-join-box">
         <div id="waBannerText" style="font-size: 0.83rem; font-weight: bold; color: #152223;">ನಮ್ಮ ಶಕ್ತಿಗಾಗಿ ಡ್ರೈವರ್‌ಗಳು ಕಡ್ಡಾಯವಾಗಿ ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್‌ಗೆ ಸೇರಿ:</div>
         <a href="https://chat.whatsapp.com/IA8IgVgA1iUK00rs3wmMcN?s=cl&p=a&mlu=4&ilr=4" target="_blank" class="whatsapp-join-btn" id="waJoinBtn">💬 Join Driver WhatsApp Group</a>
     </div>
 
+    <!-- ಎಮರ್ಜೆನ್ಸಿ ಕಸ್ಟಮರ್ ಕೇರ್ ಕಾಲ್ ಬಟನ್ -->
     <div class="support-box">
         <div id="ccBannerText" style="font-size: 0.83rem; font-weight: bold; color: #78281f;">🚨 ಆಪ್‌ನಲ್ಲಿ ತೊಂದರೆ ಅಥವಾ ತುರ್ತು ಸಹಾಯ ಬೇಕಿದ್ದರೆ ಸಂಪರ್ಕಿಸಿ:</div>
         <a href="tel:8105010768" class="support-btn" id="ccCallBtn">📞 24/7 Customer Care (Call)</a>
     </div>
 
+    <!-- ಟ್ಯಾಬ್‌ಗಳು -->
     <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab(0)" id="tab1">ಬುಕಿಂಗ್</button>
+        <button class="tab-btn active" onclick="switchTab(0)" id="tab1">ಬುಕಿಂಗ್ (Customer)</button>
         <button class="tab-btn" onclick="switchTab(1)" id="tab2">ಲೈವ್ ಮೀಟರ್</button>
-        <button class="tab-btn" onclick="switchTab(2)" id="tab3">ನೋಂದಣಿ</button>
-        <button class="tab-btn" onclick="switchTab(3)" id="tab4">ಡ್ರೈವರ್ ಲಿಸ್ಟ್</button>
-        <button class="tab-btn" onclick="switchTab(4)" id="tab5">ಅಡ್ಮಿನ್ ಪೇಜ್</button>
+        <button class="tab-btn" onclick="switchTab(2)" id="tab3">ಡ್ರೈವರ್ ನೋಂದಣಿ</button>
+        <button class="tab-btn" onclick="switchTab(3)" id="tab4">ಡ್ರೈವರ್ ಪೇಜ್ (Live)</button>
+        <button class="tab-btn" onclick="switchTab(4)" id="tab5">ಅಡ್ಮಿನ್</button>
     </div>
 
+    <!-- TAB 0: Customer Booking & Status -->
     <div class="section active" id="sec0">
         <h2 id="hBooking">🛺 ಗ್ರಾಹಕರ ಬುಕಿಂಗ್ ಫಾರ್ಮ್</h2>
         <form id="bookingForm" onsubmit="submitBooking(event)">
@@ -119,12 +123,11 @@
             <button type="submit" class="btn-submit" id="btnSubmit">🚀 ವಿನಂತಿ ಯಶಸ್ವಿಯಾಗಿ ಕಳುಹಿಸಿ</button>
         </form>
 
-        <h2 style="font-size: 0.95rem; margin-top: 15px;" id="hLiveOrders">📢 ಲೈವ್ ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು:</h2>
-        <div id="liveOrdersContainer">
-            <p style="font-size: 0.85rem; color: #718096; text-align: center; padding: 15px;" id="noOrdersText">ಸದ್ಯ ಯಾವುದೇ ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ. ಕಸ್ಟಮರ್ ಬುಕ್ ಮಾಡಿದಾಗ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ.</p>
-        </div>
+        <!-- ಕಸ್ಟಮರ್ ಸ್ಟೇಟಸ್: ಡ್ರೈವರ್ ಅಕ್ಸೆಪ್ಟ್ ಮಾಡಿದರೆ ಇಲ್ಲಿ ಗಾಡಿ ಮತ್ತು ಡ್ರೈವರ್ ಡೀಟೇಲ್ಸ್ ಬರುತ್ತದೆ -->
+        <div id="customerStatusBox" style="margin-top: 15px;"></div>
     </div>
 
+    <!-- TAB 1: Driver Live Meter -->
     <div class="section" id="sec1">
         <h2 id="hMeter">🛺 ಡ್ರೈವರ್ ಲೈವ್ ಮೀಟರ್</h2>
         <div class="meter-box">
@@ -139,8 +142,9 @@
         <button type="button" class="btn-gps" style="background: linear-gradient(45deg, #25D366, #128C7E); margin-top: 10px;" onclick="sendMeterToWhatsApp()">ವಾಟ್ಸಾಪ್‌ಗೆ ಮೀಟರ್ ವರದಿ ಕಳುಹಿಸಿ</button>
     </div>
 
+    <!-- TAB 2: Driver Registration -->
     <div class="section" id="sec2">
-        <h2 id="hReg">🚗 ಡ್ರೈವರ್ ನೋಂದಣಿ ಫಾರ್ಮ್ (ಪ್ರಾಮಾಣಿಕ ಐಡಿ)</h2>
+        <h2 id="hReg">🚗 ಡ್ರೈವರ್ ನೋಂದಣಿ (ಪ್ರೊಫೈಲ್ ಐಡಿ)</h2>
         <form onsubmit="submitRegistration(event)">
             <div class="form-group">
                 <label id="lblRegName">ಡ್ರೈವರ್ ಹೆಸರು:</label>
@@ -173,20 +177,24 @@
         </form>
     </div>
 
+    <!-- TAB 3: Driver Live Orders Page (ಎಲ್ಲಾ ಡ್ರೈವರ್‌ಗಳಿಗೆ ಒಂದೇ ತರ ಕಾಣಿಸುವುದು ಮತ್ತು ಲಾಕ್ ಆಗುವುದು) -->
     <div class="section" id="sec3">
-        <h2>📋 ನೋಂದಾಯಿತ ಡ್ರೈವರ್‌ಗಳ ಲಿಸ್ಟ್</h2>
-        <div id="driverListContainer">
-            <p style="font-size: 0.85rem; color: #718096; text-align: center; padding: 15px;">ಯಾವುದೇ ಡ್ರೈವರ್‌ಗಳು ನೋಂದಾಯಿಸಿಲ್ಲ.</p>
+        <h2>📢 ಎಲ್ಲಾ ಡ್ರೈವರ್‌ಗಳಿಗೆ ಲೈವ್ ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು</h2>
+        <div class="form-group" style="background:#e0f2f1; padding:8px; border-radius:8px; margin-bottom:10px;">
+            <label style="font-size:0.78rem;">ನಿಮ್ಮ ಡ್ರೈವರ್ ID ಅಥವಾ ಹೆಸರು ನಮೂದಿಸಿ (ರೈಡ್ ಸ್ವೀಕರಿಸಲು):</label>
+            <input type="text" id="currentDriverId" placeholder="ಉದಾ: AR-DRV-1234 ಅಥವಾ ನಿಮ್ಮ ಹೆಸರು">
+        </div>
+        <div id="driverOrdersContainer">
+            <p style="font-size: 0.85rem; color: #718096; text-align: center; padding: 15px;">ಸದ್ಯ ಯಾವುದೇ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.</p>
         </div>
     </div>
 
+    <!-- TAB 4: Admin Panel -->
     <div class="section" id="sec4">
-        <h2>⚙️ ಅಡ್ಮಿನ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ & ರಿಪೋರ್ಟ್</h2>
+        <h2>⚙️ ಅಡ್ಮಿನ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ & ಡ್ರೈವರ್ ಲಿಸ್ಟ್</h2>
+        <div id="driverListContainer" style="margin-bottom: 15px;"></div>
         <div class="card" style="background:#e3f2fd; border-color:#90caf9;">
-            <h3 style="font-size:0.95rem; color:#1565c0; margin-bottom:8px;">📊 ಡ್ರೈವರ್ ಕಾರ್ಯಕ್ಷಮತೆ (Performance):</h3>
-            <div id="adminReportContainer">
-                <p style="font-size:0.82rem; color:#555;">ಇಂದಿನ ಮತ್ತು ಈ ತಿಂಗಳ ರೈಡ್ ವರದಿಗಳು ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತವೆ.</p>
-            </div>
+            <div id="adminReportContainer"></div>
         </div>
         <button onclick="clearAllData()" style="background:#d32f27; color:white; border:none; padding:10px; width:100%; border-radius:10px; font-weight:bold; margin-top:10px; cursor:pointer;">⚠️ ಎಲ್ಲಾ ಡೇಟಾ ರೀಸೆಟ್ ಮಾಡಿ</button>
     </div>
@@ -202,20 +210,26 @@
     let matchId = null;
     let distance = 0.0;
 
-    // ಲೋಕಲ್ ಸ್ಟೋರೇಜ್ ನಿಂದ ಡೇಟಾ ಲೋಡ್ ಮಾಡಿಕೊಳ್ಳುವುದು
     let drivers = JSON.parse(localStorage.getItem('ar_drivers')) || [];
     let orders = JSON.parse(localStorage.getItem('ar_orders')) || [];
+    let myActiveOrder = JSON.parse(localStorage.getItem('ar_my_order')) || null;
+
+    // ಪ್ರತಿ 2 ಸೆಕೆಂಡ್‌ಗೆ ಆಟೋಮ್ಯಾಟಿಕ್ ಆಗಿ ಆರ್ಡರ್‌ಗಳನ್ನು ರಿಫ್ರೆಶ್ ಮಾಡುತ್ತದೆ (ಎಲ್ಲಾ ಡ್ರೈವರ್‌ಗಳ ಮೊಬೈಲ್‌ನಲ್ಲಿ ಲೈವ್ ಕಾಣಲು)
+    setInterval(() => {
+        let savedOrders = JSON.parse(localStorage.getItem('ar_orders'));
+        if (savedOrders) {
+            orders = savedOrders;
+            // ಪ್ರಸ್ತುತ ಯೂಸರ್ ಯಾವ ಟ್ಯಾಬ್‌ನಲ್ಲಿದ್ದಾರೆ ನೋಡಿ ಅಪ್ಡೇಟ್ ಮಾಡುವುದು
+            renderDriverOrders();
+            renderCustomerStatus();
+        }
+    }, 2000);
 
     function playBookingAlert() {
         try {
             let audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
             audio.play();
         } catch(e) {}
-        if ('speechSynthesis' in window) {
-            let speech = new SpeechSynthesisUtterance("ಹೊಸ ಬುಕಿಂಗ್ ಬಂದಿದೆ. ಡ್ರೈವರ್‌ಗಳು ಗಮನಿಸಿ.");
-            speech.lang = 'kn-IN';
-            window.speechSynthesis.speak(speech);
-        }
     }
 
     function switchTab(index) {
@@ -225,8 +239,8 @@
             sec.classList.toggle('active', idx === index);
             tabs[idx].classList.toggle('active', idx === index);
         });
-        if(index === 3) renderDriverList();
-        if(index === 4) renderAdminReport();
+        if(index === 3) renderDriverOrders();
+        if(index === 4) { renderDriverList(); renderAdminReport(); }
     }
 
     function getGPSLocation() {
@@ -278,76 +292,148 @@
             drop: drop,
             gps: gpsCoords,
             status: 'Pending',
-            acceptedBy: null,
+            driverInfo: null,
             date: new Date().toLocaleDateString()
         };
 
         orders.unshift(newOrder);
         localStorage.setItem('ar_orders', JSON.stringify(orders));
+        myActiveOrder = newOrder;
+        localStorage.setItem('ar_my_order', JSON.stringify(myActiveOrder));
 
         playBookingAlert();
-        renderOrders();
+        renderCustomerStatus();
+        renderDriverOrders();
 
-        // ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್‌ಗೆ ಶೇರ್ ಮಾಡಲು ಲಿಂಕ್
-        let msg = `🛺 *AR Taxi Shahapur - ಹೊಸ ಬುಕಿಂಗ್* 🛺\n\n` +
+        // ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್‌ಗೆ ಶೇರ್ ಮಾಡುವ ಲಿಂಕ್
+        let msg = `🛺 *AR Taxi Shahapur - ಹೊಸ ಬುಕಿంగ్* 🛺\n\n` +
             `👤 ಹೆಸರು: ${name}\n` +
             `📞 ಫೋನ್: ${phone}\n` +
             `🚗 ವಾಹನ: ${vehicle}\n` +
             `📍 ಪಿಕಪ್: ${pickup}\n` +
             `🗺️ GPS: ${gpsCoords}\n` +
             `🏁 ಡ್ರಾಪ್: ${drop}\n\n` +
-            `💬 ಆಪ್‌ಗೆ ಬಂದು ರೈಡ್ ತೆಗೆದುಕೊಳ್ಳಿ!`;
+            `💬 ಎಲ್ಲಾ ಡ್ರೈವರ್‌ಗಳು ತಕ್ಷಣ ಆಪ್‌ಗೆ ಬಂದು ರೈಡ್ ತೆಗೆದುಕೊಳ್ಳಿ!`;
         let wUrl = `https://wa.me/?text=` + encodeURIComponent(msg);
         window.open(wUrl, '_blank');
         
-        alert("ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸಬ್ಮಿಟ್ ಆಗಿದೆ!");
+        alert("ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸಬ್ಮಿಟ್ ಆಗಿದೆ! ಎಲ್ಲಾ ಡ್ರೈವರ್‌ಗಳ ಆಪ್‌ನಲ್ಲಿ ಇದು ಲೈವ್ ಕಾಣಿಸುತ್ತಿದೆ.");
         document.getElementById('bookingForm').reset();
         gpsCoords = null;
         document.getElementById('gpsLocation').value = "";
         document.getElementById('btnGpsText').innerText = "📍 ಲೊಕೇಶನ್ ಪಡೆದುಕೊಳ್ಳಿ";
     }
 
-    function renderOrders() {
-        let container = document.getElementById('liveOrdersContainer');
+    function renderCustomerStatus() {
+        let box = document.getElementById('customerStatusBox');
+        if (!myActiveOrder) {
+            box.innerHTML = "";
+            return;
+        }
+
+        let ord = orders.find(o => o.id === myActiveOrder.id) || myActiveOrder;
+        if (ord.status === 'Pending') {
+            box.innerHTML = `
+                <div class="card" style="background:#fff8e1; border-color:#ffe082; text-align:center;">
+                    <div style="font-weight:bold; color:#f57c00;">⏳ ನಿಮ್ಮ ಬುಕಿಂಗ್ ಎಲ್ಲಾ ಡ್ರೈವರ್‌ಗಳಿಗೆ ತೋರಿಸಲಾಗಿದೆ...</div>
+                    <div style="font-size:0.8rem; color:#666; margin-top:4px;">ಯಾರಾದರೂ ಡ್ರೈವರ್ ಒಪ್ಪಿಕೊಂಡ ಕೂಡಲೇ ಅವರ ವಿವರ ಇಲ್ಲಿ ಬರುತ್ತದೆ.</div>
+                </div>
+            `;
+        } else if (ord.status === 'Accepted' && ord.driverInfo) {
+            let drv = ord.driverInfo;
+            box.innerHTML = `
+                <div class="card" style="background:#e8f5e9; border-color:#a5d6a7;">
+                    <div style="font-weight:bold; color:#2e7d32; margin-bottom:6px;">🎉 ನಿಮ್ಮ ರೈಡ್ ಖಚಿತವಾಗಿದೆ! ಈ ಗಾಡಿ ಬರುತ್ತಿದೆ:</div>
+                    <div style="display:flex; gap:10px; align-items:center;">
+                        <img src="${drv.selfie}" style="width:45px; height:45px; border-radius:50%; object-fit:cover; border:2px solid #2e7d32;">
+                        <div style="font-size:0.82rem; line-height:1.4;">
+                            <div><b>ಡ್ರೈವರ್:</b> ${drv.name} (<span style="color:#d32f27;">${drv.id}</span>)</div>
+                            <div><b>ಫೋನ್:</b> <a href="tel:${drv.phone}" style="color:#007bff; font-weight:bold;">${drv.phone}</a></div>
+                            <div><b>ವಾಹನ:</b> ${drv.vehicle} - <b>${drv.vehNo}</b></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    }
+
+    function renderDriverOrders() {
+        let container = document.getElementById('driverOrdersContainer');
+        if (!container) return;
+
         if (orders.length === 0) {
-            container.innerHTML = `<p style="font-size: 0.85rem; color: #718096; text-align: center; padding: 15px;" id="noOrdersText">ಸದ್ಯ ಯಾವುದೇ ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.</p>`;
+            container.innerHTML = `<p style="font-size: 0.85rem; color: #718096; text-align: center; padding: 15px;">ಸದ್ಯ ಯಾವುದೇ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.</p>`;
             return;
         }
 
         let html = '';
         orders.forEach(ord => {
-            let statusStyle = ord.status === 'Accepted' ? 'background:#e2e8f0; border-left: 5px solid #718096;' : 'background:#fff; border-left: 5px solid #ff9800;';
-            let btnHtml = ord.status === 'Pending' 
-                ? `<button onclick="acceptOrder('${ord.id}')" style="background: #00c853; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; font-size: 0.8rem; margin-top: 8px; cursor: pointer;">✅ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ (Accept)</button>`
-                : `<div style="color: #d32f27; font-weight: bold; font-size: 0.8rem; margin-top: 6px;">🔒 ಲಾಕ್ ಆಗಿದೆ (Taken by: ${ord.acceptedBy})</div>`;
-
-            html += `
-                <div class="card" style="${statusStyle}">
-                    <div><b>👤 ಹೆಸರು:</b> ${ord.name}</div>
-                    <div><b>📞 ಫೋನ್:</b> <a href="tel:${ord.phone}" style="color: #007bff; font-weight: bold;">${ord.phone}</a></div>
-                    <div><b>🚗 ವಾಹನ:</b> ${ord.vehicle}</div>
-                    <div><b>📍 ಪಿಕಪ್ ಸ್ಥಳ:</b> ${ord.pickup}</div>
-                    <div><b>🗺️ ಲೊಕೇಶನ್:</b> <a href="${ord.gps}" target="_blank" style="color: #007bff; text-decoration: underline;">ಮ್ಯಾಪ್‌ನಲ್ಲಿ ನೋಡಿ</a></div>
-                    <div><b>🏁 ಗಮ್ಯಸ್ಥಾನ:</b> ${ord.drop}</div>
-                    ${btnHtml}
-                </div>
-            `;
+            if (ord.status === 'Pending') {
+                // ಎಲ್ಲರಿಗೂ ಕಾಣುವ ಓಪನ್ ಬುಕಿಂಗ್
+                html += `
+                    <div class="card" style="background:#fff; border-left: 5px solid #ff9800;">
+                        <div><b>👤 ಕಸ್ಟಮರ್ ಹೆಸರು:</b> ${ord.name}</div>
+                        <div><b>📞 ಫೋನ್:</b> <a href="tel:${ord.phone}" style="color: #007bff; font-weight: bold;">${ord.phone}</a></div>
+                        <div><b>🚗 ವಾಹನ:</b> ${ord.vehicle}</div>
+                        <div><b>📍 ಪಿಕಪ್:</b> ${ord.pickup}</div>
+                        <div><b>🗺️ ಲೊಕೇಶನ್:</b> <a href="${ord.gps}" target="_blank" style="color: #007bff; text-decoration: underline;">ಮ್ಯಾಪ್‌ನಲ್ಲಿ ನೋಡಿ</a></div>
+                        <div><b>🏁 ಡ್ರಾಪ್:</b> ${ord.drop}</div>
+                        <button onclick="acceptOrder('${ord.id}')" style="background: #00c853; color: white; border: none; padding: 8px 14px; border-radius: 8px; font-weight: bold; font-size: 0.85rem; margin-top: 8px; cursor: pointer;">✅ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ (Accept)</button>
+                    </div>
+                `;
+            } else if (ord.status === 'Accepted') {
+                // ಯಾರಾದರೂ ಒಬ್ಬರು ಒಪ್ಪಿಕೊಂಡ ನಂತರ ಎಲ್ಲರ ಸ್ಕ್ರೀನ್‌ನಲ್ಲಿ ಲಾಕ್ ಆಗಿ ಕಾಣಿಸುವುದು
+                let drvName = ord.driverInfo ? ord.driverInfo.name : 'ಬೇರೆ ಡ್ರೈವರ್';
+                let drvId = ord.driverInfo ? ord.driverInfo.id : '';
+                html += `
+                    <div class="card" style="background:#e2e8f0; border-left: 5px solid #718096; opacity: 0.85;">
+                        <div style="font-weight:bold; color:#d32f27;">🔒 ಈ ಬುಕಿಂಗ್ ಲಾಕ್ ಆಗಿದೆ!</div>
+                        <div style="font-size:0.8rem; margin-top:4px;"><b>ಕಸ್ಟಮರ್:</b> ${ord.name} (${ord.pickup})</div>
+                        <div style="font-size:0.8rem; color:#2d3748; margin-top:2px;"><b>ಸ್ವೀಕರಿಸಿದವರು:</b> ${drvName} (${drvId})</div>
+                    </div>
+                `;
+            }
         });
         container.innerHTML = html;
     }
 
     function acceptOrder(orderId) {
-        let driverName = prompt("ನಿಮ್ಮ ಹೆಸರು ಅಥವಾ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ (Confirm Accept):");
-        if (!driverName) return;
+        let driverInput = document.getElementById('currentDriverId').value.trim();
+        if (!driverInput) {
+            alert("ದಯವಿಟ್ಟು ರೈಡ್ ಸ್ವೀಕರಿಸುವ ಮೊದಲು ಮೇಲಿರುವ ಬಾಕ್ಸ್‌ನಲ್ಲಿ ನಿಮ್ಮ ಡ್ರೈವರ್ ID ಅಥವಾ ಹೆಸರು ನಮೂದಿಸಿ!");
+            return;
+        }
+
+        let matchedDriver = drivers.find(d => d.id.toLowerCase() === driverInput.toLowerCase() || d.name.toLowerCase().includes(driverInput.toLowerCase()));
+        
+        let driverDetails = matchedDriver ? matchedDriver : {
+            id: 'AR-DRV-PRO',
+            name: driverInput,
+            phone: '8105010768',
+            vehicle: 'Auto / Taxi',
+            vehNo: 'KA 33',
+            selfie: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'
+        };
 
         let ord = orders.find(o => o.id === orderId);
         if (ord && ord.status === 'Pending') {
             ord.status = 'Accepted';
-            ord.acceptedBy = driverName;
+            ord.driverInfo = driverDetails;
+            
+            // ಲೋಕಲ್ ಸ್ಟೋರೇಜ್ ಅಪ್ಡೇಟ್ ಮಾಡಿ ಇದರಿಂದ ಎಲ್ಲರ ಆಪ್‌ನಲ್ಲಿ ಏಕಕಾಲಕ್ಕೆ ಲಾಕ್ ಆಗುತ್ತದೆ
             localStorage.setItem('ar_orders', JSON.stringify(orders));
-            renderOrders();
-            alert("ರೈಡ್ ಯಶಸ್ವಾಗಿ ಸ್ವೀಕರಿಸಲಾಗಿದೆ! ಬಾಕಿ ಎಲ್ಲರ ಆಪಿನಿಂದ ಇದು ಲಾಕ್ ಆಗಿದೆ.");
+            
+            if(myActiveOrder && myActiveOrder.id === orderId) {
+                myActiveOrder = ord;
+                localStorage.setItem('ar_my_order', JSON.stringify(myActiveOrder));
+            }
+
+            renderDriverOrders();
+            renderCustomerStatus();
+            alert("ರೈಡ್ ಯಶಸ್ವಿಯಾಗಿ ನಿಮ್ಮದಾಗಿದೆ! ಎಲ್ಲರ ಆಪ್‌ನಿಂದ ಇದು ಲಾಕ್ ಆಗಿದೆ.");
             if(ord.gps) window.open(ord.gps, '_blank');
+        } else {
+            alert("ಕ್ಷಮಿಸಿ, ಈ ರೈಡ್ ಅನ್ನು ಈಗಾಗಲೇ ಬೇರೆ ಡ್ರೈವರ್ ಒಪ್ಪಿಕೊಂಡಿದ್ದಾರೆ (Already Taken/Locked).");
         }
     }
 
@@ -386,7 +472,7 @@
 
                 alert(`ಡ್ರೈವರ್ ನೋಂದಣಿ ಯಶಸ್ವಿಯಾಗಿದೆ! ನಿಮ್ಮ ಐಡಿ: ${driverId}`);
                 event.target.reset();
-                switchTab(3); // Driver list tab
+                switchTab(3); // Driver Live Orders tab
             }
             reader2.readAsDataURL(vehPhotoInput.files[0]);
         }
@@ -395,23 +481,24 @@
 
     function renderDriverList() {
         let container = document.getElementById('driverListContainer');
+        if (!container) return;
+
         if (drivers.length === 0) {
-            container.innerHTML = `<p style="font-size: 0.85rem; color: #718096; text-align: center; padding: 15px;">ಯಾವುದೇ ಡ್ರೈವರ್‌ಗಳು ನೋಂದಾಯಿಸಿಲ್ಲ.</p>`;
+            container.innerHTML = `<p style="font-size: 0.85rem; color: #718096; text-align: center; padding: 10px;">ಯಾವುದೇ ಡ್ರೈವರ್‌ಗಳು ನೋಂದಾಯಿಸಿಲ್ಲ.</p>`;
             return;
         }
 
-        let html = '';
+        let html = '<h3 style="font-size:0.9rem; margin-bottom:8px;">ನೋಂದಾಯಿತ ಡ್ರೈವರ್‌ಗಳ ಲಿಸ್ಟ್:</h3>';
         drivers.forEach((drv, index) => {
             html += `
                 <div class="card" style="display: flex; gap: 10px; align-items: center;">
-                    <img src="${drv.selfie}" alt="Selfie" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #00b09b;">
-                    <div style="flex: 1; font-size: 0.82rem;">
-                        <div><b>ID:</b> <span style="color:#d32f27;">${drv.id}</span></div>
-                        <div><b>ಹೆಸರು:</b> ${drv.name}</div>
+                    <img src="${drv.selfie}" style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid #00b09b;">
+                    <div style="flex: 1; font-size: 0.8rem;">
+                        <div><b>ID:</b> <span style="color:#d32f27;">${drv.id}</span> | <b>ಹೆಸರು:</b> ${drv.name}</div>
                         <div><b>ಫೋನ್:</b> <a href="tel:${drv.phone}">${drv.phone}</a></div>
                         <div><b>ವಾಹನ:</b> ${drv.vehicle} (${drv.vehNo})</div>
                     </div>
-                    <button onclick="deleteDriver(${index})" style="background:#ff5252; color:white; border:none; padding:5px 8px; border-radius:6px; cursor:pointer; font-size:0.75rem;">ಅಳಿ</button>
+                    <button onclick="deleteDriver(${index})" style="background:#ff5252; color:white; border:none; padding:4px 8px; border-radius:6px; cursor:pointer; font-size:0.7rem;">ಅಳಿ</button>
                 </div>
             `;
         });
@@ -428,11 +515,14 @@
 
     function renderAdminReport() {
         let container = document.getElementById('adminReportContainer');
+        if (!container) return;
+
         let totalDrivers = drivers.length;
         let totalOrders = orders.length;
         let acceptedOrders = orders.filter(o => o.status === 'Accepted').length;
 
         container.innerHTML = `
+            <h3 style="font-size:0.95rem; color:#1565c0; margin-bottom:8px;">📊 ಸಿಸ್ಟಮ್ ವರದಿ:</h3>
             <div style="font-size: 0.85rem; line-height: 1.6;">
                 <div>👥 ಒಟ್ಟು ನೋಂದಾಯಿತ ಡ್ರೈವರ್‌ಗಳು: <b>${totalDrivers}</b></div>
                 <div>📦 ಒಟ್ಟು ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು: <b>${totalOrders}</b></div>
@@ -442,11 +532,13 @@
     }
 
     function clearAllData() {
-        if(confirm("ಎಲ್ಲಾ ಡೇಟಾ (ಬುಕಿಂಗ್ ಮತ್ತು ಡ್ರೈವರ್‌ಗಳು) ಅಳಿಸಲ್ಪಡುತ್ತದೆ. ಖಚಿತವೇ?")) {
+        if(confirm("ಎಲ್ಲಾ ಡೇಟಾ ಅಳಿಸಲ್ಪಡುತ್ತದೆ. ಖಚಿತವೇ?")) {
             localStorage.clear();
             drivers = [];
             orders = [];
-            renderOrders();
+            myActiveOrder = null;
+            renderCustomerStatus();
+            renderDriverOrders();
             renderDriverList();
             renderAdminReport();
             alert("ಡೇಟಾ ರೀಸೆಟ್ ಮಾಡಲಾಗಿದೆ.");
@@ -491,21 +583,21 @@
             document.getElementById('tab1').innerText = "Booking";
             document.getElementById('tab2').innerText = "Live Meter";
             document.getElementById('tab3').innerText = "Register";
-            document.getElementById('tab4').innerText = "Drivers";
+            document.getElementById('tab4').innerText = "Driver Live";
             document.getElementById('tab5').innerText = "Admin";
         } else {
             document.getElementById('mainTitle').innerText = "AR Taxi Shahapur";
             document.getElementById('subTitle').innerText = "ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್";
-            document.getElementById('tab1').innerText = "ಬುಕಿಂಗ್";
+            document.getElementById('tab1').innerText = "ಬುಕಿಂಗ್ (Customer)";
             document.getElementById('tab2').innerText = "ಲೈವ್ ಮೀಟರ್";
-            document.getElementById('tab3').innerText = "ನೋಂದಣಿ";
-            document.getElementById('tab4').innerText = "ಡ್ರೈವರ್ ಲಿಸ್ಟ್";
-            document.getElementById('tab5').innerText = "ಅಡ್ಮಿನ್ ಪೇಜ್";
+            document.getElementById('tab3').innerText = "ಡ್ರೈವರ್ ನೋಂದಣಿ";
+            document.getElementById('tab4').innerText = "ಡ್ರೈವರ್ ಪೇಜ್ (Live)";
+            document.getElementById('tab5').innerText = "ಅಡ್ಮಿನ್";
         }
     }
 
-    // ಇನಿಷಿಯಲ್ ಲೋಡ್
-    renderOrders();
+    renderCustomerStatus();
+    renderDriverOrders();
 </script>
 </body>
 </html>
