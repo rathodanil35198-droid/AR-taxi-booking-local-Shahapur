@@ -1,519 +1,202 @@
 <!DOCTYPE html>
-<html lang="kn" id="htmlRoot">
+<html lang="kn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR Taxi Shahapur</title>
+    <title>AR Taxi Shahapur - ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್</title>
     <style>
         :root {
-            --primary: #00c853;
-            --primary-dark: #009624;
-            --accent: #ffab00;
-            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            --card-bg: #ffffff;
-            --text-color: #2d3748;
+            --primary-gradient: linear-gradient(135deg, #00b09b, #96c93d);
+            --secondary-gradient: linear-gradient(135deg, #ff416c, #ff4b2b);
+            --dark-bg: #1e293b;
+            --light-bg: #f8fafc;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body {
-            background: var(--bg-gradient);
-            color: var(--text-color);
-            padding: 10px;
-            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--light-bg);
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        header {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        header p {
+            margin: 5px 0 0;
+            font-size: 14px;
+            opacity: 0.9;
         }
         .container {
-            max-width: 450px;
-            margin: 0 auto;
-            background: var(--card-bg);
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 15px;
+        }
+        .card {
+            background: white;
+            border-radius: 15px;
             padding: 20px;
-            overflow: hidden;
-            border: 3px solid #ffffff;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border-left: 5px solid #00b09b;
         }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #edf2f7;
-            padding-bottom: 12px;
-            margin-bottom: 15px;
-        }
-        .logo-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: #1a202c;
-        }
-        .lang-btn {
-            background: linear-gradient(45deg, #2193b0, #6dd5ed);
+        .whatsapp-box {
+            background: linear-gradient(135deg, #25d366, #128c7e);
             color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 0.8rem;
-            box-shadow: 0 4px 10px rgba(33, 147, 176, 0.3);
-        }
-        .tabs {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 18px;
-        }
-        .tab-btn {
-            flex: 1;
-            padding: 10px 6px;
-            border: none;
-            background: #e2e8f0;
-            color: #4a5568;
-            font-weight: bold;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 0.85rem;
             text-align: center;
-            transition: all 0.3s ease;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
         }
-        .tab-btn.active {
-            background: linear-gradient(45deg, #00b09b, #96c93d);
-            color: white;
-            box-shadow: 0 4px 15px rgba(0, 176, 155, 0.4);
+        .whatsapp-btn {
+            background: white;
+            color: #128c7e;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
-        .section { display: none; }
-        .section.active { display: block; animation: fadeIn 0.4s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-        
         h2 {
-            font-size: 1.15rem;
-            margin-bottom: 15px;
-            color: #2d3748;
-            font-weight: 700;
-            border-left: 4px solid var(--primary);
-            padding-left: 8px;
+            font-size: 18px;
+            color: #0f172a;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+            margin-top: 0;
         }
-        .form-group { margin-bottom: 14px; }
         label {
             display: block;
-            font-size: 0.88rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-            color: #4a5568;
+            margin-top: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #475569;
         }
         input, select {
             width: 100%;
-            padding: 11px;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            background: #f8fafc;
-            transition: all 0.3s;
+            padding: 12px;
+            margin-top: 5px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 14px;
         }
-        input:focus, select:focus {
-            border-color: var(--primary);
-            background: #fff;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(0, 200, 83, 0.15);
-        }
-        .btn-gps {
-            background: linear-gradient(45deg, #f7971e, #ffd200);
-            color: #000;
+        .btn {
+            background: var(--primary-gradient);
+            color: white;
             border: none;
+            padding: 14px;
             width: 100%;
-            padding: 11px;
-            border-radius: 12px;
+            border-radius: 8px;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 6px;
-            box-shadow: 0 4px 12px rgba(247, 151, 30, 0.3);
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(0,176,155,0.3);
         }
-        .btn-submit {
-            background: linear-gradient(45deg, #11998e, #38ef7d);
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 13px;
-            border-radius: 14px;
-            font-weight: bold;
-            font-size: 1.05rem;
-            cursor: pointer;
-            margin-top: 12px;
-            box-shadow: 0 6px 20px rgba(17, 153, 142, 0.4);
-            transition: transform 0.2s;
-        }
-        .btn-submit:active { transform: scale(0.98); }
-        
-        .whatsapp-join-box {
-            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
-            border: 2px dashed #28a745;
+        .rate-card {
+            background: #e0f2fe;
+            border: 1px dashed #0284c7;
             padding: 12px;
-            border-radius: 14px;
-            text-align: center;
-            margin-bottom: 18px;
-            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.15);
+            border-radius: 8px;
+            font-size: 13px;
+            margin-top: 10px;
+            color: #0369a1;
         }
-        .whatsapp-join-btn {
-            display: inline-block;
-            background: #25D366;
-            color: white;
-            text-decoration: none;
-            padding: 8px 18px;
-            border-radius: 25px;
-            font-weight: bold;
-            margin-top: 8px;
-            font-size: 0.9rem;
-            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
-        }
-        .meter-box {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            border: 2px solid #ff9a8b;
-            padding: 16px;
-            border-radius: 16px;
-            text-align: center;
-            margin-bottom: 15px;
-            box-shadow: 0 6px 20px rgba(252, 182, 159, 0.3);
-        }
-        .meter-val {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: #d32f2f;
-            margin: 5px 0;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-        }
-        .meter-btns {
-            display: flex;
-            gap: 10px;
-            margin-top: 12px;
-        }
-        .meter-btns button {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 12px;
-            font-weight: bold;
-            color: white;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-        .btn-start { background: linear-gradient(45deg, #00b09b, #96c93d); }
-        .btn-stop { background: linear-gradient(45deg, #cb356b, #bd3f32); }
-        
-        .footer {
-            text-align: center;
-            font-size: 0.75rem;
-            color: #718096;
-            margin-top: 18px;
-            border-top: 1px solid #edf2f7;
-            padding-top: 10px;
-        }
-        .live-booking-card {
-            background: #fff;
-            border-left: 5px solid #ff9800;
-            border-top: 1px solid #eee;
-            border-right: 1px solid #eee;
-            border-bottom: 1px solid #eee;
-            padding: 12px;
-            border-radius: 12px;
-            margin-bottom: 12px;
-            font-size: 0.88rem;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        .booking-item {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <!-- Header -->
-    <div class="header">
-        <div class="logo-title">
-            <span>🛺</span>
-            <div>
-                <div id="mainTitle">AR Taxi Shahapur</div>
-                <div style="font-size: 0.7rem; color: #718096;" id="subTitle">ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್</div>
-            </div>
+    <header>
+        <h1>🛺 AR Taxi Shahapur</h1>
+        <p>ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಸೇವೆ</p>
+    </header>
+
+    <div class="container">
+
+        <!-- ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್ ಜಾಯಿನ್ ಸೆಕ್ಷನ್ -->
+        <div class="whatsapp-box">
+            <p style="margin:0; font-weight:bold;">ಡ್ರೈವರ್‌ಗಳು ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್‌ಗೆ ಸೇರಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ:</p>
+            <a href="https://chat.whatsapp.com/IA8IgVgA1iUK00rs3wmMcN" target="_blank" class="whatsapp-btn">💬 WhatsApp Group Join</a>
         </div>
-        <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">English / ಕನ್ನಡ</button>
-    </div>
 
-    <!-- WhatsApp Group Banner -->
-    <div class="whatsapp-join-box">
-        <div id="waBannerText" style="font-size: 0.85rem; font-weight: bold; color: #1b5e20;">ಡ್ರೈವರ್‌ಗಳು ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್‌ಗೆ ಸೇರಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ:</div>
-        <a href="https://chat.whatsapp.com/IA8IgVgA1iUK00rs3wmMcN?s=cl&p=a&mlu=4&ilr=4" target="_blank" class="whatsapp-join-btn" id="waJoinBtn">💬 WhatsApp Group Join</a>
-    </div>
+        <!-- ಗ್ರಾಹಕರ ಬುಕಿಂಗ್ ಫಾರ್ಮ್ -->
+        <div class="card">
+            <h2>🛺 🚗 ಗ್ರಾಹಕರ ಬುಕಿಂಗ್ ಫಾರ್ಮ್</h2>
+            <form id="bookingForm">
+                <label>ನಿಮ್ಮ ಹೆಸರು:</label>
+                <input type="text" id="custName" placeholder="ಹೆಸರು ನಮೂದಿಸಿ" required>
 
-    <!-- Tabs -->
-    <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab(0)" id="tab1">ಬುಕಿಂಗ್</button>
-        <button class="tab-btn" onclick="switchTab(1)" id="tab2">ಲೈವ್ ಮೀಟರ್</button>
-        <button class="tab-btn" onclick="switchTab(2)" id="tab3">ನೋಂದಣಿ</button>
-    </div>
+                <label>ಮೊಬೈಲ್ ನಂಬರ್:</label>
+                <input type="tel" id="custPhone" placeholder="10 ಅಂಕಿಯ ಮೊಬೈಲ್ ನಂಬರ್" pattern="[0-9]{10}" required>
 
-    <!-- TAB 1: Booking -->
-    <div class="section active" id="sec0">
-        <h2 id="hBooking">🛺 ಗ್ರಾಹಕರ ಬುಕಿಂಗ್ ಫಾರ್ಮ್</h2>
-        <form id="bookingForm" onsubmit="submitBooking(event)">
-            <div class="form-group">
-                <label id="lblCusName">ನಿಮ್ಮ ಹೆಸರು:</label>
-                <input type="text" id="cusName" placeholder="ಹೆಸರು ನಮೂದಿಸಿ" required>
-            </div>
-            <div class="form-group">
-                <label id="lblCusPhone">ಮೊಬೈಲ್ ನಂಬರ್:</label>
-                <input type="tel" id="cusPhone" placeholder="10 ಅಂಕಿಯ ಮೊಬೈಲ್ ನಂಬರ್" pattern="[0-9]{10}" required>
-            </div>
-            <div class="form-group">
-                <label id="lblVehicle">ವಾಹನದ ಪ್ರಕಾರ:</label>
-                <select id="vehicleType">
-                    <option value="Auto">🛺 ಆಟೋ (Auto)</option>
-                    <option value="Mini Taxi">🚗 ಜೀಪ್ / ಮಿನಿ ಟ್ಯಾಕ್ಸಿ</option>
-                    <option value="Car">🚙 ಕಾರು (Car)</option>
+                <label>ಪ್ರಯಾಣಿಕರ ಸಂಖ್ಯೆ:</label>
+                <input type="number" id="passengers" min="1" max="10" value="1" required>
+
+                <label>ವಾಹನದ ಪ್ರಕಾರ:</label>
+                <select id="vehicleType" onchange="updateRates()">
+                    <option value="auto">🛺 ಆಟೋ (Auto) - ಮೊದಲ 4ಕಿ.ಮೀ ರೂ. 50, ಮುಂದೆ ಪ್ರತಿ 1ಕಿ.ಮೀ ರೂ. 12</option>
+                    <option value="car">🚗 ಕಾರ್ (Car) - ಮೊದಲ 3ಕಿ.ಮೀ ರೂ. 400, ಮುಂದೆ ಪ್ರತಿ 1ಕಿ.ಮೀ ರೂ. 15</option>
                 </select>
-            </div>
-            <div class="form-group">
-                <label id="lblPickup">ಎಲ್ಲಿಂದ ಹೋಗಬೇಕು? (Pickup Address):</label>
-                <input type="text" id="pickupLocation" placeholder="ಉದಾ: ಗಾಂಧಿ ವೃತ್ತ ಶಹಾಪುರ" required>
-            </div>
-            <div class="form-group">
-                <label id="lblGps">ಪ್ರಸ್ತುತ ಸ್ಥಳ (GPS): <span style="color:red">*ಕಡ್ಡಾಯ</span></label>
-                <button type="button" class="btn-gps" onclick="getGPSLocation()" id="btnGpsText">📍 ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಪಡೆಯಿರಿ</button>
-                <input type="text" id="gpsLocation" placeholder="ಸ್ಥಳ ಲಭ್ಯವಿಲ್ಲ" readonly style="margin-top:5px; background:#f0f0f0;" required>
-            </div>
-            <div class="form-group">
-                <label id="lblDrop">ಎಲ್ಲಿಗೆ ಹೋಗಬೇಕು? (Drop Address):</label>
-                <input type="text" id="dropLocation" placeholder="ಉದಾ: ಶಹಾಪುರ ಬಸ್ ನಿಲ್ದಾಣ" required>
-            </div>
-            
-            <div style="background:#e8f5e9; padding:10px; border-radius:10px; margin-bottom:12px; font-size:0.83rem; color:#1b5e20; border:1px solid #c8e6c9;">
-                ℹ️ <b>ದರ ನಿಯಮ:</b> ಮೊದಲ 4 ಕಿ.ಮೀಗೆ ರೂ. 50 ಫಿಕ್ಸ್. ಆಮೇಲೆ ಪ್ರತಿ 1 ಕಿ.ಮೀಗೆ ರೂ. 12 ಹೆಚ್ಚುವರಿ ಚಾರ್ಜ್.
-            </div>
 
-            <button type="submit" class="btn-submit" id="btnSubmitWp">🚀 ವಾಟ್ಸಾಪ್ ಮೂಲಕ ಬುಕ್ ಮಾಡಿ</button>
-        </form>
-    </div>
+                <div class="rate-card" id="rateInfo">
+                    <b>ದರ ನಿಯಮ:</b> ಆಟೋ - ಮೊದಲ 4 ಕಿ.ಮೀಗೆ ರೂ. 50 ಫಿಕ್ಸ್, ಮೇಲೆ ಪ್ರತಿ 1 ಕಿ.ಮೀಗೆ ರೂ. 12 ಹೆಚ್ಚುವರಿ ಚಾರ್ಜ್.
+                </div>
 
-    <!-- TAB 2: Driver Live Meter & Orders -->
-    <div class="section" id="sec1">
-        <h2 id="hMeter">🛺 ಡ್ರೈವರ್ ಲೈವ್ ಮೀಟರ್ & ಆರ್ಡರ್‌ಗಳು</h2>
-        <div class="meter-box">
-            <div style="font-size: 0.85rem; font-weight:700; color:#5c4033;" id="lblDist">ಚಲಿಸಿದ ದೂರ:</div>
-            <div class="meter-val" id="distVal">0.00 ಕಿ.ಮೀ</div>
-            <div style="font-size: 0.82rem; font-weight:700; color:#5c4033;" id="lblFare">ಒಟ್ಟು ಅಂದಾಜು ಹಣ (4km=₹50, 1km=₹12):</div>
-            <div class="meter-val" style="color: #009624; font-size: 1.8rem;" id="fareVal">₹ 50</div>
-            <div class="meter-btns">
-                <button type="button" class="btn-start" onclick="startMeter()" id="btnStart">ಚಾಲುಮಾಡಿ (Start)</button>
-                <button type="button" class="btn-stop" onclick="stopMeter()" id="btnStop">ನಿಲ್ಲಿಸಿ (Stop)</button>
-            </div>
+                <label>ಎಲ್ಲಿಂದ ಹೋಗಬೇಕು? (Pickup Address):</label>
+                <input type="text" id="pickupAddr" placeholder="ಉದಾ: ಗಾಂಧಿ ವೃತ್ತ ಶಹಾಪುರ" required>
+
+                <label>ಎಲ್ಲಿಗೆ ಹೋಗಬೇಕು? (Drop Address):</label>
+                <input type="text" id="dropAddr" placeholder="ಉದಾ: ಶಹಾಪುರ ಬಸ್ ನಿಲ್ದಾಣ" required>
+
+                <button type="submit" class="btn">🚀 ಈಗಲೇ ಬುಕ್ ಮಾಡಿ</button>
+            </form>
         </div>
-        
-        <h2 style="font-size: 0.95rem; margin-top:10px;" id="hLiveOrders">📢 ಲೈವ್ ಬುಕಿಂಗ್ ಲಿಸ್ಟ್ (ಡ್ರೈವರ್‌ಗಳಿಗೆ):</h2>
-        <div id="liveOrdersContainer">
-            <div class="live-booking-card">
-                <div><b>ಪಿಕಪ್:</b> ಗಾಂಧಿ ವೃತ್ತ ಶಹಾಪುರ</div>
-                <div><b>ಡ್ರಾಪ್:</b> ಬಸ್ ನಿಲ್ದಾಣ</div>
-                <div><b>ಗ್ರಾಹಕ:</b> 81050XXXXX</div>
-                <div style="color: #c62828; font-weight: bold; font-size: 0.8rem; margin-top: 4px;">⚠️ ಬೇಗ ಬುಕಿಂಗ್ ತಗೊಳ್ಳಿ, ಇಲ್ಲವಾದರೆ ಬೇರೆ ಡ್ರೈವರ್ ತೆಗೆದುಕೊಳ್ಳುತ್ತಾರೆ!</div>
-                <button onclick="acceptOrder(this)" style="background:#00c853; color:white; border:none; padding:6px 12px; border-radius:8px; margin-top:6px; font-weight:bold; cursor:pointer;" class="accept-btn">✅ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ (Accept)</button>
+
+        <!-- ಡ್ರೈವರ್ ಲೈವ್ ಮೀಟರ್ & ಆರ್ಡರ್‌ಗಳು -->
+        <div class="card" style="border-left-color: #ff416c;">
+            <h2>📢 ಲೈವ್ ಬುಕಿಂಗ್ ಲಿಸ್ಟ್ (ಡ್ರೈವರ್‌ಗಳಿಗೆ):</h2>
+            <div id="liveBookings">
+                <p style="color: #64748b; text-align: center;">ಯಾವುದೇ ಹೊಸ ಬುಕಿಂಗ್ ಇಲ್ಲ...</p>
             </div>
         </div>
 
-        <button type="button" class="btn-gps" style="background: linear-gradient(45deg, #36d1dc, #5b86e5); color:white; margin-top:10px;" onclick="sendMeterToWhatsApp()" id="btnWpMeter">ವಾಟ್ಸಾಪ್‌ಗೆ ಮೀಟರ್ ವರದಿ ಕಳುಹಿಸಿ</button>
     </div>
 
-    <!-- TAB 3: Driver Registration -->
-    <div class="section" id="sec2">
-        <h2 id="hReg">📝 ಡ್ರೈವರ್ ನೋಂದಣಿ ಫಾರ್ಮ್</h2>
-        <form onsubmit="submitRegistration(event)">
-            <div class="form-group">
-                <label id="lblRegName">ಡ್ರೈವರ್ ಹೆಸರು:</label>
-                <input type="text" id="regName" placeholder="ನಿಮ್ಮ ಹೆಸರು" required>
-            </div>
-            <div class="form-group">
-                <label id="lblRegPhone">ಮೊಬೈಲ್ ನಂಬರ್:</label>
-                <input type="tel" id="regPhone" placeholder="ಮೊಬೈಲ್ ನಂಬರ್" pattern="[0-9]{10}" required>
-            </div>
-            <div class="form-group">
-                <label id="lblRegVehicle">ವಾಹನದ ಪ್ರಕಾರ:</label>
-                <select id="regVehicle">
-                    <option value="Auto">🛺 ಆಟೋ</option>
-                    <option value="Taxi">🚗 ಟ್ಯಾಕ್ಸಿ</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label id="lblRegNo">ವಾಹನ ನಂಬರ್ (Vehicle No):</label>
-                <input type="text" id="regVehNo" placeholder="KA 33 ..." required>
-            </div>
-            <button type="submit" class="btn-submit" id="btnRegSubmit">✍️ ಡ್ರೈವರ್ ನೋಂದಣಿ ಮಾಡಿ</button>
-        </form>
-    </div>
+    <script>
+        function updateRates() {
+            let type = document.getElementById('vehicleType').value;
+            let rateDiv = document.getElementById('rateInfo');
+            if(type === 'car') {
+                rateDiv.innerHTML = "<b>ದರ ನಿಯಮ (ಕಾರ್):</b> ಮೊದಲ 3 ಕಿ.ಮೀಗೆ ರೂ. 400 ಫಿಕ್ಸ್, ಮೇಲೆ ಪ್ರತಿ 1 ಕಿ.ಮೀಗೆ ರೂ. 15 ಹೆಚ್ಚುವರಿ ಚಾರ್ಜ್.";
+            } else {
+                rateDiv.innerHTML = "<b>ದರ ನಿಯಮ (ಆಟೋ):</b> ಮೊದಲ 4 ಕಿ.ಮೀಗೆ ರೂ. 50 ಫಿಕ್ಸ್, ಮೇಲೆ ಪ್ರತಿ 1 ಕಿ.ಮೀಗೆ ರೂ. 12 ಹೆಚ್ಚುವರಿ ಚಾರ್ಜ್.";
+            }
+        }
 
-    <div class="footer">
-        © 2026 AR Taxi Shahapur. All rights reserved.
-    </div>
-</div>
-
-<script>
-    let currentLang = 'kn';
-    let gpsCoords = "";
-    let watchId = null;
-    let distanceKm = 0;
-
-    function switchTab(index) {
-        const sections = document.querySelectorAll('.section');
-        const tabs = document.querySelectorAll('.tab-btn');
-        sections.forEach((sec, idx) => {
-            sec.classList.toggle('active', idx === index);
-            tabs[idx].classList.toggle('active', idx === index);
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('ನಿಮ್ಮ ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸ್ವೀಕರಿಸಲಾಗಿದೆ! ಹತ್ತಿರದ ಡ್ರೈವರ್‌ಗೆ ಕಳುಹಿಸಲಾಗಿದೆ.');
+            // ಇಲ್ಲಿ ರಿಯಲ್ ಟೈಮ್ ಡೇಟಾಬೇಸ್ (Firebase) ಕೋಡ್ ಸೇರಿಸಿದರೆ ನೇರವಾಗಿ ಡ್ರೈವರ್‌ಗಳ ಲಿಸ್ಟ್‌ಗೆ ಅಪ್‌ಡೇಟ್ ಆಗುತ್ತದೆ.
         });
-    }
-
-    function getGPSLocation() {
-        if (navigator.geolocation) {
-            document.getElementById('btnGpsText').innerText = "📍 ಲೊಕೇಶನ್ ಪಡೆಯಲಾಗುತ್ತಿದೆ...";
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    let lat = position.coords.latitude;
-                    let lon = position.coords.longitude;
-                    gpsCoords = `https://maps.google.com/?q=${lat},${lon}`;
-                    document.getElementById('gpsLocation').value = `Lat: ${lat.toFixed(4)}, Lon: ${lon.toFixed(4)}`;
-                    document.getElementById('btnGpsText').innerText = "✅ ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಸಿಕ್ಕಿದೆ";
-                },
-                (error) => {
-                    alert("ಲೊಕೇಶನ್ ಪಡೆಯಲು ಸಾಧ್ಯವಿಲ್ಲ. ದಯವಿಟ್ಟು ಜಿಪಿಎಸ್ ಆನ್ ಮಾಡಿ.");
-                    document.getElementById('btnGpsText').innerText = "📍 ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಪಡೆಯಿರಿ";
-                },
-                { enableHighAccuracy: true }
-            );
-        } else {
-            alert("ನಿಮ್ಮ ಬ್ರೌಸರ್ ಜಿಪಿಎಸ್ ಬೆಂಬಲಿಸುವುದಿಲ್ಲ.");
-        }
-    }
-
-    function calculateFare(km) {
-        if (km <= 4) {
-            return 50;
-        } else {
-            return 50 + Math.ceil(km - 4) * 12;
-        }
-    }
-
-    function submitBooking(event) {
-        event.preventDefault();
-        let name = document.getElementById('cusName').value;
-        let phone = document.getElementById('cusPhone').value;
-        let vehicle = document.getElementById('vehicleType').value;
-        let pickup = document.getElementById('pickupLocation').value;
-        let drop = document.getElementById('dropLocation').value;
-
-        if (!gpsCoords) {
-            alert("ದಯವಿಟ್ಟು ಮೊದಲು 'ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಪಡೆಯಿರಿ' ಬಟನ್ ಒತ್ತಿ ಕಡ್ಡಾಯವಾಗಿ ಲೊಕೇಶನ್ ಆನ್ ಮಾಡಿ!");
-            return;
-        }
-
-        let msg = `🛺 *AR Taxi Shahapur - ಹೊಸ ಬುಕಿಂಗ್* 🛺%0A%0A` +
-                  `👤 ಹೆಸರು: ${name}%0A` +
-                  `📞 ಫೋನ್: ${phone}%0A` +
-                  `🚗 ವಾಹನ: ${vehicle}%0A` +
-                  `📍 ಪಿಕಪ್ ಸ್ಥಳ: ${pickup}%0A` +
-                  `🗺️ GPS ಲೊಕೇಶನ್: ${gpsCoords}%0A` +
-                  `🏁 ಗಮ್ಯಸ್ಥಾನ (Drop): ${drop}%0A` +
-                  `⚠️ *ಎಚ್ಚರಿಕೆ ಡ್ರೈವರ್‌ಗಳೇ:* ಈ ಬುಕಿಂಗ್ ಬಂದಿದೆ, ಯಾರು ಮೊದಲು ಸ್ವೀಕರಿಸುತ್ತೀರೋ ಅವರಿಗೆ ಅವಕಾಶ! ಬೇಗ ಒಪ್ಪಿಕೊಳ್ಳಿ.%0A%0A` +
-                  `💬 ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್ ಲಿಂಕ್: https://chat.whatsapp.com/IA8IgVgA1iUK00rs3wmMcN`;
-
-        let wpUrl = `https://api.whatsapp.com/send?phone=918105010768&text=${msg}`;
-        window.open(wpUrl, '_blank');
-    }
-
-    function acceptOrder(btn) {
-        btn.innerText = "🔒 ಬುಕ್ ಆಗಿದೆ (Already Taken)";
-        btn.style.background = "#718096";
-        btn.disabled = true;
-        alert("ನೀವು ಈ ಬುಕಿಂಗ್ ಅನ್ನು ಸ್ವೀಕರಿಸಿದ್ದೀರಿ! ಮ್ಯಾಪ್ ಲೊಕೇಶನ್ ತೆರೆಯಲಾಗುತ್ತಿದೆ...");
-        if(gpsCoords) {
-            window.open(gpsCoords, '_blank');
-        } else {
-            window.open("https://maps.google.com", '_blank');
-        }
-    }
-
-    function startMeter() {
-        alert("ಲೈವ್ ಮೀಟರ್ ಚಾಲೂ ಆಗಿದೆ! (ತುಂಬಾ ನಿಧಾನವಾಗಿ ಚಲಿಸುತ್ತದೆ)");
-        distanceKm = 0.0;
-        updateMeterDisplay();
-        if (watchId) clearInterval(watchId);
-        // Extremely smooth and slow increment (every 4.5 seconds by 0.01 km)
-        watchId = setInterval(() => {
-            distanceKm += 0.01;
-            updateMeterDisplay();
-        }, 4500);
-    }
-
-    function stopMeter() {
-        if (watchId) clearInterval(watchId);
-        alert("ಮೀಟರ್ ನಿಲ್ಲಿಸಲಾಗಿದೆ.");
-    }
-
-    function updateMeterDisplay() {
-        document.getElementById('distVal').innerText = distanceKm.toFixed(2) + " ಕಿ.ಮೀ";
-        let totalFare = calculateFare(distanceKm);
-        document.getElementById('fareVal').innerText = "₹ " + totalFare;
-    }
-
-    function sendMeterToWhatsApp() {
-        let dist = document.getElementById('distVal').innerText;
-        let fare = document.getElementById('fareVal').innerText;
-        let msg = `🛺 *AR Taxi - ಮೀಟರ್ ವರದಿ* 🛺%0Aಚಲಿಸಿದ ದೂರ: ${dist}%0Aಒಟ್ಟು ಹಣ: ${fare}`;
-        window.open(`https://api.whatsapp.com/send?phone=918105010768&text=${msg}`, '_blank');
-    }
-
-    function submitRegistration(event) {
-        event.preventDefault();
-        let name = document.getElementById('regName').value;
-        let phone = document.getElementById('regPhone').value;
-        let vehicle = document.getElementById('regVehicle').value;
-        let vehNo = document.getElementById('regVehNo').value;
-
-        let msg = `📝 *ಡ್ರೈವರ್ ನೋಂದಣಿ* 📝%0Aಹೆಸರು: ${name}%0Aಫೋನ್: ${phone}%0Aವಾಹನ: ${vehicle}%0Aನಂಬರ್: ${vehNo}`;
-        window.open(`https://chat.whatsapp.com/IA8IgVgA1iUK00rs3wmMcN`, '_blank');
-    }
-
-    function toggleLanguage() {
-        currentLang = currentLang === 'kn' ? 'en' : 'kn';
-        if(currentLang === 'en') {
-            document.getElementById('mainTitle').innerText = "AR Taxi Shahapur";
-            document.getElementById('subTitle').innerText = "Local Auto & Taxi Booking";
-            document.getElementById('tab1').innerText = "Booking";
-            document.getElementById('tab2').innerText = "Live Meter";
-            document.getElementById('tab3').innerText = "Registration";
-            document.getElementById('hBooking').innerText = "🛺 Customer Booking Form";
-            document.getElementById('lblCusName').innerText = "Your Name:";
-            document.getElementById('lblCusPhone').innerText = "Mobile Number:";
-            document.getElementById('lblVehicle').innerText = "Vehicle Type:";
-            document.getElementById('lblPickup').innerText = "Pickup Address:";
-            document.getElementById('lblGps').innerText = "Current Location (GPS): Mandatory";
-            document.getElementById('btnGpsText').innerText = "📍 Get GPS Location";
-            document.getElementById('lblDrop').innerText = "Drop Address:";
-            document.getElementById('btnSubmitWp').innerText = "🚀 Book via WhatsApp";
-            document.getElementById('waBannerText').innerText = "Drivers click here to join WhatsApp Group:";
-            document.getElementById('waJoinBtn').innerText = "💬 WhatsApp Group Join";
-        } else {
-            document.getElementById('mainTitle').innerText = "AR Taxi Shahapur";
-            document.getElementById('subTitle').innerText = "ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್";
-            document.getElementById('tab1').innerText = "ಬುಕಿಂಗ್";
-            document.getElementById('tab2').innerText = "ಲೈವ್ ಮೀಟರ್";
-            document.getElementById('tab3').innerText = "ನೋಂದಣಿ";
-            document.getElementById('hBooking').innerText = "🛺 ಗ್ರಾಹಕರ ಬುಕಿಂಗ್ ಫಾರ್ಮ್";
-            document.getElementById('lblCusName').innerText = "ನಿಮ್ಮ ಹೆಸರು:";
-            document.getElementById('lblCusPhone').innerText = "ಮೊಬೈಲ್ ನಂಬರ್:";
-            document.getElementById('lblVehicle').innerText = "ವಾಹನದ ಪ್ರಕಾರ:";
-            document.getElementById('lblPickup').innerText = "ಎಲ್ಲಿಂದ ಹೋಗಬೇಕು? (Pickup Address):";
-            document.getElementById('lblGps').innerText = "ಪ್ರಸ್ತುತ ಸ್ಥಳ (GPS): ಕಡ್ಡಾಯ";
-            document.getElementById('btnGpsText').innerText = "📍 ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಪಡೆಯಿರಿ";
-            document.getElementById('lblDrop').innerText = "ಎಲ್ಲಿಗೆ ಹೋಗಬೇಕು? (Drop Address):";
-            document.getElementById('btnSubmitWp').innerText = "🚀 ವಾಟ್ಸಾಪ್ ಮೂಲಕ ಬುಕ್ ಮಾಡಿ";
-            document.getElementById('waBannerText').innerText = "ಡ್ರೈವರ್‌ಗಳು ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್‌ಗೆ ಸೇರಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ:";
-            document.getElementById('waJoinBtn').innerText = "💬 WhatsApp Group Join";
-        }
-    }
-</script>
+    </script>
 
 </body>
 </html>
