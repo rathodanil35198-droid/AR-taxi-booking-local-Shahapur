@@ -418,32 +418,31 @@ function playBookingAlert() {
             return 50 + Math.ceil(km - 4) * 12;
         }
     }
+function submitBooking(event) {
+    event.preventDefault();
 
-    function submitBooking(event) {
-        event.preventDefault();
-        let name = document.getElementById('cusName').value;
-        let phone = document.getElementById('cusPhone').value;
-        let vehicle = document.getElementById('vehicleType').value;
-        let pickup = document.getElementById('pickupLocation').value;
-        let drop = document.getElementById('dropLocation').value;
+    let name = document.getElementById('cusName').value;
+    let phone = document.getElementById('cusPhone').value;
+    let vehicle = document.getElementById('vehicleType').value;
+    let pickup = document.getElementById('pickupLocation').value;
+    let drop = document.getElementById('dropLocation').value;
 
-        if (!gpsCoords) {
-            alert("ದಯವಿಟ್ಟು ಮೊದಲು 'ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಪಡೆಯಿರಿ' ಬಟನ್ ಒತ್ತಿ ಕಡ್ಡಾಯವಾಗಿ ಲೊಕೇಶನ್ ಆನ್ ಮಾಡಿ!");
-            return;
-        }
+    let msg = `🛺 *AR Taxi Shahapur - ಹೊಸ ಬುಕಿంగ్* 🛺%0A%0A` +
+              `👤 *ಹೆಸರು:* ${name}%0A` +
+              `📞 *ಫೋನ್:* ${phone}%0A` +
+              `🛺 *ವಾಹನ:* ${vehicle}%0A` +
+              `📍 *ಇಲ್ಲಿಂದ (Pickup):* ${pickup}%0A` +
+              `🏁 *ಇಲ್ಲಿಗೆ (Drop):* ${drop}%0A%0A` +
+              `👉 *ಡ್ರೈವರ್ ಗಮನಿಸಿ:* ಈ ಮೆಸೇಜ್ ಬಂದ ಕೂಡಲೇ, ಯಾರು ಮೊದಲು ಸ್ವೀಕರಿಸುತ್ತೀರೋ ಅವರಿಗೆ ಸವಾರಿ!`;
 
-        let msg = `🛺 *AR Taxi Shahapur - ಹೊಸ ಬುಕಿಂಗ್* 🛺%0A%0A` +
-                  `👤 ಹೆಸರು: ${name}%0A` +
-                  `📞 ಫೋನ್: ${phone}%0A` +
-                  `🚗 ವಾಹನ: ${vehicle}%0A` +
-                  `📍 ಪಿಕಪ್ ಸ್ಥಳ: ${pickup}%0A` +
-                  `🗺️ GPS ಲೊಕೇಶನ್: ${gpsCoords}%0A` +
-                  `🏁 ಗಮ್ಯಸ್ಥಾನ (Drop): ${drop}%0A` +
-                  `⚠️ *ಎಚ್ಚರಿಕೆ ಡ್ರೈವರ್‌ಗಳೇ:* ಈ ಬುಕಿಂಗ್ ಬಂದಿದೆ, ಯಾರು ಮೊದಲು ಸ್ವೀಕರಿಸುತ್ತೀರೋ ಅವರಿಗೆ ಅವಕಾಶ! ಬೇಗ ಒಪ್ಪಿಕೊಳ್ಳಿ.%0A%0A` +
-                  `💬 ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್ ಲಿಂಕ್: https://chat.whatsapp.com/IA8IgVgA1iUK00rs3wmMcN`;
+    alert("ನಿಮ್ಮ ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಡ್ರೈವರ್ಸ್ ಗ್ರೂಪ್‌ಗೆ ಕಳುಹಿಸಲಾಗಿದೆ!");
+    
+    let groupLink = `https://chat.whatsapp.com/IABIgVgA1UK00rs3mWeNCN`;
+    let wapiUrl = `${groupLink}?text=${msg}`;
+    window.open(wapiUrl, '_blank');
+}
 
-        let wpUrl = `https://api.whatsapp.com/send?phone=918105010768&text=${msg}`;
-        window.open(wpUrl, '_blank');
+    
     }
 
     function acceptOrder(btn) {
