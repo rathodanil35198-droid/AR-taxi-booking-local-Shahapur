@@ -19,7 +19,6 @@
         .whatsapp-join-box { background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%); border: 2px dashed #28a745; padding: 12px; border-radius: 14px; text-align: center; margin-bottom: 12px; }
         .whatsapp-join-btn { display: inline-block; background: #25D366; color: white; text-decoration: none; padding: 8px 18px; border-radius: 25px; font-weight: bold; margin-top: 8px; font-size: 0.9rem; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4); }
 
-        /* ಕಸ್ಟಮರ್ ಕೇರ್ ಎಮರ್ಜೆನ್ಸಿ ಬಟನ್ ಸ್ಟೈಲ್ */
         .support-box { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); border: 2px solid #ff7675; padding: 12px; border-radius: 14px; text-align: center; margin-bottom: 15px; }
         .support-btn { display: inline-block; background: #d63031; color: white; text-decoration: none; padding: 8px 18px; border-radius: 25px; font-weight: bold; margin-top: 8px; font-size: 0.9rem; box-shadow: 0 4px 12px rgba(214, 48, 49, 0.4); }
 
@@ -257,15 +256,17 @@
         `;
         container.innerHTML = cardHtml + container.innerHTML;
 
-        let msg = `🛺 *AR Taxi Shahapur - ಹೊಸ ಬುಕಿంగ్* 🛺%0A%0A` +
-            `👤 ಹೆಸರು: ${name}%0A` +
-            `📞 ಫೋನ್: ${phone}%0A` +
-            `🚗 ವಾಹನ: ${vehicle}%0A` +
-            `📍 ಪಿಕಪ್: ${pickup}%0A` +
-            `🗺️ GPS: ${gpsCoords}%0A` +
-            `🏁 ಡ್ರಾಪ್: ${drop}%0A%0A` +
+        // ನೇರವಾಗಿ ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್‌ಗೆ ಸೆಂಡ್ ಆಗಲು ಸರಿಯಾದ ಲಿಂಕ್ ಫಾರ್ಮ್ಯಾಟ್
+        let msg = `🛺 *AR Taxi Shahapur - ಹೊಸ ಬುಕಿంగ్* 🛺\n\n` +
+            `👤 ಹೆಸರು: ${name}\n` +
+            `📞 ಫೋನ್: ${phone}\n` +
+            `🚗 ವಾಹನ: ${vehicle}\n` +
+            `📍 ಪಿಕಪ್: ${pickup}\n` +
+            `🗺️ GPS: ${gpsCoords}\n` +
+            `🏁 ಡ್ರಾಪ್: ${drop}\n\n` +
             `💬 ಗ್ರೂಪ್‌ಗೆ ಬಂದು ರೈಡ್ ತೆಗೆದುಕೊಳ್ಳಿ!`;
-        let wUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
+        
+        let wUrl = `https://wa.me/?text=` + encodeURIComponent(msg);
         window.open(wUrl, '_blank');
         
         alert("ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸಬ್ಮಿಟ್ ಆಗಿದೆ!");
@@ -307,8 +308,8 @@
 
     function sendMeterToWhatsApp() {
         let totalFare = calculateFare(distance);
-        let msg = `🛺 *AR Taxi Shahapur - ಮೀಟರ್ ವರದಿ* 🛺%0A📏 ದೂರ: ${distance.toFixed(2)} ಕಿ.ಮೀ%0A💰 ಒಟ್ಟು ಹಣ: ₹ ${totalFare}`;
-        let wUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
+        let msg = `🛺 *AR Taxi Shahapur - ಮೀಟರ್ ವರದಿ* 🛺\n📏 ದೂರ: ${distance.toFixed(2)} ಕಿ.ಮೀ\n💰 ಒಟ್ಟು ಹಣ: ₹ ${totalFare}`;
+        let wUrl = `https://wa.me/?text=` + encodeURIComponent(msg);
         window.open(wUrl, '_blank');
     }
 
@@ -319,8 +320,8 @@
         let vehicle = document.getElementById('regVehicle').value;
         let vehNo = document.getElementById('regVehNo').value;
         
-        let msg = `🚗 *ಡ್ರೈವರ್ ಹೊಸ ನೋಂದಣಿ* 🚗%0A👤 ಹೆಸರು: ${name}%0A📞 ಫೋನ್: ${phone}%0A🚗 ವಾಹನ: ${vehicle}%0A🔢 ನಂಬರ್: ${vehNo}`;
-        let wUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
+        let msg = `🚗 *ಡ್ರೈವರ್ ಹೊಸ ನೋಂದಣಿ* 🚗\n👤 ಹೆಸರು: ${name}\n📞 ಫೋನ್: ${phone}\n🚗 ವಾಹನ: ${vehicle}\n🔢 ನಂಬರ್: ${vehNo}`;
+        let wUrl = `https://wa.me/?text=` + encodeURIComponent(msg);
         window.open(wUrl, '_blank');
         
         alert("ಡ್ರೈವರ್ ನೋಂದಣಿ ಯಶಸ್ವಿಯಾಗಿದೆ!");
