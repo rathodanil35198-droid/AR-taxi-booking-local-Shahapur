@@ -465,7 +465,7 @@ function playBookingAlert() {
         if (watchId) clearInterval(watchId);
         // Extremely smooth and slow increment (every 4.5 seconds by 0.01 km)
         watchId = setInterval(() => {
-            distanceKm += 0.05;
+            distanceKm += 0.01;
             updateMeterDisplay();
         }, 1000);
     }
