@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR Taxi Shahapur - ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್</title>
+    <title>AR Taxi Shahapur - Live Meter & Booking</title>
     <style>
         :root {
             --primary-gradient: linear-gradient(135deg, #00b09b, #96c93d);
@@ -49,7 +49,6 @@
             font-weight: bold;
             display: inline-block;
             margin-top: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         .card {
@@ -60,7 +59,6 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             border-left: 5px solid #00b09b;
         }
-        .card.driver-section { border-left-color: #3b82f6; }
         
         h2 { font-size: 18px; color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-top: 0; }
         
@@ -86,167 +84,156 @@
             font-weight: bold;
             cursor: pointer;
             margin-top: 20px;
-            box-shadow: 0 4px 10px rgba(0,176,155,0.3);
-        }
-        .btn-car { background: var(--car-gradient); }
-
-        .rate-card {
-            background: #e0f2fe;
-            border: 1px dashed #0284c7;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 13px;
-            margin-top: 10px;
-            color: #0369a1;
         }
 
-        .toggle-box {
-            background: #f1f5f9;
+        .live-meter-box {
+            background: #1e293b;
+            color: #38bdf8;
             padding: 15px;
             border-radius: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
+            text-align: center;
+            margin-top: 20px;
+            font-family: monospace;
         }
-        .switch {
-            position: relative; display: inline-block; width: 60px; height: 34px;
-        }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider {
-            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #ccc; transition: .4s; border-radius: 34px;
-        }
-        .slider:before {
-            position: absolute; content: ""; height: 26px; width: 26px; left: 4px; bottom: 4px;
-            background-color: white; transition: .4s; border-radius: 50%;
-        }
-        input:checked + .slider { background-color: #22c55e; }
-        input:checked + .slider:before { transform: translateX(26px); }
+        .meter-display { font-size: 28px; font-weight: bold; color: #4ade80; }
     </style>
 </head>
 <body>
 
     <header>
         <h1>🛺 🚗 AR Taxi Shahapur</h1>
-        <p>ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಸೇವೆ</p>
+        <p>ಲೈವ್ ಜಿಪಿಎಸ್ ಮೀಟರ್ ಹಾಗೂ ಬುಕಿಂಗ್ ಸೇವೆ</p>
     </header>
 
     <div class="container">
 
-        <!-- 1. ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್ ಜಾಯಿನ್ ಬಟನ್ -->
+        <!-- ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್ ಜಾಯಿನ್ -->
         <div class="whatsapp-box">
             <p style="margin:0; font-weight:bold;">ಡ್ರೈವರ್‌ಗಳು ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್‌ಗೆ ಸೇರಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ:</p>
             <a href="https://chat.whatsapp.com/IA8IgVgA1iUK00rs3wmMcN" target="_blank" class="whatsapp-btn">💬 WhatsApp Group Join</a>
         </div>
 
-        <!-- 2. ಕಸ್ಟಮರ್ ಬುಕಿಂಗ್ ಫಾರ್ಮ್ (ಮೊದಲು ಕಾಣಿಸುವುದು) -->
+        <!-- ಗ್ರಾಹಕರ ಬುಕಿಂಗ್ ಮತ್ತು ಜಿಪಿಎಸ್ ಲೈವ್ ಮೀಟರ್ -->
         <div class="card">
-            <h2>🛺 🚗 ಗ್ರಾಹಕರ ಬುಕಿಂಗ್ ಫಾರ್ಮ್ (Customer Booking)</h2>
-            <form id="customerBookingForm">
+            <h2>🛺 🚗 ಗ್ರಾಹಕರ ಬುಕಿಂಗ್ & ಲೈವ್ ಮೀಟರ್</h2>
+            <form id="bookingForm">
                 <label>ನಿಮ್ಮ ಹೆಸರು:</label>
                 <input type="text" id="custName" placeholder="ಹೆಸರು ನಮೂದಿಸಿ" required>
 
                 <label>ಮೊಬೈಲ್ ನಂಬರ್:</label>
                 <input type="tel" id="custPhone" placeholder="10 ಅಂಕಿಯ ಮೊಬೈಲ್ ನಂಬರ್" pattern="[0-9]{10}" required>
 
-                <label>ಪ್ರಯಾಣಿಕರ ಸಂಖ್ಯೆ (Passengers):</label>
-                <input type="number" id="passengers" min="1" max="10" value="1" required>
-
-                <label>ವಾಹನದ ಪ್ರಕಾರ (Vehicle Type):</label>
-                <select id="vehicleType" onchange="updateRates()">
-                    <option value="auto">🛺 ಆಟೋ (Auto) - ಮೊದಲ 4 ಕಿ.ಮೀ ರೂ. 50, ಮುಂದೆ ಪ್ರತಿ 1 ಕಿ.ಮೀ ರೂ. 12</option>
-                    <option value="car">🚗 ಕಾರ್ (Car) - ಮೊದಲ 3 ಕಿ.ಮೀ ರೂ. 400, ಮುಂದೆ ಪ್ರತಿ 1 ಕಿ.ಮೀ ರೂ. 15</option>
-                </select>
-
-                <div class="rate-card" id="rateInfo">
-                    <b>ದರ ನಿಯಮ:</b> ಆಟೋ - ಮೊದಲ 4 ಕಿ.ಮೀಗೆ ರೂ. 50 ಫಿಕ್ಸ್, ಮೇಲೆ ಪ್ರತಿ 1 ಕಿ.ಮೀಗೆ ರೂ. 12 ಹೆಚ್ಚುವರಿ ಚಾರ್ಜ್.
-                </div>
-
-                <label>ಎಲ್ಲಿಂದ ಹೋಗಬೇಕು? (Pickup Address):</label>
-                <input type="text" id="pickupAddr" placeholder="ಉದಾ: ಗಾಂಧಿ ವೃತ್ತ ಶಹಾಪುರ" required>
-
-                <label>ಎಲ್ಲಿಗೆ ಹೋಗಬೇಕು? (Drop Address):</label>
-                <input type="text" id="dropAddr" placeholder="ಉದಾ: ಶಹಾಪುರ ಬಸ್ ನಿಲ್ದಾಣ" required>
-
-                <button type="submit" class="btn">🚀 ಈಗಲೇ ಬುಕ್ ಮಾಡಿ</button>
-            </form>
-        </div>
-
-        <!-- 3. ಡ್ರೈವರ್ ನೋಂದಣಿ ಹಾಗೂ ಲಾಗಿನ್ ಫಾರ್ಮ್ -->
-        <div class="card driver-section">
-            <h2>📝 ಡ್ರೈವರ್ ನೋಂದಣಿ & ಲಾಗಿನ್ (Driver Registration)</h2>
-            <form id="driverRegForm">
-                <label>ಡ್ರೈವರ್ ಹೆಸರು:</label>
-                <input type="text" id="driverName" placeholder="ನಿಮ್ಮ ಹೆಸರು" required>
-
-                <label>ಮೊಬೈಲ್ ನಂಬರ್:</label>
-                <input type="tel" id="driverPhone" placeholder="ಮೊಬೈಲ್ ನಂಬರ್" pattern="[0-9]{10}" required>
-
                 <label>ವಾಹನದ ಪ್ರಕಾರ:</label>
-                <select id="driverVehicleType">
-                    <option value="auto">🛺 ಆಟೋ (Auto)</option>
-                    <option value="car">🚗 ಕಾರ್ (Car)</option>
+                <select id="vehicleType">
+                    <option value="auto">🛺 ಆಟೋ (ಮೊದಲ 4 ಕಿ.ಮೀ ರೂ. 50, ಮುಂದೆ ಪ್ರತಿ ಕಿ.ಮೀ ರೂ. 12)</option>
+                    <option value="car">🚗 ಕಾರ್ (ಮೊದಲ 3 ಕಿ.ಮೀ ರೂ. 400, ಮುಂದೆ ಪ್ರತಿ ಕಿ.ಮೀ ರೂ. 15)</option>
                 </select>
 
-                <label>ವಾಹನ ನಂಬರ್ (Vehicle No):</label>
-                <input type="text" id="driverVehicleNo" placeholder="ಉದಾ: KA 33 ..." required>
-
-                <button type="submit" class="btn btn-car">✍️ ಡ್ರೈವರ್ ನೋಂದಣಿ ಮಾಡಿ</button>
+                <button type="button" class="btn" onclick="requestGPSAndBook()">📍 ಜಿಪಿಎಸ್ ಆನ್ ಮಾಡಿ ಬುಕ್ ಮಾಡಿ</button>
             </form>
-        </div>
 
-        <!-- 4. ಡ್ರೈವರ್ ಡ್ಯೂಟಿ ಆನ್/ಆಫ್ ಮತ್ತು ಲೈವ್ ಆರ್ಡರ್‌ಗಳು -->
-        <div class="card" style="border-left-color: #f59e0b;">
-            <h2>📢 ಡ್ರೈವರ್ ಲೈವ್ ಬುಕಿಂಗ್ ಲಿಸ್ಟ್ & ಡ್ಯೂಟಿ</h2>
-            
-            <div class="toggle-box">
-                <span style="font-weight: bold; color: #1e293b;">ಡ್ಯೂಟಿ ಸ್ಟೇಟಸ್ (Duty On/Off):</span>
-                <label class="switch">
-                    <input type="checkbox" id="dutyToggle" onchange="toggleDuty()">
-                    <span class="slider"></span>
-                </label>
-            </div>
-            <p id="dutyStatusText" style="font-size: 13px; color: #64748b; margin-top: 0;">(ಡ್ಯೂಟಿ ಆಫ್ ಆಗಿದೆ - ನೋಟಿಫಿಕೇಶನ್ ಬರುವುದಿಲ್ಲ)</p>
-
-            <div id="liveBookingsList" style="margin-top: 15px;">
-                <p style="color: #64748b; text-align: center;">ಯಾವುದೇ ಹೊಸ ಬುಕಿಂಗ್ ಇಲ್ಲ...</p>
+            <!-- ಲೈವ್ ಮೀಟರ್ ಡಿಸ್ಪ್ಲೇ -->
+            <div class="live-meter-box" id="meterBox" style="display:none;">
+                <div>ಲೈವ್ ಪ್ರಯಾಣದ ಮೀಟರ್ (Live Meter)</div>
+                <div class="meter-display" id="distanceText">0.0 ಕಿ.ಮೀ</div>
+                <div style="font-size: 18px; color: #facc15;" id="fareText">ಬಾಡಿಗೆ: ರೂ. 0</div>
+                <button class="btn" style="background: #ef4444; margin-top: 10px;" onclick="stopTrip()">ಟ್ರಿಪ್ ಮುಕ್ತಾಯಗೊಳಿಸಿ</button>
             </div>
         </div>
 
     </div>
 
     <script>
-        function updateRates() {
-            let type = document.getElementById('vehicleType').value;
-            let rateDiv = document.getElementById('rateInfo');
-            if(type === 'car') {
-                rateDiv.innerHTML = "<b>ದರ ನಿಯಮ (ಕಾರ್):</b> ಮೊದಲ 3 ಕಿ.ಮೀಗೆ ರೂ. 400 ಫಿಕ್ಸ್, ಮೇಲೆ ಪ್ರತಿ 1 ಕಿ.ಮೀಗೆ ರೂ. 15 ಹೆಚ್ಚುವರಿ ಚಾರ್ಜ್.";
+        let watchId = null;
+        let startCoords = null;
+        let totalDistance = 0;
+
+        function requestGPSAndBook() {
+            let name = document.getElementById('custName').value;
+            let phone = document.getElementById('custPhone').value;
+
+            if(!name || !phone) {
+                alert('ದಯವಿಟ್ಟು ಹೆಸರು ಮತ್ತು ಮೊಬೈಲ್ ನಂಬರ್ ನಮೂದಿಸಿ.');
+                return;
+            }
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    startCoords = {
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude
+                    };
+                    alert('ಜಿಪಿಎಸ್ (GPS) ಯಶಸ್ವಿಯಾಗಿ ಆನ್ ಆಗಿದೆ! ಟ್ರಿಪ್ ಪ್ರಾರಂಭವಾಗಿದೆ.');
+                    document.getElementById('meterBox').style.display = 'block';
+                    startLiveMeter();
+                }, function(error) {
+                    alert('ದಯವಿಟ್ಟು ನಿಮ್ಮ ಫೋನ್‌ನಲ್ಲಿ ಜಿಪಿಎಸ್ (Location) ಆನ್ ಮಾಡಿ!');
+                }, { enableHighAccuracy: true });
             } else {
-                rateDiv.innerHTML = "<b>ದರ ನಿಯಮ (ಆಟೋ):</b> ಮೊದಲ 4 ಕಿ.ಮೀಗೆ ರೂ. 50 ಫಿಕ್ಸ್, ಮೇಲೆ ಪ್ರತಿ 1 ಕಿ.ಮೀಗೆ ರೂ. 12 ಹೆಚ್ಚುವರಿ ಚಾರ್ಜ್.";
+                alert('ನಿಮ್ಮ ಬ್ರೌಸರ್ ಜಿಪಿಎಸ್ ಬೆಂಬಲಿಸುವುದಿಲ್ಲ.');
             }
         }
 
-        function toggleDuty() {
-            let isChecked = document.getElementById('dutyToggle').checked;
-            let statusText = document.getElementById('dutyStatusText');
-            if(isChecked) {
-                statusText.innerHTML = "<span style='color: #22c55e; font-weight: bold;'>ಡ್ಯೂಟಿ ಆನ್ ಆಗಿದೆ - ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು ಬರುತ್ತವೆ!</span>";
-            } else {
-                statusText.innerHTML = "<span style='color: #ef4444; font-weight: bold;'>ಡ್ಯೂಟಿ ಆಫ್ ಆಗಿದೆ - ನೋಟಿಫಿಕೇಶನ್ ಬರುವುದಿಲ್ಲ.</span>";
+        function startLiveMeter() {
+            if (navigator.geolocation) {
+                watchId = navigator.geolocation.watchPosition(function(position) {
+                    if (startCoords) {
+                        let currentCoords = {
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude
+                        };
+                        // ದೂರ ಲೆಕ್ಕಾಚಾರ (ಕಿ.ಮೀ ನಲ್ಲಿ)
+                        totalDistance = calculateDistance(startCoords.latitude, startCoords.longitude, currentCoords.latitude, currentCoords.longitude);
+                        
+                        let vType = document.getElementById('vehicleType').value;
+                        let fare = 0;
+
+                        if(vType === 'auto') {
+                            if(totalDistance <= 4) {
+                                fare = 50;
+                            } else {
+                                fare = 50 + Math.ceil(totalDistance - 4) * 12;
+                            }
+                        } else {
+                            if(totalDistance <= 3) {
+                                fare = 400;
+                            } else {
+                                font = 400 + Math.ceil(totalDistance - 3) * 15;
+                                fare = 400 + Math.ceil(totalDistance - 3) * 15;
+                            }
+                        }
+
+                        document.getElementById('distanceText').innerText = totalDistance.toFixed(2) + " ಕಿ.ಮೀ";
+                        document.getElementById('fareText').innerText = "ಬಾಡಿಗೆ: ರೂ. " + fare;
+                    }
+                }, function(error) {
+                    console.log("GPS Error");
+                }, { enableHighAccuracy: true });
             }
         }
 
-        document.getElementById('customerBookingForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿದೆ! ಆಟೋ ಅಥವಾ ಕಾರ್ ಬುಕಿಂಗ್ ಡ್ರೈವರ್‌ಗಳಿಗೆ ಕಳುಹಿಸಲಾಗಿದೆ.');
-        });
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            let R = 6371; // Earth radius in km
+            let dLat = deg2rad(lat2 - lat1);
+            let dLon = deg2rad(lon2 - lon1);
+            let a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+                    Math.sin(dLon/2) * Math.sin(dLon/2);
+            let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
 
-        document.getElementById('driverRegForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('ಡ್ರೈವರ್ ನೋಂದಣಿ ಯಶಸ್ವಿಯಾಗಿದೆ!');
-        });
+        function deg2rad(deg) {
+            return deg * (Math.PI/180);
+        }
+
+        function stopTrip() {
+            if(watchId !== null) {
+                navigator.geolocation.clearWatch(watchId);
+            }
+            alert('ಟ್ರಿಪ್ ಮುಕ್ತಾಯಗೊಂಡಿದೆ. ಒಟ್ಟು ದೂರ: ' + totalDistance.toFixed(2) + ' ಕಿ.ಮೀ');
+            document.getElementById('meterBox').style.display = 'none';
+        }
     </script>
-
 </body>
 </html>
