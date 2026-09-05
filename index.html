@@ -15,8 +15,14 @@
         #mainTitle { font-size: 1.1rem; font-weight: bold; color: #2c3e50; }
         #subTitle { font-size: 0.75rem; color: #718096; }
         .lang-btn { background: #e0f2f1; border: none; padding: 6px 12px; border-radius: 15px; font-size: 0.75rem; font-weight: bold; color: #00796b; cursor: pointer; }
-        .whatsapp-join-box { background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%); border: 2px dashed #28a745; padding: 12px; border-radius: 14px; text-align: center; margin-bottom: 15px; }
+        
+        .whatsapp-join-box { background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%); border: 2px dashed #28a745; padding: 12px; border-radius: 14px; text-align: center; margin-bottom: 12px; }
         .whatsapp-join-btn { display: inline-block; background: #25D366; color: white; text-decoration: none; padding: 8px 18px; border-radius: 25px; font-weight: bold; margin-top: 8px; font-size: 0.9rem; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4); }
+
+        /* ಕಸ್ಟಮರ್ ಕೇರ್ ಎಮರ್ಜೆನ್ಸಿ ಬಟನ್ ಸ್ಟೈಲ್ */
+        .support-box { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); border: 2px solid #ff7675; padding: 12px; border-radius: 14px; text-align: center; margin-bottom: 15px; }
+        .support-btn { display: inline-block; background: #d63031; color: white; text-decoration: none; padding: 8px 18px; border-radius: 25px; font-weight: bold; margin-top: 8px; font-size: 0.9rem; box-shadow: 0 4px 12px rgba(214, 48, 49, 0.4); }
+
         .tabs { display: flex; background: #e2e8f0; border-radius: 12px; padding: 4px; margin-bottom: 15px; gap: 4px; }
         .tab-btn { flex: 1; border: none; padding: 10px 5px; background: transparent; font-weight: bold; border-radius: 9px; cursor: pointer; font-size: 0.8rem; text-align: center; transition: all 0.2s ease; }
         .tab-btn.active { background: linear-gradient(45deg, #00b09b, #96c93d); color: white; box-shadow: 0 4px 15px rgba(0, 156, 155, 0.4); }
@@ -54,9 +60,16 @@
         <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">English / ಕನ್ನಡ</button>
     </div>
 
+    <!-- ಡ್ರೈವರ್ ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್ ಜಾಯಿನ್ ಆಗುವ ಬಾಕ್ಸ್ -->
     <div class="whatsapp-join-box">
-        <div id="waBannerText" style="font-size: 0.85rem; font-weight: bold; color: #152223;">ಡ್ರೈವರ್‌ಗಳು ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್‌ಗೆ ಸೇರಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ:</div>
-        <a href="https://chat.whatsapp.com/I48IgVgAlUK00rs3mwNCN7?autoload=1&app=abs" target="_blank" class="whatsapp-join-btn" id="waJoinBtn">💬 WhatsApp Group Join</a>
+        <div id="waBannerText" style="font-size: 0.83rem; font-weight: bold; color: #152223;">ನಮ್ಮ ಶಕ್ತಿಗಾಗಿ ಡ್ರೈವರ್‌ಗಳು ಕಡ್ಡಾಯವಾಗಿ ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್‌ಗೆ ಸೇರಿ:</div>
+        <a href="https://chat.whatsapp.com/IA8IgVgA1iUK00rs3wmMcN?s=cl&p=a&mlu=4&ilr=4" target="_blank" class="whatsapp-join-btn" id="waJoinBtn">💬 Join Driver WhatsApp Group</a>
+    </div>
+
+    <!-- ಎಮರ್ಜೆನ್ಸಿ ಕಸ್ಟಮರ್ ಕೇರ್ ಕಾಲ್ ಬಟನ್ -->
+    <div class="support-box">
+        <div id="ccBannerText" style="font-size: 0.83rem; font-weight: bold; color: #78281f;">🚨 ಆಪ್‌ನಲ್ಲಿ ತೊಂದರೆ ಅಥವಾ ತುರ್ತು ಸಹಾಯ ಬೇಕಿದ್ದರೆ ಸಂಪರ್ಕಿಸಿ:</div>
+        <a href="tel:8105010768" class="support-btn" id="ccCallBtn">📞 24/7 Customer Care (Call)</a>
     </div>
 
     <div class="tabs">
@@ -119,7 +132,7 @@
 
         <h2 style="font-size: 0.95rem; margin-top: 10px;" id="hLiveOrders">📢 ಲೈವ್ ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು:</h2>
         <div id="liveOrdersContainer">
-            <p style="font-size: 0.85rem; color: #718096; text-align: center; padding: 15px;" id="noOrdersText">ಸದ್ಯ ಯಾವುದೇ ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.</p>
+            <p style="font-size: 0.85rem; color: #718096; text-align: center; padding: 15px;" id="noOrdersText">ಸದ್ಯ ಯಾವುದೇ ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ. ಕಸ್ಟಮರ್ ಬುಕ್ ಮಾಡಿದಾಗ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ.</p>
         </div>
         <button type="button" class="btn-gps" style="background: linear-gradient(45deg, #25D366, #128C7E); margin-top: 10px;" onclick="sendMeterToWhatsApp()">ವಾಟ್ಸಾಪ್‌ಗೆ ಮೀಟರ್ ವರದಿ ಕಳುಹಿಸಿ</button>
     </div>
@@ -130,7 +143,7 @@
         <form onsubmit="submitRegistration(event)">
             <div class="form-group">
                 <label id="lblRegName">ನಿಮ್ಮ ಹೆಸರು:</label>
-                <input type="text" id="regName" placeholder="ಸಮದ ಹೆಸರು" required>
+                <input type="text" id="regName" placeholder="ನಿಮ್ಮ ಹೆಸರು" required>
             </div>
             <div class="form-group">
                 <label id="lblRegPhone">ಮೊಬೈಲ್ ನಂಬರ್:</label>
@@ -238,7 +251,7 @@
                 <div><b>📍 ಪಿಕಪ್ ಸ್ಥಳ:</b> ${pickup}</div>
                 <div><b>🗺️ ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್:</b> <a href="${gpsCoords}" target="_blank" style="color: #007bff; text-decoration: underline;">ಮ್ಯಾಪ್‌ನಲ್ಲಿ ನೋಡಿ</a></div>
                 <div><b>🏁 ಗಮ್ಯಸ್ಥಾನ (Drop):</b> ${drop}</div>
-                <div style="color: #d32f27; font-weight: bold; font-size: 0.8rem; margin-top: 4px;">⚠️ ಬೇಗ ಬುಕಿಂಗ್ ತೆಗೆದುಕೊಳ್ಳಿ!</div>
+                <div style="color: #d32f27; font-weight: bold; font-size: 0.8rem; margin-top: 4px;">⚠️ ಡ್ರೈವರ್‌ಗಳೇ ಬೇಗ ಬುಕಿಂಗ್ ತೆಗೆದುಕೊಳ್ಳಿ!</div>
                 <button onclick="acceptOrder(this)" style="background: #00c853; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; font-size: 0.8rem; margin-top: 8px; cursor: pointer;">✅ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ (Accept)</button>
             </div>
         `;
@@ -250,8 +263,9 @@
             `🚗 ವಾಹನ: ${vehicle}%0A` +
             `📍 ಪಿಕಪ್: ${pickup}%0A` +
             `🗺️ GPS: ${gpsCoords}%0A` +
-            `🏁 ಡ್ರಾಪ್: ${drop}`;
-        let wUrl = `https://api.whatsapp.com/send?phone=918105031068&text=${msg}`;
+            `🏁 ಡ್ರಾಪ್: ${drop}%0A%0A` +
+            `💬 ಗ್ರೂಪ್‌ಗೆ ಬಂದು ರೈಡ್ ತೆಗೆದುಕೊಳ್ಳಿ!`;
+        let wUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
         window.open(wUrl, '_blank');
         
         alert("ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸಬ್ಮಿಟ್ ಆಗಿದೆ!");
@@ -294,7 +308,7 @@
     function sendMeterToWhatsApp() {
         let totalFare = calculateFare(distance);
         let msg = `🛺 *AR Taxi Shahapur - ಮೀಟರ್ ವರದಿ* 🛺%0A📏 ದೂರ: ${distance.toFixed(2)} ಕಿ.ಮೀ%0A💰 ಒಟ್ಟು ಹಣ: ₹ ${totalFare}`;
-        let wUrl = `https://api.whatsapp.com/send?phone=918105031068&text=${msg}`;
+        let wUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
         window.open(wUrl, '_blank');
     }
 
@@ -306,7 +320,7 @@
         let vehNo = document.getElementById('regVehNo').value;
         
         let msg = `🚗 *ಡ್ರೈವರ್ ಹೊಸ ನೋಂದಣಿ* 🚗%0A👤 ಹೆಸರು: ${name}%0A📞 ಫೋನ್: ${phone}%0A🚗 ವಾಹನ: ${vehicle}%0A🔢 ನಂಬರ್: ${vehNo}`;
-        let wUrl = `https://chat.whatsapp.com/I48IgVgAlUK00rs3mwNCN7`;
+        let wUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
         window.open(wUrl, '_blank');
         
         alert("ಡ್ರೈವರ್ ನೋಂದಣಿ ಯಶಸ್ವಿಯಾಗಿದೆ!");
@@ -339,8 +353,10 @@
             document.getElementById('lblRegVehicle').innerText = "Vehicle Type:";
             document.getElementById('lblRegVehNo').innerText = "Vehicle Number:";
             document.getElementById('btnRegSubmit').innerText = "✍️ Register as Driver";
-            document.getElementById('waBannerText').innerText = "Drivers click here to join WhatsApp Group:";
-            document.getElementById('waJoinBtn').innerText = "💬 WhatsApp Group Join";
+            document.getElementById('waBannerText').innerText = "Drivers must join our WhatsApp group for our strength:";
+            document.getElementById('waJoinBtn').innerText = "💬 Join Driver WhatsApp Group";
+            document.getElementById('ccBannerText').innerText = "🚨 For any issue or emergency help, contact us:";
+            document.getElementById('ccCallBtn').innerText = "📞 24/7 Customer Care (Call)";
         } else {
             document.getElementById('mainTitle').innerText = "AR Taxi Shahapur";
             document.getElementById('subTitle').innerText = "ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್";
@@ -358,15 +374,17 @@
             document.getElementById('btnSubmit').innerText = "🚀 ವಿನಂತಿ ಯಶಸ್ವಿಯಾಗಿ ಕಳುಹಿಸಿ";
             document.getElementById('hMeter').innerText = "🛺 ಡ್ರೈವರ್ ಲೈವ್ ಮೀಟರ್ & ಆರ್ಡರ್‌ಗಳು";
             document.getElementById('hLiveOrders').innerText = "📢 ಲೈವ್ ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು:";
-            document.getElementById('noOrdersText').innerText = "ಸದ್ಯ ಯಾವುದೇ ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.";
+            document.getElementById('noOrdersText').innerText = "ಸದ್ಯ ಯಾವುದೇ ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ. ಕಸ್ಟಮರ್ ಬುಕ್ ಮಾಡಿದಾಗ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ.";
             document.getElementById('hReg').innerText = "🚗 ಡ್ರೈವರ್ ನೋಂದಣಿ ಫಾರ್ಮ್";
             document.getElementById('lblRegName').innerText = "ನಿಮ್ಮ ಹೆಸರು:";
             document.getElementById('lblRegPhone').innerText = "ಮೊಬೈಲ್ ನಂಬರ್:";
             document.getElementById('lblRegVehicle').innerText = "ವಾಹನದ ಪ್ರಕಾರ:";
             document.getElementById('lblRegVehNo').innerText = "ವಾಹನ ನಂಬರ್ (Vehicle No):";
             document.getElementById('btnRegSubmit').innerText = "✍️ ಡ್ರೈವರ್ ನೋಂದಣಿ ಮಾಡಿ";
-            document.getElementById('waBannerText').innerText = "ಡ್ರೈವರ್‌ಗಳು ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್‌ಗೆ ಸೇರಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ:";
-            document.getElementById('waJoinBtn').innerText = "💬 WhatsApp Group Join";
+            document.getElementById('waBannerText').innerText = "ನಮ್ಮ ಶಕ್ತಿಗಾಗಿ ಡ್ರೈವರ್‌ಗಳು ಕಡ್ಡಾಯವಾಗಿ ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್‌ಗೆ ಸೇರಿ:";
+            document.getElementById('waJoinBtn').innerText = "💬 Join Driver WhatsApp Group";
+            document.getElementById('ccBannerText').innerText = "🚨 ಆಪ್‌ನಲ್ಲಿ ತೊಂದರೆ ಅಥವಾ ತುರ್ತು ಸಹಾಯ ಬೇಕಿದ್ದರೆ ಸಂಪರ್ಕಿಸಿ:";
+            document.getElementById('ccCallBtn').innerText = "📞 24/7 Customer Care (Call)";
         }
     }
 </script>
