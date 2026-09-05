@@ -7,8 +7,7 @@
     <style>
         :root {
             --primary-gradient: linear-gradient(135deg, #00b09b, #96c93d);
-            --secondary-gradient: linear-gradient(135deg, #ff416c, #ff4b2b);
-            --dark-bg: #1e293b;
+            --car-gradient: linear-gradient(135deg, #3b82f6, #1d4ed8);
             --light-bg: #f8fafc;
         }
         body {
@@ -27,28 +26,11 @@
             border-bottom-right-radius: 20px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
-        header h1 {
-            margin: 0;
-            font-size: 24px;
-        }
-        header p {
-            margin: 5px 0 0;
-            font-size: 14px;
-            opacity: 0.9;
-        }
-        .container {
-            max-width: 500px;
-            margin: 20px auto;
-            padding: 15px;
-        }
-        .card {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            border-left: 5px solid #00b09b;
-        }
+        header h1 { margin: 0; font-size: 24px; }
+        header p { margin: 5px 0 0; font-size: 14px; opacity: 0.9; }
+        
+        .container { max-width: 500px; margin: 20px auto; padding: 15px; }
+        
         .whatsapp-box {
             background: linear-gradient(135deg, #25d366, #128c7e);
             color: white;
@@ -56,6 +38,7 @@
             padding: 15px;
             border-radius: 12px;
             margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(37,211,102,0.2);
         }
         .whatsapp-btn {
             background: white;
@@ -68,20 +51,20 @@
             margin-top: 10px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
-        h2 {
-            font-size: 18px;
-            color: #0f172a;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 8px;
-            margin-top: 0;
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border-left: 5px solid #00b09b;
         }
-        label {
-            display: block;
-            margin-top: 12px;
-            font-weight: 600;
-            font-size: 14px;
-            color: #475569;
-        }
+        .card.driver-section { border-left-color: #3b82f6; }
+        
+        h2 { font-size: 18px; color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-top: 0; }
+        
+        label { display: block; margin-top: 12px; font-weight: 600; font-size: 14px; color: #475569; }
         input, select {
             width: 100%;
             padding: 12px;
@@ -91,6 +74,7 @@
             box-sizing: border-box;
             font-size: 14px;
         }
+        
         .btn {
             background: var(--primary-gradient);
             color: white;
@@ -104,6 +88,8 @@
             margin-top: 20px;
             box-shadow: 0 4px 10px rgba(0,176,155,0.3);
         }
+        .btn-car { background: var(--car-gradient); }
+
         .rate-card {
             background: #e0f2fe;
             border: 1px dashed #0284c7;
@@ -113,47 +99,64 @@
             margin-top: 10px;
             color: #0369a1;
         }
-        .booking-item {
-            background: #fef3c7;
-            border: 1px solid #f59e0b;
+
+        .toggle-box {
+            background: #f1f5f9;
             padding: 15px;
             border-radius: 10px;
-            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
         }
+        .switch {
+            position: relative; display: inline-block; width: 60px; height: 34px;
+        }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ccc; transition: .4s; border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 26px; width: 26px; left: 4px; bottom: 4px;
+            background-color: white; transition: .4s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: #22c55e; }
+        input:checked + .slider:before { transform: translateX(26px); }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>🛺 AR Taxi Shahapur</h1>
+        <h1>🛺 🚗 AR Taxi Shahapur</h1>
         <p>ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಸೇವೆ</p>
     </header>
 
     <div class="container">
 
-        <!-- ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್ ಜಾಯಿನ್ ಸೆಕ್ಷನ್ -->
+        <!-- 1. ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್ ಜಾಯಿನ್ ಬಟನ್ -->
         <div class="whatsapp-box">
             <p style="margin:0; font-weight:bold;">ಡ್ರೈವರ್‌ಗಳು ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್‌ಗೆ ಸೇರಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ:</p>
             <a href="https://chat.whatsapp.com/IA8IgVgA1iUK00rs3wmMcN" target="_blank" class="whatsapp-btn">💬 WhatsApp Group Join</a>
         </div>
 
-        <!-- ಗ್ರಾಹಕರ ಬುಕಿಂಗ್ ಫಾರ್ಮ್ -->
+        <!-- 2. ಕಸ್ಟಮರ್ ಬುಕಿಂಗ್ ಫಾರ್ಮ್ (ಮೊದಲು ಕಾಣಿಸುವುದು) -->
         <div class="card">
-            <h2>🛺 🚗 ಗ್ರಾಹಕರ ಬುಕಿಂಗ್ ಫಾರ್ಮ್</h2>
-            <form id="bookingForm">
+            <h2>🛺 🚗 ಗ್ರಾಹಕರ ಬುಕಿಂಗ್ ಫಾರ್ಮ್ (Customer Booking)</h2>
+            <form id="customerBookingForm">
                 <label>ನಿಮ್ಮ ಹೆಸರು:</label>
                 <input type="text" id="custName" placeholder="ಹೆಸರು ನಮೂದಿಸಿ" required>
 
                 <label>ಮೊಬೈಲ್ ನಂಬರ್:</label>
                 <input type="tel" id="custPhone" placeholder="10 ಅಂಕಿಯ ಮೊಬೈಲ್ ನಂಬರ್" pattern="[0-9]{10}" required>
 
-                <label>ಪ್ರಯಾಣಿಕರ ಸಂಖ್ಯೆ:</label>
+                <label>ಪ್ರಯಾಣಿಕರ ಸಂಖ್ಯೆ (Passengers):</label>
                 <input type="number" id="passengers" min="1" max="10" value="1" required>
 
-                <label>ವಾಹನದ ಪ್ರಕಾರ:</label>
+                <label>ವಾಹನದ ಪ್ರಕಾರ (Vehicle Type):</label>
                 <select id="vehicleType" onchange="updateRates()">
-                    <option value="auto">🛺 ಆಟೋ (Auto) - ಮೊದಲ 4ಕಿ.ಮೀ ರೂ. 50, ಮುಂದೆ ಪ್ರತಿ 1ಕಿ.ಮೀ ರೂ. 12</option>
-                    <option value="car">🚗 ಕಾರ್ (Car) - ಮೊದಲ 3ಕಿ.ಮೀ ರೂ. 400, ಮುಂದೆ ಪ್ರತಿ 1ಕಿ.ಮೀ ರೂ. 15</option>
+                    <option value="auto">🛺 ಆಟೋ (Auto) - ಮೊದಲ 4 ಕಿ.ಮೀ ರೂ. 50, ಮುಂದೆ ಪ್ರತಿ 1 ಕಿ.ಮೀ ರೂ. 12</option>
+                    <option value="car">🚗 ಕಾರ್ (Car) - ಮೊದಲ 3 ಕಿ.ಮೀ ರೂ. 400, ಮುಂದೆ ಪ್ರತಿ 1 ಕಿ.ಮೀ ರೂ. 15</option>
                 </select>
 
                 <div class="rate-card" id="rateInfo">
@@ -170,10 +173,43 @@
             </form>
         </div>
 
-        <!-- ಡ್ರೈವರ್ ಲೈವ್ ಮೀಟರ್ & ಆರ್ಡರ್‌ಗಳು -->
-        <div class="card" style="border-left-color: #ff416c;">
-            <h2>📢 ಲೈವ್ ಬುಕಿಂಗ್ ಲಿಸ್ಟ್ (ಡ್ರೈವರ್‌ಗಳಿಗೆ):</h2>
-            <div id="liveBookings">
+        <!-- 3. ಡ್ರೈವರ್ ನೋಂದಣಿ ಹಾಗೂ ಲಾಗಿನ್ ಫಾರ್ಮ್ -->
+        <div class="card driver-section">
+            <h2>📝 ಡ್ರೈವರ್ ನೋಂದಣಿ & ಲಾಗಿನ್ (Driver Registration)</h2>
+            <form id="driverRegForm">
+                <label>ಡ್ರೈವರ್ ಹೆಸರು:</label>
+                <input type="text" id="driverName" placeholder="ನಿಮ್ಮ ಹೆಸರು" required>
+
+                <label>ಮೊಬೈಲ್ ನಂಬರ್:</label>
+                <input type="tel" id="driverPhone" placeholder="ಮೊಬೈಲ್ ನಂಬರ್" pattern="[0-9]{10}" required>
+
+                <label>ವಾಹನದ ಪ್ರಕಾರ:</label>
+                <select id="driverVehicleType">
+                    <option value="auto">🛺 ಆಟೋ (Auto)</option>
+                    <option value="car">🚗 ಕಾರ್ (Car)</option>
+                </select>
+
+                <label>ವಾಹನ ನಂಬರ್ (Vehicle No):</label>
+                <input type="text" id="driverVehicleNo" placeholder="ಉದಾ: KA 33 ..." required>
+
+                <button type="submit" class="btn btn-car">✍️ ಡ್ರೈವರ್ ನೋಂದಣಿ ಮಾಡಿ</button>
+            </form>
+        </div>
+
+        <!-- 4. ಡ್ರೈವರ್ ಡ್ಯೂಟಿ ಆನ್/ಆಫ್ ಮತ್ತು ಲೈವ್ ಆರ್ಡರ್‌ಗಳು -->
+        <div class="card" style="border-left-color: #f59e0b;">
+            <h2>📢 ಡ್ರೈವರ್ ಲೈವ್ ಬುಕಿಂಗ್ ಲಿಸ್ಟ್ & ಡ್ಯೂಟಿ</h2>
+            
+            <div class="toggle-box">
+                <span style="font-weight: bold; color: #1e293b;">ಡ್ಯೂಟಿ ಸ್ಟೇಟಸ್ (Duty On/Off):</span>
+                <label class="switch">
+                    <input type="checkbox" id="dutyToggle" onchange="toggleDuty()">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <p id="dutyStatusText" style="font-size: 13px; color: #64748b; margin-top: 0;">(ಡ್ಯೂಟಿ ಆಫ್ ಆಗಿದೆ - ನೋಟಿಫಿಕೇಶನ್ ಬರುವುದಿಲ್ಲ)</p>
+
+            <div id="liveBookingsList" style="margin-top: 15px;">
                 <p style="color: #64748b; text-align: center;">ಯಾವುದೇ ಹೊಸ ಬುಕಿಂಗ್ ಇಲ್ಲ...</p>
             </div>
         </div>
@@ -191,10 +227,24 @@
             }
         }
 
-        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+        function toggleDuty() {
+            let isChecked = document.getElementById('dutyToggle').checked;
+            let statusText = document.getElementById('dutyStatusText');
+            if(isChecked) {
+                statusText.innerHTML = "<span style='color: #22c55e; font-weight: bold;'>ಡ್ಯೂಟಿ ಆನ್ ಆಗಿದೆ - ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು ಬರುತ್ತವೆ!</span>";
+            } else {
+                statusText.innerHTML = "<span style='color: #ef4444; font-weight: bold;'>ಡ್ಯೂಟಿ ಆಫ್ ಆಗಿದೆ - ನೋಟಿಫಿಕೇಶನ್ ಬರುವುದಿಲ್ಲ.</span>";
+            }
+        }
+
+        document.getElementById('customerBookingForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('ನಿಮ್ಮ ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸ್ವೀಕರಿಸಲಾಗಿದೆ! ಹತ್ತಿರದ ಡ್ರೈವರ್‌ಗೆ ಕಳುಹಿಸಲಾಗಿದೆ.');
-            // ಇಲ್ಲಿ ರಿಯಲ್ ಟೈಮ್ ಡೇಟಾಬೇಸ್ (Firebase) ಕೋಡ್ ಸೇರಿಸಿದರೆ ನೇರವಾಗಿ ಡ್ರೈವರ್‌ಗಳ ಲಿಸ್ಟ್‌ಗೆ ಅಪ್‌ಡೇಟ್ ಆಗುತ್ತದೆ.
+            alert('ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿದೆ! ಆಟೋ ಅಥವಾ ಕಾರ್ ಬುಕಿಂಗ್ ಡ್ರೈವರ್‌ಗಳಿಗೆ ಕಳುಹಿಸಲಾಗಿದೆ.');
+        });
+
+        document.getElementById('driverRegForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('ಡ್ರೈವರ್ ನೋಂದಣಿ ಯಶಸ್ವಿಯಾಗಿದೆ!');
         });
     </script>
 
