@@ -316,7 +316,23 @@
         
         <h2 style="font-size: 0.95rem; margin-top:10px;" id="hLiveOrders">📢 ಲೈವ್ ಬುಕಿಂಗ್ ಲಿಸ್ಟ್ (ಡ್ರೈವರ್‌ಗಳಿಗೆ):</h2>
         <div id="liveOrdersContainer">
-            
+                <!-- TAB 3: Driver Registration -->
+    <div class="section" id="sec2">
+        <h2>🚗 ಡ್ರೈವರ್ ನೋಂದಣಿ ಫಾರ್ಮ್</h2>
+        <form onsubmit="submitRegistration(event)">
+            <div class="form-group">
+                <label>ನಿಮ್ಮ ಹೆಸರು:</label>
+                <input type="text" id="regName" placeholder="ಹೆಸರು" required>
+            </div>
+            <div class="form-group">
+                <label>ಮೊಬೈಲ್ ನಂಬರ್:</label>
+                <input type="tel" id="regPhone" placeholder="ಮೊಬೈಲ್ ನಂಬರ್" pattern="[0-9]{10}" required>
+            </div>
+            <button type="submit" class="btn-submit">✍️ ನೋಂದಣಿ ಮಾಡಿ</button>
+        </form>
+    </div>
+        </div>
+        
 <p style="font-size: 0.85rem; color: #718096; text-align: center; padding: 15px;" id="noOrdersText">ಸದ್ಯ ಯಾವುದೇ ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.</p>
 
             
