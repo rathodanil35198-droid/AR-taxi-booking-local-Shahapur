@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AR Taxi Shahapur - Live Booking System</title>
     
-    <link rel="manifest" href='data:application/manifest+json,{"name": "AR Taxi Shahapur", "short_name": "AR Taxi", "start_url": "./", "display": "standalone", "background_color": "#ffffff", "theme_color": "#0fb05b", "icons": [{"src": "https://i.ibb.co/3097180/logo.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}]}'>
+    <!-- Custom App Logo (Your Photo Set) -->
+    <link rel="manifest" href='data:application/manifest+json,{"name": "AR Taxi Shahapur", "short_name": "AR Taxi", "start_url": "./", "display": "standalone", "background_color": "#ffffff", "theme_color": "#0fb05b", "icons": [{"src": "https://i.ibb.co/6R22zYh/1000377596.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}]}'>
 
+    <!-- Firebase SDKs -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc, onSnapshot, updateDoc, doc, deleteDoc, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -103,6 +105,7 @@
         <div class="nav-tab" id="tab5" onclick="switchTab('admin')" data-key="tabAdmin">🔑 ಅಡ್ಮಿನ್</div>
     </div>
 
+    <!-- 1. CUSTOMER BOOKING SECTION -->
     <div id="customerSection" class="section active">
         <h2 data-key="hBook">🚖 ಯಾತ್ರೆ ಬುಕ್ ಮಾಡಿ (Book a Ride)</h2>
         <div class="form-group">
@@ -142,6 +145,7 @@
         <button class="btn-submit" onclick="submitBooking()" data-key="btnSubmitBook">✅ ಬುಕ್ ಮಾಡಿ (Book Ride)</button>
     </div>
 
+    <!-- 2. LIVE RUNNING METER SECTION -->
     <div id="meterSection" class="section">
         <h2 data-key="hMeter">⏱️ ಲೈವ್ ರನ್ನಿಂಗ್ ಮೀಟರ್</h2>
         <div class="form-group">
@@ -159,6 +163,7 @@
         <button class="btn-submit" onclick="stopAndSendWhatsApp()" style="background:#25D366;" data-key="btnStopMeter">🟢 ಮೀಟರ್ ಆಫ್ ಮಾಡಿ ವಾಟ್ಸಾಪ್‌ಗೆ ಕಳುಹಿಸಿ</button>
     </div>
 
+    <!-- 3. DRIVER PROFILE & REGISTRATION SECTION -->
     <div id="profileSection" class="section">
         <h2 data-key="hProfile">🚗 ಡ್ರೈವರ್ ರಿಜಿಸ್ಟ್ರೇಷನ್ / ಪ್ರೊಫೈಲ್</h2>
         <div class="form-group">
@@ -187,6 +192,7 @@
         <button class="btn-submit" onclick="registerDriver()" data-key="btnRegister">ಲಾಗಿನ್ / ರಿಜಿಸ್ಟರ್ ಮಾಡಿ</button>
     </div>
 
+    <!-- 4. DRIVER LIVE BOOKINGS SECTION -->
     <div id="liveSection" class="section">
         <h2 data-key="hLiveBookings">📢 ಡ್ರೈವರ್‌ಗಳಿಗೆ ಲೈವ್ ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು</h2>
         <div class="form-group">
@@ -196,6 +202,7 @@
         <div id="driverBookingsList">ಬುಕಿಂಗ್‌ಗಳಿಗಾಗಿ ಕಾಯಲಾಗುತ್ತಿದೆ...</div>
     </div>
 
+    <!-- 5. ADMIN SECTION -->
     <div id="adminSection" class="section">
         <h2 data-key="hAdmin">🔑 ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್ (Admin Panel)</h2>
         <p style="font-size:0.75rem; color:#718096; margin-bottom:8px;" data-key="adminSub">ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ ವೀಕ್ಷಿಸಲು ಅಥವಾ ಡಿಲೀಟ್ ಮಾಡಲು ನಿಮ್ಮ ಕೋಡ್ ನಮೂದಿಸಿ.</p>
