@@ -16,7 +16,7 @@
         #subTitle { font-size: 0.75rem; color: #718096; }
         .lang-btn { background: #e0f2f1; border: none; padding: 6px 12px; border-radius: 15px; font-size: 0.75rem; font-weight: bold; color: #00796b; cursor: pointer; }
         
-        /* ಹೊಸ ಬ್ಯಾನರ್ ಫೋಟೋ ಸ್ಟೈಲ್ */
+        /* ಸೈಜ್ ಮತ್ತು ಅಳತೆ ಹೊಂದಿಸಲಾದ ಬ್ಯಾನರ್ ಫೋಟೋ */
         .app-banner-img { width: 100%; height: 210px; object-fit: cover; border-radius: 12px; margin-bottom: 12px; border: 2px solid #e2e8f0; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
 
         .whatsapp-join-box { background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%); border: 2px dashed #28a745; padding: 12px; border-radius: 14px; text-align: center; margin-bottom: 12px; }
@@ -74,8 +74,8 @@
         <button class="lang-btn" onclick="toggleLanguage()">English / ಕನ್ನಡ</button>
     </div>
 
-    <!-- ನೀವು ಹೊಸದಾಗಿ ಕಳುಹಿಸಿದ ಸುಂದರವಾದ ಬ್ಯಾನರ್ ಫೋಟೋ -->
-    <img src="https://i.ibb.co/3ykJ8b98/1000377228.jpg" alt="AR Taxi Shahapur Banner" class="app-banner-img">
+    <!-- ಸೈಜ್ ಹೊಂದಿಸಲಾದ ಹೊಸ ಬ್ಯಾನರ್ ಫೋಟೋ -->
+    <img src="https://i.ibb.co/6R7x7sX3/1000377241.jpg" alt="AR Taxi Shahapur Banner" class="app-banner-img">
 
     <!-- ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್ ಜಾಯಿನ್ ಆಗುವ ಬಾಕ್ಸ್ -->
     <div class="whatsapp-join-box">
@@ -477,7 +477,6 @@
                 `;
             } else if (ord.status === 'Accepted') {
                 let drvName = ord.driverInfo ? ord.driverInfo.name : 'Driver';
-                let drvId = ord.driverInfo ? ord.driverInfo.id : '';
                 html += `
                     <div class="card" style="background:#e2e8f0; border-left: 5px solid #718096; opacity: 0.85;">
                         <div style="font-weight:bold; color:#d32f27;">${currentLang === 'kn' ? '🔒 ಈ ಬುಕಿಂಗ್ ಲಾಕ್ ಆಗಿದೆ! (' + vehSymbolIcon + ')' : '🔒 Booking Locked! (' + vehSymbolIcon + ')'}</div>
@@ -491,14 +490,13 @@
     }
 
     function acceptOrder(orderId) {
-        // ಐಡಿ ಕೇಳುವ ಗೊಂದಲ ತೆಗೆದುಹಾಕಲಾಗಿದೆ, ಯಾವುದೇ ಡ್ರೈವರ್ ನೇರವಾಗಿ ಒಪ್ಪಿಕೊಳ್ಳಬಹುದು
         let dummyDriver = {
             id: 'AR-DRV-DIRECT',
             name: currentLang === 'kn' ? 'ಡ್ರೈವರ್' : 'Driver',
             phone: '8105010768',
             vehicle: 'Auto',
             vehNo: 'KA33',
-            selfie: 'https://i.ibb.co/3ykJ8b98/1000377228.jpg'
+            selfie: 'https://i.ibb.co/6R7x7sX3/1000377241.jpg'
         };
 
         let ord = orders.find(o => o.id === orderId);
@@ -559,7 +557,7 @@
                     selfie: selfieData,
                     vehPhoto: vehPhotoData,
                     rcPhoto: rcPhotoData,
-                    status: 'Approved', // ನೇರವಾಗಿ ಅಪ್ರೂವ್ ಆಗುವಂತೆ ಮಾಡಲಾಗಿದೆ
+                    status: 'Approved',
                     date: new Date().toLocaleDateString()
                 };
 
@@ -673,11 +671,6 @@
     function stopMeter() {
         if (matchId) clearInterval(matchId);
         alert(currentLang === 'kn' ? "ಮೀಟರ್ ನಿಲ್ಲಿಸಲಾಗಿದೆ." : "Meter stopped.");
-    }
-
-    function calculateFare(km) {
-        if (km <= 3) { return 50; }
-        else { return 50 + Math.ceil(km - 3) * 12; }
     }
 
     function updateMeterDisplay() {
