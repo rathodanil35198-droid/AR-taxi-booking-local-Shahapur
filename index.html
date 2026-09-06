@@ -16,8 +16,8 @@
         #subTitle { font-size: 0.75rem; color: #718096; }
         .lang-btn { background: #e0f2f1; border: none; padding: 6px 12px; border-radius: 15px; font-size: 0.75rem; font-weight: bold; color: #00796b; cursor: pointer; }
         
-        /* ಆಟೋ ಫೋಟೋ ಸ್ಟೈಲ್ */
-        .app-banner-img { width: 100%; height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 12px; border: 2px solid #e2e8f0; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        /* ಹೊಸ ಬ್ಯಾನರ್ ಫೋಟೋ ಸ್ಟೈಲ್ */
+        .app-banner-img { width: 100%; height: 210px; object-fit: cover; border-radius: 12px; margin-bottom: 12px; border: 2px solid #e2e8f0; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
 
         .whatsapp-join-box { background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%); border: 2px dashed #28a745; padding: 12px; border-radius: 14px; text-align: center; margin-bottom: 12px; }
         .whatsapp-join-btn { display: inline-block; background: #25D366; color: white; text-decoration: none; padding: 8px 18px; border-radius: 25px; font-weight: bold; margin-top: 8px; font-size: 0.9rem; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4); }
@@ -74,8 +74,8 @@
         <button class="lang-btn" onclick="toggleLanguage()">English / ಕನ್ನಡ</button>
     </div>
 
-    <!-- ನೀವು ಕಳುಹಿಸಿದ ಆಟೋ ಫೋಟೋ ಇಲ್ಲಿ ಆ್ಯಪ್‌ನಲ್ಲಿ ಆಕರ್ಷಕವಾಗಿ ಕಾಣುತ್ತದೆ -->
-    <img src="https://i.ibb.co/6c2h5W7v/1000369239.png" alt="AR Taxi Shahapur Auto" class="app-banner-img">
+    <!-- ನೀವು ಹೊಸದಾಗಿ ಕಳುಹಿಸಿದ ಸುಂದರವಾದ ಬ್ಯಾನರ್ ಫೋಟೋ -->
+    <img src="https://i.ibb.co/3ykJ8b98/1000377228.jpg" alt="AR Taxi Shahapur Banner" class="app-banner-img">
 
     <!-- ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್ ಜಾಯಿನ್ ಆಗುವ ಬಾಕ್ಸ್ -->
     <div class="whatsapp-join-box">
@@ -130,8 +130,8 @@
                 <label data-en="Drop Address:" data-kn="ಎಲ್ಲಿಗೆ ತಲುಪಬೇಕು? (Drop Address):">ಎಲ್ಲಿಗೆ ತಲುಪಬೇಕು? (Drop Address):</label>
                 <input type="text" id="dropLocation" placeholder="Ex: Bus Stand Shahapur" required>
             </div>
-            <div style="background:#e8f5e9; padding:10px; border-radius:10px; margin-bottom:12px; font-size:0.83rem; color:#2e7d32;" id="fareInfoBox" data-en="💰 Fare Info: First 4 KM ₹50, then ₹12 per KM." data-kn="💰 ದರ ಮಾಹಿತಿ: ಮೊದಲ 4 ಕಿ.ಮೀ ಗೆ ₹50, ನಂತರ ಪ್ರತಿ 1 ಕಿ.ಮೀ ಗೆ ₹12 ದರ ಇರುತ್ತದೆ.">
-                💰 ದರ ಮಾಹಿತಿ: ಮೊದಲ 4 ಕಿ.ಮೀ ಗೆ ₹50, ನಂತರ ಪ್ರತಿ 1 ಕಿ.ಮೀ ಗೆ ₹12 ದರ ಇರುತ್ತದೆ.
+            <div style="background:#e8f5e9; padding:10px; border-radius:10px; margin-bottom:12px; font-size:0.83rem; color:#2e7d32;" id="fareInfoBox" data-en="💰 Fare Info: First 3 KM ₹50, then ₹12 per KM." data-kn="💰 ದರ ಮಾಹಿತಿ: ಮೊದಲ 3 ಕಿ.ಮೀ ಗೆ ₹50, ನಂತರ ಪ್ರತಿ 1 ಕಿ.ಮೀ ಗೆ ₹12 ದರ ಇರುತ್ತದೆ.">
+                💰 ದರ ಮಾಹಿತಿ: ಮೊದಲ 3 ಕಿ.ಮೀ ಗೆ ₹50, ನಂತರ ಪ್ರತಿ 1 ಕಿ.ಮೀ ಗೆ ₹12 ದರ ಇರುತ್ತದೆ.
             </div>
             <button type="submit" class="btn-submit" data-en="🚀 Send Booking to Drivers" data-kn="🚀 ಬುಕಿಂಗ್ ಕಳುಹಿಸಿ (ಡ್ರೈವರ್‌ಗಳಿಗೆ ತಲುಪುತ್ತದೆ)">🚀 ಬುಕಿಂಗ್ ಕಳುಹಿಸಿ (ಡ್ರೈವರ್‌ಗಳಿಗೆ ತಲುಪುತ್ತದೆ)</button>
         </form>
@@ -210,10 +210,6 @@
     <!-- TAB 3: Driver Live Orders Page -->
     <div class="section" id="sec3">
         <h2 id="hLiveTitle" data-en="Driver Live Booking Orders" data-kn="ಡ್ರೈವರ್‌ಗಳಿಗೆ ಲೈವ್ ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು">📢 🛺 ಡ್ರೈವರ್‌ಗಳಿಗೆ ಲೈವ್ ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು</h2>
-        <div class="form-group" style="background:#e0f2f1; padding:8px; border-radius:8px; margin-bottom:10px;">
-            <label style="font-size:0.78rem;" data-en="Enter your Approved Driver ID:" data-kn="🔑 ನಿಮ್ಮ ಅಪ್ರೂವ್ ಆಗಿರುವ ಡ್ರೈವರ್ ID ನಮೂದಿಸಿ:">🔑 ನಿಮ್ಮ ಅಪ್ರೂವ್ ಆಗಿರುವ ಡ್ರೈವರ್ ID ನಮೂದಿಸಿ:</label>
-            <input type="text" id="currentDriverId" placeholder="Ex: AR-DRV-1234">
-        </div>
         <div id="driverOrdersContainer">
             <p style="font-size: 0.85rem; color: #718096; text-align: center; padding: 15px;" data-en="No active bookings right now." data-kn="ಸದ್ಯ ಯಾವುದೇ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.">ಸದ್ಯ ಯಾವುದೇ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.</p>
         </div>
@@ -352,8 +348,8 @@
     }
 
     function calculateFare(km) {
-        if (km <= 4) { return 50; }
-        else { return 50 + Math.ceil(km - 4) * 12; }
+        if (km <= 3) { return 50; }
+        else { return 50 + Math.ceil(km - 3) * 12; }
     }
 
     function submitBooking(event) {
@@ -398,6 +394,17 @@
         document.getElementById('btnGpsText').innerText = currentLang === 'kn' ? "📍 ಲೊಕೇಶನ್ ಪಡೆದುಕೊಳ್ಳಿ" : "📍 Get GPS Location";
     }
 
+    function cancelMyBooking() {
+        if (!myActiveOrderId) return;
+        orders = orders.filter(o => o.id !== myActiveOrderId);
+        localStorage.setItem('ar_orders', JSON.stringify(orders));
+        myActiveOrderId = null;
+        localStorage.removeItem('ar_my_active_order_id');
+        renderCustomerStatus();
+        renderDriverOrders();
+        alert(currentLang === 'kn' ? "❌ ನಿಮ್ಮ ಬುಕಿಂಗ್ ರದ್ದುಗೊಳಿಸಲಾಗಿದೆ (Cancelled)." : "❌ Your booking has been cancelled.");
+    }
+
     function renderCustomerStatus() {
         let box = document.getElementById('customerStatusBox');
         if (!myActiveOrderId) {
@@ -415,9 +422,10 @@
         if (ord.status === 'Pending') {
             box.innerHTML = `
                 <div class="card" style="background:#fff8e1; border-color:#ffe082; text-align:center; padding:15px;">
-                    <div style="font-weight:bold; color:#f57c00; font-size:0.9rem;">
+                    <div style="font-weight:bold; color:#f57c00; font-size:0.9rem; margin-bottom: 10px;">
                         ${currentLang === 'kn' ? '⏳ ನಿಮ್ಮ ಬುಕಿಂಗ್ (' + vehLogo + ') ಡ್ರೈವರ್‌ಗಳಿಗೆ ಕಳುಹಿಸಲಾಗಿದೆ. ದಯವಿಟ್ಟು ನಿರೀಕ್ಷಿಸಿ...' : '⏳ Your booking (' + vehLogo + ') has been sent to drivers. Please wait...'}
                     </div>
+                    <button onclick="cancelMyBooking()" style="background:#d32f27; color:white; border:none; padding:8px 16px; border-radius:8px; font-weight:bold; font-size:0.85rem; cursor:pointer;">${currentLang === 'kn' ? '❌ ಬುಕಿಂಗ್ ರದ್ದುಮಾಡಿ (Cancel)' : '❌ Cancel Booking'}</button>
                 </div>
             `;
         } else if (ord.status === 'Accepted' && ord.driverInfo) {
@@ -464,7 +472,7 @@
                         <div><b>${currentLang === 'kn' ? 'ಪಿಕಪ್' : 'Pickup'}:</b> ${ord.pickup}</div>
                         <div><b>${currentLang === 'kn' ? 'ಲೊಕೇಶನ್' : 'Location'}:</b> <a href="${ord.gps}" target="_blank" style="color: #007bff; text-decoration: underline;">${currentLang === 'kn' ? 'ಮ್ಯಾಪ್‌ನಲ್ಲಿ ನೋಡಿ' : 'View on Map'}</a></div>
                         <div><b>${currentLang === 'kn' ? 'ಡ್ರಾಪ್' : 'Drop'}:</b> ${ord.drop}</div>
-                        <button onclick="acceptOrder('${ord.id}')" style="background: #00c853; color: white; border: none; padding: 8px 14px; border-radius: 8px; font-weight: bold; font-size: 0.85rem; margin-top: 8px; cursor: pointer;">${currentLang === 'kn' ? '✅ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ (Accept)' : '✅ Accept Booking'}</button>
+                        <button onclick="acceptOrder('${ord.id}')" style="background: #00c853; color: white; border: none; padding: 8px 14px; border-radius: 8px; font-weight: bold; font-size: 0.85rem; margin-top: 8px; cursor: pointer; width:100%;">${currentLang === 'kn' ? '✅ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ (Accept)' : '✅ Accept Booking'}</button>
                     </div>
                 `;
             } else if (ord.status === 'Accepted') {
@@ -474,7 +482,7 @@
                     <div class="card" style="background:#e2e8f0; border-left: 5px solid #718096; opacity: 0.85;">
                         <div style="font-weight:bold; color:#d32f27;">${currentLang === 'kn' ? '🔒 ಈ ಬುಕಿಂಗ್ ಲಾಕ್ ಆಗಿದೆ! (' + vehSymbolIcon + ')' : '🔒 Booking Locked! (' + vehSymbolIcon + ')'}</div>
                         <div style="font-size:0.8rem; margin-top:4px;"><b>${currentLang === 'kn' ? 'ಕಸ್ಟಮರ್' : 'Customer'}:</b> ${ord.name} (${ord.pickup})</div>
-                        <div style="font-size:0.8rem; color:#2d3748; margin-top:2px;"><b>${currentLang === 'kn' ? 'ಸ್ವೀಕರಿಸಿದ ಡ್ರೈವರ್ ID' : 'Accepted Driver ID'}:</b> <b style="color:#d32f27;">${drvId}</b> (${drvName})</div>
+                        <div style="font-size:0.8rem; color:#2d3748; margin-top:2px;"><b>${currentLang === 'kn' ? 'ಸ್ವೀಕರಿಸಿದ ಡ್ರೈವರ್' : 'Accepted Driver'}:</b> <b style="color:#d32f27;">${drvName}</b></div>
                     </div>
                 `;
             }
@@ -483,23 +491,20 @@
     }
 
     function acceptOrder(orderId) {
-        let driverInput = document.getElementById('currentDriverId').value.trim();
-        if (!driverInput) {
-            alert(currentLang === 'kn' ? "ದಯವಿಟ್ಟು ರೈಡ್ ಸ್ವೀಕರಿಸುವ ಮೊದಲು ನಿಮ್ಮ 'ಡ್ರೈವರ್ ID' ಬರೆಯಿರಿ!" : "Please enter your Driver ID!");
-            return;
-        }
-
-        let matchedDriver = drivers.find(d => (d.id.toLowerCase() === driverInput.toLowerCase()) && d.status === 'Approved');
-        
-        if (!matchedDriver) {
-            alert(currentLang === 'kn' ? "❌ ದೋಷ: ನಿಮ್ಮ ಡ್ರೈವರ್ ಐಡಿ ಅಡ್ಮಿನ್ ಇಂದ 'ಅಪ್ರೂವ್' ಆಗಿಲ್ಲ ಅಥವಾ ತಪ್ಪಾಗಿದೆ!" : "❌ Error: Driver ID not approved or invalid!");
-            return;
-        }
+        // ಐಡಿ ಕೇಳುವ ಗೊಂದಲ ತೆಗೆದುಹಾಕಲಾಗಿದೆ, ಯಾವುದೇ ಡ್ರೈವರ್ ನೇರವಾಗಿ ಒಪ್ಪಿಕೊಳ್ಳಬಹುದು
+        let dummyDriver = {
+            id: 'AR-DRV-DIRECT',
+            name: currentLang === 'kn' ? 'ಡ್ರೈವರ್' : 'Driver',
+            phone: '8105010768',
+            vehicle: 'Auto',
+            vehNo: 'KA33',
+            selfie: 'https://i.ibb.co/3ykJ8b98/1000377228.jpg'
+        };
 
         let ord = orders.find(o => o.id === orderId);
         if (ord && ord.status === 'Pending') {
             ord.status = 'Accepted';
-            ord.driverInfo = matchedDriver;
+            ord.driverInfo = dummyDriver;
             
             localStorage.setItem('ar_orders', JSON.stringify(orders));
             playAlertSound();
@@ -554,14 +559,14 @@
                     selfie: selfieData,
                     vehPhoto: vehPhotoData,
                     rcPhoto: rcPhotoData,
-                    status: 'Pending',
+                    status: 'Approved', // ನೇರವಾಗಿ ಅಪ್ರೂವ್ ಆಗುವಂತೆ ಮಾಡಲಾಗಿದೆ
                     date: new Date().toLocaleDateString()
                 };
 
                 drivers.push(newDriver);
                 localStorage.setItem('ar_drivers', JSON.stringify(drivers));
 
-                alert(currentLang === 'kn' ? `✅ ನೋಂದಣಿ ಯಶಸ್ವಿಯಾಗಿದೆ!\nನಿಮ್ಮ ಐಡಿ: ${driverId}\nಅಡ್ಮಿನ್ ಅಪ್ರೂವ್ ಮಾಡಿದ ನಂತರ ಲಾಗಿನ್ ಸಿಗುತ್ತದೆ.` : `✅ Registration successful!\nYour ID: ${driverId}`);
+                alert(currentLang === 'kn' ? `✅ ನೋಂದಣಿ ಯಶಸ್ವಿಯಾಗಿದೆ!\nನಿಮ್ಮ ಐಡಿ: ${driverId}` : `✅ Registration successful!\nYour ID: ${driverId}`);
                 event.target.reset();
                 document.getElementById('selfiePreviewImg').style.display = 'none';
                 document.getElementById('regSelfieData').value = '';
@@ -583,23 +588,17 @@
 
         let html = `<h3 style="font-size:0.9rem; margin-bottom:8px;">${currentLang === 'kn' ? 'ನೋಂದಾಯಿತ ಡ್ರೈವರ್‌ಗಳ ಲಿಸ್ಟ್:' : 'Registered Drivers List:'}</h3>`;
         drivers.forEach((drv, index) => {
-            let statusBadge = drv.status === 'Approved' 
-                ? `<span style="color:green; font-weight:bold;">✅ Approved</span>` 
-                : `<span style="color:orange; font-weight:bold;">⏳ Pending</span>`;
-
             let vehLogoIcon = drv.vehicle.includes('Auto') ? '🛺' : '🚗';
-
             html += `
-                <div class="card" style="display: flex; gap: 8px; align-items: center; background: #fafafa; border-left: 4px solid ${drv.status === 'Approved' ? 'green' : 'orange'};">
+                <div class="card" style="display: flex; gap: 8px; align-items: center; background: #fafafa; border-left: 4px solid green;">
                     <img src="${drv.selfie}" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00b09b; cursor:pointer;" onclick="showDriverDetails(${index})">
                     <div style="flex: 1; font-size: 0.78rem; cursor:pointer;" onclick="showDriverDetails(${index})">
-                        <div><b>ID:</b> <span style="color:#d32f27; font-weight:bold;">${drv.id}</span> | ${statusBadge}</div>
+                        <div><b>ID:</b> <span style="color:#d32f27; font-weight:bold;">${drv.id}</span> | <span style="color:green; font-weight:bold;">✅ Active</span></div>
                         <div><b>${currentLang === 'kn' ? 'ಹೆಸರು' : 'Name'}:</b> ${drv.name} | ${vehLogoIcon} ${drv.vehNo}</div>
                         <div><b>${currentLang === 'kn' ? 'ಫೋನ್' : 'Phone'}:</b> ${drv.phone}</div>
                     </div>
-                    <div style="display:flex; flex-direction:column; gap:4px;">
-                        ${drv.status !== 'Approved' ? `<button onclick="approveDriver(${index})" style="background:#28a745; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer; font-size:0.7rem;">Approve</button>` : `<button onclick="rejectDriver(${index})" style="background:#ff9800; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer; font-size:0.7rem;">Reject</button>`}
-                        <button onclick="secureDeleteDriver(${index})" style="background:#ff5252; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer; font-size:0.7rem;">${currentLang === 'kn' ? 'ಅಳಿ' : 'Delete'}</button>
+                    <div>
+                        <button onclick="secureDeleteDriver(${index})" style="background:#ff5252; color:white; border:none; padding:6px 10px; border-radius:4px; cursor:pointer; font-size:0.75rem;">${currentLang === 'kn' ? 'ಅಳಿ' : 'Delete'}</button>
                     </div>
                 </div>
             `;
@@ -607,23 +606,8 @@
         container.innerHTML = html;
     }
 
-    function approveDriver(index) {
-        drivers[index].status = 'Approved';
-        localStorage.setItem('ar_drivers', JSON.stringify(drivers));
-        renderDriverList();
-        renderAdminReport();
-        alert(currentLang === 'kn' ? "ಡ್ರೈವರ್ ಅಪ್ರೂವ್ ಆಗಿದ್ದಾರೆ!" : "Driver approved!");
-    }
-
-    function rejectDriver(index) {
-        drivers[index].status = 'Rejected';
-        localStorage.setItem('ar_drivers', JSON.stringify(drivers));
-        renderDriverList();
-        alert(currentLang === 'kn' ? "ಡ್ರೈವರ್ ರಿಜೆಕ್ಟ್ ಮಾಡಲಾಗಿದೆ." : "Driver rejected.");
-    }
-
     function secureDeleteDriver(index) {
-        let enteredCode = prompt(currentLang === 'kn' ? "🔒 ಇದು ಭದ್ರಿತ ವಲಯ! ಅಡ್ಮಿನ್ ಮೊಬೈಲ್ ನಂಬರ್ ನಮೂದಿಸಿ:" : "🔒 Protected Zone! Enter Admin Mobile Number:");
+        let enteredCode = prompt(currentLang === 'kn' ? "🔒 ಅಡ್ಮಿನ್ ಮೊಬೈಲ್ ನಂಬರ್ ನಮೂದಿಸಿ:" : "🔒 Enter Admin Number:");
         if (enteredCode === "8105010768") {
             drivers.splice(index, 1);
             localStorage.setItem('ar_drivers', JSON.stringify(drivers));
@@ -631,7 +615,7 @@
             renderAdminReport();
             alert(currentLang === 'kn' ? "✅ ಯಶಸ್ವಿಯಾಗಿ ಅಳಿಸಲಾಗಿದೆ." : "✅ Deleted successfully.");
         } else if (enteredCode !== null) {
-            alert(currentLang === 'kn' ? "❌ ತಪ್ಪಾದ ನಂಬರ್! ಅಳಿಸಲು ಅನುಮತಿ ಇಲ್ಲ." : "❌ Incorrect number! Permission denied.");
+            alert(currentLang === 'kn' ? "❌ ತಪ್ಪಾದ ನಂಬರ್!" : "❌ Incorrect number!");
         }
     }
 
@@ -642,12 +626,8 @@
             <div style="margin-bottom: 8px;"><b>ID:</b> <span style="color:#d32f27; font-weight:bold;">${drv.id}</span></div>
             <div style="margin-bottom: 8px;"><b>Name:</b> ${drv.name} (${drv.phone})</div>
             <div style="margin-bottom: 8px;"><b>Vehicle No:</b> <b style="color:#2e7d32;">${vehLogoIcon} ${drv.vehNo}</b></div>
-            <div style="margin-bottom: 8px;"><b>RC No:</b> <b style="color:#1565c0;">${drv.rcNo}</b></div>
-            <div style="margin-bottom: 8px;"><b>Status:</b> <span style="font-weight:bold;">${drv.status}</span></div>
-            
             <div style="margin-top: 10px;"><b>Selfie:</b><br><img src="${drv.selfie}" class="modal-img"></div>
             <div style="margin-top: 10px;"><b>Vehicle Photo:</b><br><img src="${drv.vehPhoto}" class="modal-img"></div>
-            <div style="margin-top: 10px;"><b>RC Photo:</b><br><img src="${drv.rcPhoto}" class="modal-img"></div>
         `;
         document.getElementById('modalDetails').innerHTML = modalContent;
         document.getElementById('driverModal').style.display = 'flex';
@@ -663,7 +643,7 @@
         container.innerHTML = `
             <h3 style="font-size:0.95rem; color:#1565c0; margin-bottom:8px;">${currentLang === 'kn' ? '📊 ಸಿಸ್ಟಮ್ ವರದಿ:' : '📊 System Report:'}</h3>
             <div style="font-size: 0.85rem; line-height: 1.6;">
-                <div>👥 ${currentLang === 'kn' ? 'ಒಟ್ಟು ಡ್ರೈವರ್‌ಗಳು' : 'Total Drivers'}: <b>${drivers.length}</b> (Approved: <b style="color:green;">${drivers.filter(d=>d.status==='Approved').length}</b>)</div>
+                <div>👥 ${currentLang === 'kn' ? 'ಒಟ್ಟು ಡ್ರೈವರ್‌ಗಳು' : 'Total Drivers'}: <b>${drivers.length}</b></div>
                 <div>📦 ${currentLang === 'kn' ? 'ಒಟ್ಟು ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು' : 'Total Orders'}: <b>${orders.length}</b></div>
             </div>
         `;
@@ -695,6 +675,11 @@
         alert(currentLang === 'kn' ? "ಮೀಟರ್ ನಿಲ್ಲಿಸಲಾಗಿದೆ." : "Meter stopped.");
     }
 
+    function calculateFare(km) {
+        if (km <= 3) { return 50; }
+        else { return 50 + Math.ceil(km - 3) * 12; }
+    }
+
     function updateMeterDisplay() {
         document.getElementById('distVal').innerText = distance.toFixed(2);
         let totalFare = calculateFare(distance);
@@ -710,11 +695,9 @@
 
     function toggleLanguage() {
         currentLang = currentLang === 'kn' ? 'en' : 'kn';
-        
         document.querySelectorAll('[data-kn]').forEach(el => {
             el.innerText = el.getAttribute(`data-${currentLang}`);
         });
-        
         renderDriverOrders();
         renderCustomerStatus();
         renderDriverList();
