@@ -72,6 +72,13 @@
     label { display: block; font-size: 0.78rem; font-weight: 700; margin-bottom: 2px; color: #4a5568; }
     input, select { width: 100%; padding: 8px; border: 2px solid #e2e8f0; border-radius: 6px; font-size: 0.85rem; }
     
+    /* Vehicle Logo Selector Styling */
+    .vehicle-logo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px; }
+    .vehicle-card { border: 2px solid #cbd5e0; border-radius: 8px; padding: 10px; text-align: center; cursor: pointer; background: #fff; transition: all 0.2s; }
+    .vehicle-card.selected { border-color: var(--primary); background: #e8f8f0; box-shadow: 0 0 5px rgba(15, 176, 91, 0.3); }
+    .vehicle-card img { width: 60px; height: 60px; object-fit: contain; margin-bottom: 5px; }
+    .vehicle-card span { display: block; font-size: 0.85rem; font-weight: bold; color: #2d3748; }
+
     .btn-gps, .btn-submit { width: 100%; padding: 10px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
     .btn-gps { background: #ebf8ff; color: #3182ce; border: 1px solid #bee3f8; }
     .btn-submit { background: linear-gradient(45deg, #0fb05b, #41c91d); color: white; }
@@ -132,6 +139,23 @@
       <div id="customerSection" class="section">
         <h2 data-en="Book a Ride" data-kn="ಯಾತ್ರೆ ಬುಕ್ ಮಾಡಿ">ಯಾತ್ರೆ ಬುಕ್ ಮಾಡಿ</h2>
         <div id="bookingFormContainer">
+          
+          <!-- VISUAL VEHICLE LOGO SELECTOR FOR USERS -->
+          <div class="form-group">
+            <label data-en="Select Vehicle (Click Logo):" data-kn="ವಾಹನ ಆಯ್ಕೆಮಾಡಿ (ಚಿತ್ರದ ಮೇಲೆ ಕ್ಲಿಕ್ ಮಾಡಿ):">ವಾಹನ ಆಯ್ಕೆಮಾಡಿ (ಚಿತ್ರದ ಮೇಲೆ ಕ್ಲಿಕ್ ಮಾಡಿ):</label>
+            <div class="vehicle-logo-grid">
+              <div class="vehicle-card selected" id="cardAuto" onclick="selectVehicle('Auto')">
+                <img src="https://img.icons8.com/color/512/rickshaw.png" alt="Auto Logo">
+                <span data-en="Auto" data-kn="ಆಟೋ (Auto)">ಆಟೋ (Auto)</span>
+              </div>
+              <div class="vehicle-card" id="cardCar" onclick="selectVehicle('Car')">
+                <img src="https://img.icons8.com/color/512/sedan.png" alt="Car Logo">
+                <span data-en="Car" data-kn="ಕಾರ್ (Car)">ಕಾರ್ (Car)</span>
+              </div>
+            </div>
+            <input type="hidden" id="vehicleType" value="Auto">
+          </div>
+
           <div class="form-group">
             <label data-en="Customer Name" data-kn="ನಿಮ್ಮ ಹೆಸರು">ನಿಮ್ಮ ಹೆಸರು</label>
             <input type="text" id="custName" placeholder="ಹೆಸರು ನಮೂದಿಸಿ">
@@ -139,13 +163,6 @@
           <div class="form-group">
             <label data-en="Phone Number" data-kn="ಮೊಬೈಲ್ ಸಂಖ್ಯೆ">ಮೊಬೈಲ್ ಸಂಖ್ಯೆ</label>
             <input type="tel" id="custPhone" placeholder="ಫೋನ್ ನಂಬರ್">
-          </div>
-          <div class="form-group">
-            <label data-en="Vehicle Type" data-kn="ವಾಹನ ಆಯ್ಕೆ">ವಾಹನ ಆಯ್ಕೆ</label>
-            <select id="vehicleType" onchange="updatePassengerOptions()">
-              <option value="Auto">Auto</option>
-              <option value="Car">Car</option>
-            </select>
           </div>
           <div class="form-group">
             <label data-en="Passengers Count" data-kn="ಪ್ರಯಾಣಿಕರ ಸಂಖ್ಯೆ">ಪ್ರಯಾಣಿಕರ ಸಂಖ್ಯೆ</label>
@@ -296,6 +313,18 @@
         startDriverLocationTracking();
       }
       applyLanguageTexts();
+    }
+
+    function selectVehicle(type) {
+      document.getElementById('vehicleType').value = type;
+      if (type === 'Auto') {
+        document.getElementById('cardAuto').classList.add('selected');
+        document.getElementById('cardCar').classList.remove('selected');
+      } else {
+        document.getElementById('cardCar').classList.add('selected');
+        document.getElementById('cardAuto').classList.remove('selected');
+      }
+      updatePassengerOptions();
     }
 
     function goBackToRoleSelection() {
@@ -688,7 +717,6 @@
         return;
       }
 
-      // Verify if ID exists in database
       const driversQuery = await window.getDocs(window.collection(window.db, "drivers"));
       let isValidDriver = false;
       driversQuery.forEach((dSnap) => {
@@ -702,7 +730,6 @@
         return;
       }
 
-      // If valid, start listening to bookings
       listDiv.innerHTML = `<p style="color: #718096;" data-en="Loading bookings..." data-kn="ಬುಕಿಂಗ್‌ಗಳು ಲೋಡ್ ಆಗುತ್ತಿವೆ...">ಬುಕಿಂಗ್‌ಗಳು ಲೋಡ್ ಆಗುತ್ತಿವೆ...</p>`;
 
       bookingsUnsubscribe = window.onSnapshot(window.collection(window.db, "bookings"), (snapshot) => {
