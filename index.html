@@ -41,6 +41,15 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: var(--bg); color: var(--text); padding: 8px; }
         .container { width: 100%; max-width: 480px; margin: 0 auto; background: #fff; padding: 12px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        
+        /* Role Selection Screen */
+        #roleSelectionScreen { text-align: center; padding: 30px 15px; }
+        .role-logo { width: 90px; height: 90px; object-fit: cover; border-radius: 50%; border: 3px solid var(--primary); margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+        .role-btn { display: block; width: 100%; padding: 15px; margin: 15px 0; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: 0.2s; }
+        .role-customer { background: linear-gradient(45deg, #3182ce, #63b3ed); color: white; }
+        .role-driver { background: linear-gradient(45deg, #0fb05b, #96c93d); color: white; }
+        .role-btn:active { transform: scale(0.98); }
+
         .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
         .logo-title { display: flex; align-items: center; gap: 8px; }
         .mainTitle { font-size: 1rem; font-weight: bold; color: #2c3e50; }
@@ -53,7 +62,7 @@
         .support-box { background: #fff5f5; border: 2px solid #feb2b2; padding: 8px; border-radius: 10px; text-align: center; margin-bottom: 8px; }
         .support-btn { display: inline-block; background: #e53e3e; color: white; padding: 6px 12px; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 0.78rem; margin-top: 4px; }
 
-        .nav-tabs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; background: #edf2f7; padding: 6px; border-radius: 10px; margin-bottom: 10px; text-align: center; }
+        .nav-tabs { display: grid; gap: 4px; background: #edf2f7; padding: 6px; border-radius: 10px; margin-bottom: 10px; text-align: center; }
         .nav-tab { background: #fff; border: 1px solid #cbd5e0; padding: 6px 2px; border-radius: 6px; font-size: 0.7rem; font-weight: bold; cursor: pointer; color: #2d3748; }
         .nav-tab.active { background: #0fb05b; color: white; border-color: #0fb05b; }
 
@@ -71,153 +80,169 @@
         .card { background: #fff; border: 1px solid #cbd5e0; padding: 10px; border-radius: 8px; margin-bottom: 8px; font-size: 0.82rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .preview-img { width: 50px; height: 50px; object-fit: cover; border-radius: 6px; margin-right: 6px; border: 1px solid #ccc; }
         .footer { text-align: center; font-size: 0.7rem; color: #7f8c8d; margin-top: 10px; border-top: 1px solid #eee; padding-top: 6px; }
+        .back-home-btn { background: #718096; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 0.75rem; cursor: pointer; margin-bottom: 8px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="header">
-        <div class="logo-title">
-            <span>🚖</span>
-            <div>
-                <div class="mainTitle" id="mainTitleText">AR Taxi Shahapur</div>
-                <div class="subTitle" id="subTitleText">ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್</div>
-            </div>
-        </div>
-        <button class="lang-btn" onclick="toggleLanguage()" id="langToggleBtn">English</button>
-    </div>
-
-    <div class="whatsapp-box">
-        <div style="font-size:0.75rem; font-weight:bold; color:#065f46;" data-key="waText">ದಯವಿಟ್ಟು ಡ್ರೈವರ್‌ಗಳು ಮಾತ್ರ ಈ ಗುಂಪಿಗೆ ಜಾಯಿನ್ ಆಗಿ.</div>
-        <a href="https://chat.whatsapp.com/GMEfsA4F2xZ9NGIxjeqoYC?s=cl&p=a&mlu=4&ilr=4" target="_blank" class="whatsapp-btn" data-key="waBtn">💬 Join Driver WhatsApp Group</a>
-    </div>
-
-    <div class="support-box">
-        <div style="font-size:0.75rem; font-weight:bold; color:#9b2c2c;" data-key="emergText">ತುರ್ತು ಸಹಾಯ ಬೇಕಿದ್ದರೆ ಕಾಲ್ ಮಾಡಿ ವೆಹಿಕಲ್ ನಂಬರ್ ತಿಳಿಸಿ:</div>
-        <a href="tel:8105010768" class="support-btn" data-key="emergBtn">📞 24/7 ತುರ್ತು ಕಾಲ್ (Emergency Call)</a>
-    </div>
-
-    <div class="nav-tabs">
-        <div class="nav-tab active" id="tab1" onclick="switchTab('customer')" data-key="tabCust">👤 ಬುಕಿಂಗ್</div>
-        <div class="nav-tab" id="tab2" onclick="switchTab('meter')" data-key="tabMeter">⏱️ ಲೈವ್ ಮೀಟರ್</div>
-        <div class="nav-tab" id="tab3" onclick="switchTab('profile')" data-key="tabProfile">🚗 ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್</div>
-        <div class="nav-tab" id="tab4" onclick="switchTab('live')" data-key="tabLive">📢 ಡ್ರೈವರ್ ಲೈವ್</div>
-        <div class="nav-tab" id="tab5" onclick="switchTab('admin')" data-key="tabAdmin">🔑 ಅಡ್ಮಿನ್</div>
-    </div>
-
-    <!-- 1. CUSTOMER BOOKING SECTION -->
-    <div id="customerSection" class="section active">
-        <h2 data-key="hBook">🚖 ಯಾತ್ರೆ ಬುಕ್ ಮಾಡಿ (Book a Ride)</h2>
+    
+    <!-- INITIAL ROLE SELECTION SCREEN -->
+    <div id="roleSelectionScreen">
+        <img src="https://i.ibb.co/6R22zYh/1000377596.png" class="role-logo" alt="AR Taxi Logo">
+        <h1 style="font-size: 1.2rem; color: #2c3e50; margin-bottom: 5px;">AR Taxi Shahapur</h1>
+        <p style="font-size: 0.8rem; color: #7f8c8d; margin-bottom: 25px;">ದಯವಿಟ್ಟು ನಿಮ್ಮ ಬಳಕೆಯನ್ನು ಆಯ್ಕೆ ಮಾಡಿ:</p>
         
-        <!-- Customer Booking Form -->
-        <div id="bookingFormContainer">
+        <button class="role-btn role-customer" onclick="selectRole('customer')">
+            👤 ನಾನು ಕಸ್ಟಮರ್ (Customer Booking & Meter)
+        </button>
+        
+        <button class="role-btn role-driver" onclick="selectRole('driver')">
+            🚗 ನಾನು ಡ್ರೈವರ್ (Driver Login, Meter & Admin)
+        </button>
+    </div>
+
+    <!-- MAIN APP CONTAINER (Hidden initially) -->
+    <div id="mainAppContent" style="display: none;">
+        
+        <button class="back-home-btn" onclick="goBackToRoleSelection()">⬅️ ಹಿಂದಕ್ಕೆ (Change Role)</button>
+
+        <div class="header">
+            <div class="logo-title">
+                <span>🚖</span>
+                <div>
+                    <div class="mainTitle" id="mainTitleText">AR Taxi Shahapur</div>
+                    <div class="subTitle" id="subTitleText">ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್</div>
+                </div>
+            </div>
+            <button class="lang-btn" onclick="toggleLanguage()" id="langToggleBtn">English</button>
+        </div>
+
+        <div class="whatsapp-box">
+            <div style="font-size:0.75rem; font-weight:bold; color:#065f46;" data-key="waText">ದಯವಿಟ್ಟು ಡ್ರೈವರ್‌ಗಳು ಮಾತ್ರ ಈ ಗುಂಪಿಗೆ ಜಾಯಿನ್ ಆಗಿ.</div>
+            <a href="https://chat.whatsapp.com/GMEfsA4F2xZ9NGIxjeqoYC?s=cl&p=a&mlu=4&ilr=4" target="_blank" class="whatsapp-btn" data-key="waBtn">💬 Join Driver WhatsApp Group</a>
+        </div>
+
+        <div class="support-box">
+            <div style="font-size:0.75rem; font-weight:bold; color:#9b2c2c;" data-key="emergText">ತುರ್ತು ಸಹಾಯ ಬೇಕಿದ್ದರೆ ಕಾಲ್ ಮಾಡಿ ವೆಹಿಕಲ್ ನಂಬರ್ ತಿಳಿಸಿ:</div>
+            <a href="tel:8105010768" class="support-btn" data-key="emergBtn">📞 24/7 ತುರ್ತು ಕಾಲ್ (Emergency Call)</a>
+        </div>
+
+        <!-- DYNAMIC NAV TABS -->
+        <div class="nav-tabs" id="navTabsContainer"></div>
+
+        <!-- 1. CUSTOMER BOOKING SECTION -->
+        <div id="customerSection" class="section">
+            <h2 data-key="hBook">🚖 ಯಾತ್ರೆ ಬುಕ್ ಮಾಡಿ (Book a Ride)</h2>
+            
+            <div id="bookingFormContainer">
+                <div class="form-group">
+                    <label data-key="lblCustName">👤 ನಿಮ್ಮ ಹೆಸರು (Customer Name)</label>
+                    <input type="text" id="custName" placeholder="ಹೆಸರು ನಮೂದಿಸಿ">
+                </div>
+                <div class="form-group">
+                    <label data-key="lblCustPhone">📱 ಮೊಬೈಲ್ ಸಂಖ್ಯೆ (Phone Number)</label>
+                    <input type="tel" id="custPhone" placeholder="ಫೋನ್ ನಂಬರ್">
+                </div>
+                <div class="form-group">
+                    <label data-key="lblVehType">🛺 ವಾಹನ ಆಯ್ಕೆ (Vehicle Type)</label>
+                    <select id="vehicleType" onchange="updatePassengerOptions()">
+                        <option value="Auto">🛺 ಆಟೋ (Auto)</option>
+                        <option value="Car">🚗 ಕಾರ್ (Car)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label data-key="lblPassCount">👥 ಪ್ರಯಾಣಿಕರ ಸಂಖ್ಯೆ (Passengers)</label>
+                    <select id="passengerCount"></select>
+                </div>
+                
+                <div class="form-group">
+                    <label data-key="lblCurrentLoc">📍 ನೀವು ಈಗ ಎಲ್ಲಿದ್ದೀರಿ (Current Location / Landmark)</label>
+                    <input type="text" id="currentLoc" placeholder="ಉದಾ: ಬಸ್ ಸ್ಟ್ಯಾಂಡ್ ಹತ್ತಿರ, ಗಾಂಧಿ ವೃತ್ತ">
+                </div>
+
+                <div class="form-group">
+                    <label data-key="lblPickup">📍 ಪಿಕ್‌ಅಪ್ ಲೊಕೇಶನ್ (Pickup Location)</label>
+                    <input type="text" id="pickupLoc" placeholder="ಸ್ಥಳದ ಹೆಸರು">
+                    <button type="button" class="btn-gps" onclick="getLocation()" data-key="btnGps">📍 ಲೈವ್ ಜಿಪಿಎಸ್ ಆನ್ ಮಾಡಿ (Get GPS)</button>
+                </div>
+                <div class="form-group">
+                    <label data-key="lblDrop">🏁 ಡ್ರಾಪ್ ಲೊಕೇಶನ್ (Drop Location)</label>
+                    <input type="text" id="dropLoc" placeholder="ತಲುಪಬೇಕಾದ ಸ್ಥಳ">
+                </div>
+                <button class="btn-submit" onclick="submitBooking()" data-key="btnSubmitBook">✅ ಬುಕ್ ಮಾಡಿ (Book Ride)</button>
+            </div>
+
+            <div id="customerStatusContainer" style="margin-top: 10px;"></div>
+        </div>
+
+        <!-- 2. LIVE RUNNING METER SECTION (Common for both Customer & Driver) -->
+        <div id="meterSection" class="section">
+            <h2 data-key="hMeter">⏱️ ಲೈವ್ ರನ್ನಿಂಗ್ ಮೀಟರ್</h2>
             <div class="form-group">
-                <label data-key="lblCustName">👤 ನಿಮ್ಮ ಹೆಸರು (Customer Name)</label>
-                <input type="text" id="custName" placeholder="ಹೆಸರು ನಮೂದಿಸಿ">
+                <label data-key="lblMeterVeh">ವಾಹನ ಆಯ್ಕೆ ಮಾಡಿ:</label>
+                <select id="meterVehicleType" onchange="resetMeterRate()">
+                    <option value="Auto">🛺 ಆಟೋ (Auto) - (₹50 ಫಿಕ್ಸ್, ಪ್ರತಿ ಕಿ.ಮೀ ₹12)</option>
+                    <option value="Car">🚗 ಕಾರ್ (Car) - (₹80 ಫಿಕ್ಸ್, ಪ್ರತಿ ಕಿ.ಮೀ ₹18)</option>
+                </select>
+            </div>
+            <button class="btn-submit" onclick="startMeter()" style="background:#3182ce; margin-bottom:8px;" data-key="btnStartMeter">🟢 ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
+            <div class="card" style="text-align:center; background:#f7fafc;">
+                <p style="font-size:0.8rem; color:#718096;"><span data-key="txtDist">ಪ್ರಯಾಣಿಸಿದ ದೂರ:</span> <span id="liveKm" style="font-weight:bold; color:#2d3748;">0.0</span> ಕಿ.ಮೀ</p>
+                <p style="font-size:1.2rem; font-weight:bold; color:#0fb05b; margin:6px 0;"><span data-key="txtAmt">ಒಟ್ಟು ಮೊತ್ತ:</span> ₹<span id="liveAmount">50</span></p>
+            </div>
+            <button class="btn-submit" onclick="stopAndSendWhatsApp()" style="background:#25D366;" data-key="btnStopMeter">🟢 ಮೀಟರ್ ಆಫ್ ಮಾಡಿ ವಾಟ್ಸಾಪ್‌ಗೆ ಕಳುಹಿಸಿ</button>
+        </div>
+
+        <!-- 3. DRIVER PROFILE & REGISTRATION SECTION -->
+        <div id="profileSection" class="section">
+            <h2 data-key="hProfile">🚗 ಡ್ರೈವರ್ ರಿಜಿಸ್ಟ್ರೇಷನ್ / ಪ್ರೊಫೈಲ್</h2>
+            <div class="form-group">
+                <label data-key="lblDrName">ಡ್ರೈವರ್ ಹೆಸರು (Driver Name):</label>
+                <input type="text" id="drvName" placeholder="ನಿಮ್ಮ ಹೆಸರು">
             </div>
             <div class="form-group">
-                <label data-key="lblCustPhone">📱 ಮೊಬೈಲ್ ಸಂಖ್ಯೆ (Phone Number)</label>
-                <input type="tel" id="custPhone" placeholder="ಫೋನ್ ನಂಬರ್">
+                <label data-key="lblDrPhone">ಮೊಬೈಲ್ ನಂಬರ್ (Phone):</label>
+                <input type="tel" id="drvPhone" placeholder="ಫೋನ್ ನಂಬರ್">
             </div>
             <div class="form-group">
-                <label data-key="lblVehType">🛺 ವಾಹನ ಆಯ್ಕೆ (Vehicle Type)</label>
-                <select id="vehicleType" onchange="updatePassengerOptions()">
-                    <option value="Auto">🛺 ಆಟೋ (Auto)</option>
-                    <option value="Car">🚗 ಕಾರ್ (Car)</option>
+                <label data-key="lblDrVehNo">ವೆಹಿಕಲ್ ನಂಬರ್ (Vehicle Number):</label>
+                <input type="text" id="drvVehNo" placeholder="ಉದಾ: KA-33...">
+            </div>
+            <div class="form-group">
+                <label data-key="lblDrVehType">ವಾಹನ ಪ್ರಕಾರ (Vehicle Type):</label>
+                <select id="drvVehType">
+                    <option value="Auto">🛺 Auto</option>
+                    <option value="Car">🚗 Car</option>
                 </select>
             </div>
             <div class="form-group">
-                <label data-key="lblPassCount">👥 ಪ್ರಯಾಣಿಕರ ಸಂಖ್ಯೆ (Passengers)</label>
-                <select id="passengerCount"></select>
+                <label data-key="lblVehPhoto">ವೆಹಿಕಲ್ ಫೋಟೋ ಅಪ್ಲೋಡ್ (Vehicle Photo):</label>
+                <input type="file" id="vehPhotoFile" accept="image/*">
             </div>
-            
+            <button class="btn-submit" onclick="registerDriver()" data-key="btnRegister">ಲಾಗಿನ್ / ರಿಜಿಸ್ಟರ್ ಮಾಡಿ</button>
+        </div>
+
+        <!-- 4. DRIVER LIVE BOOKINGS SECTION -->
+        <div id="liveSection" class="section">
+            <h2 data-key="hLiveBookings">📢 ಡ್ರೈವರ್‌ಗಳಿಗೆ ಲೈವ್ ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು</h2>
             <div class="form-group">
-                <label data-key="lblCurrentLoc">📍 ನೀವು ಈಗ ಎಲ್ಲಿದ್ದೀರಿ (Current Location / Landmark)</label>
-                <input type="text" id="currentLoc" placeholder="ಉದಾ: ಬಸ್ ಸ್ಟ್ಯಾಂಡ್ ಹತ್ತಿರ, ಗಾಂಧಿ ವೃತ್ತ">
+                <label data-key="lblEnterIdToAccept">ನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ:</label>
+                <input type="password" id="driverInputId" placeholder="4 ಅಂಕಿಯ ಐಡಿ (ಉದಾ: 5613)" maxlength="4">
             </div>
-
-            <div class="form-group">
-                <label data-key="lblPickup">📍 ಪಿಕ್‌ಅಪ್ ಲೊಕೇಶನ್ (Pickup Location)</label>
-                <input type="text" id="pickupLoc" placeholder="ಸ್ಥಳದ ಹೆಸರು">
-                <button type="button" class="btn-gps" onclick="getLocation()" data-key="btnGps">📍 ಲೈವ್ ಜಿಪಿಎಸ್ ಆನ್ ಮಾಡಿ (Get GPS)</button>
-            </div>
-            <div class="form-group">
-                <label data-key="lblDrop">🏁 ಡ್ರಾಪ್ ಲೊಕೇಶನ್ (Drop Location)</label>
-                <input type="text" id="dropLoc" placeholder="ತಲುಪಬೇಕಾದ ಸ್ಥಳ">
-            </div>
-            <button class="btn-submit" onclick="submitBooking()" data-key="btnSubmitBook">✅ ಬುಕ್ ಮಾಡಿ (Book Ride)</button>
+            <div id="driverBookingsList">ಬುಕಿಂಗ್‌ಗಳಿಗಾಗಿ ಕಾಯಲಾಗುತ್ತಿದೆ...</div>
         </div>
 
-        <!-- Customer Status / Live Driver Details View (Appears after booking) -->
-        <div id="customerStatusContainer" style="margin-top: 10px;"></div>
-    </div>
+        <!-- 5. ADMIN SECTION -->
+        <div id="adminSection" class="section">
+            <h2 data-key="hAdmin">🔑 ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್ (Admin Panel)</h2>
+            <p style="font-size:0.75rem; color:#718096; margin-bottom:8px;" data-key="adminSub">ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ ವೀಕ್ಷಿಸಲು ಅಥವಾ ಡಿಲೀಟ್ ಮಾಡಲು ನಿಮ್ಮ ಕೋಡ್ ನಮೂದಿಸಿ.</p>
+            <div id="adminDriversList">ಡ್ರೈವರ್‌ಗಳ ಮಾಹಿತಿ ಲೋಡ್ ಆಗುತ್ತಿದೆ...</div>
+        </div>
 
-    <!-- 2. LIVE RUNNING METER SECTION -->
-    <div id="meterSection" class="section">
-        <h2 data-key="hMeter">⏱️ ಲೈವ್ ರನ್ನಿಂಗ್ ಮೀಟರ್</h2>
-        <div class="form-group">
-            <label data-key="lblMeterVeh">ವಾಹನ ಆಯ್ಕೆ ಮಾಡಿ:</label>
-            <select id="meterVehicleType" onchange="resetMeterRate()">
-                <option value="Auto">🛺 ಆಟೋ (Auto) - (₹50 ಫಿಕ್ಸ್, ಪ್ರತಿ ಕಿ.ಮೀ ₹12)</option>
-                <option value="Car">🚗 ಕಾರ್ (Car) - (₹80 ಫಿಕ್ಸ್, ಪ್ರತಿ ಕಿ.ಮೀ ₹18)</option>
-            </select>
+        <div class="footer">
+            © 2026 AR Taxi Shahapur. All rights reserved.
         </div>
-        <button class="btn-submit" onclick="startMeter()" style="background:#3182ce; margin-bottom:8px;" data-key="btnStartMeter">🟢 ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
-        <div class="card" style="text-align:center; background:#f7fafc;">
-            <p style="font-size:0.8rem; color:#718096;"><span data-key="txtDist">ಪ್ರಯಾಣಿಸಿದ ದೂರ:</span> <span id="liveKm" style="font-weight:bold; color:#2d3748;">0.0</span> ಕಿ.ಮೀ</p>
-            <p style="font-size:1.2rem; font-weight:bold; color:#0fb05b; margin:6px 0;"><span data-key="txtAmt">ಒಟ್ಟು ಮೊತ್ತ:</span> ₹<span id="liveAmount">50</span></p>
-        </div>
-        <button class="btn-submit" onclick="stopAndSendWhatsApp()" style="background:#25D366;" data-key="btnStopMeter">🟢 ಮೀಟರ್ ಆಫ್ ಮಾಡಿ ವಾಟ್ಸಾಪ್‌ಗೆ ಕಳುಹಿಸಿ</button>
-    </div>
-
-    <!-- 3. DRIVER PROFILE & REGISTRATION SECTION -->
-    <div id="profileSection" class="section">
-        <h2 data-key="hProfile">🚗 ಡ್ರೈವರ್ ರಿಜಿಸ್ಟ್ರೇಷನ್ / ಪ್ರೊಫೈಲ್</h2>
-        <div class="form-group">
-            <label data-key="lblDrName">ಡ್ರೈವರ್ ಹೆಸರು (Driver Name):</label>
-            <input type="text" id="drvName" placeholder="ನಿಮ್ಮ ಹೆಸರು">
-        </div>
-        <div class="form-group">
-            <label data-key="lblDrPhone">ಮೊಬೈಲ್ ನಂಬರ್ (Phone):</label>
-            <input type="tel" id="drvPhone" placeholder="ಫೋನ್ ನಂಬರ್">
-        </div>
-        <div class="form-group">
-            <label data-key="lblDrVehNo">ವೆಹಿಕಲ್ ನಂಬರ್ (Vehicle Number):</label>
-            <input type="text" id="drvVehNo" placeholder="ಉದಾ: KA-33...">
-        </div>
-        <div class="form-group">
-            <label data-key="lblDrVehType">ವಾಹನ ಪ್ರಕಾರ (Vehicle Type):</label>
-            <select id="drvVehType">
-                <option value="Auto">🛺 Auto</option>
-                <option value="Car">🚗 Car</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label data-key="lblVehPhoto">ವೆಹಿಕಲ್ ಫೋಟೋ ಅಪ್ಲೋಡ್ (Vehicle Photo):</label>
-            <input type="file" id="vehPhotoFile" accept="image/*">
-        </div>
-        <button class="btn-submit" onclick="registerDriver()" data-key="btnRegister">ಲಾಗಿನ್ / ರಿಜಿಸ್ಟರ್ ಮಾಡಿ</button>
-    </div>
-
-    <!-- 4. DRIVER LIVE BOOKINGS SECTION -->
-    <div id="liveSection" class="section">
-        <h2 data-key="hLiveBookings">📢 ಡ್ರೈವರ್‌ಗಳಿಗೆ ಲೈವ್ ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು</h2>
-        <div class="form-group">
-            <label data-key="lblEnterIdToAccept">ನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ:</label>
-            <input type="password" id="driverInputId" placeholder="4 ಅಂಕಿಯ ಐಡಿ (ಉದಾ: 5613)" maxlength="4">
-        </div>
-        <div id="driverBookingsList">ಬುಕಿಂಗ್‌ಗಳಿಗಾಗಿ ಕಾಯಲಾಗುತ್ತಿದೆ...</div>
-    </div>
-
-    <!-- 5. ADMIN SECTION -->
-    <div id="adminSection" class="section">
-        <h2 data-key="hAdmin">🔑 ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್ (Admin Panel)</h2>
-        <p style="font-size:0.75rem; color:#718096; margin-bottom:8px;" data-key="adminSub">ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ ವೀಕ್ಷಿಸಲು ಅಥವಾ ಡಿಲೀಟ್ ಮಾಡಲು ನಿಮ್ಮ ಕೋಡ್ ನಮೂದಿಸಿ.</p>
-        <div id="adminDriversList">ಡ್ರೈವರ್‌ಗಳ ಮಾಹಿತಿ ಲೋಡ್ ಆಗುತ್ತಿದೆ...</div>
-    </div>
-
-    <div class="footer">
-        © 2026 AR Taxi Shahapur. All rights reserved.
     </div>
 </div>
 
@@ -228,6 +253,7 @@
     let distanceKm = 0;
     let meterInterval = null;
     let myActiveBookingId = null;
+    let currentUserRole = '';
 
     const translations = {
         kn: {
@@ -240,8 +266,8 @@
             emergBtn: "📞 24/7 ತುರ್ತು ಕಾಲ್ (Emergency Call)",
             tabCust: "👤 ಬುಕಿಂಗ್",
             tabMeter: "⏱️ ಲೈವ್ ಮೀಟರ್",
-            tabProfile: "🚗 ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್",
-            tabLive: "📢 ಡ್ರೈವರ್ ಲೈವ್",
+            tabProfile: "🚗 ಪ್ರೊಫೈಲ್",
+            tabLive: "📢 ಲೈವ್",
             tabAdmin: "🔑 ಅಡ್ಮಿನ್",
             hBook: "🚖 ಯಾತ್ರೆ ಬುಕ್ ಮಾಡಿ (Book a Ride)",
             lblCustName: "👤 ನಿಮ್ಮ ಹೆಸರು (Customer Name)",
@@ -280,9 +306,9 @@
             emergText: "For emergency help, call and state vehicle number:",
             emergBtn: "📞 24/7 Emergency Call",
             tabCust: "👤 Booking",
-            tabMeter: "⏱️ Live Meter",
-            tabProfile: "🚗 Driver Profile",
-            tabLive: "📢 Driver Live",
+            tabMeter: "⏱️ Meter",
+            tabProfile: "🚗 Profile",
+            tabLive: "📢 Live",
             tabAdmin: "🔑 Admin",
             hBook: "🚖 Book a Ride",
             lblCustName: "👤 Customer Name",
@@ -313,6 +339,39 @@
             adminSub: "Enter your code to view or delete driver profiles."
         }
     };
+
+    function selectRole(role) {
+        currentUserRole = role;
+        document.getElementById('roleSelectionScreen').style.display = 'none';
+        document.getElementById('mainAppContent').style.display = 'block';
+
+        const navTabs = document.getElementById('navTabsContainer');
+        if (role === 'customer') {
+            // Customer gets Booking and Live Meter
+            navTabs.style.gridTemplateColumns = 'repeat(2, 1fr)';
+            navTabs.innerHTML = `
+                <div class="nav-tab active" id="tab1" onclick="switchTab('customer')" data-key="tabCust">👤 ಬುಕಿಂಗ್</div>
+                <div class="nav-tab" id="tab2" onclick="switchTab('meter')" data-key="tabMeter">⏱️ ಲೈವ್ ಮೀಟರ್</div>
+            `;
+            switchTab('customer');
+        } else {
+            // Driver gets Booking, Live Meter, Profile, Live Orders, and Admin
+            navTabs.style.gridTemplateColumns = 'repeat(5, 1fr)';
+            navTabs.innerHTML = `
+                <div class="nav-tab active" id="tab1" onclick="switchTab('customer')" data-key="tabCust">👤 ಬುಕಿಂಗ್</div>
+                <div class="nav-tab" id="tab2" onclick="switchTab('meter')" data-key="tabMeter">⏱️ ಲೈವ್ ಮೀಟರ್</div>
+                <div class="nav-tab" id="tab3" onclick="switchTab('profile')" data-key="tabProfile">🚗 ಪ್ರೊಫೈಲ್</div>
+                <div class="nav-tab" id="tab4" onclick="switchTab('live')" data-key="tabLive">📢 ಲೈವ್</div>
+                <div class="nav-tab" id="tab5" onclick="switchTab('admin')" data-key="tabAdmin">🔑 ಅಡ್ಮಿನ್</div>
+            `;
+            switchTab('live'); // Default view for drivers
+        }
+    }
+
+    function goBackToRoleSelection() {
+        document.getElementById('mainAppContent').style.display = 'none';
+        document.getElementById('roleSelectionScreen').style.display = 'block';
+    }
 
     function toggleLanguage() {
         currentLang = currentLang === 'kn' ? 'en' : 'kn';
@@ -357,22 +416,22 @@
 
         if(tabName === 'customer') {
             document.getElementById('customerSection').classList.add('active');
-            document.getElementById('tab1').classList.add('active');
+            if(document.getElementById('tab1')) document.getElementById('tab1').classList.add('active');
         } else if(tabName === 'meter') {
             document.getElementById('meterSection').classList.add('active');
-            document.getElementById('tab2').classList.add('active');
+            if(document.getElementById('tab2')) document.getElementById('tab2').classList.add('active');
         } else if(tabName === 'profile') {
             document.getElementById('profileSection').classList.add('active');
-            document.getElementById('tab3').classList.add('active');
+            if(document.getElementById('tab3')) document.getElementById('tab3').classList.add('active');
         } else if(tabName === 'live') {
             document.getElementById('liveSection').classList.add('active');
-            document.getElementById('tab4').classList.add('active');
+            if(document.getElementById('tab4')) document.getElementById('tab4').classList.add('active');
             listenToBookings();
         } else if(tabName === 'admin') {
             const pass = prompt('ಅಡ್ಮಿನ್ ಕೋಡ್ ನಮೂದಿಸಿ (Enter Admin Code):');
             if(pass === '8105010768') {
                 document.getElementById('adminSection').classList.add('active');
-                document.getElementById('tab5').classList.add('active');
+                if(document.getElementById('tab5')) document.getElementById('tab5').classList.add('active');
                 loadAdminData();
             } else {
                 alert('ತಪ್ಪಾದ ಕೋಡ್! (Incorrect Code)');
@@ -530,7 +589,6 @@
             myActiveBookingId = docRef.id;
             alert('ನಿಮ್ಮ ಬುಕಿಂಗ್ ಡ್ರೈವರ್‌ಗಳಿಗೆ ಕಳುಹಿಸಲಾಗಿದೆ! ದಯವಿಟ್ಟು ಕಾಯಿರಿ.');
             
-            // Start listening for customer booking status updates
             monitorCustomerBooking(myActiveBookingId);
 
             document.getElementById('custName').value = '';
@@ -552,7 +610,6 @@
             const b = docSnap.data();
 
             if(b.status === 'Accepted by Driver') {
-                // Play notification sound for customer
                 const audio = document.getElementById('alertSound');
                 audio.play().catch(e => console.log(e));
 
