@@ -41,13 +41,14 @@
         .logo-title { display: flex; align-items: center; gap: 8px; }
         .mainTitle { font-size: 1.05rem; font-weight: bold; color: #2c3e50; }
         .subTitle { font-size: 0.72rem; color: #7f8c8d; }
-        .lang-btn { background: #eef2fe; border: 1px solid #bae1fd; padding: 6px 10px; border-radius: 20px; font-weight: 600; font-size: 0.8rem; cursor: pointer; }
+        .lang-btn { background: #eef2fe; border: 1px solid #bae1fd; padding: 6px 12px; border-radius: 20px; font-weight: 600; font-size: 0.8rem; cursor: pointer; }
         
-        .whatsapp-box { background: linear-gradient(135deg, #dffc79 0%, #96ga9d 100%); background: #e8f8f0; border: 2px dashed #0fb05b; padding: 10px; border-radius: 12px; text-align: center; margin-bottom: 10px; }
-        .whatsapp-btn { display: inline-block; background: #0fb05b; color: white; padding: 8px 14px; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 0.85rem; margin-top: 5px; }
-
+        /* Banners */
+        .whatsapp-box { background: #e8f8f0; border: 2px dashed #0fb05b; padding: 10px; border-radius: 12px; text-align: center; margin-bottom: 10px; }
+        .whatsapp-btn { display: inline-block; background: #0fb05b; color: white; padding: 8px 14px; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 0.82rem; margin-top: 6px; }
+        
         .support-box { background: #fff5f5; border: 2px solid #feb2b2; padding: 10px; border-radius: 12px; text-align: center; margin-bottom: 10px; }
-        .support-btn { display: inline-block; background: #e53e3e; color: white; padding: 8px 14px; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 0.85rem; margin-top: 5px; }
+        .support-btn { display: inline-block; background: #e53e3e; color: white; padding: 8px 14px; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 0.82rem; margin-top: 6px; }
 
         .role-selector { background: #edf2f7; padding: 8px; border-radius: 10px; margin-bottom: 12px; }
         .role-selector select { width: 100%; padding: 8px; border: 1px solid #cbd5e0; border-radius: 8px; font-weight: bold; font-size: 0.9rem; background: #fff; }
@@ -59,7 +60,7 @@
         label { display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 3px; color: #4a5568; }
         input, select { width: 100%; padding: 9px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 0.88rem; }
         
-        .btn-gps, .btn-submit { width: 100%; padding: 11px; border: none; border-radius: 8px; font-weight: bold; font-size: 0.9rem; cursor: pointer; margin-top: 5px; }
+        .btn-gps, .btn-submit { width: 100%; padding: 11px; border: none; border-radius: 8px; font-weight: bold; font-size: 0.9rem; cursor: pointer; margin-top: 5px; display: flex; align-items: center; justify-content: center; gap: 6px; }
         .btn-gps { background: #ebf8ff; color: #3182ce; border: 1px solid #bee3f8; }
         .btn-submit { background: linear-gradient(45deg, #0fb05b, #96c93d); color: white; }
         
@@ -79,70 +80,83 @@
                 <div class="subTitle" id="subTitleText">ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್</div>
             </div>
         </div>
-        <button class="lang-btn" onclick="toggleLanguage()" id="langToggleBtn">English / ಕನ್ನಡ</button>
+        <button class="lang-btn" onclick="toggleLanguage()" id="langToggleBtn">English</button>
     </div>
 
-    <!-- WhatsApp Group Banner -->
+    <!-- Driver WhatsApp Group Banner with Instructions -->
     <div class="whatsapp-box">
-        <div style="font-size:0.8rem; font-weight:bold; color:#065f46;">ಡ್ರೈವರ್‌ಗಳು ಕಡ್ಡಾಯವಾಗಿ ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್‌ಗೆ ಸೇರಿ:</div>
-        <a href="https://chat.whatsapp.com/EshgUi1zUfbCefQQKwmX7y" target="_blank" class="whatsapp-btn">Join Driver WhatsApp Group</a>
+        <div style="font-size:0.78rem; font-weight:bold; color:#065f46; line-height:1.3;" id="waInstructions">
+            ದಯವಿಟ್ಟು ಡ್ರೈವರ್‌ಗಳು ಮಾತ್ರ ಈ ಗುಂಪಿಗೆ ಜಾಯಿನ್ ಆಗಿ. ಏನಾದರೂ ಸಮಸ್ಯೆ ಬಂದರೆ ನಿಮ್ಮ ಆಪ್ ಮೂಲಕ ಅಥವಾ ಚಾಟ್‌ನಲ್ಲಿ ತಿಳಿಸಿ.
+        </div>
+        <a href="https://chat.whatsapp.com/GMEfsA4F2xZ9NGIxjeqoYC?s=cl&p=a&mlu=4&ilr=4" target="_blank" class="whatsapp-btn">💬 Join Driver WhatsApp Group</a>
     </div>
 
-    <!-- Support Banner -->
+    <!-- Emergency Support Banner with Detailed Instructions -->
     <div class="support-box">
-        <div style="font-size:0.8rem; font-weight:bold; color:#9b2c2c;">ತುರ್ತು ಸಹಾಯ ಬೇಕಿದ್ದರೆ ಸಂಪರ್ಕಿಸಿ:</div>
-        <a href="tel:9685234515" class="support-btn">📞 24/7 Customer Care (Call)</a>
+        <div style="font-size:0.78rem; font-weight:bold; color:#9b2c2c; line-height:1.3;" id="emergencyInstructions">
+            ಗ್ರಾಹಕರಿಗೆ ಅಥವಾ ಡ್ರೈವರ್‌ಗಳಿಗೆ ಯಾವುದೇ ತೊಂದರೆ/ತುರ್ತು ಸಹಾಯ ಬೇಕಿದ್ದರೆ, ಕೆಳಗಿನ ಬಟನ್ ಒತ್ತಿ ನೇರವಾಗಿ ಕಾಲ್ ಮಾಡಿ ವೆಹಿಕಲ್ ನಂಬರ್ ತಿಳಿಸಿ.
+        </div>
+        <a href="tel:8105010768" class="support-btn" id="emergencyBtnText">📞 24/7 ತುರ್ತು ಕಾಲ್ (Emergency Call)</a>
     </div>
 
-    <!-- Role Switcher Dropdown -->
+    <!-- Role Switcher -->
     <div class="role-selector">
-        <label id="lblRoleSelect">ನಿಮ್ಮ ಮೊಬೈಲ್ ಬಳಕೆ ಯಾವುದು ಆಯ್ಕೆ ಮಾಡಿ:</label>
         <select id="userRoleSelect" onchange="changeRole()">
             <option value="customer">👤 ನಾನು ಗ್ರಾಹಕ (Customer Booking)</option>
-            <option value="driver">🚗 ನಾನು ಡ್ರೈವರ್ (Driver View)</option>
+            <option value="driver">🚗 ನಾನು ಡ್ರೈವರ್ (Driver View & Meter)</option>
         </select>
     </div>
 
     <!-- CUSTOMER SECTION -->
     <div id="customerSection" class="section active">
-        <h2 id="formHeading">ಯಾತ್ರೆ ಬುಕ್ ಮಾಡಿ (Book a Ride)</h2>
+        <h2 id="formHeading">🚖 ಯಾತ್ರೆ ಬುಕ್ ಮಾಡಿ (Book a Ride)</h2>
         <div class="form-group">
-            <label id="lblCustomerName">ನಿಮ್ಮ ಹೆಸರು (Customer Name)</label>
+            <label id="lblCustomerName">👤 ನಿಮ್ಮ ಹೆಸರು (Customer Name)</label>
             <input type="text" id="custName" placeholder="ಹೆಸರು ನಮೂದಿಸಿ">
         </div>
         <div class="form-group">
-            <label id="lblCustomerPhone">ಮೊಬೈಲ್ ಸಂಖ್ಯೆ (Phone Number)</label>
+            <label id="lblCustomerPhone">📱 ಮೊಬೈಲ್ ಸಂಖ್ಯೆ (Phone Number)</label>
             <input type="tel" id="custPhone" placeholder="ಫೋನ್ ನಂಬರ್">
         </div>
         <div class="form-group">
-            <label id="lblVehicleType">ವಾಹನ ಪ್ರಕಾರ (Vehicle Type & Passengers)</label>
-            <select id="vehicleType">
-                <option value="Auto (2 ಜನ)">🛺 Auto (2 ಜನ)</option>
-                <option value="Auto (ಕಾಣ್ / 4 ಜನ)">🛺 Auto (4 ಜನ)</option>
-                <option value="Car (ಕಾರು)">🚗 Car (ಕಾರು)</option>
+            <label id="lblVehicleType">🛺 ವಾಹನ ಪ್ರಕಾರ (Vehicle & Passengers)</label>
+            <select id="vehicleType" onchange="updatePassengerLimit()">
+                <option value="Auto (ಮೋಟರ್ ಆಟೋ - 3 ಜನವರೆಗೆ)">🛺 Auto (ಮೋಟರ್ ಆಟೋ - 3 ಜನವರೆಗೆ)</option>
+                <option value="Car (ಕಾರು - 4 ಅಥವಾ ಹೆಚ್ಚು ಜನರಿಗೆ)">🚗 Car (ಕಾರು - 4 ಅಥವಾ ಹೆಚ್ಚು ಜನರಿಗೆ)</option>
             </select>
         </div>
         <div class="form-group">
-            <label id="lblPickup">ಎಲ್ಲಿಂದ ಹೊರಡಬೇಕು (Pickup Location)</label>
+            <label id="lblPickup">📍 ಪಿಕ್‌ಅಪ್ ಲೊಕೇಶನ್ (Pickup Location)</label>
             <input type="text" id="pickupLoc" placeholder="ಸ್ಥಳದ ಹೆಸರು">
-            <button type="button" class="btn-gps" onclick="getLocation()">📍 ಜಿಪಿಎಸ್ ಲೈವ್ ಲೊಕೇಶನ್ ಹಾಕಿ (Get GPS)</button>
+            <button type="button" class="btn-gps" onclick="getLocation()">📍 ಲೈವ್ ಜಿಪಿಎಸ್ ಆನ್ ಮಾಡಿ (Get GPS Location)</button>
         </div>
         <div class="form-group">
-            <label id="lblDrop">ಎಲ್ಲಿಗೆ ಹೋಗಬೇಕು (Drop Location)</label>
+            <label id="lblDrop">🏁 ಡ್ರಾಪ್ ಲೊಕೇಶನ್ (Drop Location)</label>
             <input type="text" id="dropLoc" placeholder="ತಲುಪಬೇಕಾದ ಸ್ಥಳ">
         </div>
-        <button class="btn-submit" onclick="submitBooking()" id="btnSubmitRide">ಬುಕ್ ಮಾಡಿ (Book Ride)</button>
+        <button class="btn-submit" onclick="submitBooking()" id="btnSubmitRide">✅ ಬುಕ್ ಮಾಡಿ (Book Ride)</button>
     </div>
 
     <!-- DRIVER SECTION -->
     <div id="driverSection" class="section">
-        <h2>📢 ಡ್ರೈವರ್‌ಗಳಿಗೆ ಲೈವ್ ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು</h2>
-        <p style="font-size:0.75rem; color:#2b6cb0; margin-bottom:8px;">💡 ಹೊಸ ಬುಕಿಂಗ್ ಬಂದರೆ ಡ್ರೈವರ್ ಫೋನ್‌ನಲ್ಲಿ ಲೈವ್ ಆಗಿ ಕಾಣಿಸುತ್ತದೆ.</p>
+        <h2 id="driverSectionHeading">📢 ಡ್ರೈವರ್‌ಗಳಿಗೆ ಲೈವ್ ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು</h2>
+        
+        <!-- Meter Calculator Option -->
+        <div style="background:#edf2f7; padding:10px; border-radius:10px; margin-bottom:10px;">
+            <h3 style="font-size:0.85rem; color:#2b6cb0; margin-bottom:5px;">📊 ಲೈವ್ ಮೀಟರ್ ಚಾರ್ಜ್ ಕ್ಯಾಲ್ಕುಲೇಟರ್</h3>
+            <p style="font-size:0.75rem; color:#4a5568;">(ಮೊದಲ 3 ಕಿ.ಮೀ ವರೆಗೆ ₹50 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ 1 ಕಿ.ಮೀಗೆ ₹12)</p>
+            <div style="display:flex; gap:6px; margin-top:6px;">
+                <input type="number" id="kmInput" placeholder="ಕಿ.ಮೀ (KM) ಹಾಕಿ" style="font-size:0.8rem; padding:6px;">
+                <button onclick="calculateFare()" style="background:#3182ce; color:white; border:none; padding:6px 12px; border-radius:6px; font-weight:bold; cursor:pointer; font-size:0.8rem;">ಲೆಕ್ಕ ಹಾಕಿ</button>
+            </div>
+            <div id="fareResult" style="font-weight:bold; color:#2f855a; font-size:0.85rem; margin-top:5px;"></div>
+        </div>
+
         <div id="driverBookingsList">ಬುಕಿಂಗ್‌ಗಳಿಗಾಗಿ ಕಾಯಲಾಗುತ್ತಿದೆ...</div>
     </div>
 
     <div class="footer">
-        © 2026 AR Taxi Booking Shahapur. All rights reserved.
+        © 2026 AR Taxi Shahapur. All rights reserved.
     </div>
 </div>
 
@@ -151,15 +165,35 @@
 
     function toggleLanguage() {
         currentLang = currentLang === 'kn' ? 'en' : 'kn';
-        document.getElementById('mainTitleText').innerText = currentLang === 'kn' ? 'AR Taxi Shahapur' : 'AR Taxi Shahapur';
-        document.getElementById('subTitleText').innerText = currentLang === 'kn' ? 'ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್' : 'Local Auto & Taxi Booking';
-        document.getElementById('formHeading').innerText = currentLang === 'kn' ? 'ಯಾತ್ರೆ ಬುಕ್ ಮಾಡಿ (Book a Ride)' : 'Book a Ride';
-        document.getElementById('lblCustomerName').innerText = currentLang === 'kn' ? 'ನಿಮ್ಮ ಹೆಸರು (Customer Name)' : 'Customer Name';
-        document.getElementById('lblCustomerPhone').innerText = currentLang === 'kn' ? 'ಮೊಬೈಲ್ ಸಂಖ್ಯೆ (Phone Number)' : 'Phone Number';
-        document.getElementById('lblVehicleType').innerText = currentLang === 'kn' ? 'ವಾಹನ ಪ್ರಕಾರ (Vehicle Type & Passengers)' : 'Vehicle Type';
-        document.getElementById('lblPickup').innerText = currentLang === 'kn' ? 'ಎಲ್ಲಿಂದ ಹೊರಡಬೇಕು (Pickup Location)' : 'Pickup Location';
-        document.getElementById('lblDrop').innerText = currentLang === 'kn' ? 'ಎಲ್ಲಿಗೆ ಹೋಗಬೇಕು (Drop Location)' : 'Drop Location';
-        document.getElementById('btnSubmitRide').innerText = currentLang === 'kn' ? 'ಬುಕ್ ಮಾಡಿ (Book Ride)' : 'Book Ride';
+        document.getElementById('langToggleBtn').innerText = currentLang === 'kn' ? 'English' : 'ಕನ್ನಡ';
+        
+        if(currentLang === 'en') {
+            document.getElementById('mainTitleText').innerText = 'AR Taxi Shahapur';
+            document.getElementById('subTitleText').innerText = 'Local Auto & Taxi Booking Service';
+            document.getElementById('formHeading').innerText = '🚖 Book a Ride';
+            document.getElementById('lblCustomerName').innerText = '👤 Customer Name';
+            document.getElementById('lblCustomerPhone').innerText = '📱 Phone Number';
+            document.getElementById('lblVehicleType').innerText = '🛺 Vehicle & Passengers';
+            document.getElementById('lblPickup').innerText = '📍 Pickup Location';
+            document.getElementById('lblDrop').innerText = '🏁 Drop Location';
+            document.getElementById('btnSubmitRide').innerText = '✅ Book Ride';
+            document.getElementById('waInstructions').innerText = 'Please join this group if you are a driver. Report any issues via your app or chat.';
+            document.getElementById('emergencyInstructions').innerText = 'If customers or drivers face any emergency, click below to call and provide vehicle number.';
+            document.getElementById('emergencyBtnText').innerText = '📞 24/7 Emergency Call';
+        } else {
+            document.getElementById('mainTitleText').innerText = 'AR Taxi Shahapur';
+            document.getElementById('subTitleText').innerText = 'ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್';
+            document.getElementById('formHeading').innerText = '🚖 ಯಾತ್ರೆ ಬುಕ್ ಮಾಡಿ (Book a Ride)';
+            document.getElementById('lblCustomerName').innerText = '👤 ನಿಮ್ಮ ಹೆಸರು (Customer Name)';
+            document.getElementById('lblCustomerPhone').innerText = '📱 ಮೊಬೈಲ್ ಸಂಖ್ಯೆ (Phone Number)';
+            document.getElementById('lblVehicleType').innerText = '🛺 ವಾಹನ ಪ್ರಕಾರ (Vehicle & Passengers)';
+            document.getElementById('lblPickup').innerText = '📍 ಪಿಕ್‌ಅಪ್ ಲೊಕೇಶನ್ (Pickup Location)';
+            document.getElementById('lblDrop').innerText = '🏁 ಡ್ರಾಪ್ ಲೊಕೇಶನ್ (Drop Location)';
+            document.getElementById('btnSubmitRide').innerText = '✅ ಬುಕ್ ಮಾಡಿ (Book Ride)';
+            document.getElementById('waInstructions').innerText = 'ದಯವಿಟ್ಟು ಡ್ರೈವರ್‌ಗಳು ಮಾತ್ರ ಈ ಗುಂಪಿಗೆ ಜಾಯಿನ್ ಆಗಿ. ಏನಾದರೂ ಸಮಸ್ಯೆ ಬಂದರೆ ನಿಮ್ಮ ಆಪ್ ಮೂಲಕ ಅಥವಾ ಚಾಟ್‌ನಲ್ಲಿ ತಿಳಿಸಿ.';
+            document.getElementById('emergencyInstructions').innerText = 'ಗ್ರಾಹಕರಿಗೆ ಅಥವಾ ಡ್ರೈವರ್‌ಗಳಿಗೆ ಯಾವುದೇ ತೊಂದರೆ/ತುರ್ತು ಸಹಾಯ ಬೇಕಿದ್ದರೆ, ಕೆಳಗಿನ ಬಟನ್ ಒತ್ತಿ ನೇರವಾಗಿ ಕಾಲ್ ಮಾಡಿ ವೆಹಿಕಲ್ ನಂಬರ್ ತಿಳಿಸಿ.';
+            document.getElementById('emergencyBtnText').innerText = '📞 24/7 ತುರ್ತು ಕಾಲ್ (Emergency Call)';
+        }
     }
 
     function changeRole() {
@@ -174,23 +208,35 @@
         }
     }
 
-    // GPS Location Fetcher
     function getLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude;
                 document.getElementById('pickupLoc').value = `GPS Location (${lat.toFixed(4)}, ${lon.toFixed(4)})`;
-                alert('ಲೈವ್ ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಪಡೆಯಲಾಗಿದೆ!');
+                alert(currentLang === 'kn' ? 'ಲೈವ್ ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಯಶಸ್ವಿಯಾಗಿ ಪಡೆಯಲಾಗಿದೆ!' : 'GPS location fetched successfully!');
             }, () => {
-                alert('ಲೊಕೇಶನ್ ಪಡೆಯಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ದಯವಿಟ್ಟು ಜಿಪಿಎಸ್ ಆನ್ ಮಾಡಿ.');
+                alert(currentLang === 'kn' ? 'ಲೊಕೇಶನ್ ಪಡೆಯಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ದಯವಿಟ್ಟು ಜಿಪಿಎಸ್ ಆನ್ ಮಾಡಿ.' : 'Could not get location. Please enable GPS.');
             });
         } else {
-            alert('ನಿಮ್ಮ ಬ್ರೌಸರ್ ಜಿಪಿಎಸ್ ಅನ್ನು ಬೆಂಬಲಿಸುವುದಿಲ್ಲ.');
+            alert('Geolocation is not supported by your browser.');
         }
     }
 
-    // Submit Booking to Firebase Firestore
+    function calculateFare() {
+        const km = parseFloat(document.getElementById('kmInput').value);
+        if(isNaN(km) || km <= 0) {
+            document.getElementById('fareResult').innerText = 'ಸರಿಯಾದ ಕಿ.ಮೀ ನಮೂದಿಸಿ';
+            return;
+        }
+        let fare = 50; // First 3 KM fixed ₹50
+        if(km > 3) {
+            fare += (km - 3) * 12; // Extra ₹12 per KM
+        }
+        document.getElementById('fareResult').innerText = `ಒಟ್ಟು ಅಂದಾಜು ಚಾರ್ಜ್: ₹${fare}`;
+    }
+
+    // Submit Booking with specific customer notification message
     async function submitBooking() {
         const name = document.getElementById('custName').value.trim();
         const phone = document.getElementById('custPhone').value.trim();
@@ -213,7 +259,10 @@
                 status: 'Pending',
                 timestamp: window.serverTimestamp()
             });
-            alert('ನಿಮ್ಮ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಡ್ರೈವರ್‌ಗಳಿಗೆ ತಲುಪಿದೆ!');
+
+            // Specific notification message requested by user
+            alert('ನಿಮ್ಮ ಬುಕಿಂಗ್ ಡ್ರೈವರ್‌ಗಳಿಗೆ ಕಳುಹಿಸಲಾಗಿದೆ! ಸ್ವಲ್ಪ ಕಾಲ ಕಾಯಿರಿ, ಡ್ರೈವರ್ ವೆಹಿಕಲ್ ನಂಬರ್ ಮತ್ತು ಫೋನ್ ನಂಬರ್ ಜೊತೆಗೆ ನಿಮಗೆ ಕಾಲ್ ಮಾಡುತ್ತಾರೆ.');
+            
             document.getElementById('custName').value = '';
             document.getElementById('custPhone').value = '';
             document.getElementById('pickupLoc').value = '';
@@ -224,7 +273,7 @@
         }
     }
 
-    // Real-time synchronization for Drivers
+    // Real-time synchronization for Drivers with Admin Delete Code protection (8105010768)
     function listenToBookings() {
         const listDiv = document.getElementById('driverBookingsList');
         window.onSnapshot(window.collection(window.db, "bookings"), (snapshot) => {
@@ -238,14 +287,14 @@
                 const id = docSnap.id;
                 html += `
                     <div class="booking-card">
-                        <p><b>ಕಸ್ಟಮರ್ ಹೆಸರು:</b> ${b.name}</p>
-                        <p><b>ಫೋನ್:</b> <a href="tel:${b.phone}">${b.phone}</a></p>
-                        <p><b>ವಾಹನ ಪ್ರಕಾರ:</b> ${b.vehicle}</p>
-                        <p><b>ಪಿಕ್‌ಅಪ್:</b> ${b.pickup}</p>
-                        <p><b>ಇಲ್ಲಿಗೆ:</b> ${b.drop}</p>
-                        <p><b>ಸ್ಥಿತಿ:</b> <span style="color:green; font-weight:bold;">${b.status}</span></p>
-                        <button onclick="acceptBooking('${id}')" style="background:#0fb05b; color:white; border:none; padding:6px 12px; border-radius:6px; margin-top:6px; cursor:pointer; font-weight:bold;">ಸ್ವೀಕರಿಸಿ (Accept)</button>
-                        <button onclick="deleteBooking('${id}')" style="background:#e53e3e; color:white; border:none; padding:6px 12px; border-radius:6px; margin-top:6px; margin-left:6px; cursor:pointer; font-weight:bold;">ಮುಕ್ತಾಯ/ಡಿಲೀಟ್</button>
+                        <p><b>👤 ಕಸ್ಟಮರ್ ಹೆಸರು:</b> ${b.name}</p>
+                        <p><b>📱 ಫೋನ್:</b> <a href="tel:${b.phone}">${b.phone}</a></p>
+                        <p><b>🛺 ವಾಹನ ಆಯ್ಕೆ:</b> <span style="color:#d69e2e; font-weight:bold;">${b.vehicle}</span></p>
+                        <p><b>📍 ಪಿಕ್‌ಅಪ್:</b> ${b.pickup}</p>
+                        <p><b>🏁 ಡ್ರಾಪ್:</b> ${b.drop}</p>
+                        <p><b>📌 ಸ್ಥಿತಿ:</b> <span style="color:green; font-weight:bold;">${b.status}</span></p>
+                        <button onclick="acceptBooking('${id}', '${b.pickup}')" style="background:#0fb05b; color:white; border:none; padding:7px 12px; border-radius:6px; margin-top:6px; cursor:pointer; font-weight:bold;">✅ ಸ್ವೀಕರಿಸಿ (Accept & Navigate)</button>
+                        <button onclick="protectedDelete('${id}')" style="background:#e53e3e; color:white; border:none; padding:7px 12px; border-radius:6px; margin-top:6px; margin-left:6px; cursor:pointer; font-weight:bold;">🗑️ ಮುಕ್ತಾಯ/ಡಿಲೀಟ್</button>
                     </div>
                 `;
             });
@@ -253,23 +302,30 @@
         });
     }
 
-    async function acceptBooking(id) {
+    async function acceptBooking(id, pickup) {
         try {
             const docRef = window.doc(window.db, "bookings", id);
             await window.updateDoc(docRef, { status: 'Accepted by Driver' });
-            alert('ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಲಾಗಿದೆ!');
+            alert('ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಲಾಗಿದೆ! ಕಸ್ಟಮರ್ ಲೊಕೇಶನ್ ಮ್ಯಾಪ್ ತೆರೆಯಲಾಗುತ್ತಿದೆ.');
+            // Open Google Maps navigation to pickup location
+            window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(pickup)}`, '_blank');
         } catch (e) {
             console.error("Error updating: ", e);
         }
     }
 
-    async function deleteBooking(id) {
-        if(confirm('ಈ ಬುಕಿಂಗ್ ಅನ್ನು ಮುಕ್ತಾಯಗೊಳಿಸಲು ಬಯಸುತ್ತೀರಾ?')) {
+    // Protected delete requiring the exact admin code 8105010768
+    async function protectedDelete(id) {
+        const inputCode = prompt('ಅಡ್ಮಿನ್ ಕೋಡ್ ನಮೂದಿಸಿ (Enter Admin Code to Delete):');
+        if(inputCode === '8105010768') {
             try {
                 await window.deleteDoc(window.doc(window.db, "bookings", id));
+                alert('ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಡಿಲೀಟ್ ಮಾಡಲಾಗಿದೆ.');
             } catch (e) {
                 console.error("Error deleting: ", e);
             }
+        } else if(inputCode !== null) {
+            alert('ತಪ್ಪಾದ ಕೋಡ್! ಡಿಲೀಟ್ ಮಾಡಲು ಅನುಮತಿ ಇಲ್ಲ.');
         }
     }
 </script>
