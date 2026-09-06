@@ -9,7 +9,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, onSnapshot, updateDoc, doc, deleteDoc, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, onSnapshot, updateDoc, doc, deleteDoc, getDocs, serverTimestamp, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAm3HFKu101wex1b025-zJZ2BJ_o1Xvw",
@@ -31,6 +31,8 @@
     window.doc = doc;
     window.deleteDoc = deleteDoc;
     window.getDocs = getDocs;
+    window.query = query;
+    window.where = where;
     window.serverTimestamp = serverTimestamp;
   </script>
 
@@ -115,8 +117,8 @@
       </div>
 
       <div class="whatsapp-box">
-        <div style="font-size: 0.75rem; font-weight: bold; color: #065f46;" data-en="Drivers only, please join this WhatsApp group." data-kn="ದಯವಿಟ್ಟು ಡ್ರೈವರ್‌ಗಳು ಮಾತ್ರ ಈ ಗುಂಪಿಗೆ ಜಾಯಿನ್ ಆಗಿ.">ದಯವಿಟ್ಟು ಡ್ರೈವರ್‌ಗಳು ಮಾತ್ರ ಈ ಗುಂಪಿಗೆ ಜಾಯಿನ್ ಆಗಿ.</div>
-        <a href="https://chat.whatsapp.com/WEfaMf2xZNGlxjeqoYC7s-cI&p=4&lnl=4" target="_blank" class="whatsapp-btn" data-en="💬 Join Driver WhatsApp Group" data-kn="💬 ಡ್ರೈವರ್ ವಾಟ್ಸಾಪ್ ಗುಂಪಿಗೆ ಸೇರಿ">💬 Join Driver WhatsApp Group</a>
+        <div style="font-size: 0.75rem; font-weight: bold; color: #065f46;" data-en="Drivers only, please join this WhatsApp group." data-kn="ದಯವಿಟ್ಟು ಡ್ರೈವರ್‌ಗಳು ಮಾತ್ರ ಈ ವಾಟ್ಸಾಪ್ ಗುಂಪಿಗೆ ಜಾಯಿನ್ ಆಗಿ.">ದಯವಿಟ್ಟು ಡ್ರೈವರ್‌ಗಳು ಮಾತ್ರ ಈ ವಾಟ್ಸಾಪ್ ಗುಂಪಿಗೆ ಜಾಯಿನ್ ಆಗಿ.</div>
+        <a href="https://chat.whatsapp.com/G11Yw7T0QxwKS5Njv8gReI?s=cl&p=a&mlu=4&ilr=4" target="_blank" class="whatsapp-btn" data-en="💬 Join Driver WhatsApp Group" data-kn="💬 ಡ್ರೈವರ್ ವಾಟ್ಸಾಪ್ ಗುಂಪಿಗೆ ಸೇರಿ">💬 Join Driver WhatsApp Group</a>
       </div>
 
       <div class="support-box">
@@ -218,10 +220,10 @@
       <div id="liveSection" class="section">
         <h2 data-en="Live Booking Orders for Drivers" data-kn="ಡ್ರೈವರ್‌ಗಳಿಗೆ ಲೈವ್ ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು">ಡ್ರೈವರ್‌ಗಳಿಗೆ ಲೈವ್ ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು</h2>
         <div class="form-group">
-          <label data-en="Enter your 4-digit Driver ID to accept bookings:" data-kn="ನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ:">ನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ:</label>
-          <input type="password" id="driverInputId" placeholder="4 digit ID" maxlength="4">
+          <label data-en="Enter your 4-digit Driver ID to view & accept bookings:" data-kn="ಬುಕಿಂಗ್ ವೀಕ್ಷಿಸಲು ನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ:">ಬುಕಿಂಗ್ ವೀಕ್ಷಿಸಲು ನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ:</label>
+          <input type="password" id="driverInputId" placeholder="4 digit ID" maxlength="4" oninput="checkDriverIdAndListen()">
         </div>
-        <div id="driverBookingsList"><p data-en="No bookings available." data-kn="ಯಾವುದೇ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.">ಯಾವುದೇ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.</p></div>
+        <div id="driverBookingsList"><p style="color: #e53e3e; font-weight: bold;" data-en="Please enter your valid 4-digit Driver ID above to view bookings." data-kn="ಬುಕಿಂಗ್ ನೋಡಲು ದಯವಿಟ್ಟು ನಿಮ್ಮ ಸರಿಯಾದ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ.">ಬುಕಿಂಗ್ ನೋಡಲು ದಯವಿಟ್ಟು ನಿಮ್ಮ ಸರಿಯಾದ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ.</p></div>
       </div>
 
       <!-- 5. DRIVER LIVE METER SECTION -->
@@ -267,6 +269,7 @@
     let myActiveBookingId = null;
     let currentUserRole = '';
     let driverLocationWatchId = null;
+    let bookingsUnsubscribe = null;
 
     function selectRole(role) {
       currentUserRole = role;
@@ -301,6 +304,10 @@
       if (driverLocationWatchId) {
         navigator.geolocation.clearWatch(driverLocationWatchId);
         driverLocationWatchId = null;
+      }
+      if (bookingsUnsubscribe) {
+        bookingsUnsubscribe();
+        bookingsUnsubscribe = null;
       }
     }
 
@@ -361,7 +368,7 @@
       } else if (tabName === 'live') {
         document.getElementById('liveSection').classList.add('active');
         if(document.getElementById('tab4')) document.getElementById('tab4').classList.add('active');
-        listenToBookings();
+        checkDriverIdAndListen();
       } else if (tabName === 'driverMeter') {
         document.getElementById('driverMeterSection').classList.add('active');
         if(document.getElementById('tab6')) document.getElementById('tab6').classList.add('active');
@@ -507,10 +514,18 @@
         return;
       }
 
-      const vehPhoto = await getBase64Image('vehPhotoFile');
-      const driverId = generatedDigitId();
-
       try {
+        const q = window.query(window.collection(window.db, "drivers"), window.where("phone", "==", phone));
+        const querySnapshot = await window.getDocs(q);
+
+        if (!querySnapshot.empty) {
+          alert(currentLang === 'kn' ? '⚠️ ಈ ಮೊಬೈಲ್ ನಂಬರ್ ಈಗಾಗಲೇ ರಜಿಸ್ಟರ್ ಆಗಿದೆ! ಅಡ್ಮಿನ್ ಇದನ್ನು ಡಿಲೀಟ್ ಮಾಡಿದರೆ ಮಾತ್ರ ಹೊಸದಾಗಿ ರಜಿಸ್ಟರ್ ಮಾಡಬಹುದು.' : '⚠️ This mobile number is already registered! You can register again only if admin deletes this profile.');
+          return;
+        }
+
+        const vehPhoto = await getBase64Image('vehPhotoFile');
+        const driverId = generatedDigitId();
+
         await window.addDoc(window.collection(window.db, "drivers"), {
           driverId: driverId,
           name: name,
@@ -523,6 +538,7 @@
           createdAt: Date.now(),
           timestamp: window.serverTimestamp()
         });
+
         alert(currentLang === 'kn' ? `🎉 ಯಶಸ್ವಿಯಾಗಿ ರಜಿಸ್ಟರ್ ಆಗಿದೆ!\n\nನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ: ${driverId}` : `🎉 Registered successfully!\n\nYour 4-digit Driver ID: ${driverId}`);
         document.getElementById('drvName').value = '';
         document.getElementById('drvPhone').value = '';
@@ -614,9 +630,10 @@
               <p style="font-size:0.85rem; margin-bottom:6px;" data-en="Driver is on the way to your location!" data-kn="*ನಿಮ್ಮ ಹತ್ತಿರದ ಡ್ರೈವರ್ ವಾಹನದೊಂದಿಗೆ ಬರುತ್ತಿದ್ದಾರೆ!">*ನಿಮ್ಮ ಹತ್ತಿರದ ಡ್ರೈವರ್ ವಾಹನದೊಂದಿಗೆ ಬರುತ್ತಿದ್ದಾರೆ!</p>
               <p style="font-weight:bold; font-size:0.9rem; color:#2d3748;">👤 ಡ್ರೈವರ್ ಹೆಸರು: ${b.driverName}</p>
               <p style="font-weight:bold; font-size:0.9rem; color:#2d3748;">🛺 ವಾಹನ ನಂಬರ್: ${b.driverVehNo}</p>
-              <p style="font-size:0.8rem; color:#3182ce; margin:6px 0;">📍 ಡ್ರೈವರ್ ಲೈವ್ ಜಿಪಿಎಸ್: ${b.driverLat ? (b.driverLat.toFixed(4) + ', ' + b.driverLng.toFixed(4)) : 'ಲೊಕೇಶನ್ ಸಿಗ್ನಲ್ ಪಡೆಯಲಾಗುತ್ತಿದೆ...'}</p>
+              <p style="font-size:0.85rem; color:#3182ce; margin:8px 0; font-weight:bold;">📍 ಡ್ರೈವರ್ ಲೈವ್ ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್: <br>${b.driverLat ? (b.driverLat.toFixed(4) + ', ' + b.driverLng.toFixed(4)) : 'ಲೈವ್ ಸಿಗ್ನಲ್ ಲೋಡ್ ಆಗುತ್ತಿದೆ...'}</p>
               <p style="margin:10px 0;">
                 <a href="tel:${b.driverPhone}" class="whatsapp-btn" style="background: #3182ce; padding:8px 15px;">📞 ಡ್ರೈವರ್‌ಗೆ ಕಾಲ್ ಮಾಡಿ (${b.driverPhone})</a>
+                ${b.driverLat ? `<a href="https://www.google.com/maps?q=${b.driverLat},${b.driverLng}" target="_blank" class="whatsapp-btn" style="background: #0fb05b; padding:8px 15px; margin-top:5px; display:inline-block;">🗺️ ಮ್ಯಾಪ್‌ನಲ್ಲಿ ನೋಡಿ</a>` : ''}
               </p>
               <button onclick="resetCustomerBookingView()" class="btn-gps" style="margin-top:10px;" data-en="New Booking" data-kn="🔄 ಹೊಸ ಬುಕಿಂಗ್ ವೀಕ್ಷಿಸಿ">🔄 ಹೊಸ ಬುಕಿಂಗ್ ವೀಕ್ಷಿಸಿ</button>
             </div>
@@ -656,9 +673,39 @@
     }
 
     let lastBookingCount = 0;
-    function listenToBookings() {
+
+    async function checkDriverIdAndListen() {
+      const enteredId = document.getElementById('driverInputId').value.trim();
       const listDiv = document.getElementById('driverBookingsList');
-      window.onSnapshot(window.collection(window.db, "bookings"), (snapshot) => {
+
+      if (bookingsUnsubscribe) {
+        bookingsUnsubscribe();
+        bookingsUnsubscribe = null;
+      }
+
+      if (!enteredId || enteredId.length !== 4) {
+        listDiv.innerHTML = `<p style="color: #e53e3e; font-weight: bold;" data-en="Please enter your valid 4-digit Driver ID above to view bookings." data-kn="ಬುಕಿಂಗ್ ನೋಡಲು ದಯವಿಟ್ಟು ನಿಮ್ಮ ಸರಿಯಾದ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ.">ಬುಕಿಂಗ್ ನೋಡಲು ದಯವಿಟ್ಟು ನಿಮ್ಮ ಸರಿಯಾದ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ.</p>`;
+        return;
+      }
+
+      // Verify if ID exists in database
+      const driversQuery = await window.getDocs(window.collection(window.db, "drivers"));
+      let isValidDriver = false;
+      driversQuery.forEach((dSnap) => {
+        if (dSnap.data().driverId === enteredId) {
+          isValidDriver = true;
+        }
+      });
+
+      if (!isValidDriver) {
+        listDiv.innerHTML = `<p style="color: #e53e3e; font-weight: bold;" data-en="Invalid Driver ID! Please enter registered ID." data-kn="❌ ತಪ್ಪಾದ ಡ್ರೈವರ್ ಐಡಿ! ದಯವಿಟ್ಟು ಸರಿಯಾದ ರಜಿಸ್ಟರ್ಡ್ ಐಡಿ ಹಾಕಿ.">❌ ತಪ್ಪಾದ ಡ್ರೈವರ್ ಐಡಿ! ದಯವಿಟ್ಟು ಸರಿಯಾದ ರಜಿಸ್ಟರ್ಡ್ ಐಡಿ ಹಾಕಿ.</p>`;
+        return;
+      }
+
+      // If valid, start listening to bookings
+      listDiv.innerHTML = `<p style="color: #718096;" data-en="Loading bookings..." data-kn="ಬುಕಿಂಗ್‌ಗಳು ಲೋಡ್ ಆಗುತ್ತಿವೆ...">ಬುಕಿಂಗ್‌ಗಳು ಲೋಡ್ ಆಗುತ್ತಿವೆ...</p>`;
+
+      bookingsUnsubscribe = window.onSnapshot(window.collection(window.db, "bookings"), (snapshot) => {
         let bookingsArray = [];
         snapshot.forEach((docSnap) => {
           bookingsArray.push({ id: docSnap.id, ...docSnap.data() });
@@ -804,7 +851,7 @@
       if (code === '8105010768') {
         try {
           await window.deleteDoc(window.doc(window.db, "drivers", id));
-          alert(currentLang === 'kn' ? '🗑️ ಡ್ರೈವರ್ ಡಿಲೀಟ್ ಮಾಡಲಾಗಿದೆ.' : '🗑️ Driver deleted.');
+          alert(currentLang === 'kn' ? '🗑️ ಡ್ರೈವರ್ ಯಶಸ್ವಿಯಾಗಿ ಡಿಲೀಟ್ ಮಾಡಲಾಗಿದೆ. ಈಗ ಅವರು ಹೊಸದಾಗಿ ರಜಿಸ್ಟರ್ ಮಾಡಬಹುದು.' : '🗑️ Driver deleted successfully. Now they can register newly.');
         } catch (e) { console.error(e); }
       } else if (code !== null) {
         alert(currentLang === 'kn' ? 'ತಪ್ಪು ಕೋಡ್!' : 'Incorrect Code!');
