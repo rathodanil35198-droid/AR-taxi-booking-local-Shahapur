@@ -16,7 +16,6 @@
         #subTitle { font-size: 0.75rem; color: #718096; }
         .lang-btn { background: #e0f2f1; border: none; padding: 6px 12px; border-radius: 15px; font-size: 0.75rem; font-weight: bold; color: #00796b; cursor: pointer; }
         
-        /* ಸೈಜ್ ಮತ್ತು ಅಳತೆ ಹೊಂದಿಸಲಾದ ಬ್ಯಾನರ್ ಫೋಟೋ */
         .app-banner-img { width: 100%; height: 210px; object-fit: cover; border-radius: 12px; margin-bottom: 12px; border: 2px solid #e2e8f0; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
 
         .whatsapp-join-box { background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%); border: 2px dashed #28a745; padding: 12px; border-radius: 14px; text-align: center; margin-bottom: 12px; }
@@ -74,22 +73,18 @@
         <button class="lang-btn" onclick="toggleLanguage()">English / ಕನ್ನಡ</button>
     </div>
 
-    <!-- ಸೈಜ್ ಹೊಂದಿಸಲಾದ ಹೊಸ ಬ್ಯಾನರ್ ಫೋಟೋ -->
     <img src="https://i.ibb.co/6R7x7sX3/1000377241.jpg" alt="AR Taxi Shahapur Banner" class="app-banner-img">
 
-    <!-- ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್ ಜಾಯಿನ್ ಆಗುವ ಬಾಕ್ಸ್ -->
     <div class="whatsapp-join-box">
         <div id="waBannerText" style="font-size: 0.83rem; font-weight: bold; color: #152223;" data-en="Join Driver WhatsApp Group for orders:" data-kn="ಡ್ರೈವರ್‌ಗಳು ಕಡ್ಡಾಯವಾಗಿ ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್‌ಗೆ ಸೇರಿ:">ಡ್ರೈವರ್‌ಗಳು ಕಡ್ಡಾಯವಾಗಿ ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್‌ಗೆ ಸೇರಿ:</div>
         <a href="https://chat.whatsapp.com/EPyPEdxo0YO7Cx4vBKmEwN?s=sh&p=a&mlu=4&ilr=4" target="_blank" class="whatsapp-join-btn" id="waJoinBtn">💬 Join Driver WhatsApp Group</a>
     </div>
 
-    <!-- ಎಮರ್ಜೆನ್ಸಿ ಕಸ್ಟಮರ್ ಕೇರ್ ಕಾಲ್ ಬಟನ್ -->
     <div class="support-box">
         <div id="ccBannerText" style="font-size: 0.83rem; font-weight: bold; color: #78281f;" data-en="Emergency Support & Customer Care:" data-kn="ತುರ್ತು ಸಹಾಯ ಬೇಕಿದ್ದರೆ ಸಂಪರ್ಕಿಸಿ:">ತುರ್ತು ಸಹಾಯ ಬೇಕಿದ್ದರೆ ಸಂಪರ್ಕಿಸಿ:</div>
         <a href="tel:8105010768" class="support-btn" id="ccCallBtn">📞 24/7 Customer Care (Call)</a>
     </div>
 
-    <!-- ಟ್ಯಾಬ್‌ಗಳು -->
     <div class="tabs">
         <button class="tab-btn active" onclick="switchTab(0)" id="tBtn0" data-en="👤 Booking" data-kn="👤 🛺 ಬುಕಿಂಗ್">👤 🛺 ಬುಕಿಂಗ್</button>
         <button class="tab-btn" onclick="switchTab(1)" id="tBtn1" data-en="⏱️ Meter" data-kn="⏱️ 🛺 ಮೀಟರ್">⏱️ 🛺 ಮೀಟರ್</button>
@@ -210,6 +205,9 @@
     <!-- TAB 3: Driver Live Orders Page -->
     <div class="section" id="sec3">
         <h2 id="hLiveTitle" data-en="Driver Live Booking Orders" data-kn="ಡ್ರೈವರ್‌ಗಳಿಗೆ ಲೈವ್ ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು">📢 🛺 ಡ್ರೈವರ್‌ಗಳಿಗೆ ಲೈವ್ ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು</h2>
+        <div style="font-size:0.75rem; color:#15803d; background:#f0fdf4; padding:6px; border-radius:6px; margin-bottom:10px; text-align:center;">
+            🔊 ಹೊಸ ಬುಕಿಂಗ್ ಬಂದರೆ ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಸೌಂಡ್ (Alert) ಬರುತ್ತದೆ.
+        </div>
         <div id="driverOrdersContainer">
             <p style="font-size: 0.85rem; color: #718096; text-align: center; padding: 15px;" data-en="No active bookings right now." data-kn="ಸದ್ಯ ಯಾವುದೇ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.">ಸದ್ಯ ಯಾವುದೇ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.</p>
         </div>
@@ -225,7 +223,6 @@
         <button onclick="clearAllData()" style="background:#d32f27; color:white; border:none; padding:10px; width:100%; border-radius:10px; font-weight:bold; margin-top:10px; cursor:pointer;" data-en="Reset All Data" data-kn="⚠️ ಎಲ್ಲಾ ಡೇಟಾ ರೀಸೆಟ್ ಮಾಡಿ">⚠️ ಎಲ್ಲಾ ಡೇಟಾ ರೀಸೆಟ್ ಮಾಡಿ</button>
     </div>
 
-    <!-- ಡ್ರೈವರ್ ಸಂಪೂರ್ಣ ವಿವರ ತೋರಿಸುವ ಪಾಪ್ಅಪ್ -->
     <div id="driverModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeDriverModal()">×</span>
@@ -249,27 +246,64 @@
     let drivers = JSON.parse(localStorage.getItem('ar_drivers')) || [];
     let orders = JSON.parse(localStorage.getItem('ar_orders')) || [];
     let myActiveOrderId = localStorage.getItem('ar_my_active_order_id') || null;
+    let lastKnownPendingCount = orders.filter(o => o.status === 'Pending').length;
 
-    // ಲೈವ್ ಸಿಂಕ್ (ಪ್ರತಿ 1 ಸೆಕೆಂಡಿಗೆ ಆಟೋ ಅಪ್‌ಡೇಟ್)
-    setInterval(() => {
-        let savedOrders = JSON.parse(localStorage.getItem('ar_orders'));
-        if (savedOrders) {
-            orders = savedOrders;
+    // ಜೋರಾದ ಅಲರ್ಟ್ ಸೌಂಡ್ ಮತ್ತು ವಾಯ್ಸ್ ಸಂದೇಶ ನುಡಿಸಲು (Web Audio API / Speech Synthesis)
+    function playAlarmSound() {
+        try {
+            // ಸೌಂಡ್ ಎಫೆಕ್ಟ್
+            let audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
+            audio.play().catch(e => {});
+
+            // ಕನ್ನಡದಲ್ಲಿ ವಾಯ್ಸ್ ಅಲರ್ಟ್ (ಕಸ್ಟಮರ್ ಬುಕ್ ಮಾಡಿದಾಗ ಡ್ರೈವರ್‌ಗೆ ಹೇಳಲು)
+            if ('speechSynthesis' in window) {
+                let speech = new SpeechSynthesisUtterance("ಗಮನಿಸಿ! ಹೊಸ ಬುಕಿಂಗ್ ಬಂದಿದೆ, ದಯವಿಟ್ಟು ಸ್ವೀಕರಿಸಿ.");
+                speech.lang = 'kn-IN';
+                speech.rate = 1.0;
+                window.speechSynthesis.speak(speech);
+            }
+        } catch(e) {}
+    }
+
+    // ಬೇರೆ ಮೊಬೈಲ್ ಅಥವಾ ಟ್ಯಾಬ್‌ಗಳಿಂದ ಡೇಟಾ ಸಿಂಕ್ ಆಗಲು ಲೈವ್ ಟ್ರ್ಯಾಕಿಂಗ್
+    window.addEventListener('storage', (event) => {
+        if (event.key === 'ar_orders') {
+            let newOrders = JSON.parse(event.newValue) || [];
+            let newPendingCount = newOrders.filter(o => o.status === 'Pending').length;
+            if (newPendingCount > lastKnownPendingCount) {
+                playAlarmSound();
+            }
+            lastKnownPendingCount = newPendingCount;
+            orders = newOrders;
             renderDriverOrders();
             renderCustomerStatus();
         }
-        let savedDrivers = JSON.parse(localStorage.getItem('ar_drivers'));
+        if (event.key === 'ar_drivers') {
+            drivers = JSON.parse(event.newValue) || [];
+        }
+    });
+
+    setInterval(() => {
+        let savedOrders = localStorage.getItem('ar_orders');
+        if (savedOrders) {
+            let parsedOrders = JSON.parse(savedOrders);
+            let newPendingCount = parsedOrders.filter(o => o.status === 'Pending').length;
+            if (newPendingCount > lastKnownPendingCount) {
+                playAlarmSound();
+            }
+            lastKnownPendingCount = newPendingCount;
+            
+            if (JSON.stringify(parsedOrders) !== JSON.stringify(orders)) {
+                orders = parsedOrders;
+                renderDriverOrders();
+                renderCustomerStatus();
+            }
+        }
+        let savedDrivers = localStorage.getItem('ar_drivers');
         if (savedDrivers) {
-            drivers = savedDrivers;
+            drivers = JSON.parse(savedDrivers);
         }
     }, 1000);
-
-    function playAlertSound() {
-        try {
-            let audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
-            audio.play();
-        } catch(e) {}
-    }
 
     function switchTab(index) {
         const sections = document.querySelectorAll('.section');
@@ -382,12 +416,13 @@
         localStorage.setItem('ar_orders', JSON.stringify(orders));
         myActiveOrderId = newOrder.id;
         localStorage.setItem('ar_my_active_order_id', myActiveOrderId);
+        lastKnownPendingCount = orders.filter(o => o.status === 'Pending').length;
 
-        playAlertSound();
+        playAlarmSound();
         renderCustomerStatus();
         renderDriverOrders();
         
-        alert(currentLang === 'kn' ? "✅ ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಕಳುಹಿಸಲಾಗಿದೆ! ಡ್ರೈವರ್‌ಗಳು ನಿಮ್ಮನ್ನು ಸಂಪರ್ಕಿಸುತ್ತಾರೆ." : "✅ Booking sent successfully! Drivers will contact you.");
+        alert(currentLang === 'kn' ? "✅ ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಕಳುಹಿಸಲಾಗಿದೆ! ಡ್ರೈವರ್‌ಗಳು ಸ್ವೀಕರಿಸಿದ ಕೂಡಲೇ ವಿವರ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ." : "✅ Booking sent successfully!");
         document.getElementById('bookingForm').reset();
         gpsCoords = null;
         document.getElementById('gpsLocation').value = "";
@@ -419,30 +454,30 @@
         }
 
         let vehLogo = ord.vehicle.includes('Auto') ? (currentLang === 'kn' ? '🛺 ಆಟೋ' : '🛺 Auto') : (currentLang === 'kn' ? '🚗 ಟ್ಯಾಕ್ಸಿ' : '🚗 Taxi');
+        
         if (ord.status === 'Pending') {
             box.innerHTML = `
-                <div class="card" style="background:#fff8e1; border-color:#ffe082; text-align:center; padding:15px;">
-                    <div style="font-weight:bold; color:#f57c00; font-size:0.9rem; margin-bottom: 10px;">
-                        ${currentLang === 'kn' ? '⏳ ನಿಮ್ಮ ಬುಕಿಂಗ್ (' + vehLogo + ') ಡ್ರೈವರ್‌ಗಳಿಗೆ ಕಳುಹಿಸಲಾಗಿದೆ. ದಯವಿಟ್ಟು ನಿರೀಕ್ಷಿಸಿ...' : '⏳ Your booking (' + vehLogo + ') has been sent to drivers. Please wait...'}
+                <div class="card" style="background:#f8fafc; border-color:#cbd5e1; text-align:center; padding:15px;">
+                    <div style="font-weight:bold; color:#334155; font-size:0.9rem; margin-bottom: 10px;">
+                        ${currentLang === 'kn' ? '⏳ ನಿಮ್ಮ ಬುಕಿಂಗ್ ಕಳುಹಿಸಲಾಗಿದೆ. ಡ್ರೈವರ್ ಸ್ವೀಕರಿಸುವವರೆಗೆ ದಯವಿಟ್ಟು ನಿರೀಕ್ಷಿಸಿ...' : '⏳ Your booking has been sent. Please wait for driver confirmation...'}
                     </div>
-                    <button onclick="cancelMyBooking()" style="background:#d32f27; color:white; border:none; padding:8px 16px; border-radius:8px; font-weight:bold; font-size:0.85rem; cursor:pointer;">${currentLang === 'kn' ? '❌ ಬುಕಿಂಗ್ ರದ್ದುಮಾಡಿ (Cancel)' : '❌ Cancel Booking'}</button>
+                    <button onclick="cancelMyBooking()" style="background:#ef4444; color:white; border:none; padding:8px 16px; border-radius:8px; font-weight:bold; font-size:0.85rem; cursor:pointer;">${currentLang === 'kn' ? '❌ ಬುಕಿಂಗ್ ರದ್ದುಮಾಡಿ (Cancel)' : '❌ Cancel Booking'}</button>
                 </div>
             `;
         } else if (ord.status === 'Accepted' && ord.driverInfo) {
             let drv = ord.driverInfo;
             let drvVehLogo = drv.vehicle.includes('Auto') ? '🛺' : '🚗';
             box.innerHTML = `
-                <div class="card" style="background:#e8f5e9; border-color:#a5d6a7;">
-                    <div style="font-weight:bold; color:#2e7d32; margin-bottom:6px;">
-                        ${currentLang === 'kn' ? '🎉 ನಿಮ್ಮ ರೈಡ್ ಖಚಿತವಾಗಿದೆ! ಡ್ರೈವರ್ ವಿವರ:' : '🎉 Ride Confirmed! Driver Details:'}
+                <div class="card" style="background:#f0fdf4; border-color:#bbf7d0;">
+                    <div style="font-weight:bold; color:#16a34a; margin-bottom:8px; font-size:0.95rem;">
+                        ${currentLang === 'kn' ? '🎉 ನಿಮ್ಮ ರೈಡ್ ಖಚಿತವಾಗಿದೆ! ಡ್ರೈವರ್ ವಿವರಗಳು ಕೆಳಕಂಡಂತಿವೆ:' : '🎉 Ride Confirmed! Driver Details:'}
                     </div>
-                    <div style="display:flex; gap:10px; align-items:center;">
-                        <img src="${drv.selfie}" style="width:45px; height:45px; border-radius:50%; object-fit:cover; border:2px solid #2e7d32;">
-                        <div style="font-size:0.82rem; line-height:1.4;">
-                            <div><b>ID:</b> <span style="color:#d32f27; font-weight:bold;">${drv.id}</span></div>
+                    <div style="display:flex; gap:12px; align-items:center;">
+                        <img src="${drv.selfie}" style="width:60px; height:60px; border-radius:50%; object-fit:cover; border:2px solid #16a34a;">
+                        <div style="font-size:0.85rem; line-height:1.5;">
                             <div><b>${currentLang === 'kn' ? 'ಹೆಸರು' : 'Name'}:</b> ${drv.name}</div>
-                            <div><b>${currentLang === 'kn' ? 'ಫೋನ್' : 'Phone'}:</b> <a href="tel:${drv.phone}" style="color:#007bff; font-weight:bold;">${drv.phone}</a></div>
-                            <div><b>${currentLang === 'kn' ? 'ವಾಹನ' : 'Vehicle'}:</b> ${drvVehLogo} <b>${drv.vehNo}</b></div>
+                            <div><b>${currentLang === 'kn' ? 'ಫೋನ್' : 'Phone'}:</b> <a href="tel:${drv.phone}" style="color:#0284c7; font-weight:bold; font-size:0.9rem;">📞 ${drv.phone}</a></div>
+                            <div><b>${currentLang === 'kn' ? 'ವಾಹನ' : 'Vehicle'}:</b> ${drvVehLogo} <b style="color:#0f172a; font-size:0.95rem;">${drv.vehNo}</b></div>
                         </div>
                     </div>
                 </div>
@@ -465,23 +500,24 @@
             
             if (ord.status === 'Pending') {
                 html += `
-                    <div class="card" style="background:#fff; border-left: 5px solid #ff9800;">
+                    <div class="card" style="background:#fff; border-left: 5px solid #0ea5e9;">
                         <div><b>${currentLang === 'kn' ? 'ಕಸ್ಟಮರ್ ಹೆಸರು' : 'Customer Name'}:</b> ${ord.name}</div>
-                        <div><b>${currentLang === 'kn' ? 'ಫೋನ್' : 'Phone'}:</b> <a href="tel:${ord.phone}" style="color: #007bff; font-weight: bold;">${ord.phone}</a></div>
-                        <div><b>${currentLang === 'kn' ? 'ವಾಹನ ಪ್ರಕಾರ' : 'Vehicle'}:</b> <span style="font-size:1rem; font-weight:bold; color:#d32f27;">${vehSymbolIcon} ${ord.vehicle}</span></div>
+                        <div><b>${currentLang === 'kn' ? 'ಫೋನ್' : 'Phone'}:</b> <a href="tel:${ord.phone}" style="color: #0284c7; font-weight: bold;">${ord.phone}</a></div>
+                        <div><b>${currentLang === 'kn' ? 'ವಾಹನ ಪ್ರಕಾರ' : 'Vehicle'}:</b> <span style="font-size:1rem; font-weight:bold; color:#0f172a;">${vehSymbolIcon} ${ord.vehicle}</span></div>
                         <div><b>${currentLang === 'kn' ? 'ಪಿಕಪ್' : 'Pickup'}:</b> ${ord.pickup}</div>
-                        <div><b>${currentLang === 'kn' ? 'ಲೊಕೇಶನ್' : 'Location'}:</b> <a href="${ord.gps}" target="_blank" style="color: #007bff; text-decoration: underline;">${currentLang === 'kn' ? 'ಮ್ಯಾಪ್‌ನಲ್ಲಿ ನೋಡಿ' : 'View on Map'}</a></div>
+                        <div><b>${currentLang === 'kn' ? 'ಲೊಕೇಶನ್' : 'Location'}:</b> <a href="${ord.gps}" target="_blank" style="color: #0284c7; text-decoration: underline;">${currentLang === 'kn' ? 'ಮ್ಯಾಪ್‌ನಲ್ಲಿ ನೋಡಿ' : 'View on Map'}</a></div>
                         <div><b>${currentLang === 'kn' ? 'ಡ್ರಾಪ್' : 'Drop'}:</b> ${ord.drop}</div>
-                        <button onclick="acceptOrder('${ord.id}')" style="background: #00c853; color: white; border: none; padding: 8px 14px; border-radius: 8px; font-weight: bold; font-size: 0.85rem; margin-top: 8px; cursor: pointer; width:100%;">${currentLang === 'kn' ? '✅ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ (Accept)' : '✅ Accept Booking'}</button>
+                        <button onclick="acceptOrder('${ord.id}')" style="background: #22c55e; color: white; border: none; padding: 10px 14px; border-radius: 8px; font-weight: bold; font-size: 0.9rem; margin-top: 10px; cursor: pointer; width:100%;">${currentLang === 'kn' ? '✅ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ (Accept)' : '✅ Accept Booking'}</button>
                     </div>
                 `;
             } else if (ord.status === 'Accepted') {
                 let drvName = ord.driverInfo ? ord.driverInfo.name : 'Driver';
+                let drvId = ord.driverInfo ? ord.driverInfo.id : '';
                 html += `
-                    <div class="card" style="background:#e2e8f0; border-left: 5px solid #718096; opacity: 0.85;">
-                        <div style="font-weight:bold; color:#d32f27;">${currentLang === 'kn' ? '🔒 ಈ ಬುಕಿಂಗ್ ಲಾಕ್ ಆಗಿದೆ! (' + vehSymbolIcon + ')' : '🔒 Booking Locked! (' + vehSymbolIcon + ')'}</div>
+                    <div class="card" style="background:#f1f5f9; border-left: 5px solid #64748b; opacity: 0.9;">
+                        <div style="font-weight:bold; color:#475569;">${currentLang === 'kn' ? '🔒 ಈ ಬುಕಿಂಗ್ ಒಪ್ಪಿಕೊಳ್ಳಲಾಗಿದೆ (' + vehSymbolIcon + ')' : '🔒 Booking Accepted (' + vehSymbolIcon + ')'}</div>
                         <div style="font-size:0.8rem; margin-top:4px;"><b>${currentLang === 'kn' ? 'ಕಸ್ಟಮರ್' : 'Customer'}:</b> ${ord.name} (${ord.pickup})</div>
-                        <div style="font-size:0.8rem; color:#2d3748; margin-top:2px;"><b>${currentLang === 'kn' ? 'ಸ್ವೀಕರಿಸಿದ ಡ್ರೈವರ್' : 'Accepted Driver'}:</b> <b style="color:#d32f27;">${drvName}</b></div>
+                        <div style="font-size:0.8rem; color:#334155; margin-top:2px;"><b>${currentLang === 'kn' ? 'ಸ್ವೀಕರಿಸಿದ ಡ್ರೈವರ್' : 'Accepted Driver'}:</b> <b style="color:#0f172a;">${drvName} (${drvId})</b></div>
                     </div>
                 `;
             }
@@ -490,8 +526,8 @@
     }
 
     function acceptOrder(orderId) {
-        let dummyDriver = {
-            id: 'AR-DRV-DIRECT',
+        let activeDriver = drivers.length > 0 ? drivers[drivers.length - 1] : {
+            id: 'AR-DRV-9999',
             name: currentLang === 'kn' ? 'ಡ್ರೈವರ್' : 'Driver',
             phone: '8105010768',
             vehicle: 'Auto',
@@ -502,10 +538,10 @@
         let ord = orders.find(o => o.id === orderId);
         if (ord && ord.status === 'Pending') {
             ord.status = 'Accepted';
-            ord.driverInfo = dummyDriver;
+            ord.driverInfo = activeDriver;
             
             localStorage.setItem('ar_orders', JSON.stringify(orders));
-            playAlertSound();
+            playAlarmSound();
             renderDriverOrders();
             renderCustomerStatus();
             
@@ -588,15 +624,15 @@
         drivers.forEach((drv, index) => {
             let vehLogoIcon = drv.vehicle.includes('Auto') ? '🛺' : '🚗';
             html += `
-                <div class="card" style="display: flex; gap: 8px; align-items: center; background: #fafafa; border-left: 4px solid green;">
+                <div class="card" style="display: flex; gap: 8px; align-items: center; background: #fafafa; border-left: 4px solid #22c55e;">
                     <img src="${drv.selfie}" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00b09b; cursor:pointer;" onclick="showDriverDetails(${index})">
                     <div style="flex: 1; font-size: 0.78rem; cursor:pointer;" onclick="showDriverDetails(${index})">
-                        <div><b>ID:</b> <span style="color:#d32f27; font-weight:bold;">${drv.id}</span> | <span style="color:green; font-weight:bold;">✅ Active</span></div>
+                        <div><b>ID:</b> <span style="color:#2563eb; font-weight:bold;">${drv.id}</span> | <span style="color:#16a34a; font-weight:bold;">✅ Active</span></div>
                         <div><b>${currentLang === 'kn' ? 'ಹೆಸರು' : 'Name'}:</b> ${drv.name} | ${vehLogoIcon} ${drv.vehNo}</div>
                         <div><b>${currentLang === 'kn' ? 'ಫೋನ್' : 'Phone'}:</b> ${drv.phone}</div>
                     </div>
                     <div>
-                        <button onclick="secureDeleteDriver(${index})" style="background:#ff5252; color:white; border:none; padding:6px 10px; border-radius:4px; cursor:pointer; font-size:0.75rem;">${currentLang === 'kn' ? 'ಅಳಿ' : 'Delete'}</button>
+                        <button onclick="secureDeleteDriver(${index})" style="background:#ef4444; color:white; border:none; padding:6px 10px; border-radius:4px; cursor:pointer; font-size:0.75rem;">${currentLang === 'kn' ? 'ಅಳಿ' : 'Delete'}</button>
                     </div>
                 </div>
             `;
@@ -621,9 +657,9 @@
         let drv = drivers[index];
         let vehLogoIcon = drv.vehicle.includes('Auto') ? '🛺' : '🚗';
         let modalContent = `
-            <div style="margin-bottom: 8px;"><b>ID:</b> <span style="color:#d32f27; font-weight:bold;">${drv.id}</span></div>
+            <div style="margin-bottom: 8px;"><b>ID:</b> <span style="color:#2563eb; font-weight:bold;">${drv.id}</span></div>
             <div style="margin-bottom: 8px;"><b>Name:</b> ${drv.name} (${drv.phone})</div>
-            <div style="margin-bottom: 8px;"><b>Vehicle No:</b> <b style="color:#2e7d32;">${vehLogoIcon} ${drv.vehNo}</b></div>
+            <div style="margin-bottom: 8px;"><b>Vehicle No:</b> <b style="color:#16a34a;">${vehLogoIcon} ${drv.vehNo}</b></div>
             <div style="margin-top: 10px;"><b>Selfie:</b><br><img src="${drv.selfie}" class="modal-img"></div>
             <div style="margin-top: 10px;"><b>Vehicle Photo:</b><br><img src="${drv.vehPhoto}" class="modal-img"></div>
         `;
@@ -639,7 +675,7 @@
         let container = document.getElementById('adminReportContainer');
         if (!container) return;
         container.innerHTML = `
-            <h3 style="font-size:0.95rem; color:#1565c0; margin-bottom:8px;">${currentLang === 'kn' ? '📊 ಸಿಸ್ಟಮ್ ವರದಿ:' : '📊 System Report:'}</h3>
+            <h3 style="font-size:0.95rem; color:#1d4ed8; margin-bottom:8px;">${currentLang === 'kn' ? '📊 ಸಿಸ್ಟಮ್ ವರದಿ:' : '📊 System Report:'}</h3>
             <div style="font-size: 0.85rem; line-height: 1.6;">
                 <div>👥 ${currentLang === 'kn' ? 'ಒಟ್ಟು ಡ್ರೈವರ್‌ಗಳು' : 'Total Drivers'}: <b>${drivers.length}</b></div>
                 <div>📦 ${currentLang === 'kn' ? 'ಒಟ್ಟು ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು' : 'Total Orders'}: <b>${orders.length}</b></div>
