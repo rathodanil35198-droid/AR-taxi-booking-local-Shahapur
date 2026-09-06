@@ -108,41 +108,48 @@
     <!-- 1. CUSTOMER BOOKING SECTION -->
     <div id="customerSection" class="section active">
         <h2 data-key="hBook">🚖 ಯಾತ್ರೆ ಬುಕ್ ಮಾಡಿ (Book a Ride)</h2>
-        <div class="form-group">
-            <label data-key="lblCustName">👤 ನಿಮ್ಮ ಹೆಸರು (Customer Name)</label>
-            <input type="text" id="custName" placeholder="ಹೆಸರು ನಮೂದಿಸಿ">
-        </div>
-        <div class="form-group">
-            <label data-key="lblCustPhone">📱 ಮೊಬೈಲ್ ಸಂಖ್ಯೆ (Phone Number)</label>
-            <input type="tel" id="custPhone" placeholder="ಫೋನ್ ನಂಬರ್">
-        </div>
-        <div class="form-group">
-            <label data-key="lblVehType">🛺 ವಾಹನ ಆಯ್ಕೆ (Vehicle Type)</label>
-            <select id="vehicleType" onchange="updatePassengerOptions()">
-                <option value="Auto">🛺 ಆಟೋ (Auto)</option>
-                <option value="Car">🚗 ಕಾರ್ (Car)</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label data-key="lblPassCount">👥 ಪ್ರಯಾಣಿಕರ ಸಂಖ್ಯೆ (Passengers)</label>
-            <select id="passengerCount"></select>
-        </div>
         
-        <div class="form-group">
-            <label data-key="lblCurrentLoc">📍 ನೀವು ಈಗ ಎಲ್ಲಿದ್ದೀರಿ (Current Location / Landmark)</label>
-            <input type="text" id="currentLoc" placeholder="ಉದಾ: ಬಸ್ ಸ್ಟ್ಯಾಂಡ್ ಹತ್ತಿರ, ಗಾಂಧಿ ವೃತ್ತ">
+        <!-- Customer Booking Form -->
+        <div id="bookingFormContainer">
+            <div class="form-group">
+                <label data-key="lblCustName">👤 ನಿಮ್ಮ ಹೆಸರು (Customer Name)</label>
+                <input type="text" id="custName" placeholder="ಹೆಸರು ನಮೂದಿಸಿ">
+            </div>
+            <div class="form-group">
+                <label data-key="lblCustPhone">📱 ಮೊಬೈಲ್ ಸಂಖ್ಯೆ (Phone Number)</label>
+                <input type="tel" id="custPhone" placeholder="ಫೋನ್ ನಂಬರ್">
+            </div>
+            <div class="form-group">
+                <label data-key="lblVehType">🛺 ವಾಹನ ಆಯ್ಕೆ (Vehicle Type)</label>
+                <select id="vehicleType" onchange="updatePassengerOptions()">
+                    <option value="Auto">🛺 ಆಟೋ (Auto)</option>
+                    <option value="Car">🚗 ಕಾರ್ (Car)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label data-key="lblPassCount">👥 ಪ್ರಯಾಣಿಕರ ಸಂಖ್ಯೆ (Passengers)</label>
+                <select id="passengerCount"></select>
+            </div>
+            
+            <div class="form-group">
+                <label data-key="lblCurrentLoc">📍 ನೀವು ಈಗ ಎಲ್ಲಿದ್ದೀರಿ (Current Location / Landmark)</label>
+                <input type="text" id="currentLoc" placeholder="ಉದಾ: ಬಸ್ ಸ್ಟ್ಯಾಂಡ್ ಹತ್ತಿರ, ಗಾಂಧಿ ವೃತ್ತ">
+            </div>
+
+            <div class="form-group">
+                <label data-key="lblPickup">📍 ಪಿಕ್‌ಅಪ್ ಲೊಕೇಶನ್ (Pickup Location)</label>
+                <input type="text" id="pickupLoc" placeholder="ಸ್ಥಳದ ಹೆಸರು">
+                <button type="button" class="btn-gps" onclick="getLocation()" data-key="btnGps">📍 ಲೈವ್ ಜಿಪಿಎಸ್ ಆನ್ ಮಾಡಿ (Get GPS)</button>
+            </div>
+            <div class="form-group">
+                <label data-key="lblDrop">🏁 ಡ್ರಾಪ್ ಲೊಕೇಶನ್ (Drop Location)</label>
+                <input type="text" id="dropLoc" placeholder="ತಲುಪಬೇಕಾದ ಸ್ಥಳ">
+            </div>
+            <button class="btn-submit" onclick="submitBooking()" data-key="btnSubmitBook">✅ ಬುಕ್ ಮಾಡಿ (Book Ride)</button>
         </div>
 
-        <div class="form-group">
-            <label data-key="lblPickup">📍 ಪಿಕ್‌ಅಪ್ ಲೊಕೇಶನ್ (Pickup Location)</label>
-            <input type="text" id="pickupLoc" placeholder="ಸ್ಥಳದ ಹೆಸರು">
-            <button type="button" class="btn-gps" onclick="getLocation()" data-key="btnGps">📍 ಲೈವ್ ಜಿಪಿಎಸ್ ಆನ್ ಮಾಡಿ (Get GPS)</button>
-        </div>
-        <div class="form-group">
-            <label data-key="lblDrop">🏁 ಡ್ರಾಪ್ ಲೊಕೇಶನ್ (Drop Location)</label>
-            <input type="text" id="dropLoc" placeholder="ತಲುಪಬೇಕಾದ ಸ್ಥಳ">
-        </div>
-        <button class="btn-submit" onclick="submitBooking()" data-key="btnSubmitBook">✅ ಬುಕ್ ಮಾಡಿ (Book Ride)</button>
+        <!-- Customer Status / Live Driver Details View (Appears after booking) -->
+        <div id="customerStatusContainer" style="margin-top: 10px;"></div>
     </div>
 
     <!-- 2. LIVE RUNNING METER SECTION -->
@@ -220,6 +227,7 @@
     let currentLang = 'kn';
     let distanceKm = 0;
     let meterInterval = null;
+    let myActiveBookingId = null;
 
     const translations = {
         kn: {
@@ -503,7 +511,7 @@
         }
 
         try {
-            await window.addDoc(window.collection(window.db, "bookings"), {
+            const docRef = await window.addDoc(window.collection(window.db, "bookings"), {
                 name: name,
                 phone: phone,
                 vehicle: `${vehicle} (${passengers})`,
@@ -513,9 +521,18 @@
                 status: 'Pending',
                 acceptedBy: '',
                 driverDetails: '',
+                driverName: '',
+                driverPhone: '',
+                driverVehNo: '',
                 timestamp: window.serverTimestamp()
             });
-            alert('ನಿಮ್ಮ ಬುಕಿಂಗ್ ಡ್ರೈವರ್‌ಗಳಿಗೆ ಕಳುಹಿಸಲಾಗಿದೆ!');
+
+            myActiveBookingId = docRef.id;
+            alert('ನಿಮ್ಮ ಬುಕಿಂಗ್ ಡ್ರೈವರ್‌ಗಳಿಗೆ ಕಳುಹಿಸಲಾಗಿದೆ! ದಯವಿಟ್ಟು ಕಾಯಿರಿ.');
+            
+            // Start listening for customer booking status updates
+            monitorCustomerBooking(myActiveBookingId);
+
             document.getElementById('custName').value = '';
             document.getElementById('custPhone').value = '';
             document.getElementById('currentLoc').value = '';
@@ -524,6 +541,52 @@
         } catch(e) {
             console.error(e);
         }
+    }
+
+    function monitorCustomerBooking(bookingId) {
+        const statusDiv = document.getElementById('customerStatusContainer');
+        const formDiv = document.getElementById('bookingFormContainer');
+
+        window.onSnapshot(window.doc(window.db, "bookings", bookingId), (docSnap) => {
+            if(!docSnap.exists()) return;
+            const b = docSnap.data();
+
+            if(b.status === 'Accepted by Driver') {
+                // Play notification sound for customer
+                const audio = document.getElementById('alertSound');
+                audio.play().catch(e => console.log(e));
+
+                formDiv.style.display = 'none';
+                statusDiv.innerHTML = `
+                    <div class="card" style="background:#e8f8f0; border: 2px solid #0fb05b; text-align:center; padding:15px;">
+                        <h3 style="color:#065f46; margin-bottom:8px;">✅ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಲಾಗಿದೆ!</h3>
+                        <p style="font-size:0.85rem; margin-bottom:6px;">ನಿಮ್ಮ ಹತ್ತಿರವಿರುವ ಡ್ರೈವರ್ ಈಗ ನಿಮ್ಮ ಬಳಿಗೆ ಬರುತ್ತಿದ್ದಾರೆ. ದಯವಿಟ್ಟು ವೇಟ್ ಮಾಡಿ.</p>
+                        <hr style="margin:8px 0; border:0; border-top:1px solid #cbd5e0;">
+                        <p style="font-weight:bold; font-size:0.9rem; color:#2d3748;">👤 ಡ್ರೈವರ್ ಹೆಸರು: ${b.driverName}</p>
+                        <p style="font-weight:bold; font-size:0.9rem; color:#2d3748;">🚗 ಗಾಡಿ ನಂಬರ್: ${b.driverVehNo}</p>
+                        <p style="margin:10px 0;">
+                            <a href="tel:${b.driverPhone}" class="whatsapp-btn" style="background:#3182ce; padding:8px 16px; font-size:0.9rem;">📞 ಡ್ರೈವರ್‌ಗೆ ಕಾಲ್ ಮಾಡಿ (${b.driverPhone})</a>
+                        </p>
+                        <button onclick="resetCustomerBookingView()" class="btn-gps" style="margin-top:10px;">🔄 ಹೊಸ ಬುಕಿಂಗ್ ಮಾಡಿ</button>
+                    </div>
+                `;
+            } else {
+                formDiv.style.display = 'none';
+                statusDiv.innerHTML = `
+                    <div class="card" style="background:#fffaf0; border: 2px dashed #dd6b20; text-align:center; padding:15px;">
+                        <h3 style="color:#c05621; margin-bottom:8px;">⏳ ಡ್ರೈವರ್‌ಗಾಗಿ ಕಾಯಲಾಗುತ್ತಿದೆ...</h3>
+                        <p style="font-size:0.85rem;">ನಿಮ್ಮ ವಿನಂತಿಯನ್ನು ಡ್ರೈವರ್‌ಗಳಿಗೆ ಕಳುಹಿಸಲಾಗಿದೆ. ದಯವಿಟ್ಟು ಸ್ವಲ್ಪ ಸಮಯ ಕಾಯಿರಿ.</p>
+                        <button onclick="resetCustomerBookingView()" class="btn-gps" style="margin-top:10px;">❌ ಬುಕಿಂಗ್ ರದ್ದುಗೊಳಿಸಿ / ಮರುಪ್ರಯತ್ನಿಸಿ</button>
+                    </div>
+                `;
+            }
+        });
+    }
+
+    function resetCustomerBookingView() {
+        myActiveBookingId = null;
+        document.getElementById('bookingFormContainer').style.display = 'block';
+        document.getElementById('customerStatusContainer').innerHTML = '';
     }
 
     let lastBookingCount = 0;
@@ -560,7 +623,7 @@
                         <p><b>📍 ಪಿಕ್‌ಅಪ್:</b> ${b.pickup}</p>
                         <p><b>🏁 ಡ್ರಾಪ್:</b> ${b.drop}</p>
                         <p><b>📌 ಸ್ಥಿತಿ:</b> <span style="color:${isLocked ? 'red' : 'green'}; font-weight:bold;">${b.status}</span></p>
-                        ${isLocked ? `<p style="margin-top:4px; font-weight:bold; color:#2b6cb0;">🚗 ಡ್ರೈವರ್ ವಿವರಗಳು: ${b.driverDetails}</p>` : ''}
+                        ${isLocked ? `<p style="margin-top:4px; font-weight:bold; color:#2b6cb0;">🚗 ಸ್ವೀಕರಿಸಿದ ಡ್ರೈವರ್: ${b.driverDetails}</p>` : ''}
                         
                         ${!isLocked ? `
                             <div style="margin-top:6px;">
@@ -608,7 +671,10 @@
             await window.updateDoc(docRef, { 
                 status: 'Accepted by Driver',
                 acceptedBy: enteredId,
-                driverDetails: driverInfoStr
+                driverDetails: driverInfoStr,
+                driverName: foundDriver.name,
+                driverPhone: foundDriver.phone,
+                driverVehNo: foundDriver.vehNo
             });
 
             const drvRef = window.doc(window.db, "drivers", driverDocId);
