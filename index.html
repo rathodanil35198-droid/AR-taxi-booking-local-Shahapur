@@ -208,6 +208,7 @@
     </div>
 </div>
 
+<!-- Audio for alerts and booking actions -->
 <audio id="alertSound" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" preload="auto"></audio>
 
 <script>
@@ -386,7 +387,6 @@
         }
     }
 
-    // Live Running Meter with 1 min = 1 km simulation speed or live GPS
     function startMeter() {
         distanceKm = 0;
         const vehType = document.getElementById('meterVehicleType').value;
@@ -398,11 +398,10 @@
 
         if(meterInterval) clearInterval(meterInterval);
 
-        // Simulation / Real running ticker: 1 minute = 1 km
         let secondsElapsed = 0;
         meterInterval = setInterval(() => {
             secondsElapsed++;
-            distanceKm = secondsElapsed / 60; // 60 seconds = 1 km
+            distanceKm = secondsElapsed / 60; // 1 minute = 1 km
             document.getElementById('liveKm').innerText = distanceKm.toFixed(2);
 
             let fare = baseFare;
@@ -434,19 +433,45 @@
         return Math.floor(1000 + Math.random() * 9000).toString();
     }
 
-    // Convert image to Base64 for local storage / firestore display
-    function getBaseImage(fileInputId) {
+    // Image Compressor function to prevent phone hanging / Firebase size limit errors
+    function compressImage(fileInputId) {
         return new Promise((resolve) => {
             const fileInput = document.getElementById(fileInputId);
-            if(fileInput.files && fileInput.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    resolve(e.target.result);
-                };
-                reader.readAsDataURL(fileInput.files[0]);
-            } else {
+            if (!fileInput.files || !fileInput.files[0]) {
                 resolve('');
+                return;
             }
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = new Image();
+                img.onload = function () {
+                    const canvas = document.createElement('canvas');
+                    const MAX_WIDTH = 300;
+                    const MAX_HEIGHT = 300;
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > height) {
+                        if (width > MAX_WIDTH) {
+                            height *= MAX_WIDTH / width;
+                            width = MAX_WIDTH;
+                        }
+                    } else {
+                        if (height > MAX_HEIGHT) {
+                            width *= MAX_HEIGHT / height;
+                            height = MAX_HEIGHT;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    resolve(canvas.toDataURL('image/jpeg', 0.7)); // Compressed JPEG format
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(fileInput.files[0]);
         });
     }
 
@@ -461,8 +486,9 @@
             return;
         }
 
-        const driverPhoto = await getBaseImage('drvPhotoFile');
-        const vehPhoto = await getBaseImage('vehPhotoFile');
+        // Compress images to stop crashing/hanging
+        const driverPhoto = await compressImage('drvPhotoFile');
+        const vehPhoto = await compressImage('vehPhotoFile');
         const driverId = generate4DigitId();
 
         try {
@@ -533,7 +559,7 @@
                 bookingsArray.push({ id: docSnap.id, ...docSnap.data() });
             });
 
-            // Sort newest bookings on top (Descending order of timestamp)
+            // Newest bookings on top
             bookingsArray.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
 
             if (snapshot.size > lastBookingCount && lastBookingCount !== 0) {
@@ -573,13 +599,16 @@
     }
 
     async function acceptBooking(id, pickup) {
+        // Play Audio on button click
+        const audio = document.getElementById('alertSound');
+        audio.play().catch(e => console.log(e));
+
         const enteredId = document.getElementById('driverInputId').value.trim();
         if(!enteredId || enteredId.length !== 4) {
             alert('ದಯವಿಟ್ಟು ಮೇಲ್ಭಾಗದಲ್ಲಿ ನಿಮ್ಮ ಸರಿಯಾದ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿಯನ್ನು ನಮೂದಿಸಿ!');
             return;
         }
 
-        // Verify driver ID from firestore drivers collection
         window.onSnapshot(window.collection(window.db, "drivers"), async (snapshot) => {
             let foundDriver = null;
             let driverDocId = null;
@@ -606,10 +635,9 @@
                     driverDetails: driverInfoStr
                 });
 
-                // Update Driver earnings and trips
                 const drvRef = window.doc(window.db, "drivers", driverDocId);
                 const newTrips = (foundDriver.totalTrips || 0) + 1;
-                const newEarnings = (foundDriver.totalEarnings || 0) + 100; // Rs 100 added per accepted trip simulated
+                const newEarnings = (foundDriver.totalEarnings || 0) + 100;
                 await window.updateDoc(drvRef, {
                     totalTrips: newTrips,
                     totalEarnings: newEarnings
@@ -634,7 +662,6 @@
                 const d = docSnap.data();
                 const id = docSnap.id;
 
-                // Auto-delete if older than 7 days
                 if(d.createdAt && (now - d.createdAt > sevenDaysMs)) {
                     await window.deleteDoc(window.doc(window.db, "drivers", id));
                     return;
