@@ -14,48 +14,47 @@
         .logo-title span { font-size: 1.5rem; }
         #mainTitle { font-size: 1.1rem; font-weight: bold; color: #2c3e50; }
         #subTitle { font-size: 0.75rem; color: #718096; }
-        .lang-btn { background: #e0f2f1; border: none; padding: 6px 12px; border-radius: 15px; font-size: 0.75rem; font-weight: bold; color: #00796b; cursor: pointer; }
         
-        .app-banner-img { width: 100%; height: 210px; object-fit: cover; border-radius: 12px; margin-bottom: 12px; border: 2px solid #e2e8f0; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .app-banner-img { width: 100%; height: 180px; object-fit: cover; border-radius: 12px; margin-bottom: 12px; border: 2px solid #e2e8f0; }
 
-        .whatsapp-join-box { background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%); border: 2px dashed #28a745; padding: 12px; border-radius: 14px; text-align: center; margin-bottom: 12px; }
-        .whatsapp-join-btn { display: inline-block; background: #25D366; color: white; text-decoration: none; padding: 8px 18px; border-radius: 25px; font-weight: bold; margin-top: 8px; font-size: 0.9rem; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4); }
+        .whatsapp-join-box { background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%); border: 2px dashed #28a745; padding: 10px; border-radius: 12px; text-align: center; margin-bottom: 10px; }
+        .whatsapp-join-btn { display: inline-block; background: #25D366; color: white; text-decoration: none; padding: 6px 14px; border-radius: 20px; font-weight: bold; margin-top: 6px; font-size: 0.85rem; }
 
-        .support-box { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); border: 2px solid #ff7675; padding: 12px; border-radius: 14px; text-align: center; margin-bottom: 15px; }
-        .support-btn { display: inline-block; background: #d63031; color: white; text-decoration: none; padding: 8px 18px; border-radius: 25px; font-weight: bold; margin-top: 8px; font-size: 0.9rem; box-shadow: 0 4px 12px rgba(214, 48, 49, 0.4); }
+        .support-box { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); border: 2px solid #ff7675; padding: 10px; border-radius: 12px; text-align: center; margin-bottom: 12px; }
+        .support-btn { display: inline-block; background: #d63031; color: white; text-decoration: none; padding: 6px 14px; border-radius: 20px; font-weight: bold; margin-top: 6px; font-size: 0.85rem; }
 
-        .tabs { display: flex; background: #e2e8f0; border-radius: 12px; padding: 4px; margin-bottom: 15px; gap: 2px; flex-wrap: wrap; }
-        .tab-btn { flex: 1; min-width: 30%; border: none; padding: 8px 4px; background: transparent; font-weight: bold; border-radius: 9px; cursor: pointer; font-size: 0.75rem; text-align: center; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 4px; }
-        .tab-btn.active { background: linear-gradient(45deg, #00b09b, #96c93d); color: white; box-shadow: 0 4px 15px rgba(0, 156, 155, 0.4); }
+        /* ಮೋಡ್ ಸೆಲೆಕ್ಟರ್ ಬாக்ಸ್ */
+        .role-selector-box { background: #e0f2fe; padding: 10px; border-radius: 10px; margin-bottom: 12px; text-align: center; border: 1px solid #bae6fd; }
+        
+        .tabs { display: flex; background: #e2e8f0; border-radius: 10px; padding: 4px; margin-bottom: 15px; gap: 2px; }
+        .tab-btn { flex: 1; border: none; padding: 8px 4px; background: transparent; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 0.75rem; text-align: center; }
+        .tab-btn.active { background: linear-gradient(45deg, #00b09b, #96c93d); color: white; box-shadow: 0 4px 12px rgba(0, 156, 155, 0.3); }
         
         .section { display: none; }
-        .section.active { display: block; animation: fadeIn 0.3s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .section.active { display: block; }
         
-        h2 { font-size: 1.05rem; margin-bottom: 12px; color: #2d3748; font-weight: 700; border-left: 4px solid var(--primary); padding-left: 8px; display: flex; align-items: center; gap: 6px; }
+        h2 { font-size: 1.05rem; margin-bottom: 12px; color: #2d3748; font-weight: 700; border-left: 4px solid var(--primary); padding-left: 8px; }
         .form-group { margin-bottom: 12px; }
         label { display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 4px; color: #4a5568; }
         input, select { width: 100%; padding: 10px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 0.9rem; background: #f8fafc; }
-        input:focus, select:focus { border-color: var(--primary); background: #fff; outline: none; box-shadow: 0 0 0 3px rgba(0, 200, 83, 0.15); }
-        .btn-gps, .btn-submit { width: 100%; padding: 12px; border: none; border-radius: 10px; font-weight: bold; font-size: 0.95rem; cursor: pointer; margin-top: 5px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        input:focus, select:focus { border-color: var(--primary); background: #fff; outline: none; }
+        
+        .btn-gps, .btn-submit { width: 100%; padding: 12px; border: none; border-radius: 10px; font-weight: bold; font-size: 0.95rem; cursor: pointer; margin-top: 5px; }
         .btn-gps { background: linear-gradient(45deg, #3Edfdc, #5b86e5); color: white; }
-        .btn-submit { background: linear-gradient(45deg, #00b09b, #96c93d); color: white; box-shadow: 0 4px 15px rgba(0, 176, 155, 0.3); }
+        .btn-submit { background: linear-gradient(45deg, #00b09b, #96c93d); color: white; }
         
         .meter-box { background: linear-gradient(135deg, #ffeaa7 0%, #dfe6e9 100%); border: 2px solid #fffa65; padding: 14px; border-radius: 14px; text-align: center; margin-bottom: 15px; }
         .meter-val { font-size: 2rem; font-weight: 800; color: #d32f27; margin: 4px 0; }
         .meter-btns { display: flex; gap: 10px; margin-top: 10px; }
         .meter-btns button { flex: 1; padding: 10px; border: none; border-radius: 10px; font-weight: bold; color: white; cursor: pointer; }
-        .btn-start { background: linear-gradient(45deg, #00b09b, #96c93d); }
-        .btn-stop { background: linear-gradient(45deg, #cb356b, #bd3f32); }
+        .btn-start { background: #27ae60; }
+        .btn-stop { background: #c0392b; }
         
-        .card { background: #fff; border: 1px solid #e2e8f0; padding: 12px; border-radius: 12px; margin-bottom: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); font-size: 0.85rem; }
-        
+        .card { background: #fff; border: 1px solid #e2e8f0; padding: 12px; border-radius: 12px; margin-bottom: 10px; font-size: 0.85rem; }
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; padding: 15px; }
-        .modal-content { background: #fff; width: 100%; max-width: 400px; padding: 20px; border-radius: 15px; box-shadow: 0 5px 25px rgba(0,0,0,0.3); position: relative; max-height: 90vh; overflow-y: auto; }
+        .modal-content { background: #fff; width: 100%; max-width: 400px; padding: 20px; border-radius: 15px; position: relative; max-height: 90vh; overflow-y: auto; }
         .close-btn { position: absolute; right: 15px; top: 12px; font-size: 1.5rem; font-weight: bold; color: #aaa; cursor: pointer; }
-        .modal-img { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; border: 2px solid #ddd; margin-top: 5px; }
-
-        .cam-preview { width: 100%; height: 160px; background: #000; border-radius: 10px; margin-top: 5px; display: none; object-fit: cover; }
+        .modal-img { width: 100%; height: 140px; object-fit: cover; border-radius: 8px; margin-top: 5px; border: 2px solid #ddd; }
         .footer { text-align: center; font-size: 0.75rem; color: #718096; margin-top: 15px; border-top: 1px solid #edf2f7; padding-top: 10px; }
     </style>
 </head>
@@ -70,42 +69,42 @@
                 <div id="subTitle">ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್</div>
             </div>
         </div>
-        <button class="lang-btn" onclick="toggleLanguage()">English / ಕನ್ನಡ</button>
     </div>
 
-    <img src="https://i.ibb.co/6R7x7sX3/1000377241.jpg" alt="AR Taxi Shahapur Banner" class="app-banner-img">
+    <!-- ಬ್ಯಾಕ್ನರ್ ಇಮೇಜಿಂಗ್ ಲಿಂಕ್ -->
+    <img src="https://i.ibb.co/6R7x7sX3/1000377241.jpg" alt="Banner" class="app-banner-img" onerror="this.src='https://via.placeholder.com/400x180?text=AR+Taxi+Shahapur'">
 
-    <!-- ವಾಟ್ಸಾಪ್ ಲಿಂಕ್ ಅನ್ನು ಇಲ್ಲಿ ಅಳವಡಿಸಲಾಗಿದೆ -->
     <div class="whatsapp-join-box">
-        <div id="waBannerText" style="font-size: 0.83rem; font-weight: bold; color: #152223;">ಡ್ರೈವರ್‌ಗಳು ಕಡ್ಡಾಯವಾಗಿ ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್‌ಗೆ ಸೇರಿ:</div>
-        <a href="https://chat.whatsapp.com/EsHqitUBzFcFf0Q4nWbniY?s=cl&p=a&mlu=4&ilr=4" target="_blank" class="whatsapp-join-btn" id="waJoinBtn">💬 Join Driver WhatsApp Group</a>
+        <div style="font-size: 0.82rem; font-weight: bold; color: #152223;">ಡ್ರೈವರ್‌ಗಳು ಕಡ್ಡಾಯವಾಗಿ ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್‌ಗೆ ಸೇರಿ:</div>
+        <a href="https://chat.whatsapp.com/EsHqitUBzFcFf0Q4nWbniY?s=cl&p=a&mlu=4&ilr=4" target="_blank" class="whatsapp-join-btn">💬 Join Driver WhatsApp Group</a>
     </div>
 
     <div class="support-box">
-        <div id="ccBannerText" style="font-size: 0.83rem; font-weight: bold; color: #78281f;">ತುರ್ತು ಸಹಾಯ ಬೇಕಿದ್ದರೆ ಸಂಪರ್ಕಿಸಿ:</div>
-        <a href="tel:8105010768" class="support-btn" id="ccCallBtn">📞 24/7 Customer Care (Call)</a>
+        <div style="font-size: 0.82rem; font-weight: bold; color: #78281f;">ತುರ್ತು ಸಹಾಯ ಬೇಕಿದ್ದರೆ ಸಂಪರ್ಕಿಸಿ:</div>
+        <a href="tel:8105010768" class="support-btn">📞 24/7 Customer Care (Call)</a>
     </div>
 
-    <!-- ಆಪ್ ಮೋಡ್ ಸೆಲೆಕ್ಟರ್ (ಕಸ್ಟಮರ್ ಅಥವಾ ಡ್ರೈವರ್ ಎಂದು ಆಯ್ಕೆ ಮಾಡಲು) -->
-    <div style="background:#e0f2fe; padding:10px; border-radius:10px; margin-bottom:12px; text-align:center;">
-        <label style="font-weight:bold; color:#0369a1; margin-bottom:5px;">ನಿಮ್ಮ ಮೊಬೈಲ್ ಬಳಕೆ ಯಾವುದು ಆಯ್ಕೆ ಮಾಡಿ:</label>
+    <!-- ಬಳಕೆದಾರರ ಮೋಡ್ ಆಯ್ಕೆ (ಕಸ್ಟಮರ್ ಅಥವಾ ಡ್ರೈವರ್) -->
+    <div class="role-selector-box" id="roleSelectorBox">
+        <label style="font-weight:bold; color:#0369a1; margin-bottom:4px;">ನಿಮ್ಮ ಮೊಬೈಲ್ ಬಳಕೆ ಯಾವುದು ಆಯ್ಕೆ ಮಾಡಿ:</label>
         <select id="userRoleSelect" onchange="changeUserRole()" style="font-weight:bold; color:#0c4a6e; background:#fff;">
             <option value="customer">👤 ನಾನು ಗ್ರಾಹಕ (Customer View)</option>
             <option value="driver">🚗 ನಾನು ಡ್ರೈವರ್ (Driver View)</option>
         </select>
     </div>
 
-    <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab(0)" id="tBtn0">👤 🛺 ಬುಕಿಂಗ್</button>
-        <button class="tab-btn" onclick="switchTab(1)" id="tBtn1">⏱️ 🛺 ಮೀಟರ್</button>
-        <button class="tab-btn" onclick="switchTab(2)" id="tBtn2">🚗 👤 ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್</button>
-        <button class="tab-btn" onclick="switchTab(3)" id="tBtn3">📢 🛺 ಡ್ರೈವರ್ ಲೈವ್</button>
-        <button class="tab-btn" onclick="switchTab(4)" id="tBtn4">🔑 ⚙️ ಅಡ್ಮಿನ್</button>
+    <!-- ನ್ಯಾವಿಗೇಷನ್ ಟ್ಯಾಬ್‌ಗಳು (ಕಸ್ಟಮರ್‌ಗೆ ಕೇವಲ ಬುಕಿಂಗ್ ಮಾತ್ರ ಕಾಣಿಸುತ್ತದೆ, ಡ್ರೈವರ್‌ಗೆ ಎಲ್ಲವೂ ಸಿಗುತ್ತದೆ) -->
+    <div class="tabs" id="appTabsContainer">
+        <button class="tab-btn active" onclick="switchTab(0)" id="tBtn0">👤 ಬುಕಿಂಗ್</button>
+        <button class="tab-btn driver-only-tab" onclick="switchTab(1)" id="tBtn1">⏱️ ಮೀಟರ್</button>
+        <button class="tab-btn driver-only-tab" onclick="switchTab(2)" id="tBtn2">🚗 ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್</button>
+        <button class="tab-btn driver-only-tab" onclick="switchTab(3)" id="tBtn3">📢 ಡ್ರೈವರ್ ಲೈವ್</button>
+        <button class="tab-btn driver-only-tab" onclick="switchTab(4)" id="tBtn4">🔑 ಅಡ್ಮಿನ್</button>
     </div>
 
     <!-- TAB 0: Customer Booking Form -->
     <div class="section active" id="sec0">
-        <h2 id="hBookTitle">👤 🛺 ಗ್ರಾಹಕರ ಬುಕಿಂಗ್ ಫಾರ್ಮ್</h2>
+        <h2>👤 ಗ್ರಾಹಕರ ಬುಕಿಂಗ್ ಫಾರ್ಮ್</h2>
         <form id="bookingForm" onsubmit="submitBooking(event)">
             <div class="form-group">
                 <label>ನಿಮ್ಮ ಹೆಸರು:</label>
@@ -116,10 +115,18 @@
                 <input type="tel" id="cusPhone" placeholder="10 ಅಂಕಿ ಮೊಬೈಲ್ ನಂಬರ್" pattern="[0-9]{10}" required>
             </div>
             <div class="form-group">
-                <label>ವಾಹನದ ಪ್ರಕಾರ:</label>
-                <select id="vehicleType">
-                    <option value="Auto">🛺 ಆಟೋ (Auto)</option>
-                    <option value="Mini Taxi">🚗 ಟ್ಯಾಕ್ಸಿ (Taxi)</option>
+                <label>ವಾಹನದ ಪ್ರಕಾರ & ಪ್ರಯಾಣಿಕರ ಸಂಖ್ಯೆ:</label>
+                <select id="vehicleType" onchange="updatePassengerOptions()">
+                    <option value="Auto">🛺 ಆಟೋ (Auto - 1 ರಿಂದ 3 ಜನ)</option>
+                    <option value="Mini Taxi">🚗 ಟ್ಯಾಕ್ಸಿ (Taxi - 1 ರಿಂದ 4 ಜನ)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>ಪ್ರಯಾಣಿಕರ ಸಂಖ್ಯೆ (Passengers):</label>
+                <select id="passengerCount">
+                    <option value="1">1 ಜನ</option>
+                    <option value="2">2 ಜನ</option>
+                    <option value="3">3 ಜನ</option>
                 </select>
             </div>
             <div class="form-group">
@@ -146,7 +153,7 @@
 
     <!-- TAB 1: Driver Live Meter -->
     <div class="section" id="sec1">
-        <h2>⏱️ 🛺 ಡ್ರೈವರ್ ಲೈವ್ ಮೀಟರ್</h2>
+        <h2>⏱️ ಡ್ರೈವರ್ ಲೈವ್ ಮೀಟರ್</h2>
         <div class="meter-box">
             <div style="font-size: 0.85rem; font-weight: 700; color: #5c4033;" id="lblDist">ಚಲಿಸಿದ ದೂರ: 0.00 ಕಿ.ಮೀ</div>
             <div style="font-size: 0.82rem; font-weight: 700; color: #5c4033;" id="lblFare">ಒಟ್ಟು ಅಂದಾಜು ಹಣ: ₹ 50</div>
@@ -156,14 +163,14 @@
                 <button type="button" class="btn-stop" onclick="stopMeter()">ನಿಲ್ಲಿಸಿ (Stop)</button>
             </div>
         </div>
-        <button type="button" class="btn-gps" style="background: linear-gradient(45deg, #25D366, #128C7E); margin-top: 10px;" onclick="sendMeterToWhatsApp()">ವಾಟ್ಸಾಪ್‌ಗೆ ಮೀಟರ್ ವರದಿ ಕಳುಹಿಸಿ</button>
+        <button type="button" class="btn-gps" style="background: #25D366; margin-top: 10px;" onclick="sendMeterToWhatsApp()">ವಾಟ್ಸಾಪ್‌ಗೆ ಮೀಟರ್ ವರದಿ ಕಳುಹಿಸಿ</button>
     </div>
 
-    <!-- TAB 2: Driver Registration -->
+    <!-- TAB 2: Driver Registration (ಸೆಲ್ಫಿ ಕ್ಯಾಮೆರಾ ತೆಗೆದು ಫೋಟೋ ಅಪ್‌ಲೋಡ್ ಮಾತ್ರ ಇಡಲಾಗಿದೆ) -->
     <div class="section" id="sec2">
-        <h2>🚗 👤 ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ & ನೋಂದಣಿ</h2>
+        <h2>🚗 ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ & ನೋಂದಣಿ</h2>
         <div style="font-size: 0.78rem; background: #fff3e0; color: #e65100; padding: 8px; border-radius: 8px; margin-bottom: 10px;">
-            ⚠️ ವಾಹನ ನಂಬರ್ ಮತ್ತು RC ಕಾರ್ಡ್ ನಂಬರ್ ಒಂದೇ ಆಗಿರಬೇಕು. ಸೆಲ್ಫಿ ಕ್ಯಾಮೆರಾ ಮೂಲಕ ನೇರವಾಗಿ ಫೋಟೋ ತೆಗೆಯಬೇಕು.
+            ⚠️ ಡ್ರೈವರ್ ಹೆಸರು, ಮೊಬೈಲ್ ನಂಬರ್, ವಾಹನ ನಂಬರ್ ಮತ್ತು ಫೋಟೋಗಳನ್ನು ಸರಿಯಾಗಿ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ.
         </div>
         <form onsubmit="submitRegistration(event)">
             <div class="form-group">
@@ -171,14 +178,14 @@
                 <input type="text" id="regName" placeholder="Full Name" required>
             </div>
             <div class="form-group">
-                <label>ಮೊಬೈಲ್ ನಂಬರ್:</label>
+                <label>ಮೊಬೈಲ್ ನಂಬರ್ (Contact Number):</label>
                 <input type="tel" id="regPhone" placeholder="Mobile Number" pattern="[0-9]{10}" required>
             </div>
             <div class="form-group">
-                <label>ವಾಹನದ ಪ್ರಕಾರ:</label>
+                <label>ವಾಹನದ ಪ್ರಕಾರ (Vehicle Type):</label>
                 <select id="regVehicle">
                     <option value="Auto">🛺 ಆಟೋ (Auto)</option>
-                    <option value="Taxi">🚗 ಟ್ಯಾಕ್ಸಿ (Taxi)</option>
+                    <option value="Taxi">🚗 ಕಾರ್ / ಟ್ಯಾಕ್ಸಿ (Taxi)</option>
                 </select>
             </div>
             <div class="form-group">
@@ -190,33 +197,28 @@
                 <input type="text" id="regRcNo" placeholder="RC Number" required style="text-transform:uppercase;">
             </div>
             
+            <!-- ಇಲ್ಲಿ ಕ್ಯಾಮೆರಾ ಬದಲಿಗೆ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ ಆಪ್ಷನ್ ನೀಡಲಾಗಿದೆ -->
             <div class="form-group">
-                <label>📸 ಡ್ರೈವರ್ ಸೆಲ್ಫಿ (ಲೈವ್ ಕ್ಯಾಮೆರಾ): <span style="color:red">*Mandatory</span></label>
-                <button type="button" class="btn-gps" onclick="openCamera()" style="background:#ff9800;">📷 ಕ್ಯಾಮೆರಾ ಆನ್ ಮಾಡಿ</button>
-                <video id="cameraVideo" autoplay playsinline class="cam-preview"></video>
-                <button type="button" id="captureBtn" onclick="captureSelfie()" style="display:none; width:100%; background:#28a745; color:white; border:none; padding:8px; border-radius:8px; font-weight:bold; margin-top:5px;">📸 ಫೋಟೋ ತೆಗೆಯಿರಿ (Capture)</button>
-                <canvas id="cameraCanvas" style="display:none;"></canvas>
-                <img id="selfiePreviewImg" style="display:none; width:100%; height:140px; object-fit:cover; border-radius:8px; margin-top:5px; border:2px solid #28a745;">
-                <input type="hidden" id="regSelfieData" required>
+                <label>📸 ಡ್ರೈವರ್ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ (Driver Photo): <span style="color:red">*Mandatory</span></label>
+                <input type="file" id="regSelfiePhoto" accept="image/*" required style="padding:6px;">
             </div>
-
             <div class="form-group">
-                <label>🚙 ವಾಹನದ ಫೋಟೋ: <span style="color:red">*Mandatory</span></label>
+                <label>🚙 ವಾಹನದ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ (Vehicle Photo): <span style="color:red">*Mandatory</span></label>
                 <input type="file" id="regVehPhoto" accept="image/*" required style="padding:6px;">
             </div>
             <div class="form-group">
-                <label>📄 RC ಕಾರ್ಡ್ ಫೋಟೋ: <span style="color:red">*Mandatory</span></label>
+                <label>📄 RC ಕಾರ್ಡ್ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ (RC Photo): <span style="color:red">*Mandatory</span></label>
                 <input type="file" id="regRcPhoto" accept="image/*" required style="padding:6px;">
             </div>
             <button type="submit" class="btn-submit">✍️ ಡ್ರೈವರ್ ನೋಂದಣಿ ಕಳುಹಿಸಿ</button>
         </form>
     </div>
 
-    <!-- TAB 3: Driver Live Orders Page -->
+    <!-- TAB 3: Driver Live Orders Page (ಕನ್ನಡ ವಾಯ್ಸ್ ಅಲರ್ಟ್ ಜೊತೆ) -->
     <div class="section" id="sec3">
-        <h2>📢 🛺 ಡ್ರೈವರ್‌ಗಳಿಗೆ ಲೈವ್ ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು</h2>
+        <h2>📢 ಡ್ರೈವರ್‌ಗಳಿಗೆ ಲೈವ್ ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು</h2>
         <div style="font-size:0.75rem; color:#15803d; background:#f0fdf4; padding:6px; border-radius:6px; margin-bottom:10px; text-align:center;">
-            🔊 ಹೊಸ ಬುಕಿಂಗ್ ಬಂದರೆ ಡ್ರೈವರ್ ಫೋನ್‌ನಲ್ಲಿ ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಸೌಂಡ್ (Alert) ಬರುತ್ತದೆ.
+            🔊 ಹೊಸ ಬುಕಿಂಗ್ ಬಂದರೆ ಡ್ರೈವರ್ ಫೋನ್‌ನಲ್ಲಿ ಕನ್ನಡದಲ್ಲಿ ವಾಯ್ಸ್ ಅಲರ್ಟ್ ಬರುತ್ತದೆ.
         </div>
         <div id="driverOrdersContainer">
             <p style="font-size: 0.85rem; color: #718096; text-align: center; padding: 15px;">ಸದ್ಯ ಯಾವುದೇ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.</p>
@@ -225,7 +227,7 @@
 
     <!-- TAB 4: Admin Panel -->
     <div class="section" id="sec4">
-        <h2>🔑 ⚙️ ಅಡ್ಮಿನ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ & ಅಪ್ರೂವಲ್</h2>
+        <h2>🔑 ಅಡ್ಮಿನ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ & ಅಪ್ರೂವಲ್</h2>
         <div id="driverListContainer" style="margin-bottom: 15px;"></div>
         <div class="card" style="background:#e3f2fd; border-color:#90caf9;">
             <div id="adminReportContainer"></div>
@@ -247,11 +249,9 @@
 </div>
 
 <script>
-    let currentLang = 'kn';
     let gpsCoords = null;
     let matchId = null;
     let distance = 0.0;
-    let mediaStream = null;
 
     let drivers = JSON.parse(localStorage.getItem('ar_drivers')) || [];
     let orders = JSON.parse(localStorage.getItem('ar_orders')) || [];
@@ -260,42 +260,67 @@
     let userRole = localStorage.getItem('ar_user_role') || 'customer';
 
     document.getElementById('userRoleSelect').value = userRole;
+    applyRoleView();
 
     function changeUserRole() {
         userRole = document.getElementById('userRoleSelect').value;
         localStorage.setItem('ar_user_role', userRole);
-        alert(userRole === 'driver' ? "✅ ಈಗ ನೀವು ಡ್ರೈವರ್ ಮೋಡ್‌ನಲ್ಲಿದ್ದೀರಿ. ಹೊಸ ಬುಕಿಂಗ್ ಬಂದರೆ ಸೌಂಡ್ ಬರುತ್ತದೆ." : "✅ ಈಗ ನೀವು ಕಸ್ಟಮರ್ ಮೋಡ್‌ನಲ್ಲಿದ್ದೀರಿ.");
+        applyRoleView();
     }
 
-    // ಡ್ರೈವರ್ ಫೋನ್‌ಗೆ ಮಾತ್ರ ಆಡಿಯೋ ಅಲರ್ಟ್ ಬರುವಂತೆ ಸೆಟ್ ಮಾಡಲಾಗಿದೆ
-    function playAlarmSound() {
-        if (userRole !== 'driver') return; // ಕಸ್ಟಮರ್ ಫೋನ್ ಆಗಿದ್ದರೆ ಸೌಂಡ್ ಬರುವುದಿಲ್ಲ
+    function applyRoleView() {
+        let driverTabs = document.querySelectorAll('.driver-only-tab');
+        if (userRole === 'customer') {
+            // ಕಸ್ಟಮರ್ ಆಗಿದ್ದರೆ ಕೇವಲ ಬುಕಿಂಗ್ ಟ್ಯಾಬ್ ಮಾತ್ರ ಇರುತ್ತದೆ, ಉಳಿದ ಎಲ್ಲಾ ಬಟನ್‌ಗಳು ಮಾಯವಾಗುತ್ತವೆ
+            driverTabs.forEach(t => t.style.display = 'none');
+            switchTab(0);
+        } else {
+            // ಡ್ರೈವರ್ ಆಗಿದ್ದರೆ ಎಲ್ಲಾ ಆಪ್ಷನ್‌ಗಳು ಕಾಣಿಸುತ್ತವೆ
+            driverTabs.forEach(t => t.style.display = 'block');
+            alert("✅ ಈಗ ನೀವು ಡ್ರೈವರ್ ಮೋಡ್‌ನಲ್ಲಿದ್ದೀರಿ. ಹೊಸ ಬುಕಿಂಗ್ ಬಂದರೆ ಕನ್ನಡದಲ್ಲಿ ಸೌಂಡ್ ಬರುತ್ತದೆ.");
+        }
+    }
+
+    // ಆಟೋ ಅಥವಾ ಕಾರ್ ಸೆಲೆಕ್ಟ್ ಮಾಡಿದಾಗ ಪ್ರಯಾಣಿಕರ ಸಂಖ್ಯೆ ಆಪ್ಷನ್ ಬದಲಾಗುವುದು
+    function updatePassengerOptions() {
+        let vType = document.getElementById('vehicleType').value;
+        let pSelect = document.getElementById('passengerCount');
+        pSelect.innerHTML = '';
+        if (vType === 'Auto') {
+            // ಆಟೋಗೆ 1 ರಿಂದ 3 ಜನ
+            for (let i = 1; i <= 3; i++) {
+                let opt = document.createElement('option');
+                opt.value = i;
+                opt.textContent = i + ' ಜನ';
+                pSelect.appendChild(opt);
+            }
+        } else {
+            // ಕಾರ್/ಟ್ಯಾಕ್ಸಿಗೆ 1 ರಿಂದ 4 ಜನ
+            for (let i = 1; i <= 4; i++) {
+                let opt = document.createElement('option');
+                opt.value = i;
+                opt.textContent = i + ' ಜನ';
+                pSelect.appendChild(opt);
+            }
+        }
+    }
+    updatePassengerOptions();
+
+    // ಡ್ರೈವರ್ ಫೋನ್‌ಗೆ ಮಾತ್ರ ಕನ್ನಡ ವಾಯ್ಸ್ ಮತ್ತು ಸೌಂಡ್ ಅಲರ್ಟ್ ಬರುವುದು
+    function playKannadaVoiceAlarm() {
+        if (userRole !== 'driver') return;
         try {
             let audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
             audio.play().catch(e => {});
 
             if ('speechSynthesis' in window) {
-                let speech = new SpeechSynthesisUtterance("ಗಮನಿಸಿ! ಹೊಸ ಬುಕಿಂಗ್ ಬಂದಿದೆ, ದಯವಿಟ್ಟು ಸ್ವೀಕರಿಸಿ.");
+                let speech = new SpeechSynthesisUtterance("ಗಮನಿಸಿ! ರಿಯಲ್ ಕಸ್ಟಮರ್ ಬುಕಿಂಗ್ ಬಂದಿದೆ, ದಯವಿಟ್ಟು ಡ್ರೈವರ್ ಪೇಜ್ ಪರಿಶೀಲಿಸಿ ಸ್ವೀಕರಿಸಿ.");
                 speech.lang = 'kn-IN';
-                speech.rate = 1.0;
+                speech.rate = 0.95;
                 window.speechSynthesis.speak(speech);
             }
         } catch(e) {}
     }
-
-    window.addEventListener('storage', (event) => {
-        if (event.key === 'ar_orders') {
-            let newOrders = JSON.parse(event.newValue) || [];
-            let newPendingCount = newOrders.filter(o => o.status === 'Pending').length;
-            if (newPendingCount > lastKnownPendingCount && userRole === 'driver') {
-                playAlarmSound();
-            }
-            lastKnownPendingCount = newPendingCount;
-            orders = newOrders;
-            renderDriverOrders();
-            renderCustomerStatus();
-        }
-    });
 
     setInterval(() => {
         let savedOrders = localStorage.getItem('ar_orders');
@@ -303,7 +328,7 @@
             let parsedOrders = JSON.parse(savedOrders);
             let newPendingCount = parsedOrders.filter(o => o.status === 'Pending').length;
             if (newPendingCount > lastKnownPendingCount && userRole === 'driver') {
-                playAlarmSound();
+                playKannadaVoiceAlarm();
             }
             lastKnownPendingCount = newPendingCount;
             
@@ -316,57 +341,15 @@
     }, 1000);
 
     function switchTab(index) {
+        if (userRole === 'customer' && index !== 0) return; // ಕಸ್ಟಮರ್ ಬೇರೆ ಟ್ಯಾಬ್‌ಗೆ ಹೋಗಲು ಬಿಡುವುದಿಲ್ಲ
         const sections = document.querySelectorAll('.section');
         const tabs = document.querySelectorAll('.tab-btn');
         sections.forEach((sec, idx) => {
             sec.classList.toggle('active', idx === index);
             tabs[idx].classList.toggle('active', idx === index);
         });
-        if(index !== 2 && mediaStream) {
-            mediaStream.getTracks().forEach(track => track.stop());
-            document.getElementById('cameraVideo').style.display = 'none';
-            document.getElementById('captureBtn').style.display = 'none';
-        }
         if(index === 3) renderDriverOrders();
         if(index === 4) { renderDriverList(); renderAdminReport(); }
-    }
-
-    async function openCamera() {
-        try {
-            const videoElem = document.getElementById('cameraVideo');
-            const captureBtn = document.getElementById('captureBtn');
-            videoElem.style.display = 'block';
-            captureBtn.style.display = 'block';
-            
-            mediaStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false });
-            videoElem.srcObject = mediaStream;
-        } catch (err) {
-            alert("ಕ್ಯಾಮೆರಾ ಪರ್ಮಿಷನ್ ಸಿಕ್ಕಿಲ್ಲ.");
-        }
-    }
-
-    function captureSelfie() {
-        const videoElem = document.getElementById('cameraVideo');
-        const canvas = document.getElementById('cameraCanvas');
-        const previewImg = document.getElementById('selfiePreviewImg');
-        const selfieInputData = document.getElementById('regSelfieData');
-
-        canvas.width = videoElem.videoWidth || 300;
-        canvas.height = videoElem.videoHeight || 300;
-        let ctx = canvas.getContext('2d');
-        ctx.drawImage(videoElem, 0, 0, canvas.width, canvas.height);
-
-        let dataUrl = canvas.toDataURL('image/jpeg');
-        selfieInputData.value = dataUrl;
-        previewImg.src = dataUrl;
-        previewImg.style.display = 'block';
-
-        if (mediaStream) {
-            mediaStream.getTracks().forEach(track => track.stop());
-        }
-        videoElem.style.display = 'none';
-        document.getElementById('captureBtn').style.display = 'none';
-        alert("✅ ಸೆಲ್ಫಿ ಫೋಟೋ ಯಶಸ್ವಿಯಾಗಿ ಸೆರೆಹಿಡಿಯಲಾಗಿದೆ!");
     }
 
     function getGPSLocation() {
@@ -401,6 +384,7 @@
         let name = document.getElementById('cusName').value;
         let phone = document.getElementById('cusPhone').value;
         let vehicle = document.getElementById('vehicleType').value;
+        let passengers = document.getElementById('passengerCount').value;
         let pickup = document.getElementById('pickupLocation').value;
         let drop = document.getElementById('dropLocation').value;
 
@@ -414,6 +398,7 @@
             name: name,
             phone: phone,
             vehicle: vehicle,
+            passengers: passengers,
             pickup: pickup,
             drop: drop,
             gps: gpsCoords,
@@ -451,7 +436,6 @@
             return;
         }
 
-        // ಕಸ್ಟಮರ್ ಸ್ಕ್ರೀನ್‌ನಲ್ಲಿ ಯಾವುದೇ ಕೆಂಪು ಬಣ್ಣದ ಕ್ಯಾನ್ಸಲ್ ಪಟ್ಟಿ ಇರುವುದಿಲ್ಲ. ಕೇವಲ ಶಾಂತಿಯುತ ಸಂದೇಶ ಮಾತ್ರ ಇರುತ್ತದೆ.
         if (ord.status === 'Pending') {
             box.innerHTML = `
                 <div class="card" style="background:#f8fafc; border-color:#cbd5e1; text-align:center; padding:15px;">
@@ -469,7 +453,7 @@
                         🎉 ನಿಮ್ಮ ರೈಡ್ ಖಚಿತವಾಗಿದೆ! ಡ್ರೈವರ್ ವಿವರಗಳು ಕೆಳಕಂಡಂತಿವೆ:
                     </div>
                     <div style="display:flex; gap:12px; align-items:center;">
-                        <img src="${drv.selfie}" style="width:60px; height:60px; border-radius:50%; object-fit:cover; border:2px solid #16a34a;">
+                        <img src="${drv.selfie}" style="width:60px; height:60px; border-radius:50%; object-fit:cover; border:2px solid #16a34a;" onerror="this.src='https://via.placeholder.com/60'">
                         <div style="font-size:0.85rem; line-height:1.5;">
                             <div><b>ಹೆಸರು:</b> ${drv.name}</div>
                             <div><b>ಫೋನ್:</b> <a href="tel:${drv.phone}" style="color:#0284c7; font-weight:bold; font-size:0.9rem;">📞 ${drv.phone}</a></div>
@@ -499,7 +483,7 @@
                     <div class="card" style="background:#fff; border-left: 5px solid #0ea5e9;">
                         <div><b>ಕಸ್ಟಮರ್ ಹೆಸರು:</b> ${ord.name}</div>
                         <div><b>ಫೋನ್:</b> <a href="tel:${ord.phone}" style="color: #0284c7; font-weight: bold;">${ord.phone}</a></div>
-                        <div><b>ವಾಹನ ಪ್ರಕಾರ:</b> <span style="font-size:1rem; font-weight:bold; color:#0f172a;">${vehSymbolIcon} ${ord.vehicle}</span></div>
+                        <div><b>ವಾಹನ ಪ್ರಕಾರ:</b> <span style="font-size:1rem; font-weight:bold; color:#0f172a;">${vehSymbolIcon} ${ord.vehicle} (${ord.passengers || 1} ಜನ)</span></div>
                         <div><b>ಪಿಕಪ್:</b> ${ord.pickup}</div>
                         <div><b>ಲೊಕೇಶನ್:</b> <a href="${ord.gps}" target="_blank" style="color: #0284c7; text-decoration: underline;">ಮ್ಯಾಪ್‌ನಲ್ಲಿ ನೋಡಿ</a></div>
                         <div><b>ಡ್ರಾಪ್:</b> ${ord.drop}</div>
@@ -553,56 +537,54 @@
         let vehicle = document.getElementById('regVehicle').value;
         let vehNo = document.getElementById('regVehNo').value.trim().toUpperCase();
         let rcNo = document.getElementById('regRcNo').value.trim().toUpperCase();
-        let selfieData = document.getElementById('regSelfieData').value;
-
-        if (!selfieData) {
-            alert("❌ ದಯವಿಟ್ಟು ಸೆಲ್ಫಿ ಫೋಟೋ ತೆಗೆಯಿರಿ!");
-            return;
-        }
 
         if (vehNo !== rcNo) {
             alert("❌ ವಾಹನ ನಂಬರ್ ಮತ್ತು RC ಕಾರ್ಡ್ ನಂಬರ್ ಒಂದೇ ಆಗಿರಬೇಕು.");
             return;
         }
         
+        let selfiePhotoInput = document.getElementById('regSelfiePhoto');
         let vehPhotoInput = document.getElementById('regVehPhoto');
         let rcPhotoInput = document.getElementById('regRcPhoto');
 
         let reader1 = new FileReader();
         let reader2 = new FileReader();
+        let reader3 = new FileReader();
 
         reader1.onload = function(e1) {
-            let vehPhotoData = e1.target.result;
+            let selfieData = e1.target.result;
             reader2.onload = function(e2) {
-                let rcPhotoData = e2.target.result;
-                
-                let driverId = 'AR-DRV-' + Math.floor(1000 + Math.random() * 9000);
-                let newDriver = {
-                    id: driverId,
-                    name: name,
-                    phone: phone,
-                    vehicle: vehicle,
-                    vehNo: vehNo,
-                    rcNo: rcNo,
-                    selfie: selfieData,
-                    vehPhoto: vehPhotoData,
-                    rcPhoto: rcPhotoData,
-                    status: 'Approved',
-                    date: new Date().toLocaleDateString()
-                };
+                let vehPhotoData = e2.target.result;
+                reader3.onload = function(e3) {
+                    let rcPhotoData = e3.target.result;
+                    
+                    let driverId = 'AR-DRV-' + Math.floor(1000 + Math.random() * 9000);
+                    let newDriver = {
+                        id: driverId,
+                        name: name,
+                        phone: phone,
+                        vehicle: vehicle,
+                        vehNo: vehNo,
+                        rcNo: rcNo,
+                        selfie: selfieData,
+                        vehPhoto: vehPhotoData,
+                        rcPhoto: rcPhotoData,
+                        status: 'Approved',
+                        date: new Date().toLocaleDateString()
+                    };
 
-                drivers.push(newDriver);
-                localStorage.setItem('ar_drivers', JSON.stringify(drivers));
+                    drivers.push(newDriver);
+                    localStorage.setItem('ar_drivers', JSON.stringify(drivers));
 
-                alert(`✅ ನೋಂದಣಿ ಯಶಸ್ವಿಯಾಗಿದೆ!\nನಿಮ್ಮ ಐಡಿ: ${driverId}`);
-                event.target.reset();
-                document.getElementById('selfiePreviewImg').style.display = 'none';
-                document.getElementById('regSelfieData').value = '';
-                switchTab(3);
+                    alert(`✅ ನೋಂದಣಿ ಯಶಸ್ವಿಯಾಗಿದೆ!\nನಿಮ್ಮ ಐಡಿ: ${driverId}`);
+                    event.target.reset();
+                    switchTab(3);
+                }
+                reader3.readAsDataURL(rcPhotoInput.files[0]);
             }
-            reader2.readAsDataURL(rcPhotoInput.files[0]);
+            reader2.readAsDataURL(vehPhotoInput.files[0]);
         }
-        reader1.readAsDataURL(vehPhotoInput.files[0]);
+        reader1.readAsDataURL(selfiePhotoInput.files[0]);
     }
 
     function renderDriverList() {
@@ -654,7 +636,7 @@
             <div style="margin-bottom: 8px;"><b>ID:</b> <span style="color:#2563eb; font-weight:bold;">${drv.id}</span></div>
             <div style="margin-bottom: 8px;"><b>Name:</b> ${drv.name} (${drv.phone})</div>
             <div style="margin-bottom: 8px;"><b>Vehicle No:</b> <b style="color:#16a34a;">${vehLogoIcon} ${drv.vehNo}</b></div>
-            <div style="margin-top: 10px;"><b>Selfie:</b><br><img src="${drv.selfie}" class="modal-img"></div>
+            <div style="margin-top: 10px;"><b>Driver Photo:</b><br><img src="${drv.selfie}" class="modal-img"></div>
             <div style="margin-top: 10px;"><b>Vehicle Photo:</b><br><img src="${drv.vehPhoto}" class="modal-img"></div>
         `;
         document.getElementById('modalDetails').innerHTML = modalContent;
@@ -714,10 +696,6 @@
         let totalFare = calculateFare(distance);
         let msg = `⏱️ *AR Taxi Shahapur - Meter Report* ⏱️\nDistance: ${distance.toFixed(2)} KM\nTotal Fare: ₹ ${totalFare}`;
         window.open(`https://wa.me/?text=` + encodeURIComponent(msg), '_blank');
-    }
-
-    function toggleLanguage() {
-        // Simple fallback
     }
 
     renderCustomerStatus();
