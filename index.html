@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR Taxi Shahapur - Live Booking & Meter</title>
-    <!-- Firebase SDK Compat Scripts -->
+    <title>AR Taxi Shahapur - Local Auto & Taxi Booking</title>
+    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
     <style>
@@ -30,18 +30,19 @@
 <body>
 
 <div class="container" id="mainContainer">
+    <!-- ಲೋಗೋ ಮತ್ತು ಹೆಡರ್ -->
     <img src="1000377596_2.png" alt="AR Taxi Logo" class="logo">
     <h2>AR Taxi Shahapur</h2>
-    <div class="subtitle">ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್</div>
+    <div class="subtitle" id="subTitleText">ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್</div>
 
-    <!-- 1. ರೋಲ್ ಸೆಲೆಕ್ಷನ್ -->
+    <!-- 1. ರೋಲ್ ಸೆಲೆಕ್ಷನ್ ವ್ಯೂ (Role Selection) -->
     <div id="roleSelectionView">
         <div style="text-align: center; margin-bottom: 15px; font-weight: bold; font-size: 14px;">ದಯವಿಟ್ಟು ನಿಮ್ಮ ವಲಯವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ:</div>
-        <button class="btn btn-secondary" onclick="selectRole('customer')" style="margin-bottom: 10px; padding: 15px;">🚖 ಕಸ್ಟಮರ್ ಬುಕಿಂಗ್ & ಮೀಟರ್</button>
-        <button class="btn" onclick="selectRole('driver')" style="padding: 15px;"> ಡ್ರೈವರ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ & ಅಡ್ಮಿನ್</button>
+        <button class="btn btn-secondary" onclick="selectRole('customer')" style="margin-bottom: 10px; padding: 15px;">🚖 ಕಸ್ಟಮರ್ ಬುಕಿಂಗ್ & ಮೀಟರ್<br><span style="font-size:11px; font-weight:normal;">(Customer Booking & Meter)</span></button>
+        <button class="btn" onclick="selectRole('driver')" style="padding: 15px;"> ಡ್ರೈವರ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ & ಅಡ್ಮಿನ್<br><span style="font-size:11px; font-weight:normal;">(Driver Dashboard & Admin)</span></button>
     </div>
 
-    <!-- 2. ಕಸ್ಟಮರ್ ವ್ಯೂ -->
+    <!-- 2. ಕಸ್ಟಮರ್ ಇಂಟರ್ಫೇಸ್ -->
     <div id="customerView" class="hidden">
         <button class="btn" style="background:#636e72; padding:6px; font-size:12px; margin-bottom:10px;" onclick="backToRoleSelect()">⬅️ ಹಿಂದಕ್ಕೆ (Change Role)</button>
         
@@ -63,10 +64,10 @@
         <!-- ಬುಕಿಂಗ್ ಟ್ಯಾಬ್ -->
         <div id="custBookingTab">
             <div class="card">
-                <label>ವಾಹನ ಆಯ್ಕೆಮಾಡಿ:</label>
+                <label>ವಾಹನ ಆಯ್ಕೆಮಾಡಿ (ಚಿತ್ರದ ಮೇಲೆ ಕ್ಲಿಕ್ ಮಾಡಿ):</label>
                 <div style="display: flex; gap: 10px; margin-top: 5px;">
-                    <div id="selectAuto" onclick="selectVehicle('Auto')" style="flex:1; text-align:center; padding:8px; border:2px solid #00b894; border-radius:6px; cursor:pointer; background:#e8f8f0;">🛺 ಆಟೋ</div>
-                    <div id="selectCar" onclick="selectVehicle('Car')" style="flex:1; text-align:center; padding:8px; border:2px solid #ddd; border-radius:6px; cursor:pointer;">🚗 ಕಾರು</div>
+                    <div id="selectAuto" onclick="selectVehicle('Auto')" style="flex:1; text-align:center; padding:8px; border:2px solid #00b894; border-radius:6px; cursor:pointer; background:#e8f8f0;">🛺 ಆಟೋ (Auto)</div>
+                    <div id="selectCar" onclick="selectVehicle('Car')" style="flex:1; text-align:center; padding:8px; border:2px solid #ddd; border-radius:6px; cursor:pointer;">🚗 ಕಾರು (Car)</div>
                 </div>
 
                 <label>ನಿಮ್ಮ ಹೆಸರು</label>
@@ -83,30 +84,30 @@
                     <option value="4+">4+ ಜನ / Persons</option>
                 </select>
 
-                <label>ಪ್ರಸ್ತುತ ಸ್ಥಳ</label>
+                <label>ನೀವು ಈಗ ಎಲ್ಲಿದ್ದೀರಿ</label>
                 <input type="text" id="currentLoc" placeholder="ಉದಾ: ಬಸ್ ಸ್ಟ್ಯಾಂಡ್ ಹತ್ತಿರ">
 
-                <label>ಪಿಕೋಪ್ ಲೊಕೇಶನ್ (GPS)</label>
-                <input type="text" id="pickupLoc" placeholder="ಸ್ಥಳದ ಹೆಸರು ಅಥವಾ ಜಿಪಿಎಸ್">
-                <button class="btn btn-secondary" style="padding:6px; font-size:12px; margin-top:5px;" onclick="getCustomerGPS()">📍 ಲೈವ್ ಜಿಪಿಎಸ್ ಆನ್ ಮಾಡಿ</button>
+                <label>ಪಿಕೋಪ್ ಲೊಕೇಶನ್ (GPS ಕಡ್ಡಾಯ)</label>
+                <input type="text" id="pickupLoc" placeholder="ಸ್ಥಳದ ಹೆಸರು ಅಥವಾ ಜಿಪಿಎಸ್ ಬಳಸಿ">
+                <button class="btn btn-secondary" style="padding:6px; font-size:12px; margin-top:5px;" onclick="getCustomerGPS()">📍 ಲೈವ್ ಜಿಪಿಎಸ್ ಆನ್ ಮಾಡಿ (2KM ಮಿತಿಗಾಗಿ)</button>
 
                 <label>ಡ್ರಾಪ್ ಲೊಕೇಶನ್</label>
                 <input type="text" id="dropLoc" placeholder="ತಲುಪಬೇಕಾದ ಸ್ಥಳ">
 
-                <button class="btn" style="margin-top:15px;" onclick="submitBooking()">ಬುಕ್ ಮಾಡಿ (Book Now)</button>
+                <button class="btn" style="margin-top:15px;" onclick="submitBooking()">ಬುಕ್ ಮಾಡಿ</button>
             </div>
         </div>
 
-        <!-- ಲೈವ್ ಮೀಟರ್ ಟ್ಯಾಬ್ -->
+        <!-- ಲೈವ್ ಮೀಟರ್ ಟ್ಯಾಬ್ (ಕಸ್ಟಮರ್) -->
         <div id="custMeterTab" class="hidden">
             <div class="card" style="text-align: center;">
                 <h3>⏱️ ಲೈವ್ ರನ್ನಿಂಗ್ ಮೀಟರ್</h3>
                 <p style="font-size:13px; color:#666;">ಡ್ರೈವರ್ ಪಿಕಪ್ ಸ್ಥಳಕ್ಕೆ ಬಂದಾಗ OTP ನೀಡಿ ರೈಡ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ.</p>
                 
-                <label>ಮ್ಯಾಚಿಂಗ್ OTP ನಮೂದಿಸಿ:</label>
+                <label>ಡ್ರೈವರ್ ಮ್ಯಾಚಿಂಗ್ OTP ನಮೂದಿಸಿ:</label>
                 <input type="text" id="custOtpInput" placeholder="4 ಅಂಕಿಯ OTP" maxlength="4" style="text-align:center; font-size:18px; letter-spacing:5px;">
-                <button class="btn" onclick="startCustomerMeter()">🚀 ಮೀಟರ್ ಆನ್ ಮಾಡಿ</button>
-                <button class="btn btn-danger" onclick="stopCustomerMeter()">⏹️ ರೈಡ್ ಮುಕ್ತಾಯ</button>
+                <button class="btn" onclick="startCustomerMeter()">🚀 ಮೀಟರ್ ಆನ್ ಮಾಡಿ (Start Meter)</button>
+                <button class="btn btn-danger" onclick="stopCustomerMeter()">⏹️ ರೈಡ್ ಮುಕ್ತಾಯ (Stop Meter)</button>
 
                 <div id="liveMeterDisplay" style="margin-top:15px; padding:10px; background:#fff; border-radius:6px; border:1px solid #ddd; text-align:left;">
                     <b>ಸ್ಥಿತಿ:</b> ಕಾಯಲಾಗುತ್ತಿದೆ...<br>
@@ -117,13 +118,14 @@
         </div>
     </div>
 
-    <!-- 3. ಡ್ರೈವರ್ ವ್ಯೂ -->
+    <!-- 3. ಡ್ರೈವರ್ ಇಂಟರ್ಫೇಸ್ -->
     <div id="driverView" class="hidden">
         <button class="btn" style="background:#636e72; padding:6px; font-size:12px; margin-bottom:10px;" onclick="backToRoleSelect()">⬅️ ಹಿಂದಕ್ಕೆ (Change Role)</button>
 
         <div class="nav-tabs">
-            <button class="active" onclick="switchDriverTab('live')">🚨 ಲೈವ್ ಆರ್ಡರ್ಸ್</button>
+            <button class="active" onclick="switchDriverTab('live')">🚨 ಲೈವ್ (2KM)</button>
             <button onclick="switchDriverTab('profile')">🚗 ಪ್ರೊಫೈಲ್</button>
+            <button onclick="switchDriverTab('meter')">⏱️ ಮೀಟರ್</button>
             <button onclick="switchDriverTab('admin')">🔐 ಅಡ್ಮಿನ್</button>
         </div>
 
@@ -134,7 +136,7 @@
                 <input type="password" id="driverInputId" placeholder="####" maxlength="4" style="text-align:center; font-size:18px;" oninput="loadDriverBookings()">
             </div>
             <div id="driverBookingsList">
-                <p style="text-align:center; color:#7f8c8d; font-size:13px;">ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿದ ನಂತರ ಲೈವ್ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತವೆ.</p>
+                <p style="text-align:center; color:#7f8c8d; font-size:13px;">ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿದ ನಂತರ ಹತ್ತಿರದ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತವೆ.</p>
             </div>
         </div>
 
@@ -142,13 +144,26 @@
         <div id="driverProfileTab" class="hidden">
             <div class="card">
                 <h3>ಡ್ರೈವರ್ ನೋಂದಣಿ</h3>
-                <label>ಹೆಸರು:</label>
+                <label>ನಿಮ್ಮ ಹೆಸರು:</label>
                 <input type="text" id="drvName" placeholder="ಪೂರ್ಣ ಹೆಸರು">
                 <label>ಮೊಬೈಲ್ ನಂಬರ್:</label>
                 <input type="tel" id="drvPhone" placeholder="ಫೋನ್ ನಂಬರ್">
-                <label>ವಾಹನ ನಂಬರ್:</label>
-                <input type="text" id="drvVehNo" placeholder="KA 33 A 1234">
-                <button class="btn" onclick="registerDriver()">ನೋಂದಾಯಿಸಿ</button>
+                <label>ವಾಹನ ನಂಬರ್ (ಉದಾ: KA 33 A 1234):</label>
+                <input type="text" id="drvVehNo" placeholder="Vehicle Number">
+                <button class="btn" onclick="registerDriver()">ನೋಂದಾಯಿಸಿ (Register)</button>
+            </div>
+        </div>
+
+        <!-- ಡ್ರೈವರ್ ಮೀಟರ್ ಟ್ಯಾಬ್ -->
+        <div id="driverMeterTab" class="hidden">
+            <div class="card" style="text-align: center;">
+                <h3>⏱️ ಡ್ರೈವರ್ ಲೈವ್ ಮೀಟರ್</h3>
+                <p style="font-size:13px;">ಗಾಡಿ ಚಲಿಸಿದಂತೆ ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಮೀಟರ್ ಓಡುತ್ತದೆ.</p>
+                <button class="btn" onclick="startDriverMeter()">🟢 ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
+                <button class="btn btn-danger" onclick="stopDriverMeter()">🔴 ಮೀಟರ್ ನಿಲ್ಲಿಸಿ</button>
+                <div id="drvMeterBox" style="margin-top:15px; padding:10px; background:#fff; border-radius:6px; text-align:left;">
+                    <b>ದೂರ:</b> 0.00 ಕಿ.ಮೀ | <b>ಬಾಡಿಗೆ:</b> ರೂ. 0.00
+                </div>
             </div>
         </div>
 
@@ -187,7 +202,7 @@
     let watchId = null;
     let prevCoords = null;
     let totalDist = 0;
-    const generatedOTP = "4321"; // ಕಸ್ಟಮರ್ - ಡ್ರೈವರ್ ಮ್ಯಾಚಿಂಗ್ OTP
+    const generatedOTP = "4321"; // ಸಿಸ್ಟಮ್ ಆಟೋ ಜನರೇಟೆಡ್ ಮ್ಯಾಚಿಂಗ್ OTP
 
     function selectRole(role) {
         document.getElementById('roleSelectionView').classList.add('hidden');
@@ -215,9 +230,10 @@
     }
 
     function switchDriverTab(tab) {
-        ['driverLiveTab', 'driverProfileTab', 'driverAdminTab'].forEach(t => document.getElementById(t).classList.add('hidden'));
+        ['driverLiveTab', 'driverProfileTab', 'driverMeterTab', 'driverAdminTab'].forEach(t => document.getElementById(t).classList.add('hidden'));
         if(tab==='live') document.getElementById('driverLiveTab').classList.remove('hidden');
         if(tab==='profile') document.getElementById('driverProfileTab').classList.remove('hidden');
+        if(tab==='meter') document.getElementById('driverMeterTab').classList.remove('hidden');
         if(tab==='admin') document.getElementById('driverAdminTab').classList.remove('hidden');
     }
 
@@ -249,7 +265,7 @@
         }
     }
 
-    // ಬುಕಿಂಗ್ ಸಬ್ಮಿಟ್ ಮಾಡುವುದು (Firebase ಗೆ ಸೇವ್ ಆಗುತ್ತದೆ)
+    // ಬುಕಿಂಗ್ ಸಬ್ಮಿಟ್ ಮಾಡುವುದು
     function submitBooking() {
         const name = document.getElementById('custName').value.trim();
         const phone = document.getElementById('custPhone').value.trim();
@@ -308,7 +324,7 @@
                 const curr = { lat: pos.coords.latitude, lon: pos.coords.longitude };
                 if(prevCoords) {
                     const distMoved = calcDistance(prevCoords.lat, prevCoords.lon, curr.lat, curr.lon);
-                    // ಗಾಡಿ ನಿಂತಿದ್ದರೆ ಕೌಂಟ್ ಆಗುವುದಿಲ್ಲ, ಚಲಿಸಿದರೆ ಮಾತ್ರ ರನ್ ಆಗುತ್ತದೆ
+                    // ಗಾಡಿ ನಿಂತಿದ್ದರೆ ಕೌಂಟ್ ಆಗುವುದಿಲ್ಲ, 5 ಮೀಟರ್‌ಗಿಂತ ಹೆಚ್ಚು ಚಲಿಸಿದರೆ ಮಾತ್ರ ಮೀಟರ್ ರನ್ ಆಗುತ್ತದೆ
                     if(distMoved > 0.005) {
                         totalDist += distMoved;
                         updateMeterUI('liveMeterDisplay', totalDist, "ರನ್ನಿಂಗ್ (Running)");
@@ -329,6 +345,9 @@
         }
     }
 
+    function startDriverMeter() { startCustomerMeter(); }
+    function stopDriverMeter() { stopCustomerMeter(); }
+
     function updateMeterUI(elementId, dist, status) {
         let fare = dist <= 3 ? 200 : 200 + (dist - 3) * 15;
         document.getElementById(elementId).innerHTML = `
@@ -338,7 +357,6 @@
         `;
     }
 
-    // ಡ್ರೈವರ್ ನೋಂದಣಿ
     function registerDriver() {
         const name = document.getElementById('drvName').value.trim();
         const phone = document.getElementById('drvPhone').value.trim();
@@ -360,7 +378,6 @@
         }).catch(err => alert("ದೋಷ: " + err.message));
     }
 
-    // ಡ್ರೈವರ್ ಲೈವ್ ಬುಕಿಂಗ್ ಲೋಡ್ ಮಾಡುವುದು
     function loadDriverBookings() {
         const id = document.getElementById('driverInputId').value.trim();
         const listDiv = document.getElementById('driverBookingsList');
