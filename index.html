@@ -3,198 +3,414 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR Taxi Shahapur - Live Meter & Booking</title>
-    <!-- Happy Logo Icon -->
-    <link rel="icon" type="image/png" href="happy_logo.png">
+    <title>AR Taxi Shahapur - Live Booking & Meter</title>
+    <!-- Firebase SDK Compat Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 15px;
-            background-color: #f4f4f9;
-        }
-        .container {
-            max-width: 450px;
-            margin: 0 auto;
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        .logo {
-            width: 90px;
-            height: 90px;
-            margin-bottom: 10px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-        h2 {
-            color: #333;
-            font-size: 22px;
-            margin-bottom: 15px;
-        }
-        .btn {
-            width: 100%;
-            padding: 12px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 10px;
-            font-weight: bold;
-        }
-        .btn:hover {
-            background-color: #218838;
-        }
-        .stop-btn {
-            background-color: #dc3545;
-        }
-        .stop-btn:hover {
-            background-color: #c82333;
-        }
-        .whatsapp-btn {
-            background-color: #25D366;
-            margin-top: 15px;
-        }
-        .whatsapp-btn:hover {
-            background-color: #1ebe5d;
-        }
-        #resultBox {
-            margin-top: 20px;
-            padding: 15px;
-            background: #e9ecef;
-            border-radius: 8px;
-            font-size: 18px;
-            color: #333;
-            text-align: left;
-            line-height: 1.6;
-        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 10px; background: #f4f7f6; color: #333; }
+        .container { max-width: 480px; margin: 0 auto; background: #ffffff; padding: 15px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .logo { width: 80px; height: 80px; display: block; margin: 0 auto 10px auto; border-radius: 50%; object-fit: cover; border: 3px solid #00b894; }
+        h2 { text-align: center; color: #2c3e50; margin-bottom: 5px; font-size: 20px; }
+        .subtitle { text-align: center; color: #7f8c8d; font-size: 13px; margin-bottom: 15px; }
+        .card { background: #f9f9f9; padding: 12px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #00b894; }
+        .btn { width: 100%; padding: 12px; background: #00b894; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: bold; margin-top: 5px; box-shadow: 0 3px 8px rgba(0,184,148,0.3); }
+        .btn-secondary { background: #0984e3; box-shadow: 0 3px 8px rgba(9,132,227,0.3); }
+        .btn-danger { background: #d63031; box-shadow: 0 3px 8px rgba(214,48,49,0.3); }
+        .whatsapp-box { background: #e8f8f0; border: 2px dashed #2ecc71; padding: 10px; border-radius: 8px; text-align: center; margin-bottom: 10px; font-size: 13px; }
+        .emergency-box { background: #fde8e8; border: 2px dashed #e74c3c; padding: 10px; border-radius: 8px; text-align: center; margin-bottom: 15px; font-size: 13px; }
+        label { display: block; margin-top: 8px; font-weight: bold; font-size: 13px; color: #2c3e50; }
+        input, select { width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid #ddd; border-radius: 6px; margin-top: 4px; font-size: 14px; }
+        .hidden { display: none !important; }
+        .nav-tabs { display: flex; gap: 5px; margin-bottom: 15px; }
+        .nav-tabs button { flex: 1; padding: 8px; font-size: 12px; border: none; border-radius: 6px; background: #dfe6e9; cursor: pointer; font-weight: bold; }
+        .nav-tabs button.active { background: #00b894; color: white; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <!-- Happy Logo -->
-    <img src="happy_logo.png" alt="Happy Logo" class="logo">
+<div class="container" id="mainContainer">
+    <img src="1000377596_2.png" alt="AR Taxi Logo" class="logo">
     <h2>AR Taxi Shahapur</h2>
+    <div class="subtitle">ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್</div>
 
-    <p style="color: #666; font-size: 14px;">ಲೈವ್ ಜಿಪಿಎಸ್ ಆಟೋ ಮೀಟರ್</p>
-
-    <!-- Controls -->
-    <button class="btn" onclick="startLiveTracking()">ರೈಡ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ (Start Meter)</button>
-    <button class="btn stop-btn" onclick="stopLiveTracking()">ರೈಡ್ ನಿಲ್ಲಿಸಿ (Stop)</button>
-
-    <!-- Live Result Display -->
-    <div id="resultBox">
-        <b>ಸ್ಥಿತಿ:</b> ನಿಂತಿದೆ<br>
-        <b>ಒಟ್ಟು ದೂರ:</b> 0.00 ಕಿ.ಮೀ<br>
-        <b>ಒಟ್ಟು ಬಾಡಿಗೆ:</b> ರೂ. 0.00
+    <!-- 1. ರೋಲ್ ಸೆಲೆಕ್ಷನ್ -->
+    <div id="roleSelectionView">
+        <div style="text-align: center; margin-bottom: 15px; font-weight: bold; font-size: 14px;">ದಯವಿಟ್ಟು ನಿಮ್ಮ ವಲಯವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ:</div>
+        <button class="btn btn-secondary" onclick="selectRole('customer')" style="margin-bottom: 10px; padding: 15px;">🚖 ಕಸ್ಟಮರ್ ಬುಕಿಂಗ್ & ಮೀಟರ್</button>
+        <button class="btn" onclick="selectRole('driver')" style="padding: 15px;"> ಡ್ರೈವರ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ & ಅಡ್ಮಿನ್</button>
     </div>
 
-    <!-- WhatsApp Share Button -->
-    <button class="btn whatsapp-btn" onclick="shareOnWhatsApp()">WhatsApp ನಲ್ಲಿ ಶೇರ್ ಮಾಡಿ</button>
+    <!-- 2. ಕಸ್ಟಮರ್ ವ್ಯೂ -->
+    <div id="customerView" class="hidden">
+        <button class="btn" style="background:#636e72; padding:6px; font-size:12px; margin-bottom:10px;" onclick="backToRoleSelect()">⬅️ ಹಿಂದಕ್ಕೆ (Change Role)</button>
+        
+        <div class="whatsapp-box">
+            <b>ದಯವಿಟ್ಟು ಡ್ರೈವರ್‌ಗಳು ಮಾತ್ರ ಈ ವಾಟ್ಸಾಪ್ ಗುಂಪಿಗೆ ಜಾಯಿನ್ ಆಗಿ.</b><br>
+            <a href="https://chat.whatsapp.com/your-group-link" target="_blank" style="display:inline-block; margin-top:5px; background:#25D366; color:white; padding:6px 12px; border-radius:20px; text-decoration:none; font-weight:bold;">💬 Join Driver WhatsApp Group</a>
+        </div>
+
+        <div class="emergency-box">
+            ತುರ್ತು ಸಹಾಯ ಬೇಕಿದ್ದರೆ ಕಾಲ್ ಮಾಡಿ ವೆಹಿಕಲ್ ನಂಬರ್ ತಿಳಿಸಿ:<br>
+            <a href="tel:9966857576" style="display:inline-block; margin-top:5px; background:#e74c3c; color:white; padding:6px 12px; border-radius:20px; text-decoration:none; font-weight:bold;">📞 24/7 ತುರ್ತು ಕಾಲ್ (Emergency Call)</a>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="active" onclick="switchCustTab('booking')">🚖 ಬುಕಿಂಗ್</button>
+            <button onclick="switchCustTab('meter')">⏱️ ಲೈವ್ ಮೀಟರ್</button>
+        </div>
+
+        <!-- ಬುಕಿಂಗ್ ಟ್ಯಾಬ್ -->
+        <div id="custBookingTab">
+            <div class="card">
+                <label>ವಾಹನ ಆಯ್ಕೆಮಾಡಿ:</label>
+                <div style="display: flex; gap: 10px; margin-top: 5px;">
+                    <div id="selectAuto" onclick="selectVehicle('Auto')" style="flex:1; text-align:center; padding:8px; border:2px solid #00b894; border-radius:6px; cursor:pointer; background:#e8f8f0;">🛺 ಆಟೋ</div>
+                    <div id="selectCar" onclick="selectVehicle('Car')" style="flex:1; text-align:center; padding:8px; border:2px solid #ddd; border-radius:6px; cursor:pointer;">🚗 ಕಾರು</div>
+                </div>
+
+                <label>ನಿಮ್ಮ ಹೆಸರು</label>
+                <input type="text" id="custName" placeholder="ಹೆಸರು ನಮೂದಿಸಿ">
+
+                <label>ಮೊಬೈಲ್ ಸಂಖ್ಯೆ</label>
+                <input type="tel" id="custPhone" placeholder="ಫೋನ್ ನಂಬರ್">
+
+                <label>ಪ್ರಯಾಣಿಕರ ಸಂಖ್ಯೆ</label>
+                <select id="passengerCount">
+                    <option value="1">1 ಜನ / Person</option>
+                    <option value="2">2 ಜನ / Persons</option>
+                    <option value="3">3 ಜನ / Persons</option>
+                    <option value="4+">4+ ಜನ / Persons</option>
+                </select>
+
+                <label>ಪ್ರಸ್ತುತ ಸ್ಥಳ</label>
+                <input type="text" id="currentLoc" placeholder="ಉದಾ: ಬಸ್ ಸ್ಟ್ಯಾಂಡ್ ಹತ್ತಿರ">
+
+                <label>ಪಿಕೋಪ್ ಲೊಕೇಶನ್ (GPS)</label>
+                <input type="text" id="pickupLoc" placeholder="ಸ್ಥಳದ ಹೆಸರು ಅಥವಾ ಜಿಪಿಎಸ್">
+                <button class="btn btn-secondary" style="padding:6px; font-size:12px; margin-top:5px;" onclick="getCustomerGPS()">📍 ಲೈವ್ ಜಿಪಿಎಸ್ ಆನ್ ಮಾಡಿ</button>
+
+                <label>ಡ್ರಾಪ್ ಲೊಕೇಶನ್</label>
+                <input type="text" id="dropLoc" placeholder="ತಲುಪಬೇಕಾದ ಸ್ಥಳ">
+
+                <button class="btn" style="margin-top:15px;" onclick="submitBooking()">ಬುಕ್ ಮಾಡಿ (Book Now)</button>
+            </div>
+        </div>
+
+        <!-- ಲೈವ್ ಮೀಟರ್ ಟ್ಯಾಬ್ -->
+        <div id="custMeterTab" class="hidden">
+            <div class="card" style="text-align: center;">
+                <h3>⏱️ ಲೈವ್ ರನ್ನಿಂಗ್ ಮೀಟರ್</h3>
+                <p style="font-size:13px; color:#666;">ಡ್ರೈವರ್ ಪಿಕಪ್ ಸ್ಥಳಕ್ಕೆ ಬಂದಾಗ OTP ನೀಡಿ ರೈಡ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ.</p>
+                
+                <label>ಮ್ಯಾಚಿಂಗ್ OTP ನಮೂದಿಸಿ:</label>
+                <input type="text" id="custOtpInput" placeholder="4 ಅಂಕಿಯ OTP" maxlength="4" style="text-align:center; font-size:18px; letter-spacing:5px;">
+                <button class="btn" onclick="startCustomerMeter()">🚀 ಮೀಟರ್ ಆನ್ ಮಾಡಿ</button>
+                <button class="btn btn-danger" onclick="stopCustomerMeter()">⏹️ ರೈಡ್ ಮುಕ್ತಾಯ</button>
+
+                <div id="liveMeterDisplay" style="margin-top:15px; padding:10px; background:#fff; border-radius:6px; border:1px solid #ddd; text-align:left;">
+                    <b>ಸ್ಥಿತಿ:</b> ಕಾಯಲಾಗುತ್ತಿದೆ...<br>
+                    <b>ಚಲಿಸಿದ ದೂರ:</b> 0.00 ಕಿ.ಮೀ<br>
+                    <b>ಒಟ್ಟು ಬಾಡಿಗೆ:</b> ರೂ. 0.00
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. ಡ್ರೈವರ್ ವ್ಯೂ -->
+    <div id="driverView" class="hidden">
+        <button class="btn" style="background:#636e72; padding:6px; font-size:12px; margin-bottom:10px;" onclick="backToRoleSelect()">⬅️ ಹಿಂದಕ್ಕೆ (Change Role)</button>
+
+        <div class="nav-tabs">
+            <button class="active" onclick="switchDriverTab('live')">🚨 ಲೈವ್ ಆರ್ಡರ್ಸ್</button>
+            <button onclick="switchDriverTab('profile')">🚗 ಪ್ರೊಫೈಲ್</button>
+            <button onclick="switchDriverTab('admin')">🔐 ಅಡ್ಮಿನ್</button>
+        </div>
+
+        <!-- ಡ್ರೈವರ್ ಲೈವ್ ಆರ್ಡರ್ಸ್ -->
+        <div id="driverLiveTab">
+            <div class="card">
+                <label>ಬುಕಿಂಗ್ ವೀಕ್ಷಿಸಲು ನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ:</label>
+                <input type="password" id="driverInputId" placeholder="####" maxlength="4" style="text-align:center; font-size:18px;" oninput="loadDriverBookings()">
+            </div>
+            <div id="driverBookingsList">
+                <p style="text-align:center; color:#7f8c8d; font-size:13px;">ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿದ ನಂತರ ಲೈವ್ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತವೆ.</p>
+            </div>
+        </div>
+
+        <!-- ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ -->
+        <div id="driverProfileTab" class="hidden">
+            <div class="card">
+                <h3>ಡ್ರೈವರ್ ನೋಂದಣಿ</h3>
+                <label>ಹೆಸರು:</label>
+                <input type="text" id="drvName" placeholder="ಪೂರ್ಣ ಹೆಸರು">
+                <label>ಮೊಬೈಲ್ ನಂಬರ್:</label>
+                <input type="tel" id="drvPhone" placeholder="ಫೋನ್ ನಂಬರ್">
+                <label>ವಾಹನ ನಂಬರ್:</label>
+                <input type="text" id="drvVehNo" placeholder="KA 33 A 1234">
+                <button class="btn" onclick="registerDriver()">ನೋಂದಾಯಿಸಿ</button>
+            </div>
+        </div>
+
+        <!-- ಅಡ್ಮಿನ್ ಟ್ಯಾಬ್ -->
+        <div id="driverAdminTab" class="hidden">
+            <div class="card">
+                <h3>🔐 ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್</h3>
+                <button class="btn btn-secondary" onclick="loadAdminDrivers()">ಎಲ್ಲಾ ಡ್ರೈವರ್‌ಗಳನ್ನು ನೋಡಿ</button>
+                <div id="adminDriversList" style="margin-top:10px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 15px; font-size: 11px; color: #95a5a6;">
+        © 2026 AR Taxi Shahapur. All rights reserved.
+    </div>
 </div>
 
 <script>
-    let watchId = null;
-    let previousCoords = null;
-    let totalDistance = 0;
-
-    // ಭೂಮಿಯ ಮೇಲಿನ ಎರಡು ಜಿಪಿಎಸ್ ಪಾಯಿಂಟ್‌ಗಳ ನಡುವಿನ ದೂರ ಅಳೆಯುವ ಸೂತ್ರ (Haversine Formula)
-    function calculateDistance(lat1, lon1, lat2, lon2) {
-        const R = 6371; // ಕಿ.ಮೀ
-        const dLat = (lat2 - lat1) * (Math.PI / 180);
-        const dLon = (lon2 - lon1) * (Math.PI / 180);
-        const a = 
-            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * 
-            Math.sin(dLon / 2) * Math.sin(dLon / 2);
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        return R * c; // ದೂರ ಕಿ.ಮೀ ನಲ್ಲಿ ಸಿಗುತ್ತದೆ
+    // Firebase ಕಾನ್ಫಿಗರೇಶನ್ (ನಿಮ್ಮ ಪ್ರಾಜೆಕ್ಟ್ ಕನೆಕ್ಷನ್)
+    const firebaseConfig = {
+        apiKey: "AIzaSyD-Placeholder-Key",
+        authDomain: "ar-taxi-shahapur.firebaseapp.com",
+        projectId: "ar-taxi-shahapur",
+        storageBucket: "ar-taxi-shahapur.appspot.com",
+        messagingSenderId: "123456789",
+        appId: "1:123:web:abc"
+    };
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
     }
+    const db = firebase.firestore();
 
-    // ಲೈವ್ ಜಿಪಿಎಸ್ ಟ್ರ್ಯಾಕಿಂಗ್ ಆರಂಭಿಸುವುದು
-    function startLiveTracking() {
-        if ("geolocation" in navigator) {
-            totalDistance = 0;
-            previousCoords = null;
-            
-            document.getElementById('resultBox').innerHTML = "<b>ಸ್ಥಿತಿ:</b> ಜಿಪಿಎಸ್ ಕನೆಕ್ಟ್ ಆಗುತ್ತಿದೆ... ಚಲಿಸಿ.<br><b>ಒಟ್ಟು ದೂರ:</b> 0.00 ಕಿ.ಮೀ<br><b>ಒಟ್ಟು ಬಾಡಿಗೆ:</b> ರೂ. 200 (ಬೆಲೆ ನಿಗದಿ)";
+    let selectedVehicleType = "Auto";
+    let custLat = 16.7093, custLon = 76.8257;
+    let watchId = null;
+    let prevCoords = null;
+    let totalDist = 0;
+    const generatedOTP = "4321"; // ಕಸ್ಟಮರ್ - ಡ್ರೈವರ್ ಮ್ಯಾಚಿಂಗ್ OTP
 
-            watchId = navigator.geolocation.watchPosition(
-                (position) => {
-                    const currentCoords = {
-                        latitude: position.coords.latitude,
-                        longitude: position.coords.longitude
-                    };
-
-                    if (previousCoords) {
-                        // ಹಿಂದಿನ ಮತ್ತು ಪ್ರಸ್ತುತ ಸ್ಥಳದ ನಡುವಿನ ದೂರ ಲೆಕ್ಕಾಚಾರ
-                        const distanceMoved = calculateDistance(
-                            previousCoords.latitude,
-                            previousCoords.longitude,
-                            currentCoords.latitude,
-                            currentCoords.longitude
-                        );
-
-                        // ಅತಿ ചെറിയ ಜಿಪಿಎಸ್ ವ್ಯತ್ಯಾಸಗಳನ್ನು (10 ಮೀಟರ್‌ಗಿಂತ ಕಡಿಮೆ) ನಿರ್ಲಕ್ಷಿಸಲು (GPS Jitter filter)
-                        if (distanceMoved > 0.005) { 
-                            totalDistance += distanceMoved;
-                            updateMeterDisplay(totalDistance, "ಚಲಿಸುತ್ತಿದೆ (Running)");
-                        }
-                    }
-
-                    previousCoords = currentCoords;
-                },
-                (error) => {
-                    alert("ಜಿಪಿಎಸ್ ಸಿಗ್ನಲ್ ಸಿಗುತ್ತಿಲ್ಲ. ದಯವಿಟ್ಟು ಲೊಕೇಶನ್ ಆನ್ ಮಾಡಿ.");
-                },
-                {
-                    enableHighAccuracy: true,
-                    maximumAge: 0,
-                    timeout: 5000
-                }
-            );
+    function selectRole(role) {
+        document.getElementById('roleSelectionView').classList.add('hidden');
+        if (role === 'customer') {
+            document.getElementById('customerView').classList.remove('hidden');
         } else {
-            alert("ನಿಮ್ಮ ಬ್ರೌಸರ್ ಜಿಪಿಎಸ್ ಬೆಂಬಲಿಸುವುದಿಲ್ಲ.");
+            document.getElementById('driverView').classList.remove('hidden');
         }
     }
 
-    // ಟ್ರ್ಯಾಕಿಂಗ್ ನಿಲ್ಲಿಸುವುದು
-    function stopLiveTracking() {
-        if (watchId !== null) {
+    function backToRoleSelect() {
+        document.getElementById('customerView').classList.add('hidden');
+        document.getElementById('driverView').classList.add('hidden');
+        document.getElementById('roleSelectionView').classList.remove('hidden');
+    }
+
+    function switchCustTab(tab) {
+        if(tab==='booking') {
+            document.getElementById('custBookingTab').classList.remove('hidden');
+            document.getElementById('custMeterTab').classList.add('hidden');
+        } else {
+            document.getElementById('custBookingTab').classList.add('hidden');
+            document.getElementById('custMeterTab').classList.remove('hidden');
+        }
+    }
+
+    function switchDriverTab(tab) {
+        ['driverLiveTab', 'driverProfileTab', 'driverAdminTab'].forEach(t => document.getElementById(t).classList.add('hidden'));
+        if(tab==='live') document.getElementById('driverLiveTab').classList.remove('hidden');
+        if(tab==='profile') document.getElementById('driverProfileTab').classList.remove('hidden');
+        if(tab==='admin') document.getElementById('driverAdminTab').classList.remove('hidden');
+    }
+
+    function selectVehicle(type) {
+        selectedVehicleType = type;
+        if(type === 'Auto') {
+            document.getElementById('selectAuto').style.background = '#e8f8f0';
+            document.getElementById('selectAuto').style.borderColor = '#00b894';
+            document.getElementById('selectCar').style.background = '#fff';
+            document.getElementById('selectCar').style.borderColor = '#ddd';
+        } else {
+            document.getElementById('selectCar').style.background = '#e8f8f0';
+            document.getElementById('selectCar').style.borderColor = '#00b894';
+            document.getElementById('selectAuto').style.background = '#fff';
+            document.getElementById('selectAuto').style.borderColor = '#ddd';
+        }
+    }
+
+    function getCustomerGPS() {
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(pos => {
+                custLat = pos.coords.latitude;
+                custLon = pos.coords.longitude;
+                document.getElementById('pickupLoc').value = `GPS (${custLat.toFixed(4)}, ${custLon.toFixed(4)})`;
+                alert("ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಯಶಸ್ವಿಯಾಗಿ ಪಡೆಯಲಾಗಿದೆ!");
+            }, err => alert("ಜಿಪಿಎಸ್ ಸಿಗುತ್ತಿಲ್ಲ. ಲೋಕೇಶನ್ ಆನ್ ಮಾಡಿ."), {enableHighAccuracy:true});
+        } else {
+            alert("ಬ್ರೌಸರ್ ಜಿಪಿಎಸ್ ಬೆಂಬಲಿಸುವುದಿಲ್ಲ.");
+        }
+    }
+
+    // ಬುಕಿಂಗ್ ಸಬ್ಮಿಟ್ ಮಾಡುವುದು (Firebase ಗೆ ಸೇವ್ ಆಗುತ್ತದೆ)
+    function submitBooking() {
+        const name = document.getElementById('custName').value.trim();
+        const phone = document.getElementById('custPhone').value.trim();
+        const currentLoc = document.getElementById('currentLoc').value.trim();
+        const pickup = document.getElementById('pickupLoc').value.trim();
+        const drop = document.getElementById('dropLoc').value.trim();
+        const passengers = document.getElementById('passengerCount').value;
+
+        if(!name || !phone || !pickup || !drop) {
+            alert("ದಯವಿಟ್ಟು ಎಲ್ಲಾ ಅಗತ್ಯ ಮಾಹಿತಿ ಭರ್ತಿ ಮಾಡಿ!");
+            return;
+        }
+
+        db.collection("bookings").add({
+            name: name,
+            phone: phone,
+            vehicle: `${selectedVehicleType} (${passengers} Persons)`,
+            currentLocation: currentLoc,
+            pickup: pickup,
+            drop: drop,
+            lat: custLat,
+            lon: custLon,
+            status: "Pending",
+            otp: generatedOTP,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        }).then(() => {
+            alert(`ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿದೆ! ನಿಮ್ಮ ಮ್ಯಾಚಿಂಗ್ OTP: ${generatedOTP}`);
+            switchCustTab('meter');
+            document.getElementById('custOtpInput').value = "";
+        }).catch(err => alert("ದೋಷ: " + err.message));
+    }
+
+    // Haversine Formula ದೂರ ಅಳೆಯಲು
+    function calcDistance(lat1, lon1, lat2, lon2) {
+        const R = 6371;
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLon = (lon2 - lon1) * Math.PI / 180;
+        const a = Math.sin(dLat/2)*Math.sin(dLat/2) + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)*Math.sin(dLon/2);
+        return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
+    }
+
+    // OTP ವೆರಿಫೈ ಮಾಡಿ ಗಾಡಿ ಚಲಿಸಿದರೆ ಮಾತ್ರ ಮೀಟರ್ ಓಡಿಸುವುದು
+    function startCustomerMeter() {
+        const enteredOtp = document.getElementById('custOtpInput').value.trim();
+        if(enteredOtp !== generatedOTP) {
+            alert("ತಪ್ಪು OTP! ಡ್ರೈವರ್ ನೀಡಿದ ಸರಿಯಾದ OTP ನಮೂದಿಸಿ.");
+            return;
+        }
+
+        if("geolocation" in navigator) {
+            totalDist = 0;
+            prevCoords = null;
+            document.getElementById('liveMeterDisplay').innerHTML = "<b>ಸ್ಥಿತಿ:</b> 🟢 OTP ಮ್ಯಾಚ್ ಆಯಿತು! ಗಾಡಿ ಚಲಿಸಿದರೆ ಮೀಟರ್ ಓಡುತ್ತದೆ...<br><b>ದೂರ:</b> 0.00 ಕಿ.ಮೀ<br><b>ಬಾಡಿಗೆ:</b> ರೂ. 200 (ಮೊದಲ 3 ಕಿ.ಮೀ)";
+
+            watchId = navigator.geolocation.watchPosition(pos => {
+                const curr = { lat: pos.coords.latitude, lon: pos.coords.longitude };
+                if(prevCoords) {
+                    const distMoved = calcDistance(prevCoords.lat, prevCoords.lon, curr.lat, curr.lon);
+                    // ಗಾಡಿ ನಿಂತಿದ್ದರೆ ಕೌಂಟ್ ಆಗುವುದಿಲ್ಲ, ಚಲಿಸಿದರೆ ಮಾತ್ರ ರನ್ ಆಗುತ್ತದೆ
+                    if(distMoved > 0.005) {
+                        totalDist += distMoved;
+                        updateMeterUI('liveMeterDisplay', totalDist, "ರನ್ನಿಂಗ್ (Running)");
+                    }
+                }
+                prevCoords = curr;
+            }, err => alert("ಜಿಪಿಎಸ್ ಸಿಗ್ನಲ್ ಸಿಗುತ್ತಿಲ್ಲ"), {enableHighAccuracy:true, maximumAge:0});
+        } else {
+            alert("ಜಿಪಿಎಸ್ ಲಭ್ಯವಿಲ್ಲ.");
+        }
+    }
+
+    function stopCustomerMeter() {
+        if(watchId !== null) {
             navigator.geolocation.clearWatch(watchId);
             watchId = null;
-            updateMeterDisplay(totalDistance, "ರೈಡ್ ಮುಕ್ತಗೊಂಡಿದೆ (Completed)");
+            updateMeterUI('liveMeterDisplay', totalDist, "ರೈಡ್ ಮುಕ್ತಾಯಗೊಂಡಿದೆ (Completed)");
         }
     }
 
-    // ಮೀಟರ್ ಮತ್ತು ದರ ಲೆಕ್ಕಾಚಾರ ಅಪ್‌ಡೇಟ್ ಮಾಡುವುದು
-    function updateMeterDisplay(distance, statusText) {
-        let totalFare = 0;
-
-        // ನಿಯಮ: 3 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 200, ನಂತರ ಪ್ರತಿ 1 ಕಿ.ಮೀಗೆ ರೂ. 15
-        if (distance <= 3) {
-            totalFare = 200;
-        } else {
-            totalFare = 200 + (distance - 3) * 15;
-        }
-
-        document.getElementById('resultBox').innerHTML = `
-            <b>ಸ್ಥಿತಿ:</b> ${statusText}<br>
-            <b>ಒಟ್ಟು ದೂರ:</b> ${distance.toFixed(2)} ಕಿ.ಮೀ<br>
-            <b>ಒಟ್ಟು ಬಾಡಿಗೆ:</b> ರೂ. ${totalFare.toFixed(2)}
+    function updateMeterUI(elementId, dist, status) {
+        let fare = dist <= 3 ? 200 : 200 + (dist - 3) * 15;
+        document.getElementById(elementId).innerHTML = `
+            <b>ಸ್ಥಿತಿ:</b> ${status}<br>
+            <b>ಚಲಿಸಿದ ದೂರ:</b> ${dist.toFixed(2)} ಕಿ.ಮೀ<br>
+            <b>ಒಟ್ಟು ಬಾಡಿಗೆ:</b> ರೂ. ${fare.toFixed(2)}
         `;
     }
 
-    // ವಾಟ್ಸಾಪ್ ಶೇರ್ ಫಂಕ್ಷನ್
-    function shareOnWhatsApp() {
-        const appLink = window.location.href;
-        const message = encodeURIComponent("ಶಾಹಾಪುರದಲ್ಲಿ ಆಟೋ ಅಥವಾ ಟ್ಯಾಕ್ಸಿ ಬೇಕಾದಲ್ಲಿ ಈ ಆಪ್ ಬಳಸಿ ಬುಕ್ ಮಾಡಿ: " + appLink);
-        window.open(`https://api.whatsapp.com/send?text=${message}`, '_blank');
+    // ಡ್ರೈವರ್ ನೋಂದಣಿ
+    function registerDriver() {
+        const name = document.getElementById('drvName').value.trim();
+        const phone = document.getElementById('drvPhone').value.trim();
+        const vehNo = document.getElementById('drvVehNo').value.trim();
+        const driverId = Math.floor(1000 + Math.random() * 9000).toString();
+
+        if(!name || !phone || !vehNo) {
+            alert("ಎಲ್ಲಾ ವಿವರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ!");
+            return;
+        }
+
+        db.collection("drivers").add({
+            name, phone, vehNo, driverId, totalTrips: 0, createdAt: new Date()
+        }).then(() => {
+            alert(`ಯಶಸ್ವಿಯಾಗಿ ನೋಂದಾಯಿಸಲಾಗಿದೆ! ನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ: ${driverId}`);
+            document.getElementById('drvName').value = "";
+            document.getElementById('drvPhone').value = "";
+            document.getElementById('drvVehNo').value = "";
+        }).catch(err => alert("ದೋಷ: " + err.message));
+    }
+
+    // ಡ್ರೈವರ್ ಲೈವ್ ಬುಕಿಂಗ್ ಲೋಡ್ ಮಾಡುವುದು
+    function loadDriverBookings() {
+        const id = document.getElementById('driverInputId').value.trim();
+        const listDiv = document.getElementById('driverBookingsList');
+        if(id.length !== 4) {
+            listDiv.innerHTML = "<p style='text-align:center; color:red;'>ದಯವಿಟ್ಟು ನಿಮ್ಮ ಸರಿಯಾದ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ.</p>";
+            return;
+        }
+
+        db.collection("bookings").onSnapshot(snapshot => {
+            let html = "";
+            if(snapshot.empty) {
+                listDiv.innerHTML = "<p style='text-align:center;'>ಯಾವುದೇ ಬುಕಿಂಗ್‌ಗಳು ಲಭ್ಯವಿಲ್ಲ.</p>";
+                return;
+            }
+            snapshot.forEach(doc => {
+                const b = doc.data();
+                html += `
+                    <div class="card" style="border-left-color: #0984e3;">
+                        <p><b>ಕಸ್ಟಮರ್:</b> ${b.name} (<a href="tel:${b.phone}">${b.phone}</a>)</p>
+                        <p><b>ವಾಹನ:</b> ${b.vehicle}</p>
+                        <p><b>ಪ್ರಸ್ತುತ ಸ್ಥಳ:</b> ${b.currentLocation}</p>
+                        <p><b>ಪಿಕೋಪ್:</b> ${b.pickup}</p>
+                        <p><b>ಡ್ರಾಪ್:</b> ${b.drop}</p>
+                        <p><b>ಸ್ಥಿತಿ:</b> ${b.status}</p>
+                        <button class="btn" style="padding:6px; font-size:12px;" onclick="acceptBooking('${doc.id}')">ಸ್ವೀಕರಿಸಿ (Accept)</button>
+                    </div>
+                `;
+            });
+            listDiv.innerHTML = html;
+        });
+    }
+
+    function acceptBooking(bookingId) {
+        db.collection("bookings").doc(bookingId).update({ status: "Accepted by Driver" })
+        .then(() => alert("ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಲಾಗಿದೆ! ಪಿಕಪ್ ಸ್ಥಳಕ್ಕೆ ತೆರಳಿ."))
+        .catch(err => alert("ದೋಷ: " + err.message));
+    }
+
+    function loadAdminDrivers() {
+        const adminDiv = document.getElementById('adminDriversList');
+        db.collection("drivers").get().then(snapshot => {
+            let html = "";
+            snapshot.forEach(doc => {
+                const d = doc.data();
+                html += `<div style="background:#fff; padding:8px; margin-top:5px; border-radius:4px; border:1px solid #ddd;">
+                    <b>ID:</b> ${d.driverId} | <b>ಹೆಸರು:</b> ${d.name} | <b>ಫೋನ್:</b> ${d.phone} | <b>ವಾಹನ:</b> ${d.vehNo}
+                </div>`;
+            });
+            adminDiv.innerHTML = html || "ಯಾವುದೇ ಡ್ರೈವರ್‌ಗಳಿಲ್ಲ.";
+        });
     }
 </script>
 
