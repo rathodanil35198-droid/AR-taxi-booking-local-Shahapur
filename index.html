@@ -93,17 +93,15 @@
   </style>
 </head>
 <body>
-
-  <div class="container">
-        <div class="container" style="max-width: 500px; margin: auto; padding: 15px;">
+      <div class="container" style="max-width: 500px; margin: auto; padding: 15px;">
         
-        <!-- ೧. ನಿಯಮಗಳು ಮತ್ತು ಒಪ್ಪಂದದ ಪುಟ (ಡಾರ್ಕ್ ಹಾಗೂ ಸ್ಪಷ್ಟ ಅಕ್ಷರಗಳಲ್ಲಿ) -->
-        <div id="termsScreen" style="padding: 20px; background: #2d3748; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+        <!-- ೧. ನಿಯಮಗಳು ಮತ್ತು ಒಪ್ಪಂದದ ಪುಟ (ಮೊದಲ ಬಾರಿ ಮಾತ್ರ ಕಾಣಿಸುತ್ತದೆ) -->
+        <div id="termsScreen" style="display: none; padding: 20px; background: #2d3748; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); margin-top: 20px;">
             <h2 style="color: #48bb78; text-align: center; font-size: 1.2rem; margin-bottom: 5px;">ER Taxi Shahapur - ಸ್ವಾಗತ</h2>
             <p style="font-size: 0.85rem; color: #e2e8f0; text-align: center; margin-bottom: 15px;">ದಯವಿಟ್ಟು ಕೆಳಗಿನ ಎಲ್ಲಾ ನಿಯಮಗಳನ್ನು ಓದಿ ಒಪ್ಪಿಗೆ ನೀಡಿ.</p>
             
             <!-- ಓದಲು ಸುಲಭವಿರುವ ಸ್ಕ್ರೋಲ್ ಬಾಕ್ಸ್ -->
-            <div style="border: 1px solid #4a5568; padding: 12px; height: 260px; overflow-y: scroll; font-size: 0.85rem; background: #1a202c; color: #cbd5e0; margin-bottom: 15px; border-radius: 8px; line-height: 1.5;">
+            <div style="border: 1px solid #4a5568; padding: 12px; height: 240px; overflow-y: scroll; font-size: 0.85rem; background: #1a202c; color: #cbd5e0; margin-bottom: 15px; border-radius: 8px; line-height: 1.5;">
                 <strong style="color: #f6ad55; font-size: 0.95rem;">ಎಲ್ಲರಿಗೂ ಸ್ವಾಗತ!</strong><br>
                 ಯಾದಗಿರಿ ಜಿಲ್ಲೆಯ ಶಹಾಪುರ ತಾಲ್ಲೂಕಿನ ಸ್ಥಳೀಯ ER Taxi ಆ್ಯಪ್‌ಗೆ ಸ್ವಾಗತ.<br><br>
 
@@ -129,68 +127,85 @@
                 <span>ಮೇಲಿನ ಎಲ್ಲಾ ನಿಯಮಗಳನ್ನು ನಾನು ಓದಿದ್ದೇನೆ ಮತ್ತು ಒಪ್ಪುತ್ತೇನೆ (I Agree)</span>
             </div>
 
-            <!-- ಮುಂದೆ ಹೋಗಿ ಬಟನ್ (ಮೊದಲು ಬೂದು ಬಣ್ಣದಲ್ಲಿ ಲಾಕ್ ಆಗಿರುತ್ತದೆ) -->
-            <button id="nextBtn" disabled style="width: 100%; padding: 12px; background: #4a5568; color: #a0aec0; border: none; border-radius: 8px; font-weight: bold; font-size: 1rem; cursor: not-allowed; transition: 0.3s;" onclick="showRoleSelection()">
+            <!-- ಮುಂದೆ ಹೋಗಿ ಬಟನ್ -->
+            <button id="nextBtn" disabled style="width: 100%; padding: 12px; background: #4a5568; color: #a0aec0; border: none; border-radius: 8px; font-weight: bold; font-size: 1rem; cursor: not-allowed; transition: 0.3s;" onclick="acceptTerms()">
                 ಮುಂದೆ ಹೋಗಿ (Next)
             </button>
         </div>
 
-        <!-- ೨. ಕಸ್ಟಮರ್ ಮತ್ತು ಡ್ರೈವರ್ ಬಟನ್‌ಗಳು (ಚೆಕ್ ಮಾಡಿ 'ಮುಂದೆ ಹೋಗಿ' ಒತ್ತಿದ ನಂತರ ಮಾತ್ರ ಕಾಣಿಸುತ್ತದೆ) -->
-        <div id="roleSelectionScreen" style="display: none; text-align: center; padding: 20px; background: #2d3748; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+        <!-- ೨. ಮುಂದಿನ ಪುಟ: ಕಸ್ಟಮರ್, ಡ್ರೈವರ್ ಮತ್ತು ವಾಟ್ಸಾಪ್ ಶೇರ್ ಬಟನ್ -->
+        <div id="roleSelectionScreen" style="display: none; text-align: center; padding: 20px; background: #2d3748; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); margin-top: 20px;">
             <div style="font-size: 2.5rem; margin-bottom: 10px;">🛺</div>
-            <h1 style="font-size: 1.3rem; color: #fff; margin-bottom: 5px;">AR Taxi Shahapur</h1>
+            <h1 style="font-size: 1.3rem; color: #fff; margin-bottom: 5px;">ER Taxi Shahapur</h1>
             <p style="font-size: 0.8rem; color: #a0aec0; margin-bottom: 25px;">ದಯವಿಟ್ಟು ನಿಮ್ಮ ವಲಯವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ / Select Your Role:</p>
 
             <button class="role-btn role-customer" onclick="selectRole('customer')" style="display: block; width: 100%; padding: 16px; margin: 15px 0; border: none; border-radius: 12px; font-size: 1rem; background: linear-gradient(45deg, #3182ce, #63b3ed); color: white; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.2);">
-                👤 ಕಸ್ಟಮರ್ ಬುಕಿಂಗ್ & ಮೀಟರ್<br><span style="font-size: 0.75rem; font-weight: normal; color: #e2e8f0;">(Customer Booking & Meter)</span>
+                👤 ಕಸ್ಟಮರ್ ಬುಕಿంగ్ & ಮೀಟರ್<br><span style="font-size: 0.75rem; font-weight: normal; color: #e2e8f0;">(Customer Booking & Meter)</span>
             </button>
 
             <button class="role-btn role-driver" onclick="selectRole('driver')" style="display: block; width: 100%; padding: 16px; margin: 15px 0; border: none; border-radius: 12px; font-size: 1rem; background: linear-gradient(45deg, #38a169, #48bb78); color: white; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.2);">
                 🛺 ಡ್ರೈವರ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ & ಅಡ್ಮಿನ್<br><span style="font-size: 0.75rem; font-weight: normal; color: #e2e8f0;">(Driver Dashboard & Admin)</span>
             </button>
+
+            <!-- ವಾಟ್ಸಾಪ್ ಶೇರ್ ಬಟನ್ -->
+            <div style="margin-top: 25px; border-top: 1px solid #4a5568; padding-top: 20px;">
+                <button onclick="shareAppOnWhatsApp()" style="width: 100%; padding: 14px; background: #25D366; color: white; border: none; border-radius: 12px; font-weight: bold; font-size: 0.95rem; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <span>💬</span> ಈ ಆ್ಯಪ್ ಅನ್ನು ವಾಟ್ಸಾಪ್‌ನಲ್ಲಿ ಶೇರ್ ಮಾಡಿ
+                </button>
+            </div>
         </div>
 
     </div>
 
-    <!-- ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್ ಕೋಡ್ -->
+    <!-- ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್ ಕಂಟ್ರೋಲ್ ಕೋಡ್ -->
     <script>
+        // ಆ್ಯಪ್ ಲೋಡ್ ಆದ ಕೂಡಲೇ ಚೆಕ್ ಮಾಡುತ್ತದೆ
+        window.onload = function() {
+            const hasAccepted = localStorage.getItem('erTaxiTermsAccepted');
+            if (hasAccepted === 'true') {
+                // ಈಗಾಗಲೇ ಒಪ್ಪಿಗೆ ಕೊಟ್ಟಿದ್ದರೆ, ನೇರವಾಗಿ ಮುಂದಿನ ರೋಲ್ ಸೆಲೆಕ್ಷನ್ ಪೇಜ್ ತೋರಿಸು
+                document.getElementById('termsScreen').style.display = 'none';
+                document.getElementById('roleSelectionScreen').style.display = 'block';
+            } else {
+                // ಮೊದಲ ಬಾರಿ ಬಂದಿದ್ದರೆ ಮಾತ್ರ ನಿಯಮಗಳ ಪೇಜ್ ತೋರಿಸು
+                document.getElementById('termsScreen').style.display = 'block';
+                document.getElementById('roleSelectionScreen').style.display = 'none';
+            }
+        };
+
         function toggleNextButton() {
             const checkbox = document.getElementById('agreeCheckbox');
             const nextBtn = document.getElementById('nextBtn');
             
             if (checkbox.checked) {
                 nextBtn.disabled = false;
-                nextBtn.style.background = '#48bb78'; // ಆಕರ್ಷಕ ಹಸಿರು ಬಣ್ಣ
+                nextBtn.style.background = '#48bb78';
                 nextBtn.style.color = '#fff';
                 nextBtn.style.cursor = 'pointer';
             } else {
                 nextBtn.disabled = true;
-                nextBtn.style.background = '#4a5568'; // ಬೂದು ಬಣ್ಣ
+                nextBtn.style.background = '#4a5568';
                 nextBtn.style.color = '#a0aec0';
                 nextBtn.style.cursor = 'not-allowed';
             }
         }
 
-        function showRoleSelection() {
-            document.getElementById('termsScreen').style.display = 'none';         // ನಿಯಮಗಳ ಪೇಜ್ ಮುಚ್ಚಿಕೊಳ್ಳುತ್ತದೆ
-            document.getElementById('roleSelectionScreen').style.display = 'block'; // ಬಟನ್‌ಗಳು ಈಗ ಮಾತ್ರ ಕಾಣಿಸುತ್ತವೆ
+        function acceptTerms() {
+            // ಮೊಬೈಲ್ ಮೆಮೊರಿಯಲ್ಲಿ 'Accepted' ಎಂದು ಸೇವ್ ಮಾಡಿಕೊಳ್ಳುತ್ತದೆ
+            localStorage.setItem('erTaxiTermsAccepted', 'true');
+            
+            // ನಿಯಮಗಳ ಪೇಜ್ ಮುಚ್ಚಿ ಮುಂದಿನ ಪೇಜ್ ತೋರಿಸುತ್ತದೆ
+            document.getElementById('termsScreen').style.display = 'none';
+            document.getElementById('roleSelectionScreen').style.display = 'block';
+        }
+
+        function shareAppOnWhatsApp() {
+            const appUrl = window.location.href; 
+            const message = "ಯಾದಗಿರಿ ಜಿಲ್ಲೆಯ ಶಹಾಪುರ ತಾಲ್ಲೂಕಿನ ಸ್ಥಳೀಯ ER Taxi ಬುಕಿಂಗ್ ಆ್ಯಪ್! ನೀವೂ ಒಮ್ಮೆ ಬಳಸಿ: " + appUrl;
+            const whatsappUrl = "https://api.whatsapp.com/send?text=" + encodeURIComponent(message);
+            window.open(whatsappUrl, '_blank');
         }
     </script>
-
-
-    <div id="roleSelectionScreen">
-      <div style="font-size: 4rem; margin-bottom: 15px;">🛺</div>
-      <h1 class="mainTitle" style="font-size: 1.3rem; color: #2c3e50;">AR Taxi Shahapur</h1>
-      <p style="font-size: 0.85rem; color: #7f8c8d; margin-bottom: 25px;">ದಯವಿಟ್ಟು ನಿಮ್ಮ ವಲಯವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ / Select Your Role:</p>
-
-      <button class="role-btn role-customer" onclick="selectRole('customer')">
-        👤 ಕಸ್ಟಮರ್ ಬುಕಿಂಗ್ & ಮೀಟರ್ (Customer Booking & Meter)
-      </button>
-
-      <button class="role-btn role-driver" onclick="selectRole('driver')">
-        🛺 ಡ್ರೈವರ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ & ಅಡ್ಮಿನ್ (Driver Dashboard & Admin)
-      </button>
-    </div>
 
     <div id="mainAppContent" style="display: none;">
       
