@@ -41,6 +41,113 @@
     window.where = where;
     window.serverTimestamp = serverTimestamp;
   </script>
+  <style>
+    .modal-overlay {
+      display: flex;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-box {
+      background: #fff;
+      padding: 20px;
+      width: 90%;
+      max-width: 400px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 15px rgba(0,0,0,0.4);
+      font-family: sans-serif;
+    }
+    .modal-box h3 { margin-top: 0; color: #333; text-align: center; }
+    .terms-text {
+      font-size: 13px;
+      color: #555;
+      max-height: 200px;
+      overflow-y: scroll;
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+    .checkbox-container {
+      font-size: 13px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .next-btn {
+      background-color: #ccc;
+      color: white;
+      border: none;
+      padding: 12px 15px;
+      width: 100%;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: not-allowed;
+    }
+    .next-btn.active {
+      background-color: #28a745;
+      cursor: pointer;
+    }
+  </style>
+
+  <div id="termsModal" class="modal-overlay">
+    <div class="modal-box">
+      <h3>AR Taxi Shahapur - ನಿಯಮಗಳು</h3>
+      <div class="terms-text">
+        <b>ಗಮನಿಸಿ:</b> ನಮ್ಮ AR Taxi Shahapur ಆಪ್ ಕೇವಲ ಕಸ್ಟಮರ್‌ಗಳು ಮತ್ತು ಡ್ರೈವರ್‌ಗಳನ್ನು ಸಂಪರ್ಕಿಸುವ ಡಿಜಿಟಲ್ ಮಾಧ್ಯಮವಾಗಿದೆ. ಅಪಘಾತಗಳು ಅಥವಾ ಜಗಳಗಳಿಗೆ ಆಪ್ ನಿರ್ವಾಹಕರು ಜವಾಬ್ದಾರರಲ್ಲ.<br><br>
+        <b>೧. ಕಸ್ಟಮರ್‌ಗಳಿಗೆ ಸೂಚನೆಗಳು:</b><br>
+        - ಡ್ರೈವರ್‌ಗಳೊಂದಿಗೆ ವಿನಯದಿಂದ ವರ್ತಿಸಿ.<br>
+        - ಲೈವ್ ಮೀಟರ್ ಅಥವಾ ಮಾತುಕತೆಯಂತೆ ಸರಿಯಾದ ಹಣ ನೀಡಿ.<br>
+        - ದೂರುಗಳಿದ್ದರೆ ತಕ್ಷಣ ತಿಳಿಸಿ, ಡ್ರೈವರ್‌ಗಳನ್ನು ಬ್ಲಾಕ್ ಮಾಡಲಾಗುತ್ತದೆ.<br><br>
+        <b>೨. ಡ್ರೈವರ್‌ಗಳಿಗೆ ಸೂಚನೆಗಳು:</b><br>
+        - ಕಸ್ಟಮರ್‌ಗಳನ್ನು ಗೌರವದಿಂದ ಕಾಣಿ.<br>
+        - DL, RC ಕಾರ್ಡ್ ಮತ್ತು ಇನ್ಶೂರೆನ್ಸ್ ಕಡ್ಡಾಯವಾಗಿರಬೇಕು.<br>
+        - ಪ್ರಯಾಣದ ವೇಳೆ ಜಗಳ ಅಥವಾ ಅಪಘಾತವಾದರೆ ಸಂಪೂರ್ಣ ಜವಾಬ್ದಾರಿ ಡ್ರೈವರ್‌ಗಳೇ ಹೊರಬೇಕು.
+      </div>
+      
+      <div class="checkbox-container">
+        <input type="checkbox" id="agreeCheckbox" onchange="toggleNextButton()">
+        <label for="agreeCheckbox"><b>ಮೇಲಿನ ಎಲ್ಲಾ ನಿಯಮಗಳನ್ನು ನಾನು ಓದಿದ್ದೇನೆ ಮತ್ತು ಒಪ್ಪುತ್ತೇನೆ.</b></label>
+      </div>
+      
+      <button id="nextBtn" class="next-btn" disabled onclick="closeTermsModal()">ಮುಂದೆ ಹೋಗಿ (Next)</button>
+    </div>
+  </div>
+
+  <script>
+    function toggleNextButton() {
+      let checkbox = document.getElementById("agreeCheckbox");
+      let btn = document.getElementById("nextBtn");
+      if (checkbox.checked) {
+        btn.disabled = false;
+        btn.classList.add("active");
+      } else {
+        btn.disabled = true;
+        btn.classList.remove("active");
+      }
+    }
+
+    function closeTermsModal() {
+      let checkbox = document.getElementById("agreeCheckbox");
+      if (checkbox.checked) {
+        document.getElementById("termsModal").style.display = "none";
+        localStorage.setItem("termsAccepted", "true");
+      }
+    }
+
+    window.onload = function() {
+      if (localStorage.getItem("termsAccepted") === "true") {
+        document.getElementById("termsModal").style.display = "none";
+      } else {
+        document.getElementById("termsModal").style.display = "flex";
+      }
+    };
+  </script>
 
   <style>
     :root { --primary: #0fb05b; --secondary: #41c91d; --bg: #f4f7f6; --text: #333; }
