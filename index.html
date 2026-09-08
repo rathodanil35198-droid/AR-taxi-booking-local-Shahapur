@@ -301,7 +301,7 @@
           <label id="lblMeterVeh">ವಾಹನ ಆಯ್ಕೆ ಮಾಡಿ:</label>
           <select id="meterVehicleType" onchange="resetMeterRate()">
             <option value="Auto">🛺 ಆಟೋ / Auto (₹50 Base)</option>
-            <option value="Car">🚗 ಕಾರ್ / Car (₹80 Base)</option>
+            <option value="Car">🚗 ಕಾರ್ / Car (₹200 Base)</option>
           </select>
         </div>
         <button class="btn-submit" onclick="startMeter()" style="background:#3182ce; margin-bottom:8px;" id="btnStartMeter">ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
@@ -358,7 +358,7 @@
           <label id="lblDrvMeterVeh">ವಾಹನ ಆಯ್ಕೆ ಮಾಡಿ:</label>
           <select id="driverMeterVehicleType" onchange="resetDriverMeterRate()">
             <option value="Auto">🛺 ಆಟೋ / Auto (₹50 Base)</option>
-            <option value="Car">🚗 ಕಾರ್ / Car (₹80 Base)</option>
+            <option value="Car">🚗 ಕಾರ್ / Car (₹2000 Base)</option>
           </select>
         </div>
         <button class="btn-submit" onclick="startDriverMeter()" style="background:#3182ce; margin-bottom:8px;" id="btnDrvStartMeter">ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
@@ -707,91 +707,137 @@
       return R * c;
     }
 
-    function resetMeterRate() {
-      stopMeterOnly();
-      document.getElementById('distCount').innerText = '0.0';
-      document.getElementById('liveAmount').innerText = '0';
+    let watchId = null;
+let lastLat = null;
+let lastLon = null;
+let distanceKm = 0;
+
+function calculateDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371e3;
+    const φ1 = lat1 * Math.PI / 180;
+    const φ2 = lat2 * Math.PI / 180;
+    const Δφ = (lat2 - lat1) * Math.PI / 180;
+    const Δλ = (lon2 - lon1) * Math.PI / 180;
+
+    const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+              Math.cos(φ1) * Math.cos(φ2) *
+              Math.sin(Δλ/2) * Math.sin(Δλ/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+    return R * c;
+}
+
+function resetMeterRate() {
+    if (watchId !== null) {
+        navigator.geolocation.clearWatch(watchId);
+        watchId = null;
+    }
+    document.getElementById('distCount').innerText = '0.0';
+    document.getElementById('liveAmount').innerText = '0';
+    document.getElementById('driverDistCount').innerText = '0.0';
+    document.getElementById('driverLiveAmount').innerText = '0';
+}
+
+function startMeter() {
+    if (!navigator.geolocation) {
+        alert(currentLang === 'kn' ? 'ನಿಮ್ಮ ಫೋನ್‌ನಲ್ಲಿ ಜಿಪಿಎಸ್ ಸೌಲಭ್ಯವಿಲ್ಲ!' : 'Geolocation not supported');
+        return;
     }
 
-    function startMeter() {
-      distanceKm = 0;
-      const vehType = document.getElementById('meterVehicleType').value;
-      const baseFare = vehType === 'Auto' ? 50 : 80;
-      const perKmRate = vehType === 'Auto' ? 12 : 18;
+    alert(currentLang === 'kn' ? 'ದಯವಿಟ್ಟು ಜಿಪಿಎಸ್ (Location) ಆನ್ ಮಾಡಿ.' : 'Please turn on GPS location.');
 
-      document.getElementById('liveAmount').innerText = baseFare;
-      document.getElementById('distCount').innerText = '0.0';
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+            lastLat = position.coords.latitude;
+            lastLon = position.coords.longitude;
+            distanceKm = 0;
+            
+            let vehType = document.getElementById('meterVehicleType') ? document.getElementById('meterVehicleType').value : 'Auto';
+            let baseFare = (vehType === 'Auto') ? 50 : 200;
 
-      if (meterInterval) clearInterval(meterInterval);
+            document.getElementById('distCount').innerText = '0.0';
+            document.getElementById('driverDistCount').innerText = '0.0';
+            document.getElementById('liveAmount').innerText = baseFare;
+            document.getElementById('driverLiveAmount').innerText = baseFare;
 
-      let secondsElapsed = 0;
-      meterInterval = setInterval(() => {
-        secondsElapsed++;
-        distanceKm = secondsElapsed / 60; 
-        document.getElementById('distCount').innerText = distanceKm.toFixed(2);
+            if (watchId !== null) {
+                navigator.geolocation.clearWatch(watchId);
+            }
 
-        let fare = baseFare;
-        if (distanceKm > 3) {
-          fare = baseFare + ((distanceKm - 3) * perKmRate);
-        }
-        document.getElementById('liveAmount').innerText = Math.round(fare);
-      }, 1000);
+            watchId = navigator.geolocation.watchPosition(
+                (pos) => {
+                    const currentLat = pos.coords.latitude;
+                    const currentLon = pos.coords.longitude;
 
-      alert(currentLang === 'kn' ? '⏱️ ಲೈವ್ ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಆಗಿದೆ!' : '⏱️ Live meter started!');
+                    if (lastLat !== null && lastLon !== null) {
+                        const distanceMeters = calculateDistance(lastLat, lastLon, currentLat, currentLon);
+                        
+                        if (distanceMeters > 3) {
+                            distanceKm += distanceMeters / 1000;
+                            lastLat = currentLat;
+                            lastLon = currentLon;
+
+                            let distStr = distanceKm.toFixed(2);
+                            document.getElementById('distCount').innerText = distStr;
+                            document.getElementById('driverDistCount').innerText = distStr;
+
+                            let perKmRate = (vehType === 'Auto') ? 12 : 18;
+                            let totalFare = baseFare;
+
+                            if (distanceKm > 3) {
+                                totalFare = baseFare + ((distanceKm - 3) * perKmRate);
+                            }
+                            let amountStr = Math.round(totalFare);
+                            document.getElementById('liveAmount').innerText = amountStr;
+                            document.getElementById('driverLiveAmount').innerText = amountStr;
+                        }
+                    } else {
+                        lastLat = currentLat;
+                        lastLon = currentLon;
+                    }
+                },
+                (error) => {
+                    console.error("GPS Error: ", error);
+                },
+                {
+                    enableHighAccuracy: true,
+                    maximumAge: 0,
+                    timeout: 10000
+                }
+            );
+
+            alert(currentLang === 'kn' ? '✅ ಜಿಪಿಎಸ್ ಲೈವ್ ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಆಗಿದೆ!' : '✅ Live GPS meter started!');
+        },
+        (error) => {
+            alert(currentLang === 'kn' ? '❌ ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಸಿಗುತ್ತಿಲ್ಲ.' : '❌ GPS access denied.');
+        },
+        { enableHighAccuracy: true }
+    );
+}
+
+function stopMeterOnly() {
+    if (watchId !== null) {
+        navigator.geolocation.clearWatch(watchId);
+        watchId = null;
     }
+    const km = document.getElementById('distCount').innerText;
+    const amount = document.getElementById('liveAmount').innerText;
+    alert(currentLang === 'kn' ? `🛑 ಮೀಟರ್ ನಿಲ್ಲಿಸಲಾಗಿದೆ! ದೂರ: ${km} ಕಿ.ಮೀ., ಮೊತ್ತ: ₹${amount}` : `Meter stopped! Distance: ${km} km`);
+}
 
-    function stopMeterOnly() {
-      if (meterInterval) {
-        clearInterval(meterInterval);
-        meterInterval = null;
-      }
-      const km = document.getElementById('distCount').innerText;
-      const amount = document.getElementById('liveAmount').innerText;
-      alert(currentLang === 'kn' ? `⏱️ ಮೀಟರ್ ನಿಲ್ಲಿಸಲಾಗಿದೆ! ದೂರ: ${km} ಕಿ.ಮೀ, ಮೊತ್ತ: ₹${amount}` : `⏱️ Meter stopped! Distance: ${km} km, Amount: ₹${amount}`);
-    }
+function resetDriverMeterRate() {
+    resetMeterRate();
+}
 
-    function resetDriverMeterRate() {
-      stopDriverMeterOnly();
-      document.getElementById('driverDistCount').innerText = '0.0';
-      document.getElementById('driverLiveAmount').innerText = '0';
-    }
+function startDriverMeter() {
+    startMeter();
+}
 
-    function startDriverMeter() {
-      driverDistanceKm = 0;
-      const vehType = document.getElementById('driverMeterVehicleType').value;
-      const baseFare = vehType === 'Auto' ? 50 : 80;
-      const perKmRate = vehType === 'Auto' ? 12 : 18;
-
-      document.getElementById('driverLiveAmount').innerText = baseFare;
-      document.getElementById('driverDistCount').innerText = '0.0';
-
-      if (driverMeterInterval) clearInterval(driverMeterInterval);
-
-      let secondsElapsed = 0;
-      driverMeterInterval = setInterval(() => {
-        secondsElapsed++;
-        driverDistanceKm = secondsElapsed / 60; 
-        document.getElementById('driverDistCount').innerText = driverDistanceKm.toFixed(2);
-
-        let fare = baseFare;
-        if (driverDistanceKm > 3) {
-          fare = baseFare + ((driverDistanceKm - 3) * perKmRate);
-        }
-        document.getElementById('driverLiveAmount').innerText = Math.round(fare);
-      }, 1000);
-
-      alert(currentLang === 'kn' ? '⏱️ ಡ್ರೈವರ್ ಲೈವ್ ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಆಗಿದೆ!' : '⏱️ Driver live meter started!');
-    }
-
-    function stopDriverMeterOnly() {
-      if (driverMeterInterval) {
-        clearInterval(driverMeterInterval);
-        driverMeterInterval = null;
-      }
-      const km = document.getElementById('driverDistCount').innerText;
-      const amount = document.getElementById('driverLiveAmount').innerText;
-      alert(currentLang === 'kn' ? `⏱️ ಮೀಟರ್ ನಿಲ್ಲಿಸಲಾಗಿದೆ! ದೂರ: ${km} ಕಿ.ಮೀ, ಮೊತ್ತ: ₹${amount}` : `⏱️ Meter stopped! Distance: ${km} km, Amount: ₹${amount}`);
-    }
+function stopDriverMeterOnly() {
+    stopMeterOnly();
+}
+    
+    
 
     function generatedDigitId() {
       return Math.floor(1000 + Math.random() * 9000).toString();
