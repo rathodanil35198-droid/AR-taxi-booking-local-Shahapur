@@ -75,7 +75,7 @@
     .vehicle-logo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px; }
     .vehicle-card { border: 2px solid #cbd5e0; border-radius: 8px; padding: 10px; text-align: center; cursor: pointer; background: #fff; transition: all 0.2s; }
     .vehicle-card.selected { border-color: var(--primary); background: #e8f8f0; box-shadow: 0 0 5px rgba(15, 176, 91, 0.3); }
-    .vehicle-card .vehicle-icon { font-size: 3rem; margin-bottom: 2px; display: block; }
+    .vehicle-card img { width: 60px; height: 60px; object-fit: contain; margin-bottom: 5px; }
     .vehicle-card span { display: block; font-size: 0.85rem; font-weight: bold; color: #2d3748; }
 
     .btn-gps, .btn-submit { width: 100%; padding: 10px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
@@ -92,7 +92,7 @@
   <div class="container">
     
     <div id="roleSelectionScreen">
-      <div style="font-size: 4rem; margin-bottom: 15px;">🛺</div>
+      <img src="https://img.icons8.com/color/512/taxi.png" class="role-logo" alt="AR Taxi Logo">
       <h1 class="mainTitle" style="font-size: 1.3rem; color: #2c3e50;">AR Taxi Shahapur</h1>
       <p style="font-size: 0.85rem; color: #7f8c8d; margin-bottom: 25px;">ದಯವಿಟ್ಟು ನಿಮ್ಮ ವಲಯವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ:</p>
 
@@ -141,11 +141,11 @@
             <label>ವಾಹನ ಆಯ್ಕೆಮಾಡಿ (ಚಿತ್ರದ ಮೇಲೆ ಕ್ಲಿಕ್ ಮಾಡಿ):</label>
             <div class="vehicle-logo-grid">
               <div class="vehicle-card selected" id="cardAuto" onclick="selectVehicle('Auto')">
-                <span class="vehicle-icon">🛺</span>
+                <img src="https://img.icons8.com/color/512/rickshaw.png" alt="Auto Logo">
                 <span>ಆಟೋ (Auto)</span>
               </div>
               <div class="vehicle-card" id="cardCar" onclick="selectVehicle('Car')">
-                <span class="vehicle-icon">🚗</span>
+                <img src="https://img.icons8.com/color/512/sedan.png" alt="Car Logo">
                 <span>ಕಾರ್ (Car)</span>
               </div>
             </div>
@@ -411,8 +411,9 @@
       }
     }
 
+    // Distance calculation formula (Haversine) in KM
     function calculateDistance(lat1, lon1, lat2, lon2) {
-      const R = 6371; 
+      const R = 6371; // Earth radius in KM
       const dLat = (lat2 - lat1) * Math.PI / 180;
       const dLon = (lon2 - lon1) * Math.PI / 180;
       const a = 
@@ -423,6 +424,7 @@
       return R * c;
     }
 
+    // Customer Meter
     function resetMeterRate() {
       stopMeterOnly();
       document.getElementById('distCount').innerText = '0.0';
@@ -466,6 +468,7 @@
       alert(`⏱️ ಮೀಟರ್ ನಿಲ್ಲಿಸಲಾಗಿದೆ! ದೂರ: ${km} ಕಿ.ಮೀ, ಮೊತ್ತ: ₹${amount}`);
     }
 
+    // Driver Meter
     function resetDriverMeterRate() {
       stopDriverMeterOnly();
       document.getElementById('driverDistCount').innerText = '0.0';
@@ -759,17 +762,19 @@
         bookingsArray.forEach((b) => {
           let isLocked = b.status === 'Accepted by Driver';
           
+          // Calculate distance between driver and customer if both have GPS
           let distText = "ದೂರ: ಅಂದಾಜು ಸಿಗುತ್ತಿಲ್ಲ";
-          let isWithin2Km = true; 
+          let isWithin2Km = true; // default true if GPS not available for comparison yet
 
           if (currentDriverLat && currentDriverLng && b.customerLat && b.customerLng) {
             let km = calculateDistance(currentDriverLat, currentDriverLng, b.customerLat, b.customerLng);
             distText = `ಕಸ್ಟಮರ್ ದೂರ: ${km.toFixed(1)} KM`;
             if (km > 2.0 && b.status === 'Pending') {
-              isWithin2Km = false; 
+              isWithin2Km = false; // Exceeds 2 KM limit
             }
           }
 
+          // If pending and outside 2km, hide from this driver
           if (!isWithin2Km && b.status === 'Pending') {
             return; 
           }
@@ -777,7 +782,7 @@
           visibleCount++;
           html += `
             <div class="card" style="background:${isLocked ? '#edf2f7' : '#fff'}; border-left: 5px solid ${isLocked ? '#718096' : '#0fb05b'};">
-              <p style="color: #0fb05b; font-weight: bold; font-size: 0.85rem;">📍 ${distText}</p>
+              <p style="color: #0fb05b; font-weight: bold; font-size: 0.85rem;">📍 ${distText} (${km ? (km <= 1 ? '1 KM ಒಳಗೆ ಇದೆ' : `${Math.round(km)} KM`) : 'ಶುದ್ಧ 2KM ಮಿತಿ'})</p>
               <p><b>👤 ಕಸ್ಟಮರ್:</b> ${b.name} (<a href="tel:${b.phone}">${b.phone}</a>)</p>
               <p><b>🛺 ವಾಹನ ಆಯ್ಕೆ:</b> ${b.vehicle}</p>
               <p><b>📍 ಈಗ ಇರುವ ಸ್ಥಳ:</b> ${b.currentLocation || 'N/A'}</p>
