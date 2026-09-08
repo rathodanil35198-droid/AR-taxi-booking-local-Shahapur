@@ -1,5 +1,56 @@
 <!DOCTYPE html>
 <html lang="kn">
+      <!-- ನಿಯಮಗಳು ಮತ್ತು ನಿಬಂಧನೆಗಳ ಪಾಪ್-ಅಪ್ ಕೋಡ್ -->
+    <div id="terms-screen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; display: flex; justify-content: center; align-items: center; padding: 15px;">
+        <div style="background: #ffffff; max-width: 420px; width: 100%; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); max-height: 90vh; overflow-y: auto; text-align: left;">
+            <h2 style="color: #2c3e50; font-size: 1.1rem; margin-bottom: 10px; text-align: center;">ನಿಯಮಗಳು ಮತ್ತು ನಿಬಂಧನೆಗಳು</h2>
+            
+            <div style="font-size: 0.8rem; color: #555; line-height: 1.4; margin-bottom: 12px;">
+                <p style="margin-bottom: 6px;"><b>೧. ಕೇವಲ ಸಂಪರ್ಕ ಸೇವೆ:</b> AR Taxi Shahapur ಆ್ಯಪ್ ಕೇವಲ ಕಸ್ಟಮರ್ ಮತ್ತು ಡ್ರೈವರ್ ನಡುವೆ ಸಂಪರ್ಕ ಕಲ್ಪಿಸುವ ಸೇತುವೆ ಮಾತ್ರ.</p>
+                <p style="margin-bottom: 6px;"><b>೨. ಅಪಘಾತದ ಜವಾಬ್ದಾರಿ ಇಲ್ಲ:</b> ಪ್ರಯಾಣದ ಸಮಯದಲ್ಲಿ ಯಾವುದೇ ಅಪಘಾತ, ಗಾಯ ಅಥವಾ ಪ್ರಾಣಹಾನಿ ಸಂಭವಿಸಿದರೆ ಅದಕ್ಕೆ ಆ್ಯಪ್ ಅಥವಾ ಅಡ್ಮಿನ್ ಯಾವುದೇ ರೀತಿಯಲ್ಲಿ ಹೊಣೆಗಾರರಲ್ಲ.</p>
+                <p style="margin-bottom: 6px;"><b>೩. ನೇರ ಜವಾಬ್ದಾರಿ:</b> ಡ್ರೈವರ್ ಹಾಗೂ ಕಸ್ಟಮರ್ ನಡುವಿನ ವೈಯಕ್ತಿಕ ಕಲಹಗಳು ಅಥವಾ ಹಣಕಾಸಿನ ವಿವಾದಗಳಿಗೆ ಅವರೆ ನೇರ ಜವಾಬ್ದಾರರು.</p>
+            </div>
+
+            <!-- ಚೆಕ್ ಬಾಕ್ಸ್ (Check Box) -->
+            <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                <input type="checkbox" id="agreeCheckbox" onclick="toggleNextButton()" style="width: 18px; height: 18px; cursor: pointer;">
+                <label for="agreeCheckbox" style="font-size: 0.85rem; color: #333; cursor: pointer;">ಮೇಲಿನ ಎಲ್ಲಾ ನಿಯಮಗಳನ್ನು ನಾನು ಓದಿ ಒಪ್ಪಿದ್ದೇನೆ</label>
+            </div>
+
+            <!-- ನೆಕ್ಸ್ಟ್ ಬಟನ್ (Next Button) - ಆರಂಭದಲ್ಲಿ ಇದು ಲಾಕ್ ಆಗಿರುತ್ತದೆ -->
+            <button id="nextBtn" onclick="acceptTerms()" disabled style="width: 100%; background: #cccccc; color: white; border: none; padding: 10px; border-radius: 8px; font-size: 0.95rem; font-weight: bold; cursor: not-allowed;">ಮುಂದೆ ಹೋಗಿ (Next)</button>
+        </div>
+    </div>
+
+    <!-- ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್ ಕೋಡ್ -->
+    <script>
+        function toggleNextButton() {
+            const checkbox = document.getElementById('agreeCheckbox');
+            const btn = document.getElementById('nextBtn');
+            if (checkbox.checked) {
+                btn.disabled = false;
+                btn.style.background = '#0f0b5b5b'; // ಸಕ್ರಿಯವಾದಾಗ ಬಣ್ಣ ಬದಲಾಗುತ್ತದೆ
+                btn.style.background = '#0f0b5b';
+                btn.style.cursor = 'pointer';
+            } else {
+                btn.disabled = true;
+                btn.style.background = '#cccccc';
+                btn.style.cursor = 'not-allowed';
+            }
+        }
+
+        function acceptTerms() {
+            document.getElementById('terms-screen').style.display = 'none';
+            localStorage.setItem('termsAccepted', 'true');
+        }
+
+        window.onload = function() {
+            if (localStorage.getItem('termsAccepted') === 'true') {
+                document.getElementById('terms-screen').style.display = 'none';
+            }
+        }
+    </script>
+  
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
