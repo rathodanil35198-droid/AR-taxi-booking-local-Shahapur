@@ -1011,7 +1011,7 @@
           if (currentDriverLat && currentDriverLng && b.customerLat && b.customerLng) {
             let km = calculateDistance(currentDriverLat, currentDriverLng, b.customerLat, b.customerLng);
             distText = currentLang === 'kn' ? `ಕಸ್ಟಮರ್ ದೂರ: ${km.toFixed(1)} KM` : `Customer Distance: ${km.toFixed(1)} KM`;
-            if (km > 2.0 && b.status === 'Pending') {
+            if (km > 3.0 && b.status === 'Pending') {
               isWithin2Km = false; 
             }
           }
@@ -1120,6 +1120,8 @@
       const adminDiv = document.getElementById('adminDriversList');
       window.onSnapshot(window.collection(window.db, "drivers"), (snapshot) => {
         let html = '';
+                let searchBoxHTML = `<div style="margin: 15px 0;"><input type="text" id="vehicleSearchInput" placeholder="🔍 ವೆಹಿಕಲ್ ನಂಬರ್ ಅಥವಾ ಹೆಸರು ಹಾಕಿ ಹುಡುಕಿ..." onkeyup="searchVehicle()" style="width: 100%; padding: 12px; font-size: 16px; border: 2px solid #4CAF50; border-radius: 8px; box-sizing: border-box;"></div>`;
+
         if (snapshot.empty) {
           adminDiv.innerHTML = `<p>${currentLang === 'kn' ? 'ಯಾವುದೇ ಡ್ರೈವರ್ ಡೇಟಾ ಇಲ್ಲ.' : 'No driver data available.'}</p>`;
           return;
