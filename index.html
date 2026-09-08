@@ -43,178 +43,148 @@
   </script>
 
   <style>
-    :root { --primary: #0fb05b; --secondary: #41c91d; --bg: #f4f7f6; --text: #333; }
+    :root { --primary: #0fb05b; --secondary: #41c91d; --bg: #121824; --text: #333; }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     body { background-color: var(--bg); color: var(--text); padding: 8px; }
-    .container { width: 100%; max-width: 480px; margin: 0 auto; background: #fff; padding: 12px; border-radius: 8px; }
+    .container { width: 100%; max-width: 480px; margin: 0 auto; background: #fff; padding: 12px; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.4); }
 
-    #roleSelectionScreen { text-align: center; padding: 20px 15px; }
-    .role-btn { display: block; width: 100%; padding: 15px; margin: 15px 0; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: bold; cursor: pointer; color: white; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-    .role-customer { background: linear-gradient(45deg, #3182ce, #2b6cb0); }
-    .role-driver { background: linear-gradient(45deg, #0fb05b, #41c91d); }
+    /* ಮಿಂಚುವ ಕರ್ನಾಟಕ ಅನಿಮೇಷನ್ ಶೈಲಿ */
+    @keyframes glowText {
+      0% { color: #ffeb3b; text-shadow: 0 0 5px #ff9800, 0 0 10px #ff5722; }
+      50% { color: #00e676; text-shadow: 0 0 10px #00e676, 0 0 20px #1de9b6; }
+      100% { color: #ffeb3b; text-shadow: 0 0 5px #ff9800, 0 0 10px #ff5722; }
+    }
+    .glowing-karnataka {
+      font-size: 1.2rem;
+      font-weight: bold;
+      animation: glowText 1.5s infinite alternate;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ನಿಯಮಗಳ ಪುಟ ಸ್ಟೈಲ್ */
+    #termsScreen { text-align: left; padding: 15px; background: #1e293b; border-radius: 10px; color: #f8fafc; }
+    .terms-box { border: 1px solid #475569; padding: 10px; height: 210px; overflow-y: scroll; font-size: 0.8rem; background: #0f172a; color: #cbd5e1; margin-bottom: 12px; border-radius: 6px; line-height: 1.4; }
+
+    #roleSelectionScreen { text-align: center; padding: 15px; background: #fff; }
+    .role-btn { display: block; width: 100%; padding: 14px; margin: 12px 0; border: none; border-radius: 12px; font-size: 1rem; font-weight: bold; cursor: pointer; color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: transform 0.2s; }
     .role-btn:active { transform: scale(0.98); }
+    .role-customer { background: linear-gradient(45deg, #2563eb, #3b82f6); }
+    .role-driver { background: linear-gradient(45deg, #059669, #10b981); }
 
     .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
     .logo-title { display: flex; align-items: center; gap: 8px; }
-    .mainTitle { font-size: 1.1rem; font-weight: bold; color: #2c3e50; }
-    .subTitle { font-size: 0.75rem; color: #7f8c8d; }
-    .lang-btn { background: #eef2f3; border: 1px solid #dae1df; padding: 5px 10px; border-radius: 20px; font-weight: bold; cursor: pointer; }
+    .mainTitle { font-size: 1.1rem; font-weight: bold; color: #1e293b; }
+    .subTitle { font-size: 0.75rem; color: #64748b; }
+    .lang-btn { background: #f1f5f9; border: 1px solid #cbd5e1; padding: 5px 10px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 0.75rem; }
 
-    .whatsapp-box { background: #e8f8f0; border: 2px dashed #0fb05b; padding: 8px; border-radius: 10px; text-align: center; margin-bottom: 10px; }
-    .whatsapp-btn { display: inline-block; background: #0fb05b; color: white; padding: 6px 12px; border-radius: 20px; text-decoration: none; font-size: 0.8rem; font-weight: bold; margin-top: 5px; }
+    .whatsapp-box { background: #ecfdf5; border: 2px dashed #10b981; padding: 8px; border-radius: 10px; text-align: center; margin-bottom: 10px; }
+    .whatsapp-btn { display: inline-block; background: #059669; color: white; padding: 6px 12px; border-radius: 20px; text-decoration: none; font-size: 0.8rem; font-weight: bold; margin-top: 5px; }
     
-    .support-box { background: #fff5f5; border: 2px solid #feb2b2; padding: 8px; border-radius: 10px; text-align: center; margin-bottom: 10px; }
-    .support-btn { display: inline-block; background: #e53e3e; color: white; padding: 6px 12px; border-radius: 20px; text-decoration: none; font-size: 0.8rem; font-weight: bold; margin-top: 5px; }
+    .support-box { background: #fef2f2; border: 2px solid #f87171; padding: 8px; border-radius: 10px; text-align: center; margin-bottom: 10px; }
+    .support-btn { display: inline-block; background: #dc2626; color: white; padding: 6px 12px; border-radius: 20px; text-decoration: none; font-size: 0.8rem; font-weight: bold; margin-top: 5px; }
 
     .nav-tabs { display: grid; gap: 4px; margin-bottom: 8px; }
-    .nav-tab { background: #fff; border: 1px solid #cbd5e0; padding: 6px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; cursor: pointer; text-align: center; }
-    .nav-tab.active { background: #0fb05b; color: white; border-color: #0fb05b; }
+    .nav-tab { background: #f8fafc; border: 1px solid #cbd5e1; padding: 6px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; cursor: pointer; text-align: center; color: #475569; }
+    .nav-tab.active { background: #059669; color: white; border-color: #059669; }
 
     .section { display: none; }
     .section.active { display: block; }
-    h2 { font-size: 0.95rem; margin-bottom: 8px; color: #2d3748; border-left: 4px solid var(--primary); padding-left: 6px; }
+    h2 { font-size: 0.95rem; margin-bottom: 8px; color: #1e293b; border-left: 4px solid var(--primary); padding-left: 6px; }
     .form-group { margin-bottom: 8px; }
-    label { display: block; font-size: 0.78rem; font-weight: 700; margin-bottom: 2px; color: #4a5568; }
+    label { display: block; font-size: 0.78rem; font-weight: 700; margin-bottom: 2px; color: #334155; }
     input, select { width: 100%; padding: 8px; border: 2px solid #e2e8f0; border-radius: 6px; font-size: 0.85rem; }
     
     .vehicle-logo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px; }
-    .vehicle-card { border: 2px solid #cbd5e0; border-radius: 8px; padding: 10px; text-align: center; cursor: pointer; background: #fff; transition: all 0.2s; }
-    .vehicle-card.selected { border-color: var(--primary); background: #e8f8f0; box-shadow: 0 0 5px rgba(15, 176, 91, 0.3); }
-    .vehicle-card .vehicle-icon { font-size: 3rem; margin-bottom: 2px; display: block; }
-    .vehicle-card span { display: block; font-size: 0.85rem; font-weight: bold; color: #2d3748; }
+    .vehicle-card { border: 2px solid #cbd5e1; border-radius: 8px; padding: 10px; text-align: center; cursor: pointer; background: #fff; transition: all 0.2s; }
+    .vehicle-card.selected { border-color: var(--primary); background: #ecfdf5; box-shadow: 0 0 8px rgba(16, 185, 129, 0.3); }
+    .vehicle-card .vehicle-icon { font-size: 2.8rem; margin-bottom: 2px; display: block; }
+    .vehicle-card span { display: block; font-size: 0.85rem; font-weight: bold; color: #1e293b; }
 
     .btn-gps, .btn-submit { width: 100%; padding: 10px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
-    .btn-gps { background: #ebf8ff; color: #3182ce; border: 1px solid #bee3f8; }
-    .btn-submit { background: linear-gradient(45deg, #0fb05b, #41c91d); color: white; }
-    .card { background: #fff; border: 1px solid #cbd5e0; padding: 10px; border-radius: 8px; margin-bottom: 8px; }
-    .preview-img { width: 50px; height: 50px; object-fit: contain; border-radius: 50%; border: 2px solid #cbd5e0; margin-right: 8px; }
-    .footer { text-align: center; font-size: 0.7rem; color: #7f8c8d; margin-top: 10px; border-top: 1px solid #eee; padding-top: 5px; }
-   
-<!DOCTYPE html>
-<html lang="kn">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR Taxi Shahapur</title>
-    <style>
-        :root { --primary: #0f0b5b; --accent: #facf15; --bg-light: #f7f8c8; }
-        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: var(--bg-light); margin: 0; padding: 15px; color: #333; }
-        .container { max-width: 500px; margin: auto; background: #fff; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .header { text-align: center; margin-bottom: 20px; }
-        .logo-title { font-size: 2rem; font-weight: bold; color: var(--primary); display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .mainTitle { font-size: 1.5rem; font-weight: bold; color: var(--primary); }
-        .subTitle { font-size: 0.9rem; color: #666; margin-top: 5px; }
-        .lang-btn { background: var(--primary); color: #fff; border: none; padding: 6px 15px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; margin-top: 10px; }
-        .whatsapp-box, .support-box { background: #e8f8f0; border: 2px dashed #2ecc71; padding: 12px; border-radius: 10px; text-align: center; margin-bottom: 15px; font-size: 0.85rem; }
-        .support-box { background: #eaf2f8; border: 2px solid #3498db; }
-        .whatsapp-box a, .support-box a { font-weight: bold; color: #27ae60; text-decoration: none; display: block; margin-top: 5px; }
-        .support-box a { color: #2980b9; }
-        .section { margin-top: 20px; }
-        h2 { font-size: 1.1rem; color: var(--primary); border-left: 4px solid var(--accent); padding-left: 8px; margin-bottom: 12px; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; color: #444; }
-        input, select { width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 0.95rem; box-sizing: border-box; }
-        input:focus, select:focus { border-color: var(--primary); outline: none; }
-        .vehicle-logo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
-        .vehicle-card { border: 2px solid #ddd; border-radius: 10px; padding: 12px; text-align: center; cursor: pointer; background: #fafafa; }
-        .vehicle-card.selected { border-color: var(--primary); background: #f0f3ff; box-shadow: 0 0 10px rgba(15, 11, 91, 0.15); }
-        .vehicle-card .vehicle-icon { font-size: 2.2rem; display: block; margin-bottom: 5px; }
-        .vehicle-card span { display: block; font-size: 0.9rem; font-weight: bold; color: #333; }
-        .btn-gps, .btn-submit { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; }
-        .btn-gps { background: #e3f2fd; color: #1976d2; border: 1px solid #90caf9; margin-bottom: 8px; }
-        .btn-submit { background: var(--primary); color: white; margin-top: 10px; }
-    </style>
+    .btn-gps { background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; }
+    .btn-submit { background: linear-gradient(45deg, #059669, #10b981); color: white; }
+    .card { background: #fff; border: 1px solid #cbd5e1; padding: 10px; border-radius: 8px; margin-bottom: 8px; }
+    .preview-img { width: 50px; height: 50px; object-fit: contain; border-radius: 50%; border: 2px solid #cbd5e1; margin-right: 8px; }
+    .footer { text-align: center; font-size: 0.7rem; color: #64748b; margin-top: 10px; border-top: 1px solid #eee; padding-top: 5px; }
+    .back-home-btn { background: #64748b; color: white; border: none; padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; margin-bottom: 8px; }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="logo-title">
-                <span>🛺</span>
-                <div>
-                    <div class="mainTitle" id="mainTitleText">AR Taxi Shahapur</div>
-                    <div class="subTitle" id="subTitleText">ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್</div>
-                </div>
-            </div>
-            <button class="lang-btn" onclick="toggleLanguage()" id="langToggleBtn">English</button>
-        </div>
 
-        <div class="whatsapp-box">
-            <span id="waBoxText">WhatsApp ಮೂಲಕ ನೇರವಾಗಿ ಮಾತನಾಡಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ:</span>
-            <a href="https://chat.whatsapp.com/G11yw7T0QxwK55Njv8gRei7?c=1&p=a&mlu=4&ilr=4" target="_blank" class="whatsapp-btn">💬 WhatsApp Chat Open</a>
-        </div>
+  <div class="container">
+    
+    <!-- 1. ನಿಯಮಗಳು ಮತ್ತು ಒಪ್ಪಂದದ ಪುಟ (ಮೊದಲ ಬಾರಿ ಮಾತ್ರ) -->
+    <div id="termsScreen" style="display: none;">
+      <div class="glowing-karnataka" style="text-align: center;">🌟 ಕರ್ನಾಟಕ 🌟</div>
+      <h2 style="color: #34d399; text-align: center; font-size: 1.1rem; border:none; padding:0; margin-bottom: 4px;">ಯಾದಗಿರಿ ಜಿಲ್ಲೆ, ಶಹಾಪುರ</h2>
+      <p style="font-size: 0.75rem; color: #94a3b8; text-align: center; margin-bottom: 12px;">ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಆ್ಯಪ್‌ಗೆ ಸ್ವಾಗತ!</p>
+      
+      <div class="terms-box">
+        <strong style="color: #fbbf24;">ಎಲ್ಲರಿಗೂ ಸ್ವಾಗತ!</strong><br>
+        ಯಾದಗಿರಿ ಜಿಲ್ಲೆಯ ಶಹಾಪುರ ತಾಲ್ಲೂಕಿನ ಸ್ಥಳೀಯ AR Taxi ಆ್ಯಪ್‌ಗೆ ಸುಸ್ವಾಗತ.<br><br>
 
-        <div class="support-box">
-            <span id="emergencyBoxText">ತುರ್ತು ಸಹಾಯ ಬೇಕಿದ್ದರೆ ನೇರವಾಗಿ ಈ ನಂಬರ್ಗೆ ಕರೆ ಮಾಡಿ:</span>
-            <a href="tel:8105010768" id="emergencyBtnText">📞 24/7 ತುರ್ತು ಕರೆ (Emergency Call)</a>
-        </div>
+        <strong style="color: #60a5fa;">1. ಕಸ್ಟಮರ್‌ಗಳಿಗೆ ಸೂಚನೆಗಳು:</strong><br>
+        - ಕಸ್ಟಮರ್‌ಗಳು ಡ್ರೈವರ್‌ಗಳೊಂದಿಗೆ ಗೌರವದಿಂದ ವರ್ತಿಸಿ. ಕಸ್ಟಮರ್‌ಗಳು ನಮಗೆ ದೇವರ ಸಮಾನರು.<br>
+        - ಸರಿಯಾದ ಸ್ಥಳಕ್ಕೆ ಸುರಕ್ಷಿತವಾಗಿ ತಲುಪಿಸುವುದು ಡ್ರೈವರ್ ಕೆಲಸ.<br>
+        - ಡ್ರೈವರ್ ಮತ್ತು ಕಸ್ಟಮರ್ ನಡುವೆ ಏನಾದರೂ ವೈಯಕ್ತಿಕ ಜಗಳಗಳಾದರೆ ಅದಕ್ಕೆ ನಮ್ಮ ಆ್ಯಪ್ ಹೊಣೆಯಲ್ಲ.<br>
+        - ಸರಿಯಾದ ಮೀಟರ್ ಚಾರ್ಜಸ್ ಕೊಡಿ, ಅನಾವಶ್ಯಕ ಜಗಳಗಳಿಗೆ ಹೋಗಬೇಡಿ.<br>
+        - ಡ್ರೈವರ್‌ಗಳಿಂದ ತೊಂದರೆಯಾದರೆ ಆ್ಯಪ್‌ನಲ್ಲಿರುವ ವಾಟ್ಸಾಪ್ ಬಟನ್ ಮೂಲಕ ಕಂಪ್ಲೇಂಟ್ ನೀಡಿ.<br>
+        - ಡ್ರೈವರ್ ವಾಹನ ನಂಬರ್ ನೀಡಿದರೆ ತಕ್ಷಣ ಆ್ಯಪ್‌ನಿಂದ ಅವರನ್ನು ಡಿಲೀಟ್ ಮಾಡಲಾಗುವುದು.<br>
+        - ಡ್ರೈವರ್ ದಾಖಲೆಗಳು ನಮ್ಮ ಬಳಿ ಇರುತ್ತವೆ. ಕಂಪ್ಲೇಂಟ್ ಬಂದರೆ ಪೊಲೀಸ್ ಸ್ಟೇಷನ್‌ಗೆ ಮಾತ್ರ ನೀಡಲಾಗುವುದು.<br><br>
 
-        <!-- 1. CUSTOMER BOOKING SECTION -->
-        <div id="customerSection" class="section">
-            <h2 id="h2Booking">ಯಾತ್ರೆ ಬುಕ್ ಮಾಡಿ</h2>
-            <div id="bookingFormContainer">
-                <div class="form-group">
-                    <label id="lblVehSelect">ವಾಹನ ಆಯ್ಕೆಮಾಡಿ (ಚಿತ್ರದ ಮೇಲೆ ಕ್ಲಿಕ್ ಮಾಡಿ):</label>
-                    <div class="vehicle-logo-grid">
-                        <div class="vehicle-card selected" id="cardAuto" onclick="selectVehicle('Auto')">
-                            <span class="vehicle-icon">🛺</span>
-                            <span id="lblAutoCard">ಆಟೋ (Auto)</span>
-                        </div>
-                        <div class="vehicle-card" id="cardCar" onclick="selectVehicle('Car')">
-                            <span class="vehicle-icon">🚗</span>
-                            <span id="lblCarCard">ಕಾರ್ (Car)</span>
-                        </div>
-                    </div>
-                    <input type="hidden" id="vehicleType" value="Auto">
-                </div>
+        <strong style="color: #60a5fa;">2. ಡ್ರೈವರ್‌ಗಳಿಗೆ ಸೂಚನೆಗಳು:</strong><br>
+        - ಕಸ್ಟಮರ್‌ಗಳನ್ನು ನಿಮ್ಮ ಕುಟುಂಬದವರಂತೆ ಪ್ರೀತಿಯಿಂದ ನೋಡಿಕೊಳ್ಳಿ.<br>
+        - ನಿಮ್ಮ ವಾಹನದ ಎಲ್ಲಾ ದಾಖಲೆಗಳು ಕಡ್ಡಾಯವಾಗಿ ಇರಬೇಕು.<br>
+        - ವ್ಯವಹಾರವನ್ನು ಪ್ರಾಮಾಣಿಕವಾಗಿ ನಡೆಸಿದರೆ ಪ್ರತಿದಿನ ಹೆಚ್ಚು ಬುಕಿಂಗ್‌ಗಳು ಸಿಗುತ್ತವೆ.
+      </div>
 
-                <div class="form-group">
-                    <label id="lblCustName">ನಿಮ್ಮ ಹೆಸರು:</label>
-                    <input type="text" id="custName" placeholder="ಹೆಸರು ನಮूदಿಸಿ">
-                </div>
+      <div style="margin-bottom: 12px; font-size: 0.8rem; color: #fff; display: flex; align-items: center; gap: 8px;">
+        <input type="checkbox" id="agreeCheckbox" onclick="toggleNextButton()" style="width: 18px; height: 18px; cursor: pointer;">
+        <span>ಮೇಲಿನ ಎಲ್ಲಾ ನಿಯಮಗಳನ್ನು ನಾನು ಒಪ್ಪುತ್ತೇನೆ (I Agree)</span>
+      </div>
 
-                <div class="form-group">
-                    <label id="lblCustPhone">ಮೊಬೈಲ್ ನಂಬರ್:</label>
-                    <input type="tel" id="custPhone" placeholder="ನಂಬರ್ ನಮೂದಿಸಿ">
-                </div>
-
-                <div class="form-group">
-                    <label id="lblPassengers">ಪ್ರಯಾಣಿಕರ ಸಂಖ್ಯೆ:</label>
-                    <select id="passengerCount">
-                        <option value="1">1 Person</option>
-                        <option value="2">2 Persons</option>
-                        <option value="3">3 Persons</option>
-                        <option value="4">4 Persons</option>
-                        <option value="5+">5+ Persons</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label id="lblCurrentLoc">ನಿಮ್ಮ ಈಗಿನ ಸ್ಥಳ (GPS):</label>
-                    <input type="text" id="currentloc" placeholder="ಉದಾ: ಬಸ್ ಸ್ಟ್ಯಾಂಡ್ ಹತ್ತಿರ">
-                </div>
-
-                <div class="form-group">
-                    <label id="lblPickup">ಬರಬೇಕಾದ ಸ್ಥಳದ ವಿವರ (GPS ಮೂಲಕ):</label>
-                    <input type="text" id="pickuploc" placeholder="ಥಳದ ಹೆಸರು অথবা ಜಿಪಿಎಸ್ ಬಳಸಿ" readonly>
-                    <button type="button" class="btn-gps" onclick="getLocation()" id="btnGpsText">📍 ಜಿಪಿಎಸ್ ಮೂಲಕ ನನ್ನ ಸ್ಥಳ ಗುರುತಿಸಿ</button>
-                </div>
-
-                <div class="form-group">
-                    <label id="lblDrop">ಹೋಗಬೇಕಾದ ಸ್ಥಳ:</label>
-                    <input type="text" id="droploc" placeholder="ತಲುಪಬೇಕಾದ ಸ್ಥಳ">
-                </div>
-
-                <button class="btn-submit" onclick="submitBooking()" id="btnSubmitBooking">ಬುಕ್ ಮಾಡಿ (Book Now)</button>
-            </div>
-        </div>
+      <button id="nextBtn" disabled style="width: 100%; padding: 12px; background: #334155; color: #94a3b8; border: none; border-radius: 8px; font-weight: bold; font-size: 0.95rem; cursor: not-allowed;" onclick="acceptTerms()">
+        ಮುಂದೆ ಹೋಗಿ (Next)
+      </button>
     </div>
-</body>
-</html>
+
+    <!-- 2. ರೋಲ್ ಸೆಲೆಕ್ಷನ್ & ಶೇರ್ ಬಟನ್ ಪೇಜ್ -->
+    <div id="roleSelectionScreen" style="display: none;">
+      <div class="glowing-karnataka">🌟 ಕರ್ನಾಟಕ 🌟</div>
+      <div style="font-size: 3rem; margin-bottom: 5px;">🛺🚗</div>
+      <h1 class="mainTitle" style="font-size: 1.2rem; color: #1e293b;">AR Taxi Shahapur</h1>
+      <p style="font-size: 0.78rem; color: #64748b; margin-bottom: 15px;">ಯಾದಗಿರಿ ಜಿಲ್ಲೆ, ಶಹಾಪುರ ಲೋಕಲ್ ಸೇವೆಗೆ ಸ್ವಾಗತ!</p>
+      
+      <p style="font-size: 0.8rem; font-weight: bold; color: #334155; margin-bottom: 10px;">ದಯವಿಟ್ಟು ನಿಮ್ಮ ವಲಯವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ:</p>
+
+      <button class="role-btn role-customer" onclick="selectRole('customer')">
+        👤 ಕಸ್ಟಮರ್ ಬುಕಿಂಗ್ & ಮೀಟರ್<br><span style="font-size: 0.7rem; font-weight: normal; opacity: 0.9;">(Customer Booking & Meter)</span>
+      </button>
+
+      <button class="role-btn role-driver" onclick="selectRole('driver')">
+        🛺 ಡ್ರೈವರ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ & ಅಡ್ಮಿನ್<br><span style="font-size: 0.7rem; font-weight: normal; opacity: 0.9;">(Driver Dashboard & Admin)</span>
+      </button>
+
+      <!-- ವಾಟ್ಸಾಪ್ ಶೇರ್ ಬಟನ್ -->
+      <div style="margin-top: 15px; border-top: 1px solid #e2e8f0; padding-top: 15px;">
+        <button onclick="shareAppOnWhatsApp()" style="width: 100%; padding: 12px; background: #25D366; color: white; border: none; border-radius: 10px; font-weight: bold; font-size: 0.85rem; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; gap: 6px;">
+          <span>💬</span> ಈ ಆ್ಯಪ್ ಅನ್ನು ವಾಟ್ಸಾಪ್‌ನಲ್ಲಿ ಶೇರ್ ಮಾಡಿ
+        </button>
+      </div>
+    </div>
+
+    <!-- 3. ಮುಖ್ಯ ಆ್ಯಪ್ ಕಂಟೆಂಟ್ (ಬುಕಿಂಗ್, ಮೀಟರ್, ಡ್ರೈವರ್, ಅಡ್ಮಿನ್) -->
+    <div id="mainAppContent" style="display: none;">
+      
+      <button class="back-home-btn" onclick="goBackToRoleSelection()" id="backBtnText">⬅ ಹಿಂದಕ್ಕೆ (Change Role)</button>
 
       <div class="header">
         <div class="logo-title">
-          <span style="font-size: 1.6rem;">🛺</span>
+          <span style="font-size: 1.5rem;">🛺</span>
           <div>
+            <div class="glowing-karnataka" style="font-size: 0.9rem; margin:0;">🌟 ಕರ್ನಾಟಕ - ಶಹಾಪುರ 🌟</div>
             <div class="mainTitle" id="mainTitleText">AR Taxi Shahapur</div>
             <div class="subTitle" id="subTitleText">ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್</div>
           </div>
@@ -223,18 +193,18 @@
       </div>
 
       <div class="whatsapp-box">
-        <div style="font-size: 0.75rem; font-weight: bold; color: #065f46;" id="waBoxText">ದಯವಿಟ್ಟು ಡ್ರೈವರ್‌ಗಳು ಮಾತ್ರ ಈ ವಾಟ್ಸಾಪ್ ಗುಂಪಿಗೆ ಜಾಯಿನ್ ಆಗಿ.</div>
+        <div style="font-size: 0.72rem; font-weight: bold; color: #065f46;" id="waBoxText">ದಯವಿಟ್ಟು ಡ್ರೈವರ್‌ಗಳು ಮಾತ್ರ ಈ ವಾಟ್ಸಾಪ್ ಗುಂಪಿಗೆ ಜಾಯಿನ್ ಆಗಿ.</div>
         <a href="https://chat.whatsapp.com/G11Yw7T0QxwKS5Njv8gReI?s=cl&p=a&mlu=4&ilr=4" target="_blank" class="whatsapp-btn" id="waBtnText">💬 Join Driver WhatsApp Group</a>
       </div>
 
       <div class="support-box">
-        <div style="font-size: 0.75rem; font-weight: bold; color: #9b2c2c;" id="emergencyBoxText">ತುರ್ತು ಸಹಾಯ ಬೇಕಿದ್ದರೆ ಕಾಲ್ ಮಾಡಿ ವೆಹಿಕಲ್ ನಂಬರ್ ತಿಳಿಸಿ:</div>
+        <div style="font-size: 0.72rem; font-weight: bold; color: #9b2c2c;" id="emergencyBoxText">ತುರ್ತು ಸಹಾಯ ಬೇಕಿದ್ದರೆ ಕಾಲ್ ಮಾಡಿ ವೆಹಿಕಲ್ ನಂಬರ್ ತಿಳಿಸಿ:</div>
         <a href="tel:8105010768" class="support-btn" id="emergencyBtnText">📞 24/7 ತುರ್ತು ಕಾಲ್ (Emergency Call)</a>
       </div>
 
       <div class="nav-tabs" id="navTabsContainer"></div>
 
-      <!-- 1. CUSTOMER BOOKING SECTION -->
+      <!-- ಕಸ್ಟಮರ್ ಬುಕಿಂಗ್ ಸೆಕ್ಷನ್ -->
       <div id="customerSection" class="section">
         <h2 id="h2Booking">ಯಾತ್ರೆ ಬುಕ್ ಮಾಡಿ</h2>
         <div id="bookingFormContainer">
@@ -284,7 +254,7 @@
         <div id="customerStatusContainer" style="margin-top: 10px;"></div>
       </div>
 
-      <!-- 2. CUSTOMER LIVE METER SECTION -->
+      <!-- ಕಸ್ಟಮರ್ ಲೈವ್ ಮೀಟರ್ ಸೆಕ್ಷನ್ -->
       <div id="meterSection" class="section">
         <h2 id="h2LiveMeter">ಲೈವ್ ರನ್ನಿಂಗ್ ಮೀಟರ್</h2>
         <div class="form-group">
@@ -294,15 +264,15 @@
             <option value="Car">🚗 ಕಾರ್ / Car (₹80 Base)</option>
           </select>
         </div>
-        <button class="btn-submit" onclick="startMeter()" style="background:#3182ce; margin-bottom:8px;" id="btnStartMeter">ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
-        <div class="card" style="text-align:center; background:#f7fafc;">
-          <p style="font-size:0.8rem; color:#718096;"><span id="txtDistCovered">ಪ್ರಯಾಣಿಸಿದ ದೂರ:</span> <span id="distCount">0.0</span> ಕಿ.ಮೀ</p>
-          <p style="font-size:1.2rem; font-weight:bold; color:#0fb05b;"><span id="txtEstFare">ಅಂದಾಜು ಶುಲ್ಕ:</span> ₹<span id="liveAmount">0</span></p>
+        <button class="btn-submit" onclick="startMeter()" style="background:#2563eb; margin-bottom:8px;" id="btnStartMeter">ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
+        <div class="card" style="text-align:center; background:#f8fafc;">
+          <p style="font-size:0.8rem; color:#64748b;"><span id="txtDistCovered">ಪ್ರಯಾಣಿಸಿದ ದೂರ:</span> <span id="distCount">0.0</span> ಕಿ.ಮೀ</p>
+          <p style="font-size:1.2rem; font-weight:bold; color:#059669;"><span id="txtEstFare">ಅಂದಾಜು ಶುಲ್ಕ:</span> ₹<span id="liveAmount">0</span></p>
         </div>
-        <button class="btn-submit" onclick="stopMeterOnly()" style="background:#e53e3e;" id="btnStopMeter">ಮೀಟರ್ ಆಫ್ ಮಾಡಿ</button>
+        <button class="btn-submit" onclick="stopMeterOnly()" style="background:#dc2626;" id="btnStopMeter">ಮೀಟರ್ ಆಫ್ ಮಾಡಿ</button>
       </div>
 
-      <!-- 3. DRIVER PROFILE SECTION -->
+      <!-- ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ ಸೆಕ್ಷನ್ -->
       <div id="profileSection" class="section">
         <h2 id="h2DriverProfile">ಡ್ರೈವರ್ ರಜಿಸ್ಟ್ರೇಷನ್ / ಪ್ರೊಫೈಲ್</h2>
         <div class="form-group">
@@ -331,17 +301,17 @@
         <button class="btn-submit" onclick="registerDriver()" id="btnRegisterDriver">ಲಾಗಿನ್ / ರಜಿಸ್ಟರ್ ಮಾಡಿ</button>
       </div>
 
-      <!-- 4. DRIVER LIVE BOOKINGS SECTION -->
+      <!-- ಡ್ರೈವರ್ ಲೈವ್ ಬುಕಿಂಗ್ಸ್ ಸೆಕ್ಷನ್ -->
       <div id="liveSection" class="section">
         <h2 id="h2LiveOrders">ಡ್ರೈವರ್‌ಗಳಿಗೆ ಲೈವ್ ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು (2 KM ಒಳಗೆ ಇರುವವರು)</h2>
         <div class="form-group">
           <label id="lblEnterDriverId">ಬುಕಿಂಗ್ ವೀಕ್ಷಿಸಲು ನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ:</label>
           <input type="password" id="driverInputId" placeholder="4 digit ID" maxlength="4" oninput="checkDriverIdAndListen()">
         </div>
-        <div id="driverBookingsList"><p style="color: #e53e3e; font-weight: bold;" id="txtEnterIdPrompt">ಬುಕಿಂಗ್ ನೋಡಲು ದಯವಿಟ್ಟು ನಿಮ್ಮ ಸರಿಯಾದ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ.</p></div>
+        <div id="driverBookingsList"><p style="color: #dc2626; font-weight: bold;" id="txtEnterIdPrompt">ಬುಕಿಂಗ್ ನೋಡಲು ದಯವಿಟ್ಟು ನಿಮ್ಮ ಸರಿಯಾದ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ.</p></div>
       </div>
 
-      <!-- 5. DRIVER LIVE METER SECTION -->
+      <!-- ಡ್ರೈವರ್ ಲೈವ್ ಮೀಟರ್ ಸೆಕ್ಷನ್ -->
       <div id="driverMeterSection" class="section">
         <h2 id="h2DrvMeterTitle">ಡ್ರೈವರ್ ಲೈವ್ ಮೀಟರ್</h2>
         <div class="form-group">
@@ -351,18 +321,18 @@
             <option value="Car">🚗 ಕಾರ್ / Car (₹80 Base)</option>
           </select>
         </div>
-        <button class="btn-submit" onclick="startDriverMeter()" style="background:#3182ce; margin-bottom:8px;" id="btnDrvStartMeter">ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
-        <div class="card" style="text-align:center; background:#f7fafc;">
-          <p style="font-size:0.8rem; color:#718096;"><span id="txtDrvDist">ಪ್ರಯಾಣಿಸಿದ ದೂರ:</span> <span id="driverDistCount">0.0</span> ಕಿ.ಮೀ</p>
-          <p style="font-size:1.2rem; font-weight:bold; color:#0fb05b;"><span id="txtDrvFare">ಅಂದಾಜು ಶುಲ್ಕ:</span> ₹<span id="driverLiveAmount">0</span></p>
+        <button class="btn-submit" onclick="startDriverMeter()" style="background:#2563eb; margin-bottom:8px;" id="btnDrvStartMeter">ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
+        <div class="card" style="text-align:center; background:#f8fafc;">
+          <p style="font-size:0.8rem; color:#64748b;"><span id="txtDrvDist">ಪ್ರಯಾಣಿಸಿದ ದೂರ:</span> <span id="driverDistCount">0.0</span> ಕಿ.ಮೀ</p>
+          <p style="font-size:1.2rem; font-weight:bold; color:#059669;"><span id="txtDrvFare">ಅಂದಾಜು ಶುಲ್ಕ:</span> ₹<span id="driverLiveAmount">0</span></p>
         </div>
-        <button class="btn-submit" onclick="stopDriverMeterOnly()" style="background:#e53e3e;" id="btnDrvStopMeter">ಮೀಟರ್ ಆಫ್ ಮಾಡಿ</button>
+        <button class="btn-submit" onclick="stopDriverMeterOnly()" style="background:#dc2626;" id="btnDrvStopMeter">ಮೀಟರ್ ಆಫ್ ಮಾಡಿ</button>
       </div>
 
-      <!-- 6. ADMIN SECTION -->
+      <!-- ಅಡ್ಮಿನ್ ಸೆಕ್ಷನ್ -->
       <div id="adminSection" class="section">
         <h2 id="h2AdminTitle">ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್</h2>
-        <p style="font-size: 0.75rem; color: #7f8c8d;" id="txtAdminSub">ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ಗಳ ವೀಕ್ಷಣೆ ಅಥವಾ ಡಿಲೀಟ್ ಮಾಡಲು ಇಲ್ಲಿಗೆ ಬನ್ನಿರಿ...</p>
+        <p style="font-size: 0.75rem; color: #64748b;" id="txtAdminSub">ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ಗಳ ವೀಕ್ಷಣೆ ಅಥವಾ ಡಿಲೀಟ್ ಮಾಡಲು ಇಲ್ಲಿಗೆ ಬನ್ನಿರಿ...</p>
         <div id="adminDriversList">ಡ್ರೈವರ್‌ಗಳ ಮಾಹಿತಿ ಲೋಡ್ ಆಗುತ್ತಿದೆ...</div>
       </div>
 
@@ -376,6 +346,48 @@
   <audio id="alertSound" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" preload="auto" loop></audio>
 
   <script>
+    // ಆ್ಯಪ್ ಲೋಡ್ ಆದ ಕೂಡಲೇ ನಿಯಮಗಳ ಪುಟ ತೋರಿಸುವುದನ್ನು ಇಲ್ಲಿ ಕಂಟ್ರೋಲ್ ಮಾಡಲಾಗುತ್ತದೆ
+    window.onload = function() {
+      const hasAccepted = localStorage.getItem('arTaxiTermsAccepted');
+      if (hasAccepted === 'true') {
+        document.getElementById('termsScreen').style.display = 'none';
+        document.getElementById('roleSelectionScreen').style.display = 'block';
+      } else {
+        document.getElementById('termsScreen').style.display = 'block';
+        document.getElementById('roleSelectionScreen').style.display = 'none';
+      }
+      updatePassengerOptions();
+    };
+
+    function toggleNextButton() {
+      const checkbox = document.getElementById('agreeCheckbox');
+      const nextBtn = document.getElementById('nextBtn');
+      if (checkbox.checked) {
+        nextBtn.disabled = false;
+        nextBtn.style.background = '#059669';
+        nextBtn.style.color = '#fff';
+        nextBtn.style.cursor = 'pointer';
+      } else {
+        nextBtn.disabled = true;
+        nextBtn.style.background = '#334155';
+        nextBtn.style.color = '#94a3b8';
+        nextBtn.style.cursor = 'not-allowed';
+      }
+    }
+
+    function acceptTerms() {
+      localStorage.setItem('arTaxiTermsAccepted', 'true');
+      document.getElementById('termsScreen').style.display = 'none';
+      document.getElementById('roleSelectionScreen').style.display = 'block';
+    }
+
+    function shareAppOnWhatsApp() {
+      const appUrl = window.location.href;
+      const message = "🌟 ಕರ್ನಾಟಕ - ಯಾದಗಿರಿ ಜಿಲ್ಲೆ, ಶಹಾಪುರ ಸ್ಥಳೀಯ AR Taxi ಬುಕಿಂಗ್ ಆ್ಯಪ್! ನೀವೂ ಒಮ್ಮೆ ಬಳಸಿ: " + appUrl;
+      const whatsappUrl = "https://api.whatsapp.com/send?text=" + encodeURIComponent(message);
+      window.open(whatsappUrl, '_blank');
+    }
+
     let currentLang = 'kn';
     let distanceKm = 0;
     let meterInterval = null;
@@ -621,6 +633,7 @@
     function updatePassengerOptions() {
       const type = document.getElementById('vehicleType').value;
       const select = document.getElementById('passengerCount');
+      if(!select) return;
       select.innerHTML = '';
       if (type === 'Auto') {
         select.innerHTML = `
@@ -637,7 +650,6 @@
         `;
       }
     }
-    updatePassengerOptions();
 
     function switchTab(tabName) {
       document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -689,10 +701,7 @@
       const R = 6371; 
       const dLat = (lat2 - lat1) * Math.PI / 180;
       const dLon = (lon2 - lon1) * Math.PI / 180;
-      const a = 
-        Math.sin(dLat/2) * Math.sin(dLat/2) +
-        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
-        Math.sin(dLon/2) * Math.sin(dLon/2);
+      const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon/2) * Math.sin(dLon/2);
       const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
       return R * c;
     }
@@ -930,30 +939,30 @@
           formDiv.style.display = 'none';
           if (currentLang === 'kn') {
             statusDiv.innerHTML = `
-              <div class="card" style="background:#e8f8f0; border: 2px solid #0fb05b; text-align:center;">
+              <div class="card" style="background:#ecfdf5; border: 2px solid #059669; text-align:center;">
                 <h3 style="color:#065f46; margin-bottom:8px;">✅ ನಿಮ್ಮ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಲಾಗಿದೆ!</h3>
-                <p style="font-weight:bold; font-size:0.95rem; color:#2d3748; margin-top:6px;">👤 ಡ್ರೈವರ್ ಹೆಸರು: ${b.driverName}</p>
-                <p style="font-weight:bold; font-size:0.95rem; color:#2d3748;">📞 ಮೊಬೈಲ್ ನಂಬರ್: <a href="tel:${b.driverPhone}" style="color:#3182ce;">${b.driverPhone}</a></p>
-                <p style="font-weight:bold; font-size:0.95rem; color:#2d3748;">🛺 ವಾಹನ ನಂಬರ್: ${b.driverVehNo}</p>
-                <p style="font-size:0.85rem; color:#3182ce; margin:8px 0; font-weight:bold;">📍 ಡ್ರೈವರ್ ಲೈವ್ ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್: <br>${b.driverLat ? (b.driverLat.toFixed(4) + ', ' + b.driverLng.toFixed(4)) : 'ಲೋಡ್ ಆಗುತ್ತಿದೆ...'}</p>
+                <p style="font-weight:bold; font-size:0.95rem; color:#1e293b; margin-top:6px;">👤 ಡ್ರೈವರ್ ಹೆಸರು: ${b.driverName}</p>
+                <p style="font-weight:bold; font-size:0.95rem; color:#1e293b;">📞 ಮೊಬೈಲ್ ನಂಬರ್: <a href="tel:${b.driverPhone}" style="color:#2563eb;">${b.driverPhone}</a></p>
+                <p style="font-weight:bold; font-size:0.95rem; color:#1e293b;">🛺 ವಾಹನ ನಂಬರ್: ${b.driverVehNo}</p>
+                <p style="font-size:0.85rem; color:#2563eb; margin:8px 0; font-weight:bold;">📍 ಡ್ರೈವರ್ ಲೈವ್ ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್: <br>${b.driverLat ? (b.driverLat.toFixed(4) + ', ' + b.driverLng.toFixed(4)) : 'ಲೋಡ್ ಆಗುತ್ತಿದೆ...'}</p>
                 <p style="margin:10px 0;">
-                  <a href="tel:${b.driverPhone}" class="whatsapp-btn" style="background: #3182ce; padding:8px 15px;">📞 ಕಾಲ್ ಮಾಡಿ (${b.driverPhone})</a>
-                  ${b.driverLat ? `<a href="https://www.google.com/maps?q=${b.driverLat},${b.driverLng}" target="_blank" class="whatsapp-btn" style="background: #0fb05b; padding:8px 15px; margin-top:5px; display:inline-block;">🗺️ ಮ್ಯಾಪ್‌ನಲ್ಲಿ ಗಾಡಿ ನೋಡಿ</a>` : ''}
+                  <a href="tel:${b.driverPhone}" class="whatsapp-btn" style="background: #2563eb; padding:8px 15px;">📞 ಕಾಲ್ ಮಾಡಿ (${b.driverPhone})</a>
+                  ${b.driverLat ? `<a href="https://www.google.com/maps?q=${b.driverLat},${b.driverLng}" target="_blank" class="whatsapp-btn" style="background: #059669; padding:8px 15px; margin-top:5px; display:inline-block;">🗺️ ಮ್ಯಾಪ್‌ನಲ್ಲಿ ಗಾಡಿ ನೋಡಿ</a>` : ''}
                 </p>
                 <button onclick="resetCustomerBookingView()" class="btn-gps" style="margin-top:10px;">🔄 ಹೊಸ ಬುಕಿಂಗ್ ಮಾಡಿ</button>
               </div>
             `;
           } else {
             statusDiv.innerHTML = `
-              <div class="card" style="background:#e8f8f0; border: 2px solid #0fb05b; text-align:center;">
+              <div class="card" style="background:#ecfdf5; border: 2px solid #059669; text-align:center;">
                 <h3 style="color:#065f46; margin-bottom:8px;">✅ Your Booking is Accepted!</h3>
-                <p style="font-weight:bold; font-size:0.95rem; color:#2d3748; margin-top:6px;">👤 Driver Name: ${b.driverName}</p>
-                <p style="font-weight:bold; font-size:0.95rem; color:#2d3748;">📞 Mobile Number: <a href="tel:${b.driverPhone}" style="color:#3182ce;">${b.driverPhone}</a></p>
-                <p style="font-weight:bold; font-size:0.95rem; color:#2d3748;">🛺 Vehicle Number: ${b.driverVehNo}</p>
-                <p style="font-size:0.85rem; color:#3182ce; margin:8px 0; font-weight:bold;">📍 Driver Live GPS: <br>${b.driverLat ? (b.driverLat.toFixed(4) + ', ' + b.driverLng.toFixed(4)) : 'Loading...'}</p>
+                <p style="font-weight:bold; font-size:0.95rem; color:#1e293b; margin-top:6px;">👤 Driver Name: ${b.driverName}</p>
+                <p style="font-weight:bold; font-size:0.95rem; color:#1e293b;">📞 Mobile Number: <a href="tel:${b.driverPhone}" style="color:#2563eb;">${b.driverPhone}</a></p>
+                <p style="font-weight:bold; font-size:0.95rem; color:#1e293b;">🛺 Vehicle Number: ${b.driverVehNo}</p>
+                <p style="font-size:0.85rem; color:#2563eb; margin:8px 0; font-weight:bold;">📍 Driver Live GPS: <br>${b.driverLat ? (b.driverLat.toFixed(4) + ', ' + b.driverLng.toFixed(4)) : 'Loading...'}</p>
                 <p style="margin:10px 0;">
-                  <a href="tel:${b.driverPhone}" class="whatsapp-btn" style="background: #3182ce; padding:8px 15px;">📞 Call Driver (${b.driverPhone})</a>
-                  ${b.driverLat ? `<a href="https://www.google.com/maps?q=${b.driverLat},${b.driverLng}" target="_blank" class="whatsapp-btn" style="background: #0fb05b; padding:8px 15px; margin-top:5px; display:inline-block;">🗺️ View on Map</a>` : ''}
+                  <a href="tel:${b.driverPhone}" class="whatsapp-btn" style="background: #2563eb; padding:8px 15px;">📞 Call Driver (${b.driverPhone})</a>
+                  ${b.driverLat ? `<a href="https://www.google.com/maps?q=${b.driverLat},${b.driverLng}" target="_blank" class="whatsapp-btn" style="background: #059669; padding:8px 15px; margin-top:5px; display:inline-block;">🗺️ View on Map</a>` : ''}
                 </p>
                 <button onclick="resetCustomerBookingView()" class="btn-gps" style="margin-top:10px;">🔄 New Booking</button>
               </div>
@@ -963,18 +972,18 @@
           formDiv.style.display = 'none';
           if (currentLang === 'kn') {
             statusDiv.innerHTML = `
-              <div class="card" style="background:#fffaf0; border: 2px dashed #dd6b20; text-align:center;">
-                <h3 style="color:#c05621; margin-bottom:8px;">⏳ ನಿಮ್ಮ ಹತ್ತಿರದ ಡ್ರೈವರ್‌ಗೆ ನೋಟಿಫಿಕೇಶನ್ ಕಳುಹಿಸಲಾಗಿದೆ</h3>
-                <p style="font-size:0.9rem; font-weight:bold; color:#2d3748; margin-bottom:10px;">ದಯವಿಟ್ಟು ದಾರಿಯನ್ನು ಕಾಯಿರಿ...</p>
-                <p style="font-size:0.75rem; color:#718096;">ಡ್ರೈವರ್ ಸ್ವೀಕರಿಸಿದ ಕೂಡಲೇ ಅವರ ವಿವರಗಳು ಮತ್ತು ಜಿಪಿಎಸ್ ಇಲ್ಲಿ ಕಾಣಿಸಿಕೊಳ್ಳುತ್ತದೆ.</p>
+              <div class="card" style="background:#fffbeb; border: 2px dashed #d97706; text-align:center;">
+                <h3 style="color:#b45309; margin-bottom:8px;">⏳ ನಿಮ್ಮ ಹತ್ತಿರದ ಡ್ರೈವರ್‌ಗೆ ನೋಟಿಫಿಕೇಶನ್ ಕಳುಹಿಸಲಾಗಿದೆ</h3>
+                <p style="font-size:0.9rem; font-weight:bold; color:#1e293b; margin-bottom:10px;">ದಯವಿಟ್ಟು ದಾರಿಯನ್ನು ಕಾಯಿರಿ...</p>
+                <p style="font-size:0.75rem; color:#64748b;">ಡ್ರೈವರ್ ಸ್ವೀಕರಿಸಿದ ಕೂಡಲೇ ಅವರ ವಿವರಗಳು ಮತ್ತು ಜಿಪಿಎಸ್ ಇಲ್ಲಿ ಕಾಣಿಸಿಕೊಳ್ಳುತ್ತದೆ.</p>
               </div>
             `;
           } else {
             statusDiv.innerHTML = `
-              <div class="card" style="background:#fffaf0; border: 2px dashed #dd6b20; text-align:center;">
-                <h3 style="color:#c05621; margin-bottom:8px;">⏳ Notification sent to nearest driver</h3>
-                <p style="font-size:0.9rem; font-weight:bold; color:#2d3748; margin-bottom:10px;">Please wait...</p>
-                <p style="font-size:0.75rem; color:#718096;">Driver details and GPS will appear here once accepted.</p>
+              <div class="card" style="background:#fffbeb; border: 2px dashed #d97706; text-align:center;">
+                <h3 style="color:#b45309; margin-bottom:8px;">⏳ Notification sent to nearest driver</h3>
+                <p style="font-size:0.9rem; font-weight:bold; color:#1e293b; margin-bottom:10px;">Please wait...</p>
+                <p style="font-size:0.75rem; color:#64748b;">Driver details and GPS will appear here once accepted.</p>
               </div>
             `;
           }
@@ -998,7 +1007,7 @@
       }
 
       if (!enteredId || enteredId.length !== 4) {
-        listDiv.innerHTML = `<p style="color: #e53e3e; font-weight: bold;">${currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ನೋಡಲು ದಯವಿಟ್ಟು ನಿಮ್ಮ ಸರಿಯಾದ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ.' : 'Please enter correct 4-digit Driver ID to view bookings.'}</p>`;
+        listDiv.innerHTML = `<p style="color: #dc2626; font-weight: bold;">${currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ನೋಡಲು ದಯವಿಟ್ಟು ನಿಮ್ಮ ಸರಿಯಾದ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ.' : 'Please enter correct 4-digit Driver ID to view bookings.'}</p>`;
         return;
       }
 
@@ -1011,11 +1020,11 @@
       });
 
       if (!isValidDriver) {
-        listDiv.innerHTML = `<p style="color: #e53e3e; font-weight: bold;">${currentLang === 'kn' ? '❌ ತಪ್ಪಾದ ಡ್ರೈವರ್ ಐಡಿ! ದಯವಿಟ್ಟು ಸರಿಯಾದ ರಜಿಸ್ಟರ್ಡ್ ಐಡಿ ಹಾಕಿ.' : '❌ Incorrect Driver ID! Please enter registered ID.'}</p>`;
+        listDiv.innerHTML = `<p style="color: #dc2626; font-weight: bold;">${currentLang === 'kn' ? '❌ ತಪ್ಪಾದ ಡ್ರೈವರ್ ಐಡಿ! ದಯವಿಟ್ಟು ಸರಿಯಾದ ರಜಿಸ್ಟರ್ಡ್ ಐಡಿ ಹಾಕಿ.' : '❌ Incorrect Driver ID! Please enter registered ID.'}</p>`;
         return;
       }
 
-      listDiv.innerHTML = `<p style="color: #718096;">${currentLang === 'kn' ? 'ಬುಕಿಂಗ್‌ಗಳು ಲೋಡ್ ಆಗುತ್ತಿವೆ...' : 'Loading bookings...'}</p>`;
+      listDiv.innerHTML = `<p style="color: #64748b;">${currentLang === 'kn' ? 'ಬುಕಿಂಗ್‌ಗಳು ಲೋಡ್ ಆಗುತ್ತಿವೆ...' : 'Loading bookings...'}</p>`;
 
       bookingsUnsubscribe = window.onSnapshot(window.collection(window.db, "bookings"), (snapshot) => {
         let bookingsArray = [];
@@ -1050,7 +1059,6 @@
 
         bookingsArray.forEach((b) => {
           let isLocked = b.status === 'Accepted by Driver';
-          
           let distText = currentLang === 'kn' ? "ದೂರ: ಅಂದಾಜು ಸಿಗುತ್ತಿಲ್ಲ" : "Distance: Estimating...";
           let isWithin2Km = true; 
 
@@ -1068,15 +1076,15 @@
 
           visibleCount++;
           html += `
-            <div class="card" style="background:${isLocked ? '#edf2f7' : '#fff'}; border-left: 5px solid ${isLocked ? '#718096' : '#0fb05b'};">
-              <p style="color: #0fb05b; font-weight: bold; font-size: 0.85rem;">📍 ${distText}</p>
+            <div class="card" style="background:${isLocked ? '#f1f5f9' : '#fff'}; border-left: 5px solid ${isLocked ? '#64748b' : '#059669'};">
+              <p style="color: #059669; font-weight: bold; font-size: 0.85rem;">📍 ${distText}</p>
               <p><b>👤 ${currentLang === 'kn' ? 'ಕಸ್ಟಮರ್' : 'Customer'}:</b> ${b.name} (<a href="tel:${b.phone}">${b.phone}</a>)</p>
               <p><b>🛺 ${currentLang === 'kn' ? 'ವಾಹನ' : 'Vehicle'}:</b> ${b.vehicle}</p>
               <p><b>📍 ${currentLang === 'kn' ? 'ಪ್ರಸ್ತುತ ಸ್ಥಳ' : 'Current Loc'}:</b> ${b.currentLocation || 'N/A'}</p>
               <p><b>📍 ${currentLang === 'kn' ? 'ಪಿಕೋಪ್' : 'Pickup'}:</b> ${b.pickup}</p>
               <p><b>🏁 ${currentLang === 'kn' ? 'ಡ್ರಾಪ್' : 'Drop'}:</b> ${b.drop}</p>
               <p style="color: ${isLocked ? 'red' : 'green'}; font-weight: bold;">📍 ${currentLang === 'kn' ? 'ಸ್ಥಿತಿ' : 'Status'}: ${b.status}</p>
-              ${isLocked ? `<p style="margin-top:4px; color:#4a5568;">🔒 ${currentLang === 'kn' ? 'ಈ ಬುಕಿಂಗ್ ಲಾಕ್ ಆಗಿದೆ.' : 'This booking is locked.'}</p>` : `
+              ${isLocked ? `<p style="margin-top:4px; color:#475569;">🔒 ${currentLang === 'kn' ? 'ಈ ಬುಕಿಂಗ್ ಲಾಕ್ ಆಗಿದೆ.' : 'This booking is locked.'}</p>` : `
                 <div style="margin-top:6px;">
                   <button onclick="acceptBooking('${b.id}', '${b.pickup}')" class="btn-submit" style="padding:8px; font-size:0.85rem;">✅ ${currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ (Accept)' : 'Accept Booking'}</button>
                 </div>
@@ -1086,7 +1094,7 @@
         });
 
         if (visibleCount === 0) {
-          listDiv.innerHTML = `<p style="color: #718096; font-weight: bold;">${currentLang === 'kn' ? 'ನಿಮ್ಮ 2 ಕಿ.ಮೀ ವ್ಯಾಪ್ತಿಯಲ್ಲಿ ಯಾವುದೇ ಹೊಸ ಬುಕಿಂಗ್‌ಗಳಿಲ್ಲ.' : 'No new bookings within 2 KM range.'}</p>`;
+          listDiv.innerHTML = `<p style="color: #64748b; font-weight: bold;">${currentLang === 'kn' ? 'ನಿಮ್ಮ 2 ಕಿ.ಮೀ ವ್ಯಾಪ್ತಿಯಲ್ಲಿ ಯಾವುದೇ ಹೊಸ ಬುಕಿಂಗ್‌ಗಳಿಲ್ಲ.' : 'No new bookings within 2 KM range.'}</p>`;
         } else {
           listDiv.innerHTML = html;
         }
@@ -1182,9 +1190,9 @@
                 <p><b>🆔 ID:</b> ${d.driverId || 'N/A'}</p>
                 <p><b>👤 ${currentLang === 'kn' ? 'ಹೆಸರು' : 'Name'}:</b> ${d.name} (${d.phone})</p>
                 <p><b>🔢 ${currentLang === 'kn' ? 'ವಾಹನ' : 'Vehicle'}:</b> ${d.vehNo} (${d.vehType})</p>
-                <p style="color: #0fb05b; font-weight: bold;">🛺 ${currentLang === 'kn' ? 'ರೈಡ್ಸ್' : 'Trips'}: ${d.totalTrips || 0}, ₹${d.totalEarnings || 0}</p>
+                <p style="color: #059669; font-weight: bold;">🛺 ${currentLang === 'kn' ? 'ರೈಡ್ಸ್' : 'Trips'}: ${d.totalTrips || 0}, ₹${d.totalEarnings || 0}</p>
               </div>
-              <button onclick="deleteDriver('${id}')" style="background: #e53e3e; color: white; border: none; border-radius: 6px; padding: 8px; cursor: pointer;">🗑️</button>
+              <button onclick="deleteDriver('${id}')" style="background: #dc2626; color: white; border: none; border-radius: 6px; padding: 8px; cursor: pointer;">🗑️</button>
             </div>
           `;
         });
