@@ -755,17 +755,55 @@
     }
 
     async function registerDriver() {
-      const name = document.getElementById('drvName').value.trim();
-      const phone = document.getElementById('drvPhone').value.trim();
-      const vehNo = document.getElementById('drvVehNo').value.trim();
-      const vehType = document.getElementById('drvVehType').value;
+    const name = document.getElementById('drvName').value.trim();
+    const phone = document.getElementById('drvPhone').value.trim();
+    const vehNo = document.getElementById('drvVehNo').value.trim();
+    const vehType = document.getElementById('drvVehType').value;
 
-      if (!name || !phone || !vehNo) {
-        alert(currentLang === 'kn' ? 'ದಯವಿಟ್ಟು ಎಲ್ಲ ವಿವರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ!' : 'Please fill all details!');
+    if (!name || !phone || !vehNo) {
+        alert(currentLang === 'kn' ? 'ದಯವಿಟ್ಟು ಎಲ್ಲಾ ವಿವರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ!' : 'Please fill all details!');
         return;
-      }
+    }
 
-      try {
+    try {
+        const q = window.query(window.collection(window.db, "drivers"), window.where("phone", "==", phone));
+        const querySnapshot = await window.getDocs(q);
+
+        if (!querySnapshot.empty) {
+            alert(currentLang === 'kn' ? '⚠️ ಈ ಮೊಬೈಲ್ ನಂಬರ್ ಈಗಾಗಲೇ ರಿಜಿಸ್ಟರ್ ಆಗಿದೆ!' : '⚠️ This mobile number is already registered!');
+            return;
+        }
+
+        const vehPhoto = await getBase64Image('vehPhotoFile');
+        const driverId = generatedDigitId();
+
+        await window.addDoc(window.collection(window.db, "drivers"), {
+            driverId: driverId,
+            name: name,
+            phone: phone,
+            vehNo: vehNo,
+            vehType: vehType,
+            vehPhoto: vehPhoto,
+            totalEarnings: 0,
+            totalTrips: 0,
+            createdAt: Date.now(),
+            timestamp: window.serverTimestamp()
+        });
+
+        alert(currentLang === 'kn' ? `🎉 ಯಶಸ್ವಿಯಾಗಿ ರಿಜಿಸ್ಟರ್ ಆಗಿದೆ!\nನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ: ${driverId}` : `🎉 Successfully registered!\nYour 4-digit Driver ID: ${driverId}`);
+        
+        document.getElementById('drvName').value = '';
+        document.getElementById('drvPhone').value = '';
+        document.getElementById('drvVehNo').value = '';
+        if(document.getElementById('vehPhotoFile')) document.getElementById('vehPhotoFile').value = '';
+        
+    } catch (e) {
+        console.error(e);
+        alert("Error: " + e.message);
+    }
+    }
+        
+        
         const q = window.query(window.collection(window.db, "drivers"), window.where("phone", "==", phone));
         const querySnapshot = await window.getDocs(q);
 
