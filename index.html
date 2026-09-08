@@ -89,180 +89,127 @@
     .card { background: #fff; border: 1px solid #cbd5e0; padding: 10px; border-radius: 8px; margin-bottom: 8px; }
     .preview-img { width: 50px; height: 50px; object-fit: contain; border-radius: 50%; border: 2px solid #cbd5e0; margin-right: 8px; }
     .footer { text-align: center; font-size: 0.7rem; color: #7f8c8d; margin-top: 10px; border-top: 1px solid #eee; padding-top: 5px; }
-    .back-home-btn { background: #718096; color: white; border: none; padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; margin-bottom: 8px; }
-  </style>
+   
+<!DOCTYPE html>
+<html lang="kn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR Taxi Shahapur</title>
+    <style>
+        :root { --primary: #0f0b5b; --accent: #facf15; --bg-light: #f7f8c8; }
+        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: var(--bg-light); margin: 0; padding: 15px; color: #333; }
+        .container { max-width: 500px; margin: auto; background: #fff; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .header { text-align: center; margin-bottom: 20px; }
+        .logo-title { font-size: 2rem; font-weight: bold; color: var(--primary); display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .mainTitle { font-size: 1.5rem; font-weight: bold; color: var(--primary); }
+        .subTitle { font-size: 0.9rem; color: #666; margin-top: 5px; }
+        .lang-btn { background: var(--primary); color: #fff; border: none; padding: 6px 15px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; margin-top: 10px; }
+        .whatsapp-box, .support-box { background: #e8f8f0; border: 2px dashed #2ecc71; padding: 12px; border-radius: 10px; text-align: center; margin-bottom: 15px; font-size: 0.85rem; }
+        .support-box { background: #eaf2f8; border: 2px solid #3498db; }
+        .whatsapp-box a, .support-box a { font-weight: bold; color: #27ae60; text-decoration: none; display: block; margin-top: 5px; }
+        .support-box a { color: #2980b9; }
+        .section { margin-top: 20px; }
+        h2 { font-size: 1.1rem; color: var(--primary); border-left: 4px solid var(--accent); padding-left: 8px; margin-bottom: 12px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; color: #444; }
+        input, select { width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 0.95rem; box-sizing: border-box; }
+        input:focus, select:focus { border-color: var(--primary); outline: none; }
+        .vehicle-logo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+        .vehicle-card { border: 2px solid #ddd; border-radius: 10px; padding: 12px; text-align: center; cursor: pointer; background: #fafafa; }
+        .vehicle-card.selected { border-color: var(--primary); background: #f0f3ff; box-shadow: 0 0 10px rgba(15, 11, 91, 0.15); }
+        .vehicle-card .vehicle-icon { font-size: 2.2rem; display: block; margin-bottom: 5px; }
+        .vehicle-card span { display: block; font-size: 0.9rem; font-weight: bold; color: #333; }
+        .btn-gps, .btn-submit { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; }
+        .btn-gps { background: #e3f2fd; color: #1976d2; border: 1px solid #90caf9; margin-bottom: 8px; }
+        .btn-submit { background: var(--primary); color: white; margin-top: 10px; }
+    </style>
 </head>
-  <body>
-    <div class="container" style="max-width: 500px; margin: auto; padding: 20px; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: #060913; min-height: 100vh; color: #f8fafc; box-sizing: border-box;">
-        
-        <!-- ಅನಿಮೇಷನ್ ಮತ್ತು ಮಿಂಚುವ (Glow & Pulse) ಸ್ಟೈಲ್ಸ್ -->
-        <style>
-            @keyframes pulseGlow {
-                0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
-                70% { transform: scale(1.03); box-shadow: 0 0 0 14px rgba(34, 197, 94, 0); }
-                100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
-            }
-            .whatsapp-zoom-btn {
-                animation: pulseGlow 2s infinite ease-in-out;
-            }
-            @keyframes karnatakaShine {
-                0% { opacity: 0.8; text-shadow: 0 0 10px rgba(250, 204, 21, 0.5); }
-                50% { opacity: 1; text-shadow: 0 0 25px rgba(250, 204, 21, 0.9), 0 0 10px rgba(56, 189, 248, 0.8); }
-                100% { opacity: 0.8; text-shadow: 0 0 10px rgba(250, 204, 21, 0.5); }
-            }
-            .karnataka-highlight {
-                animation: karnatakaShine 1.8s infinite ease-in-out;
-                background: linear-gradient(90deg, #facc15, #38bdf8, #4ade80);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                font-weight: 900;
-            }
-        </style>
-
-        <!-- 1. ನಿಯಮಗಳು ಮತ್ತು ಒಪ್ಪಂದದ ಪುಟ (ಮೊದಲ ಬಾರಿ ಮಾತ್ರ ಕಾಣಿಸುತ್ತದೆ) -->
-        <div id="termsScreen" style="display: none; padding: 25px; background: #111827; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.7); border: 1px solid #1f2937;">
-            
-            <!-- ಕರ್ನಾಟಕ ಹೈಲೈಟ್ ಬ್ಯಾಡ್ಜ್ -->
-            <div style="text-align: center; margin-bottom: 12px;">
-                <span style="background: rgba(250, 204, 21, 0.15); border: 1px solid #facc15; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;" class="karnataka-highlight">
-                    ★ ಕರ್ನಾಟಕ • KARNATAKA ★
-                </span>
-            </div>
-
-            <!-- ಆಟೋ ಮತ್ತು ಟ್ಯಾಕ್ಸಿ ಲೋಗೋ ಲುಕ್ -->
-            <div style="text-align: center; margin-bottom: 12px;">
-                <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #0284c7, #0369a1); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 1.8rem; box-shadow: 0 8px 25px rgba(2, 132, 199, 0.5); border: 2px solid #38bdf8;">
-                    🛺🚕
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-title">
+                <span>🛺</span>
+                <div>
+                    <div class="mainTitle" id="mainTitleText">AR Taxi Shahapur</div>
+                    <div class="subTitle" id="subTitleText">ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್</div>
                 </div>
             </div>
-
-            <h2 style="color: #38bdf8; text-align: center; font-size: 1.35rem; margin-bottom: 5px; font-weight: 800;">AR Taxi Shahapur - ಯಾದಗಿರಿ</h2>
-            <p style="font-size: 0.82rem; color: #9ca3af; text-align: center; margin-bottom: 18px;">ದಯವಿಟ್ಟು ನಿಯಮಗಳನ್ನು ಓದಿ ಒಪ್ಪಿಗೆ ನೀಡಿ</p>
-            
-            <!-- ಓದಲು ಸುಲಭವಿರುವ ಸ್ಕ್ರೋಲ್ ಬಾಕ್ಸ್ -->
-            <div style="border: 1px solid #374155; padding: 15px; height: 200px; overflow-y: scroll; font-size: 0.85rem; background: #030712; border-radius: 12px; color: #d1d5db; line-height: 1.6;">
-                <strong style="color: #38bdf8; font-size: 0.95rem;">ಕರ್ನಾಟಕದ ಯಾದಗಿರಿ ಜಿಲ್ಲೆಯ ಶಹಾಪುರ ತಾಲೂಕಿನ ಅಧಿಕೃತ AR Taxi ಆಪ್.</strong><br><br>
-                
-                <strong style="color: #facc15;">1. ಕಸ್ಟಮರ್‌ಗಳಿಗೆ ಸೂಚನೆಗಳು:</strong><br>
-                - ಕಸ್ಟಮರ್‌ಗಳು ಡ್ರೈವರ್‌ಗಳೊಂದಿಗೆ ಸೌಜನ್ಯದಿಂದ ವರ್ತಿಸಬೇಕು.<br>
-                - ನಿಗದಿತ ಸ್ಥಳಕ್ಕೆ ಸುರಕ್ಷಿತವಾಗಿ ಮತ್ತು ಸರಿಯಾದ ಸಮಯದಲ್ಲಿ ತಲುಪಿಸುವುದು ನಮ್ಮ ಮುಖ್ಯ ಉದ್ದೇಶ.<br><br>
-                
-                <strong style="color: #facc15;">2. ಡ್ರೈವರ್‌ಗಳಿಗೆ ಸೂಚನೆಗಳು:</strong><br>
-                - ಡ್ರೈವರ್‌ಗಳು ತಮ್ಮ ಸಂಪೂರ್ಣ ವಿವರಗಳನ್ನು ಮತ್ತು ಸರಿಯಾದ ದರ ಪಟ್ಟಿಯನ್ನು ಕಾಯ್ದುಕೊಳ್ಳಬೇಕು.<br>
-                - ಯಾವುದೇ ಪ್ರಯಾಣಿಕರೊಂದಿಗೆ ಅನಗತ್ಯ ವಾದ-ವಿವಾದ ಮಾಡಕೂಡದು.<br>
-            </div>
-            
-            <!-- ಚೆಕ್ ಬಾಕ್ಸ್ -->
-            <div style="margin-top: 18px; font-size: 0.88rem; color: #f3f4f6; display: flex; align-items: center; gap: 12px; background: #030712; padding: 12px; border-radius: 12px; border: 1px solid #1f2937;">
-                <input type="checkbox" id="agreeCheckbox" onclick="toggleNextButton()" style="width: 20px; height: 20px; accent-color: #38bdf8; cursor: pointer;">
-                <span style="font-weight: 500;">ಮೇಲಿನ ಎಲ್ಲಾ ನಿಯಮಗಳನ್ನು ನಾನು ಒಪ್ಪಿದ್ದೇನೆ</span>
-            </div>
-            
-            <!-- ಮುಂದೆ ಹೋಗಿ ಬಟನ್ -->
-            <div style="margin-top: 18px;">
-                <button id="nextBtn" disabled style="width: 100%; padding: 14px; background: #374155; color: #9ca3af; border: none; border-radius: 14px; font-size: 1rem; font-weight: bold; cursor: not-allowed; transition: all 0.3s ease;">
-                    ಮುಂದೆ ಹೋಗಿ (Get Started)
-                </button>
-            </div>
+            <button class="lang-btn" onclick="toggleLanguage()" id="langToggleBtn">English</button>
         </div>
 
-        <!-- 2. ಮುಖ್ಯ ಪುಟ: ಪ್ಲೇ ಸ್ಟೋರ್ ಲುಕ್ (ಆಟೋ+ಟ್ಯಾಕ್ಸಿ ಲೋಗೋ, ಕರ್ನಾಟಕ ಹೈಲೈಟ್ & ಝೂಮ್ ಬಟನ್) -->
-        <div id="roleSelectionScreen" style="display: none; text-align: center; padding: 5px;">
-            
-            <!-- ಕರ್ನಾಟಕ ಹೈಲೈಟ್ ಪ್ರಕಾಶಮಾನ ಲೋಗೋ ಮೇಲ್ಭಾಗದಲ್ಲಿ -->
-            <div style="margin-bottom: 8px;">
-                <span style="font-size: 1.1rem; letter-spacing: 2px;" class="karnataka-highlight">
-                    ★ ಕರ್ನಾಟಕ (KARNATAKA) ★
-                </span>
-            </div>
+        <div class="whatsapp-box">
+            <span id="waBoxText">WhatsApp ಮೂಲಕ ನೇರವಾಗಿ ಮಾತನಾಡಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ:</span>
+            <a href="https://chat.whatsapp.com/G11yw7T0QxwK55Njv8gRei7?c=1&p=a&mlu=4&ilr=4" target="_blank" class="whatsapp-btn">💬 WhatsApp Chat Open</a>
+        </div>
 
-            <!-- ರಿಯಲ್ ಆ್ಯಪ್ ಪ್ರೀಮಿಯಂ ಆಟೋ ಮತ್ತು ಟ್ಯಾಕ್ಸಿ ಲೋಗೋ -->
-            <div style="margin-bottom: 12px;">
-                <div style="width: 90px; height: 90px; background: linear-gradient(135deg, #10b981, #047857); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 2.2rem; box-shadow: 0 10px 30px rgba(16, 185, 129, 0.5); border: 3px solid #34d399;">
-                    🛺🚕
+        <div class="support-box">
+            <span id="emergencyBoxText">ತುರ್ತು ಸಹಾಯ ಬೇಕಿದ್ದರೆ ನೇರವಾಗಿ ಈ ನಂಬರ್ಗೆ ಕರೆ ಮಾಡಿ:</span>
+            <a href="tel:8105010768" id="emergencyBtnText">📞 24/7 ತುರ್ತು ಕರೆ (Emergency Call)</a>
+        </div>
+
+        <!-- 1. CUSTOMER BOOKING SECTION -->
+        <div id="customerSection" class="section">
+            <h2 id="h2Booking">ಯಾತ್ರೆ ಬುಕ್ ಮಾಡಿ</h2>
+            <div id="bookingFormContainer">
+                <div class="form-group">
+                    <label id="lblVehSelect">ವಾಹನ ಆಯ್ಕೆಮಾಡಿ (ಚಿತ್ರದ ಮೇಲೆ ಕ್ಲಿಕ್ ಮಾಡಿ):</label>
+                    <div class="vehicle-logo-grid">
+                        <div class="vehicle-card selected" id="cardAuto" onclick="selectVehicle('Auto')">
+                            <span class="vehicle-icon">🛺</span>
+                            <span id="lblAutoCard">ಆಟೋ (Auto)</span>
+                        </div>
+                        <div class="vehicle-card" id="cardCar" onclick="selectVehicle('Car')">
+                            <span class="vehicle-icon">🚗</span>
+                            <span id="lblCarCard">ಕಾರ್ (Car)</span>
+                        </div>
+                    </div>
+                    <input type="hidden" id="vehicleType" value="Auto">
                 </div>
-            </div>
 
-            <h1 style="font-size: 1.6rem; color: #ffffff; margin-bottom: 4px; font-weight: 900; letter-spacing: 0.5px;">AR Taxi Shahapur</h1>
-            <p style="font-size: 0.85rem; color: #38bdf8; font-weight: 600; margin-bottom: 5px;">ಯಾದಗಿರಿ, ಕರ್ನಾಟಕ</p>
-            <p style="font-size: 0.8rem; color: #9ca3af; margin-bottom: 22px;">ನಿಮ್ಮ ವಲಯವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ / Select Your Role:</p>
+                <div class="form-group">
+                    <label id="lblCustName">ನಿಮ್ಮ ಹೆಸರು:</label>
+                    <input type="text" id="custName" placeholder="ಹೆಸರು ನಮूदಿಸಿ">
+                </div>
 
-            <!-- ಕಸ್ಟಮರ್ ಬುಕಿಂಗ್ ಬಟನ್ -->
-            <button class="role-btn role-customer" onclick="selectRole('customer')" style="display: block; width: 100%; padding: 18px; margin: 15px 0; border: none; border-radius: 16px; font-size: 1.05rem; background: linear-gradient(135deg, #0284c7, #2563eb); color: white; font-weight: bold; cursor: pointer; box-shadow: 0 8px 20px rgba(37, 99, 235, 0.5); transition: transform 0.2s;">
-                👤 ಕಸ್ಟಮರ್ ಬುಕಿಂಗ್ & ಮೀಟರ್<br><span style="font-size: 0.78rem; font-weight: normal; color: #bae6fd;">(Customer Booking & Meter)</span>
-            </button>
+                <div class="form-group">
+                    <label id="lblCustPhone">ಮೊಬೈಲ್ ನಂಬರ್:</label>
+                    <input type="tel" id="custPhone" placeholder="ನಂಬರ್ ನಮೂದಿಸಿ">
+                </div>
 
-            <!-- ಡ್ರೈವರ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ ಬಟನ್ -->
-            <button class="role-btn role-driver" onclick="selectRole('driver')" style="display: block; width: 100%; padding: 18px; margin: 15px 0; border: none; border-radius: 16px; font-size: 1.05rem; background: linear-gradient(135deg, #059669, #10b981); color: white; font-weight: bold; cursor: pointer; box-shadow: 0 8px 20px rgba(16, 185, 129, 0.5); transition: transform 0.2s;">
-                🛺 ಡ್ರೈವರ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ & ಅಡ್ಮಿನ್<br><span style="font-size: 0.78rem; font-weight: normal; color: #a7f3d0;">(Driver Dashboard & Admin)</span>
-            </button>
+                <div class="form-group">
+                    <label id="lblPassengers">ಪ್ರಯಾಣಿಕರ ಸಂಖ್ಯೆ:</label>
+                    <select id="passengerCount">
+                        <option value="1">1 Person</option>
+                        <option value="2">2 Persons</option>
+                        <option value="3">3 Persons</option>
+                        <option value="4">4 Persons</option>
+                        <option value="5+">5+ Persons</option>
+                    </select>
+                </div>
 
-            <!-- ಝೂಮ್ ಆಗಿ ಮಿಂಚುವ ವಾಟ್ಸಾಪ್ ಶೇರ್ ಬಟನ್ -->
-            <div style="margin-top: 30px; border-top: 1px solid #1f2937; padding-top: 22px;">
-                <button onclick="shareAppOnWhatsApp()" class="whatsapp-zoom-btn" style="width: 100%; padding: 16px; background: linear-gradient(135deg, #16a34a, #22c55e); color: white; border: none; border-radius: 16px; font-size: 1rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;">
-                    <span style="font-size: 1.4rem;">💬</span> ಈ ಆ್ಯಪ್ ಅನ್ನು ವಾಟ್ಸಾಪ್‌ನಲ್ಲಿ ಶೇರ್ ಮಾಡಿ
-                </button>
+                <div class="form-group">
+                    <label id="lblCurrentLoc">ನಿಮ್ಮ ಈಗಿನ ಸ್ಥಳ (GPS):</label>
+                    <input type="text" id="currentloc" placeholder="ಉದಾ: ಬಸ್ ಸ್ಟ್ಯಾಂಡ್ ಹತ್ತಿರ">
+                </div>
+
+                <div class="form-group">
+                    <label id="lblPickup">ಬರಬೇಕಾದ ಸ್ಥಳದ ವಿವರ (GPS ಮೂಲಕ):</label>
+                    <input type="text" id="pickuploc" placeholder="ಥಳದ ಹೆಸರು অথবা ಜಿಪಿಎಸ್ ಬಳಸಿ" readonly>
+                    <button type="button" class="btn-gps" onclick="getLocation()" id="btnGpsText">📍 ಜಿಪಿಎಸ್ ಮೂಲಕ ನನ್ನ ಸ್ಥಳ ಗುರುತಿಸಿ</button>
+                </div>
+
+                <div class="form-group">
+                    <label id="lblDrop">ಹೋಗಬೇಕಾದ ಸ್ಥಳ:</label>
+                    <input type="text" id="droploc" placeholder="ತಲುಪಬೇಕಾದ ಸ್ಥಳ">
+                </div>
+
+                <button class="btn-submit" onclick="submitBooking()" id="btnSubmitBooking">ಬುಕ್ ಮಾಡಿ (Book Now)</button>
             </div>
         </div>
-
     </div>
-
-    <!-- ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್ ಕಂಟ್ರೋಲ್ ಕೋಡ್ -->
-    <script>
-        window.onload = function () {
-            const hasAccepted = localStorage.getItem('arTaxiTermAccepted');
-            if (hasAccepted === 'true') {
-                document.getElementById('roleSelectionScreen').style.display = 'block';
-                document.getElementById('termsScreen').style.display = 'none';
-            } else {
-                document.getElementById('termsScreen').style.display = 'block';
-                document.getElementById('roleSelectionScreen').style.display = 'none';
-            }
-        };
-
-        function toggleNextButton() {
-            const checkbox = document.getElementById('agreeCheckbox');
-            const nextBtn = document.getElementById('nextBtn');
-            if (checkbox.checked) {
-                nextBtn.disabled = false;
-                nextBtn.style.background = 'linear-gradient(135deg, #0284c7, #2563eb)';
-                nextBtn.style.color = 'white';
-                nextBtn.style.cursor = 'pointer';
-                nextBtn.style.boxShadow = '0 6px 15px rgba(37, 99, 235, 0.4)';
-            } else {
-                nextBtn.disabled = true;
-                nextBtn.style.background = '#374155';
-                nextBtn.style.color = '#9ca3af';
-                nextBtn.style.cursor = 'not-allowed';
-                nextBtn.style.boxShadow = 'none';
-            }
-        }
-
-        document.getElementById('nextBtn').addEventListener('click', function () {
-            localStorage.setItem('arTaxiTermAccepted', 'true');
-            document.getElementById('termsScreen').style.display = 'none';
-            document.getElementById('roleSelectionScreen').style.display = 'block';
-        });
-
-        function selectRole(role) {
-            if (role === 'customer') {
-                alert('ಕಸ್ಟಮರ್ ಬುಕಿಂಗ್ ಪೇಜ್ ಶೀಘ್ರದಲ್ಲೇ ಓಪನ್ ಆಗುತ್ತದೆ!');
-            } else if (role === 'driver') {
-                alert('ಡ್ರೈವರ್ ಅಡ್ಮಿನ್ ಪೇಜ್ ಶೀಘ್ರದಲ್ಲೇ ಓಪನ್ ಆಗುತ್ತದೆ!');
-            }
-        }
-
-        function shareAppOnWhatsApp() {
-            const appUrl = window.location.href;
-            const message = "🛺🚕 AR Taxi Shahapur - ಯಾದಗಿರಿ, ಕರ್ನಾಟಕ! ಅತ್ಯಂತ ಸುಲಭ ಮತ್ತು ಸುರಕ್ಷಿತ ಆಟೋ/ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್‌ಗಾಗಿ ಈಗಲೇ ಈ ಆ್ಯಪ್ ಬಳಸಿ:\n\n" + appUrl;
-            const whatsappUrl = "https://api.whatsapp.com/send?text=" + encodeURIComponent(message);
-            window.open(whatsappUrl, '_blank');
-        }
-    </script>
 </body>
-
-      
-      <button class="back-home-btn" onclick="goBackToRoleSelection()" id="backBtnText">⬅ ಹಿಂದಕ್ಕೆ (Change Role)</button>
+</html>
 
       <div class="header">
         <div class="logo-title">
