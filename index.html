@@ -533,20 +533,21 @@
       updateLanguageUI();
     }
 
-    function selectRole(role) {
-      currentUserRole = role;
-      document.getElementById('roleSelectionScreen').style.display = 'none';
-      document.getElementById('mainAppContent').style.display = 'block';
-      updateLanguageUI();
+    
+        function selectRole(role) {
+    currentUserRole = role;
+    document.getElementById('roleSelectionScreen').style.display = 'none';
+    document.getElementById('mainAppContent').style.display = 'block';
+    updateLanguageUI();
 
-      if (role === 'customer') {
+    if (role === 'customer') {
         switchTab('customer');
-      } else {
+    } else {
         switchTab('live');
         startDriverLocationTracking();
-      }
     }
-
+        }
+        
     function selectVehicle(type) {
       document.getElementById('vehicleType').value = type;
       if (type === 'Auto') {
