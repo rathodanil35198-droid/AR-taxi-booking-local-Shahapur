@@ -358,7 +358,7 @@
           <label id="lblDrvMeterVeh">ವಾಹನ ಆಯ್ಕೆ ಮಾಡಿ:</label>
           <select id="driverMeterVehicleType" onchange="resetDriverMeterRate()">
             <option value="Auto">🛺 ಆಟೋ / Auto (₹50 Base)</option>
-            <option value="Car">🚗 ಕಾರ್ / Car (₹2000 Base)</option>
+            <option value="Car">🚗 ಕಾರ್ / Car (₹200 Base)</option>
           </select>
         </div>
         <button class="btn-submit" onclick="startDriverMeter()" style="background:#3182ce; margin-bottom:8px;" id="btnDrvStartMeter">ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
@@ -822,63 +822,100 @@ function stopDriverMeterOnly() {
 
     function generatedDigitId() {
       return Math.floor(1000 + Math.random() * 9000).toString();
-    }
-
-    function getBase64Image(fileInputId) {
-      return new Promise(resolve => {
+    
+    function getCompressedBase64Image(fileInputId) {
+    return new Promise((resolve) => {
         const fileInput = document.getElementById(fileInputId);
         if (!fileInput || !fileInput.files || !fileInput.files[0]) {
-          resolve('');
-          return;
+            resolve("");
+            return;
         }
+        const file = fileInput.files[0];
         const reader = new FileReader();
-        reader.onload = e => resolve(e.target.result);
-        reader.readAsDataURL(fileInput.files[0]);
-      });
+        reader.onload = function (e) {
+            const img = new Image();
+            img.onload = function () {
+                const canvas = document.createElement('canvas');
+                let width = img.width;
+                let height = img.height;
+                
+                const maxDim = 800;
+                if (width > height && width > maxDim) {
+                    height = Math.round((height * maxDim) / width);
+                    width = maxDim;
+                } else if (height > maxDim) {
+                    width = Math.round((width * maxDim) / height);
+                    height = maxDim;
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+                
+                const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+                resolve(compressedDataUrl);
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+}
+
+async function registerDriver() {
+    const name = document.getElementById('drvName').value.trim();
+    const phone = document.getElementById('drvPhone').value.trim();
+    const vehNo = document.getElementById('drvVehNo').value.trim();
+    const vehType = document.getElementById('drvVehType').value;
+
+    if (!name || !phone || !vehNo) {
+        alert(currentLang === 'kn' ? '❌ ದಯವಿಟ್ಟು ಎಲ್ಲ ಮಾಹಿತಿ ಭರ್ತಿ ಮಾಡಿ!' : 'Please fill all details!');
+        return;
     }
 
-    async function registerDriver() {
-      const name = document.getElementById('drvName').value.trim();
-      const phone = document.getElementById('drvPhone').value.trim();
-      const vehNo = document.getElementById('drvVehNo').value.trim();
-      const vehType = document.getElementById('drvVehType').value;
-
-      if (!name || !phone || !vehNo) {
-        alert(currentLang === 'kn' ? 'ದಯವಿಟ್ಟು ಎಲ್ಲ ವಿವರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ!' : 'Please fill all details!');
-        return;
-      }
-
-      try {
+    try {
         const q = window.query(window.collection(window.db, "drivers"), window.where("phone", "==", phone));
         const querySnapshot = await window.getDocs(q);
 
         if (!querySnapshot.empty) {
-          alert(currentLang === 'kn' ? '⚠️ ಈ ಮೊಬೈಲ್ ನಂಬರ್ ಈಗಾಗಲೇ ರಜಿಸ್ಟರ್ ಆಗಿದೆ!' : '⚠️ This mobile number is already registered!');
-          return;
+            alert(currentLang === 'kn' ? '⚠️ ಈ ಮೊಬೈಲ್ ನಂಬರ್ ಈಗಾಗಲೇ ರಜಿಸ್ಟರ್ ಆಗಿದೆ!' : 'This mobile number is already registered!');
+            return;
         }
 
-        const vehPhoto = await getBase64Image('vehPhotoFile');
+        const vehPhoto = await getCompressedBase64Image('vehPhotoFile');
+        const rcPhoto = await getCompressedBase64Image('rcPhotoFile');
+        const driverPhoto = await getCompressedBase64Image('driverPhotoFile');
+        const aadhaarPhoto = await getCompressedBase64Image('aadhaarPhotoFile');
+
         const driverId = generatedDigitId();
 
         await window.addDoc(window.collection(window.db, "drivers"), {
-          driverId: driverId,
-          name: name,
-          phone: phone,
-          vehNo: vehNo,
-          vehType: vehType,
-          vehPhoto: vehPhoto,
-          totalEarnings: 0,
-          totalTrips: 0,
-          createdAt: Date.now(),
-          timestamp: window.serverTimestamp()
+            driverId,
+            name,
+            phone,
+            vehNo,
+            vehType,
+            vehPhoto,
+            rcPhoto,
+            driverPhoto,
+            aadhaarPhoto,
+            totalEarnings: 0,
+            totalTrips: 0,
+            createdAt: window.serverTimestamp()
         });
 
-        alert(currentLang === 'kn' ? `🎉 ಯಶಸ್ವಿಯಾಗಿ ರಜಿಸ್ಟರ್ ಆಗಿದೆ!\n\nನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ: ${driverId}` : `🎉 Successfully registered!\n\nYour 4-digit Driver ID: ${driverId}`);
+        alert(currentLang === 'kn' ? `✅ ಯಶಸ್ವಿಯಾಗಿ ರಿಜಿಸ್ಟರ್ ಆಗಿದೆ! ನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ: ${driverId}` : `Registered successfully! Driver ID: ${driverId}`);
+        
         document.getElementById('drvName').value = '';
         document.getElementById('drvPhone').value = '';
         document.getElementById('drvVehNo').value = '';
-      } catch (e) {
+    } catch (e) {
         console.error(e);
+        alert("Error: " + e.message);
+    }
+}
+    
+    
       }
     }
 
