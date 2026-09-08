@@ -695,23 +695,18 @@
       }
     }
 
-    function calculateDistance(lat1, lon1, lat2, lon2) {
-      const R = 6371; 
-      const dLat = (lat2 - lat1) * Math.PI / 180;
-      const dLon = (lon2 - lon1) * Math.PI / 180;
-      const a = 
-        Math.sin(dLat/2) * Math.sin(dLat/2) +
-        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
-        Math.sin(dLon/2) * Math.sin(dLon/2);
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-      return R * c;
+    
+
+function resetMeterRate() {
+    if (watchId !== null) {
+        navigator.geolocation.clearWatch(watchId);
+        watchId = null;
     }
-
-    let watchId = null;
-let lastLat = null;
-let lastLon = null;
-let distanceKm = 0;
-
+    document.getElementById('distCount').innerText = '0.0';
+    document.getElementById('liveAmount').innerText = '0';
+    document.getElementById('driverDistCount').innerText = '0.0';
+    document.getElementById('driverLiveAmount').innerText = '0';
+}
 function calculateDistance(lat1, lon1, lat2, lon2) {
     const R = 6371e3;
     const φ1 = lat1 * Math.PI / 180;
@@ -726,18 +721,7 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
 
     return R * c;
 }
-
-function resetMeterRate() {
-    if (watchId !== null) {
-        navigator.geolocation.clearWatch(watchId);
-        watchId = null;
-    }
-    document.getElementById('distCount').innerText = '0.0';
-    document.getElementById('liveAmount').innerText = '0';
-    document.getElementById('driverDistCount').innerText = '0.0';
-    document.getElementById('driverLiveAmount').innerText = '0';
-}
-
+    
 function startMeter() {
     if (!navigator.geolocation) {
         alert(currentLang === 'kn' ? 'ನಿಮ್ಮ ಫೋನ್‌ನಲ್ಲಿ ಜಿಪಿಎಸ್ ಸೌಲಭ್ಯವಿಲ್ಲ!' : 'Geolocation not supported');
