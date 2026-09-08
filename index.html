@@ -245,7 +245,7 @@
           <label id="lblMeterVeh">ವಾಹನ ಆಯ್ಕೆ ಮಾಡಿ:</label>
           <select id="meterVehicleType" onchange="resetMeterRate()">
             <option value="Auto">🛺 ಆಟೋ / Auto (₹50 Base)</option>
-            <option value="Car">🚗 ಕಾರ್ / Car (₹80 Base)</option>
+            <option value="Car">🚗 ಕಾರ್ / Car (₹200 Base)</option>
           </select>
         </div>
         <button class="btn-submit" onclick="startMeter()" style="background:#3182ce; margin-bottom:8px;" id="btnStartMeter">ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
@@ -302,7 +302,7 @@
           <label id="lblDrvMeterVeh">ವಾಹನ ಆಯ್ಕೆ ಮಾಡಿ:</label>
           <select id="driverMeterVehicleType" onchange="resetDriverMeterRate()">
             <option value="Auto">🛺 ಆಟೋ / Auto (₹50 Base)</option>
-            <option value="Car">🚗 ಕಾರ್ / Car (₹80 Base)</option>
+            <option value="Car">🚗 ಕಾರ್ / Car (₹200 Base)</option>
           </select>
         </div>
         <button class="btn-submit" onclick="startDriverMeter()" style="background:#3182ce; margin-bottom:8px;" id="btnDrvStartMeter">ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
@@ -660,7 +660,7 @@
     function startMeter() {
       distanceKm = 0;
       const vehType = document.getElementById('meterVehicleType').value;
-      const baseFare = vehType === 'Auto' ? 50 : 80;
+      const baseFare = vehType === 'Auto' ? 50 : 200;
       const perKmRate = vehType === 'Auto' ? 12 : 18;
 
       document.getElementById('liveAmount').innerText = baseFare;
@@ -679,7 +679,7 @@
           fare = baseFare + ((distanceKm - 3) * perKmRate);
         }
         document.getElementById('liveAmount').innerText = Math.round(fare);
-      }, 1000);
+      }, 900);
 
       alert(currentLang === 'kn' ? '⏱️ ಲೈವ್ ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಆಗಿದೆ!' : '⏱️ Live meter started!');
     }
@@ -703,7 +703,7 @@
     function startDriverMeter() {
       driverDistanceKm = 0;
       const vehType = document.getElementById('driverMeterVehicleType').value;
-      const baseFare = vehType === 'Auto' ? 50 : 80;
+      const baseFare = vehType === 'Auto' ? 50 : 200;
       const perKmRate = vehType === 'Auto' ? 12 : 18;
 
       document.getElementById('driverLiveAmount').innerText = baseFare;
