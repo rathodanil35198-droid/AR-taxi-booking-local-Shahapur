@@ -59,7 +59,7 @@
       100% { color: #fff176; text-shadow: 0 0 8px #ff9800, 0 0 15px #ff5722, 0 0 25px #d32f2f; }
     }
     .glowing-karnataka {
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       font-weight: 900;
       animation: glowText 1.2s infinite alternate;
       margin-bottom: 6px;
@@ -75,8 +75,8 @@
     #termsScreen { text-align: left; padding: 15px; background: #1e293b; border-radius: 10px; color: #f8fafc; }
     .terms-box { border: 1px solid #475569; padding: 10px; height: 210px; overflow-y: scroll; font-size: 0.8rem; background: #0f172a; color: #cbd5e1; margin-bottom: 12px; border-radius: 6px; line-height: 1.4; }
 
-    #roleSelectionScreen { text-align: center; padding: 15px; background: #fff; }
-    .role-btn { display: block; width: 100%; padding: 14px; margin: 12px 0; border: none; border-radius: 12px; font-size: 1rem; font-weight: bold; cursor: pointer; color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: transform 0.2s; }
+    #roleSelectionScreen { text-align: center; padding: 10px; background: #fff; display: flex; flex-direction: column; align-items: center; }
+    .role-btn { display: block; width: 100%; padding: 14px; margin: 10px 0; border: none; border-radius: 12px; font-size: 1rem; font-weight: bold; cursor: pointer; color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: transform 0.2s; }
     .role-btn:active { transform: scale(0.98); }
     .role-customer { background: linear-gradient(45deg, #2563eb, #3b82f6); }
     .role-driver { background: linear-gradient(45deg, #059669, #10b981); }
@@ -164,17 +164,20 @@
       </button>
     </div>
 
-    <!-- 2. ರೋಲ್ ಸೆಲೆಕ್ಷನ್ & ಶೇರ್ ಬಟನ್ ಪೇಜ್ (ಹೊಸ ಬ್ಯಾನರ್ ಫೋಟೋ ಮೇಲ್ಗಡೆ ಮತ್ತು ಬಟನ್‌ಗಳು ಕೆಳಗಡೆ) -->
+    <!-- 2. ರೋಲ್ ಸೆಲೆಕ್ಷನ್ & ಶೇರ್ ಬಟನ್ ಪೇಜ್ (ಬ್ಯಾನರ್ ಫೋಟೋ ಕರಾರುವಕ್ಕಾಗಿ ಮೇಲ್ಭಾಗದಲ್ಲಿ ಬರುವಂತೆ ಸರಿಪಡಿಸಲಾಗಿದೆ) -->
     <div id="roleSelectionScreen" style="display: none;">
       
-      <!-- ನೀವು ಒದಗಿಸಿದ ಹೊಸ ಬ್ಯಾನರ್ ಫೋಟೋ (ಉನ್ನತ ಗುಣಮಟ್ಟದ ಫೋಟೋ) -->
-      <div style="margin-bottom: 10px; text-align: center;">
-        <img src="https://i.ibb.co/1000380329_2.jpg" alt="AR Taxi Shahapur Banner" style="width: 100%; max-height: 240px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 2px solid #ffeb3b;">
+      <!-- ಆಕರ್ಷಕ ಒರಿಜಿನಲ್ ಬ್ಯಾನರ್ ಫೋಟೋ ಈಗ ಸ್ಕ್ರೀನ್‌ನ ತುತ್ತತುದಿಯಲ್ಲಿ ಹೆಡರ್ ಆಗಿ ಹಾಕಲಾಗಿದೆ -->
+      <div style="width: 100%; margin-bottom: 10px; text-align: center;">
+        <img src="https://i.ibb.co/1000377596_2.png" alt="AR Taxi Shahapur Banner" style="width: 100%; max-height: 180px; object-fit: cover; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 2px solid #ffeb3b;">
       </div>
 
-      <div class="glowing-karnataka" style="font-size: 1.1rem; margin-bottom: 4px;">🌟 ಕರ್ನಾಟಕ - ಶಹಾಪುರ ಲೋಕಲ್ 🌟</div>
+      <div class="glowing-karnataka" style="width: 100%;">🌟 ಕರ್ನಾಟಕ - ಶಹಾಪುರ ಲೋಕಲ್ 🌟</div>
       
-      <p style="font-size: 0.78rem; color: #059669; font-weight: bold; margin-bottom: 10px; text-align: center;">ಯಾದಗಿರಿ ಜಿಲ್ಲೆ, ಶಹಾಪುರ ಲೋಕಲ್ ಸೇವೆಗೆ ಸ್ವಾಗತ! ದಯವಿಟ್ಟು ನಿಮ್ಮ ವಲಯವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ:</p>
+      <h1 class="mainTitle" style="font-size: 1.2rem; color: #1e293b; text-align: center; font-weight: 900; margin-top: 4px;">AR TAXI BOOKING</h1>
+      <p style="font-size: 0.78rem; color: #059669; font-weight: bold; margin-bottom: 10px; text-align: center;">ಯಾದಗಿರಿ ಜಿಲ್ಲೆ, ಶಹಾಪುರ ಲೋಕಲ್ ಸೇವೆಗೆ ಸ್ವಾಗತ!</p>
+      
+      <p style="font-size: 0.78rem; font-weight: bold; color: #334155; margin-bottom: 8px; text-align: center;">ದಯವಿಟ್ಟು ನಿಮ್ಮ ವಲಯವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ:</p>
 
       <button class="role-btn role-customer" onclick="selectRole('customer')">
         👤 ಕಸ್ಟಮರ್ ಬುಕಿಂಗ್ & ಮೀಟರ್<br><span style="font-size: 0.7rem; font-weight: normal; opacity: 0.9;">(Customer Booking & Meter)</span>
@@ -184,10 +187,10 @@
         🛺 ಡ್ರೈವರ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ & ಅಡ್ಮಿನ್<br><span style="font-size: 0.7rem; font-weight: normal; opacity: 0.9;">(Driver Dashboard & Admin)</span>
       </button>
 
-      <!-- ಕಸ್ಟಮ್ ಶೇರಿಂಗ್ ಬಟನ್ (ವಿಶೇಷ ಸಂದೇಶದೊಂದಿಗೆ) -->
-      <div style="margin-top: 10px; border-top: 1px solid #e2e8f0; padding-top: 10px; text-align: center;">
-        <button onclick="shareAppOnWhatsApp()" style="width: 100%; padding: 12px; background: #25D366; color: white; border: none; border-radius: 10px; font-weight: bold; font-size: 0.85rem; cursor: pointer; box-shadow: 0 4px 15px rgba(37,211,102,0.6); display: flex; align-items: center; justify-content: center; gap: 8px; animation: glowText 1.5s infinite alternate;">
-          <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='white'><path d='M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z'/></svg>" style="width:24px; height:24px;" alt="Share">
+      <!-- ಕಸ್ಟಮ್ ಶೇರಿಂಗ್ ಬಟನ್ -->
+      <div style="width: 100%; margin-top: 10px; border-top: 1px solid #e2e8f0; paddingTop: 10px; text-align: center;">
+        <button onclick="shareAppOnWhatsApp()" style="width: 100%; padding: 11px; background: #25D366; color: white; border: none; border-radius: 10px; font-weight: bold; font-size: 0.8rem; cursor: pointer; box-shadow: 0 4px 15px rgba(37,211,102,0.6); display: flex; align-items: center; justify-content: center; gap: 8px; animation: glowText 1.5s infinite alternate;">
+          <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='white'><path d='M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z'/></svg>" style="width:22px; height:22px;" alt="Share">
           <span>💬 ನಮ್ಮ ಆ್ಯಪನ್ನು 10 ಜನರಿಗೆ ಕಳಿಸಿ ಬೋನಸ್ ಪಡೆಯಿರಿ!</span>
         </button>
       </div>
@@ -439,7 +442,6 @@
       document.getElementById('roleSelectionScreen').style.display = 'block';
     }
 
-    /* ವಾಟ್ಸಾಪ್ ಶೇರಿಂಗ್ ಫಂಕ್ಷನ್ */
     function shareAppOnWhatsApp() {
       const appUrl = window.location.href;
       const message = "🌟 ಕರ್ನಾಟಕ - ಯಾದಗಿರಿ ಜಿಲ್ಲೆ, ಶಹಾಪುರ ಸ್ಥಳೀಯ AR Taxi ಬುಕಿಂಗ್ ಆಪ್!\n\n📲 ನಮ್ಮ ಆ್ಯಪನ್ನು 10 ಜನರಿಗೆ ಕಳಿಸಿ ಬೋನಸ್ ಪಡೆಯಿರಿ!\n\n🎁 ತಿಂಗಳಲ್ಲಿ ನಮ್ಮ ಬಳಿ ಒಂದು ಡ್ರಾ ಆಗುತ್ತೆ ಅದರಲ್ಲಿ ನಿಮ್ಮ ಹೆಸರು ಬರಬಹುದು!\n\nಈ ಲಿಂಕ್ ಮೇಲೆ ಕ್ಲಿಕ್ ಮಾಡಿ ಆಪ್ ಓಪನ್ ಮಾಡಿ: " + appUrl;
@@ -1316,7 +1318,7 @@
                 ${d.driverPhoto ? `<img src="${d.driverPhoto}" style="width:40px;height:40px;object-fit:cover;border-radius:4px;cursor:pointer;" title="ಡ್ರೈವರ್ ಫೋಟೋ" onclick="openImageModal('${d.driverPhoto}')">` : ''}
                 ${d.vehPhoto ? `<img src="${d.vehPhoto}" style="width:40px;height:40px;object-fit:cover;border-radius:4px;cursor:pointer;" title="ವಾಹನ ಫೋಟೋ" onclick="openImageModal('${d.vehPhoto}')">` : ''}
                 ${d.rcPhoto ? `<img src="${d.rcPhoto}" style="width:40px;height:40px;object-fit:cover;border-radius:4px;cursor:pointer;" title="RC ಕಾರ್ಡ್" onclick="openImageModal('${d.rcPhoto}')">` : ''}
-                ${d.dlPhoto ? `<img src="${d.dlPhoto}" style="width:40px;height:40px;object-fit:text/plain;border-radius:4px;cursor:pointer;" title="DL ಫೋಟೋ" onclick="openImageModal('${d.dlPhoto}')">` : ''}
+                ${d.dlPhoto ? `<img src="${d.dlPhoto}" style="width:40px;height:40px;object-fit:cover;border-radius:4px;cursor:pointer;" title="DL ಫೋಟೋ" onclick="openImageModal('${d.dlPhoto}')">` : ''}
                 ${d.aadhaarPhoto ? `<img src="${d.aadhaarPhoto}" style="width:40px;height:40px;object-fit:cover;border-radius:4px;cursor:pointer;" title="ಆಧಾರ್ ಕಾರ್ಡ್" onclick="openImageModal('${d.aadhaarPhoto}')">` : ''}
               </div>
             </div>
