@@ -52,20 +52,23 @@
       .container { max-width: 480px; min-height: auto; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.4); }
     }
 
-    /* ಮಿಂಚುವ ಕರ್ನಾಟಕ ಅನಿಮೇಷನ್ ಶೈಲಿ */
+    /* ಅಕ್ಷರಗಳು ಅತ್ಯಂತ ಸ್ಪಷ್ಟವಾಗಿ ಮತ್ತು ಎದ್ದು ಕಾಣುವಂತೆ ಮಿಂಚುವ ಶೈಲಿ */
     @keyframes glowText {
-      0% { color: #ffeb3b; text-shadow: 0 0 5px #ff9800, 0 0 10px #ff5722; }
-      50% { color: #00e676; text-shadow: 0 0 10px #00e676, 0 0 20px #1de9b6; }
-      100% { color: #ffeb3b; text-shadow: 0 0 5px #ff9800, 0 0 10px #ff5722; }
+      0% { color: #fff176; text-shadow: 0 0 8px #ff9800, 0 0 15px #ff5722, 0 0 25px #d32f2f; }
+      50% { color: #69f0ae; text-shadow: 0 0 12px #00e676, 0 0 22px #1de9b6, 0 0 30px #00b0ff; }
+      100% { color: #fff176; text-shadow: 0 0 8px #ff9800, 0 0 15px #ff5722, 0 0 25px #d32f2f; }
     }
     .glowing-karnataka {
-      font-size: 1.3rem;
-      font-weight: bold;
-      animation: glowText 1.5s infinite alternate;
-      margin-bottom: 5px;
+      font-size: 1.4rem;
+      font-weight: 900;
+      animation: glowText 1.2s infinite alternate;
+      margin-bottom: 6px;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.2px;
       text-align: center;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 6px;
+      border-radius: 8px;
     }
 
     /* ನಿಯಮಗಳ ಪುಟ ಸ್ಟೈಲ್ */
@@ -161,12 +164,18 @@
       </button>
     </div>
 
-    <!-- 2. ರೋಲ್ ಸೆಲೆಕ್ಷನ್ & ಶೇರ್ ಬಟನ್ ಪೇಜ್ -->
+    <!-- 2. ರೋಲ್ ಸೆಲೆಕ್ಷನ್ & ಶೇರ್ ಬಟನ್ ಪೇಜ್ (ಅತಿ ಸುಂದರವಾದ ಲೋಗೋ ಬ್ಯಾನರ್ ಫೋಟೋದೊಂದಿಗೆ) -->
     <div id="roleSelectionScreen" style="display: none;">
-      <div class="glowing-karnataka">🌟 ಕರ್ನಾಟಕ - ಶಹಾಪುರ 🌟</div>
-      <div style="font-size: 3rem; margin-bottom: 5px; text-align: center;">🛺🚗</div>
-      <h1 class="mainTitle" style="font-size: 1.2rem; color: #1e293b; text-align: center;">AR Taxi Shahapur</h1>
-      <p style="font-size: 0.78rem; color: #64748b; margin-bottom: 15px; text-align: center;">ಯಾದಗಿರಿ ಜಿಲ್ಲೆ, ಶಹಾಪುರ ಲೋಕಲ್ ಸೇವೆಗೆ ಸ್ವಾಗತ!</p>
+      
+      <!-- ನೀವು ಕೇಳಿರುವ ಆಕರ್ಷಕ ಒರಿಜಿನಲ್ ಬ್ಯಾನರ್ ಫೋಟೋ ಇಲ್ಲಿ ಹೆಡರ್ ಆಗಿ ಹಾಕಲಾಗಿದೆ -->
+      <div style="margin-bottom: 12px; text-align: center;">
+        <img src="https://i.ibb.co/1000377596_2.png" alt="AR Taxi Shahapur Banner" style="width: 100%; max-height: 220px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 2px solid #ffeb3b;">
+      </div>
+
+      <div class="glowing-karnataka">🌟 ಕರ್ನಾಟಕ - ಶಹಾಪುರ ಲೋಕಲ್ 🌟</div>
+      
+      <h1 class="mainTitle" style="font-size: 1.3rem; color: #1e293b; text-align: center; font-weight: 900; margin-top: 4px;">AR TAXI BOOKING</h1>
+      <p style="font-size: 0.8rem; color: #059669; font-weight: bold; margin-bottom: 12px; text-align: center;">ಯಾದಗಿರಿ ಜಿಲ್ಲೆ, ಶಹಾಪುರ ಲೋಕಲ್ ಸೇವೆಗೆ ಸ್ವಾಗತ!</p>
       
       <p style="font-size: 0.8rem; font-weight: bold; color: #334155; margin-bottom: 10px; text-align: center;">ದಯವಿಟ್ಟು ನಿಮ್ಮ ವಲಯವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ:</p>
 
@@ -178,11 +187,11 @@
         🛺 ಡ್ರೈವರ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ & ಅಡ್ಮಿನ್<br><span style="font-size: 0.7rem; font-weight: normal; opacity: 0.9;">(Driver Dashboard & Admin)</span>
       </button>
 
-      <!-- ಕಸ್ಟಮ್ ಶೇರಿಂಗ್ ಬಟನ್ (ಮಿಂಚುತ್ತಾ ಇರುವುದು & ವಾಟ್ಸಾಪ್ ಶೇರ್) -->
+      <!-- ಕಸ್ಟಮ್ ಶೇರಿಂಗ್ ಬಟನ್ (ನೀವು ಕೇಳಿದ ವಿಶೇಷ ಸಂದೇಶದೊಂದಿಗೆ) -->
       <div style="margin-top: 15px; border-top: 1px solid #e2e8f0; padding-top: 15px; text-align: center;">
         <button onclick="shareAppOnWhatsApp()" style="width: 100%; padding: 12px; background: #25D366; color: white; border: none; border-radius: 10px; font-weight: bold; font-size: 0.85rem; cursor: pointer; box-shadow: 0 4px 15px rgba(37,211,102,0.6); display: flex; align-items: center; justify-content: center; gap: 8px; animation: glowText 1.5s infinite alternate;">
           <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='white'><path d='M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z'/></svg>" style="width:24px; height:24px;" alt="Share">
-          <span>💬 ಈ ಆ್ಯಪ್ ಅನ್ನು ವಾಟ್ಸಾಪ್‌ನಲ್ಲಿ ಶೇರ್ ಮಾಡಿ (10 ಜನಕ್ಕೆ ಶೇರ್ ಮಾಡಿ ಕಾಯಿನ್ ಗೆಲ್ಲಿರಿ!)</span>
+          <span>💬 ನಮ್ಮ ಆ್ಯಪನ್ನು 10 ಜನರಿಗೆ ಕಳಿಸಿ ಬೋನಸ್ ಪಡೆಯಿರಿ!</span>
         </button>
       </div>
     </div>
@@ -196,7 +205,7 @@
         <div class="logo-title">
           <span style="font-size: 1.5rem;">🛺</span>
           <div>
-            <div class="glowing-karnataka" style="font-size: 0.9rem; margin:0; text-align:left;">🌟 ಕರ್ನಾಟಕ - ಶಹಾಪುರ 🌟</div>
+            <div class="glowing-karnataka" style="font-size: 0.85rem; margin:0; text-align:left; padding:2px;">🌟 ಕರ್ನಾಟಕ - ಶಹಾಪುರ 🌟</div>
             <div class="mainTitle" id="mainTitleText">AR Taxi Shahapur</div>
             <div class="subTitle" id="subTitleText">ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್</div>
           </div>
@@ -266,7 +275,7 @@
         <div id="customerStatusContainer" style="margin-top: 10px;"></div>
       </div>
 
-      <!-- ಕಸ್ಟಮರ್ ಲೈವ್ ಮೀಟರ್ ಸೆಕ್ಷನ್ (GPS & Half Screen Split / Meter Integration) -->
+      <!-- ಕಸ್ಟಮರ್ ಲೈವ್ ಮೀಟರ್ ಸೆಕ್ಷನ್ -->
       <div id="meterSection" class="section">
         <h2 id="h2LiveMeter">ಲೈವ್ ರನ್ನಿಂಗ್ ಮೀಟರ್ & ಜಿಪಿಎಸ್</h2>
         <div class="form-group">
@@ -296,7 +305,7 @@
         <button class="btn-submit" onclick="stopMeterOnly()" style="background:#dc2626;" id="btnStopMeter">ಮೀಟರ್ ಆಫ್ ಮಾಡಿ</button>
       </div>
 
-      <!-- ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ ಸೆಕ್ಷನ್ (Fast, Registration Check & Validation) -->
+      <!-- ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ ಸೆಕ್ಷನ್ -->
       <div id="profileSection" class="section">
         <h2 id="h2DriverProfile">ಡ್ರೈವರ್ ರಜಿಸ್ಟ್ರೇಷನ್ / ಪ್ರೊಫೈಲ್</h2>
         <div class="form-group">
@@ -369,7 +378,7 @@
         <button class="btn-submit" onclick="stopDriverMeterOnly()" style="background:#dc2626;" id="btnDrvStopMeter">ಮೀಟರ್ ಆಫ್ ಮಾಡಿ</button>
       </div>
 
-      <!-- ಅಡ್ಮಿನ್ ಸೆಕ್ಷನ್ (Search Box & Profile Image Click Preview / Download) -->
+      <!-- ಅಡ್ಮಿನ್ ಸೆಕ್ಷನ್ -->
       <div id="adminSection" class="section">
         <h2 id="h2AdminTitle">ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್</h2>
         <p style="font-size: 0.75rem; color: #64748b; margin-bottom: 8px;" id="txtAdminSub">ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ಗಳ ವೀಕ್ಷಣೆ ಅಥವಾ ಡಿಲೀಟ್ ಮಾಡಲು ಇಲ್ಲಿಗೆ ಬನ್ನಿರಿ...</p>
@@ -433,9 +442,10 @@
       document.getElementById('roleSelectionScreen').style.display = 'block';
     }
 
+    /* ನೀವು ಕೇಳಿದ ವಿಶೇಷ ಸಂದೇಶದೊಂದಿಗೆ ವಾಟ್ಸಾಪ್ ಶೇರಿಂಗ್ ಫಂಕ್ಷನ್ */
     function shareAppOnWhatsApp() {
       const appUrl = window.location.href;
-      const message = "🌟 ಕರ್ನಾಟಕ - ಯಾದಗಿರಿ ಜಿಲ್ಲೆ, ಶಹಾಪುರ ಸ್ಥಳೀಯ AR Taxi ಬುಕಿಂಗ್ ಆಪ್! ಈ ಲಿಂಕ್ ಮೇಲೆ ಕ್ಲಿಕ್ ಮಾಡಿ ಆಪ್ ಓಪನ್ ಮಾಡಿ: " + appUrl + "\n\n📢 10 ಜನಕ್ಕೆ ಶೇರ್ ಮಾಡಿ ನಮಗೆ ನಿಮ್ಮ ವಾಟ್ಸಾಪ್ ಚಾಟ್‌ನಲ್ಲಿ ತಿಳಿಸಿ! ನಿಮ್ಮ ಐಡಿ ಫೀಡ್ ಆಗಿ ನಮ್ಮಲ್ಲಿ ಕಾಯಿನ್ ಸಿಗಲಿವೆ ಹಾಗೂ ಗೆಲ್ಲುವ ಅವಕಾಶವಿರುತ್ತದೆ!";
+      const message = "🌟 ಕರ್ನಾಟಕ - ಯಾದಗಿರಿ ಜಿಲ್ಲೆ, ಶಹಾಪುರ ಸ್ಥಳೀಯ AR Taxi ಬುಕಿಂಗ್ ಆಪ್!\n\n📲 ನಮ್ಮ ಆ್ಯಪನ್ನು 10 ಜನರಿಗೆ ಕಳಿಸಿ ಬೋನಸ್ ಪಡೆಯಿರಿ!\n\n🎁 ತಿಂಗಳಲ್ಲಿ ನಮ್ಮ ಬಳಿ ಒಂದು ಡ್ರಾ ಆಗುತ್ತೆ ಅದರಲ್ಲಿ ನಿಮ್ಮ ಹೆಸರು ಬರಬಹುದು!\n\nಈ ಲಿಂಕ್ ಮೇಲೆ ಕ್ಲಿಕ್ ಮಾಡಿ ಆಪ್ ಓಪನ್ ಮಾಡಿ: " + appUrl;
       const whatsappUrl = "https://api.whatsapp.com/send?text=" + encodeURIComponent(message);
       window.open(whatsappUrl, '_blank');
     }
@@ -765,7 +775,6 @@
       document.getElementById('liveAmount').innerText = '0';
     }
 
-    // GPS & Meter Live Running Logic with Half-Screen info
     let meterWatchId = null;
     let lastMeterPos = null;
 
@@ -793,7 +802,7 @@
 
         if (lastMeterPos) {
           const distIncrement = calculateDistance(lastMeterPos.lat, lastMeterPos.lng, currLat, currLng);
-          if (distIncrement > 0.005) { // moved more than 5 meters
+          if (distIncrement > 0.005) {
             distanceKm += distIncrement;
             document.getElementById('distCount').innerText = distanceKm.toFixed(2);
             document.getElementById('meterRunningState').innerText = 'ವಾಹನ ಮುಂದೆ ಹೋಗುತ್ತಿದೆ 🚖';
@@ -815,7 +824,7 @@
         alert("GPS Error: Please enable location services.");
       }, { enableHighAccuracy: true, maximumAge: 1000, timeout: 5000 });
 
-      alert(currentLang === 'kn' ? '⏱️ ಲೈಫ್ ಜಿಪಿಎಸ್ & ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಆಗಿದೆ!' : '⏱️ Live GPS & Meter started!');
+      alert(currentLang === 'kn' ? '⏱️ ಲೈವ್ ಜಿಪಿಎಸ್ & ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಆಗಿದೆ!' : '⏱️ Live GPS & Meter started!');
     }
 
     function stopMeterOnly() {
@@ -892,7 +901,6 @@
       });
     }
 
-    // Strict Phone Number Check on registration
     async function checkExistingDriverPhone(phoneVal) {
       if (!phoneVal || phoneVal.length < 10) return;
       try {
