@@ -715,7 +715,7 @@
     function startMeter() {
       distanceKm = 0;
       const vehType = document.getElementById('meterVehicleType').value;
-      const baseFare = vehType === 'Auto' ? 50 : 80;
+      const baseFare = vehType === 'Auto' ? 50 : 200;
       const perKmRate = vehType === 'Auto' ? 12 : 18;
 
       document.getElementById('liveAmount').innerText = baseFare;
@@ -758,7 +758,7 @@
     function startDriverMeter() {
       driverDistanceKm = 0;
       const vehType = document.getElementById('driverMeterVehicleType').value;
-      const baseFare = vehType === 'Auto' ? 50 : 80;
+      const baseFare = vehType === 'Auto' ? 50 : 200;
       const perKmRate = vehType === 'Auto' ? 12 : 18;
 
       document.getElementById('driverLiveAmount').innerText = baseFare;
@@ -777,7 +777,7 @@
           fare = baseFare + ((driverDistanceKm - 3) * perKmRate);
         }
         document.getElementById('driverLiveAmount').innerText = Math.round(fare);
-      }, 1000);
+      }, 900);
 
       alert(currentLang === 'kn' ? '⏱️ ಡ್ರೈವರ್ ಲೈವ್ ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಆಗಿದೆ!' : '⏱️ Driver live meter started!');
     }
