@@ -45,8 +45,12 @@
   <style>
     :root { --primary: #0fb05b; --secondary: #41c91d; --bg: #121824; --text: #333; }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background-color: var(--bg); color: var(--text); padding: 8px; }
-    .container { width: 100%; max-width: 480px; margin: 0 auto; background: #fff; padding: 12px; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.4); }
+    body { background-color: var(--bg); color: var(--text); padding: 0; margin: 0; min-height: 100vh; display: flex; justify-content: center; align-items: center; }
+    .container { width: 100%; max-width: 100%; min-height: 100vh; margin: 0 auto; background: #fff; padding: 12px; border-radius: 0; box-shadow: none; display: flex; flex-direction: column; justify-content: space-between; }
+    @media (min-width: 480px) {
+      body { padding: 8px; }
+      .container { max-width: 480px; min-height: auto; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.4); }
+    }
 
     /* ಮಿಂಚುವ ಕರ್ನಾಟಕ ಅನಿಮೇಷನ್ ಶೈಲಿ */
     @keyframes glowText {
@@ -160,7 +164,7 @@
       <p style="font-size: 0.8rem; font-weight: bold; color: #334155; margin-bottom: 10px;">ದಯವಿಟ್ಟು ನಿಮ್ಮ ವಲಯವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ:</p>
 
       <button class="role-btn role-customer" onclick="selectRole('customer')">
-        👤 ಕಸ್ಟಮರ್ ಬುಕಿಂಗ್ & ಮಾಡಲು <ಬ್ರಿ><span style="font-size: 0.7rem; font-weight: normal; opacity: 0.9;">(Customer Booking & Meter)</span>
+        👤 ಕಸ್ಟಮರ್ ಬುಕಿಂಗ್ & ಮೀಟರ್<br><span style="font-size: 0.7rem; font-weight: normal; opacity: 0.9;">(Customer Booking & Meter)</span>
       </button>
 
       <button class="role-btn role-driver" onclick="selectRole('driver')">
@@ -293,6 +297,22 @@
             <option value="Auto">🛺 ಆಟೋ (Auto)</option>
             <option value="Car">🚗 ಕಾರ್ (Car)</option>
           </select>
+        </div>
+        <div class="form-group">
+          <label>ವೆಹಿಕಲ್ RC ಕಾರ್ಡ್ ಫೋಟೋ ಅಪ್ಲೋಡ್:</label>
+          <input type="file" id="rcPhotoFile" accept="image/*">
+        </div>
+        <div class="form-group">
+          <label>ಡಿ ಎಲ್ ಫೋಟೋ ಅಪ್ಲೋಡ್:</label>
+          <input type="file" id="dlPhotoFile" accept="image/*">
+        </div>
+        <div class="form-group">
+          <label>ಆಧಾರ್ ಕಾರ್ಡ್ ಫೋಟೋಸ್:</label>
+          <input type="file" id="aadhaarPhotoFile" accept="image/*">
+        </div>
+        <div class="form-group">
+          <label>ಡ್ರೈವರ್ ಫೋಟೋ ಅಪ್ಲೋಡ್:</label>
+          <input type="file" id="driverPhotoFile" accept="image/*">
         </div>
         <div class="form-group">
           <label id="lblDrvPhoto">ವಾಹನ ಫೋಟೋ ಅಪ್‌ಲೋಡ್:</label>
@@ -715,7 +735,7 @@
     function startMeter() {
       distanceKm = 0;
       const vehType = document.getElementById('meterVehicleType').value;
-      const baseFare = vehType === 'Auto' ? 50 : 200;
+      const baseFare = vehType === 'Auto' ? 50 : 80;
       const perKmRate = vehType === 'Auto' ? 12 : 18;
 
       document.getElementById('liveAmount').innerText = baseFare;
@@ -758,7 +778,7 @@
     function startDriverMeter() {
       driverDistanceKm = 0;
       const vehType = document.getElementById('driverMeterVehicleType').value;
-      const baseFare = vehType === 'Auto' ? 50 : 200;
+      const baseFare = vehType === 'Auto' ? 50 : 80;
       const perKmRate = vehType === 'Auto' ? 12 : 18;
 
       document.getElementById('driverLiveAmount').innerText = baseFare;
@@ -777,7 +797,7 @@
           fare = baseFare + ((driverDistanceKm - 3) * perKmRate);
         }
         document.getElementById('driverLiveAmount').innerText = Math.round(fare);
-      }, 900);
+      }, 1000);
 
       alert(currentLang === 'kn' ? '⏱️ ಡ್ರೈವರ್ ಲೈವ್ ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಆಗಿದೆ!' : '⏱️ Driver live meter started!');
     }
@@ -830,6 +850,10 @@
         }
 
         const vehPhoto = await getBase64Image('vehPhotoFile');
+        const rcPhoto = await getBase64Image('rcPhotoFile');
+        const dlPhoto = await getBase64Image('dlPhotoFile');
+        const aadhaarPhoto = await getBase64Image('aadhaarPhotoFile');
+        const driverPhoto = await getBase64Image('driverPhotoFile');
         const driverId = generatedDigitId();
 
         await window.addDoc(window.collection(window.db, "drivers"), {
@@ -839,13 +863,17 @@
           vehNo: vehNo,
           vehType: vehType,
           vehPhoto: vehPhoto,
+          rcPhoto: rcPhoto,
+          dlPhoto: dlPhoto,
+          aadhaarPhoto: aadhaarPhoto,
+          driverPhoto: driverPhoto,
           totalEarnings: 0,
           totalTrips: 0,
           createdAt: Date.now(),
           timestamp: window.serverTimestamp()
         });
 
-        alert(currentLang === 'kn' ? `🎉 ಯಶಸ್ವಿಯಾಗಿ ರಜಿಸ್ಟರ್ ಆಗಿದೆ!\n\nನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ: ${driverId}` : `🎉 Successfully registered!\n\nYour 4-digit Driver ID: ${driverId}`);
+        alert(currentLang === 'kn' ? `🎉 ಯಶಸ್ವಿಯಾಗಿ ರಜಿಸ್ಟರ್ ಆಗಿದೆ!\n\nನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ: ${driverId}\nದಯವಿಟ್ಟು ಈ 4 ಅಂಕಿಯ ಸಂಖ್ಯೆಯನ್ನು ನೆನಪಿನಲ್ಲಿಟ್ಟುಕೊಳ್ಳಿ. ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸುವಾಗ ಇದು ಬೇಕಾಗುತ್ತದೆ.` : `🎉 Successfully registered!\n\nYour 4-digit Driver ID: ${driverId}`);
         document.getElementById('drvName').value = '';
         document.getElementById('drvPhone').value = '';
         document.getElementById('drvVehNo').value = '';
@@ -1184,15 +1212,26 @@
           const id = docSnap.id;
 
           html += `
-            <div class="card" style="display: flex; align-items:center; gap: 8px;">
-              <img src="${d.vehPhoto ? d.vehPhoto : 'https://img.icons8.com/color/512/taxi.png'}" class="preview-img" title="Vehicle Photo">
-              <div style="flex-grow: 1;">
-                <p><b>🆔 ID:</b> ${d.driverId || 'N/A'}</p>
-                <p><b>👤 ${currentLang === 'kn' ? 'ಹೆಸರು' : 'Name'}:</b> ${d.name} (${d.phone})</p>
-                <p><b>🔢 ${currentLang === 'kn' ? 'ವಾಹನ' : 'Vehicle'}:</b> ${d.vehNo} (${d.vehType})</p>
-                <p style="color: #059669; font-weight: bold;">🛺 ${currentLang === 'kn' ? 'ರೈಡ್ಸ್' : 'Trips'}: ${d.totalTrips || 0}, ₹${d.totalEarnings || 0}</p>
+            <div class="card" style="display: block; gap: 8px;">
+              <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                <img src="${d.driverPhoto ? d.driverPhoto : (d.vehPhoto ? d.vehPhoto : 'https://img.icons8.com/color/512/taxi.png')}" class="preview-img" title="Driver Photo">
+                <div style="flex-grow: 1;">
+                  <p><b>🆔 ID:</b> ${d.driverId || 'N/A'}</p>
+                  <p><b>👤 ${currentLang === 'kn' ? 'ಹೆಸರು' : 'Name'}:</b> ${d.name} (${d.phone})</p>
+                  <p><b>🔢 ${currentLang === 'kn' ? 'ವಾಹನ' : 'Vehicle'}:</b> ${d.vehNo} (${d.vehType})</p>
+                </div>
+                <button onclick="deleteDriver('${id}')" style="background: #dc2626; color: white; border: none; border-radius: 6px; padding: 8px; cursor: pointer;">🗑️</button>
               </div>
-              <button onclick="deleteDriver('${id}')" style="background: #dc2626; color: white; border: none; border-radius: 6px; padding: 8px; cursor: pointer;">🗑️</button>
+              <div style="font-size: 0.75rem; background: #f8fafc; padding: 6px; border-radius: 6px; border: 1px solid #e2e8f0;">
+                <p><b>ಫೋಟೋಗಳು / ದಾಖಲೆಗಳು:</b></p>
+                <div style="display: flex; gap: 5px; margin-top: 4px; overflow-x: auto;">
+                  ${d.driverPhoto ? `<a href="${d.driverPhoto}" target="_blank"><img src="${d.driverPhoto}" style="width:40px;height:40px;object-fit:cover;border-radius:4px;" title="ಡ್ರೈವರ್ ಫೋಟೋ"></a>` : ''}
+                  ${d.vehPhoto ? `<a href="${d.vehPhoto}" target="_blank"><img src="${d.vehPhoto}" style="width:40px;height:40px;object-fit:cover;border-radius:4px;" title="ವಾಹನ ಫೋಟೋ"></a>` : ''}
+                  ${d.rcPhoto ? `<a href="${d.rcPhoto}" target="_blank"><img src="${d.rcPhoto}" style="width:40px;height:40px;object-fit:cover;border-radius:4px;" title="RC ಕಾರ್ಡ್"></a>` : ''}
+                  ${d.dlPhoto ? `<a href="${d.dlPhoto}" target="_blank"><img src="${d.dlphoto || d.dlPhoto}" style="width:40px;height:40px;object-fit:cover;border-radius:4px;" title="DL ಫೋಟೋ"></a>` : ''}
+                  ${d.aadhaarPhoto ? `<a href="${d.aadhaarPhoto}" target="_blank"><img src="${d.aadhaarPhoto}" style="width:40px;height:40px;object-fit:cover;border-radius:4px;" title="ಆಧಾರ್ ಕಾರ್ಡ್"></a>` : ''}
+                </div>
+              </div>
             </div>
           `;
         });
@@ -1201,14 +1240,14 @@
     }
 
     async function deleteDriver(id) {
-      const code = prompt(currentLang === 'kn' ? 'ಡ್ರೈವರ್ ಡಿಲೀಟ್ ಮಾಡಲು ಅಡ್ಮಿನ್ ಕೋಡ್ ಹಾಕಿ (8105010768):' : 'Enter Admin Code to delete driver (8105010768):');
+      const code = prompt(currentLang === 'kn' ? 'ಡ್ರೈವರ್ ಡಿಲೀಟ್ ಮಾಡಲು ಕೋಡ್ ಹಾಕಿ (8105010768):' : 'Enter code to delete driver (8105010768):');
       if (code === '8105010768') {
         try {
           await window.deleteDoc(window.doc(window.db, "drivers", id));
           alert(currentLang === 'kn' ? '🗑️ ಡ್ರೈವರ್ ಯಶಸ್ವಿಯಾಗಿ ಡಿಲೀಟ್ ಮಾಡಲಾಗಿದೆ.' : '🗑️ Driver deleted successfully.');
         } catch (e) { console.error(e); }
       } else if (code !== null) {
-        alert(currentLang === 'kn' ? 'ತಪ್ಪು ಕೋಡ್!' : 'Incorrect Code!');
+        alert(currentLang === 'kn' ? 'ತಪ್ಪಾದ ಕೋಡ್!' : 'Incorrect Code!');
       }
     }
   </script>
