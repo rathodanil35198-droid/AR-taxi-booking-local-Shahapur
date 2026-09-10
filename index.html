@@ -46,7 +46,61 @@
     :root { --primary: #0fb05b; --secondary: #41c91d; --bg: #f4f7f6; --text: #333; }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     body { background-color: var(--bg); color: var(--text); padding: 8px; }
-    .container { width: 100%; max-width: 480px; margin: 0 auto; background: #fff; padding: 12px; border-radius: 8px; }
+    .container { width: 100%; max-width: 480px; margin: 0 auto; background: #fff; padding: 12px; border-radius: 8px; position: relative; }
+
+    /* ಮಿಂಚುವ ಅಕ್ಷರಗಳ ಸ್ಟೈಲ್ (Glow & Flash Animation) */
+    @keyframes flashingText {
+      0% { opacity: 1; text-shadow: 0 0 5px #ff0000, 0 0 10px #ff7300; }
+      50% { opacity: 0.4; text-shadow: none; }
+      100% { opacity: 1; text-shadow: 0 0 5px #ff0000, 0 0 10px #ff7300; }
+    }
+    .flashing-header-box {
+      text-align: center;
+      background: linear-gradient(135deg, #11998e, #38ef7d);
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      color: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+    .flashing-title {
+      font-size: 1rem;
+      font-weight: bold;
+      animation: flashingText 1.5s infinite;
+      line-height: 1.5;
+      margin-top: 5px;
+    }
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      font-size: 2rem;
+      margin-bottom: 5px;
+    }
+
+    /* ವಾಟ್ಸಾಪ್ ಶೇರಿಂಗ್ ಫ್ಲೋಟಿಂಗ್ ಬಟನ್ (ಸೈಡ್ ಕೊನೆಯಲ್ಲಿ) */
+    .floating-share-btn {
+      position: fixed;
+      bottom: 25px;
+      right: 20px;
+      background-color: #25d366;
+      color: white;
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      z-index: 9999;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s;
+    }
+    .floating-share-btn:active {
+      transform: scale(0.9);
+    }
 
     #roleSelectionScreen { text-align: center; padding: 20px 15px; }
     .role-btn { display: block; width: 100%; padding: 15px; margin: 15px 0; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: bold; cursor: pointer; color: white; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
@@ -94,8 +148,26 @@
 </head>
 <body>
 
+  <!-- ವಾಟ್ಸಾಪ್ ಶೇರ್ ಮಾಡುವ ಫ್ಲೋಟಿಂಗ್ ಬಟನ್ (ಸೈಡ್ ಕೊನೆಯಲ್ಲಿ ಇರುತ್ತದೆ) -->
+  <a href="javascript:void(0);" onclick="shareAppOnWhatsApp()" class="floating-share-btn" title="WhatsApp Share">
+    💬
+  </a>
+
   <div class="container">
     
+    <!-- ಮೇಲ್ಗಡೆ ಮಿಂಚುವ ಶೀರ್ಷಿಕೆ ಮತ್ತು ಕಾರು, ಆಟೋ ಲೋಗೋಗಳು -->
+    <div class="flashing-header-box">
+      <div class="logo-container">
+        <span>🚗</span>
+        <span>🛺</span>
+      </div>
+      <div class="flashing-title">
+        ಕರ್ನಾಟಕ ಯಾದಗಿರಿ ಜಿಲ್ಲೆ<br>
+        ಶಹಾಪುರ ತಾಲ್ಲೂಕು ಲೋಕಲ್ ಆಟೋ ಹಾಗೂ ಕಾರ್<br>
+        ಜನಸೇವಕ ಕೇಂದ್ರ
+      </div>
+    </div>
+
     <div id="roleSelectionScreen">
       <div style="font-size: 4rem; margin-bottom: 15px;">🛺</div>
       <h1 class="mainTitle" style="font-size: 1.3rem; color: #2c3e50;">AR Taxi Shahapur</h1>
@@ -292,6 +364,14 @@
     let currentCustomerLng = null;
     let currentDriverLat = null;
     let currentDriverLng = null;
+
+    // ವಾಟ್ಸಾಪ್ ಶೇರಿಂಗ್ ಫಂಕ್ಷನ್ (ಲಿಂಕ್ ಮೇಲೆ ಕ್ಲಿಕ್ ಮಾಡಿದರೆ ಆ್ಯಪ್ ಓಪನ್ ಆಗುತ್ತದೆ)
+    function shareAppOnWhatsApp() {
+      const appUrl = window.location.href;
+      const message = `🛺🚗 ಕರ್ನಾಟಕ ಯಾದಗಿರಿ ಜಿಲ್ಲೆ ಶಹಾಪುರ ತಾಲ್ಲೂಕು ಜನಸೇವಕ ಕೇಂದ್ರದ ಅಧಿಕೃತ ಆಟೋ ಹಾಗೂ ಕಾರ್ ಬುಕಿಂಗ್ ಆಪ್!\n\nತಕ್ಷಣವೇ ಆಟೋ ಅಥವಾ ಕಾರ್ ಬುಕ್ ಮಾಡಲು ಈ ಲಿಂಕ್ ಮೇಲೆ ಕ್ಲಿಕ್ ಮಾಡಿ ಆ್ಯಪ್ ಓಪನ್ ಮಾಡಿ:\n${appUrl}`;
+      const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+    }
 
     const texts = {
       kn: {
