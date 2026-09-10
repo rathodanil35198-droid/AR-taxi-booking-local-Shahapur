@@ -279,8 +279,8 @@
         <div class="form-group">
           <label id="lblMeterVeh">ವಾಹನ ಆಯ್ಕೆ ಮಾಡಿ:</label>
           <select id="meterVehicleType" onchange="resetMeterRate()">
-            <option value="Auto">🛺 ಆಟೋ / Auto (₹50 Base)</option>
-            <option value="Car">🚗 ಕಾರ್ / Car (₹80 Base)</option>
+            <option value="Auto">🛺 ಆಟೋ / Auto (2 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 50 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 12)</option>
+            <option value="Car">🚗 ಕಾರ್ / Car (3 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 200 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 15)</option>
           </select>
         </div>
         <button class="btn-submit" onclick="startMeter()" style="background:#3182ce; margin-bottom:8px;" id="btnStartMeter">ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
@@ -366,8 +366,8 @@
         <div class="form-group">
           <label id="lblDrvMeterVeh">ವಾಹನ ಆಯ್ಕೆ ಮಾಡಿ:</label>
           <select id="driverMeterVehicleType" onchange="resetDriverMeterRate()">
-            <option value="Auto">🛺 ಆಟೋ / Auto (₹50 Base)</option>
-            <option value="Car">🚗 ಕಾರ್ / Car (₹80 Base)</option>
+            <option value="Auto">🛺 ಆಟೋ / Auto (2 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 50 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 12)</option>
+            <option value="Car">🚗 ಕಾರ್ / Car (3 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 200 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 15)</option>
           </select>
         </div>
         <button class="btn-submit" onclick="startDriverMeter()" style="background:#3182ce; margin-bottom:8px;" id="btnDrvStartMeter">ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
@@ -847,7 +847,7 @@
       distanceKm = 0.0;
       lastCustPos = null;
       document.getElementById('distCount').innerText = distanceKm.toFixed(1);
-      document.getElementById('liveAmount').innerText = getBaseFare(document.getElementById('meterVehicleType').value);
+      document.getElementById('liveAmount').innerText = calculateFare(document.getElementById('meterVehicleType').value, distanceKm);
       document.getElementById('meterStatusMsg').innerText = currentLang === 'kn' ? "ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಆನ್ ಆಗಿದೆ..." : "GPS Location Enabled...";
       document.getElementById('meterStatusMsg').style.color = "#3182ce";
 
@@ -859,19 +859,17 @@
 
           if (lastCustPos) {
             let distMoved = calculateDistance(lastCustPos.lat, lastCustPos.lng, lat, lng);
-            // If moved more than 5 meters (0.005 km)
             if (distMoved > 0.005) {
               distanceKm += distMoved;
               document.getElementById('distCount').innerText = distanceKm.toFixed(1);
-              let base = getBaseFare(document.getElementById('meterVehicleType').value);
-              let ratePerKm = document.getElementById('meterVehicleType').value === 'Auto' ? 15 : 22;
-              let total = base + (distanceKm * ratePerKm);
+              let vehType = document.getElementById('meterVehicleType').value;
+              let total = calculateFare(vehType, distanceKm);
               document.getElementById('liveAmount').innerText = Math.round(total);
               
               document.getElementById('meterStatusMsg').innerText = currentLang === 'kn' ? "ವಾಹನ ಚಲಿಸುತ್ತಿದೆ..." : "Vehicle Moving...";
               document.getElementById('meterStatusMsg').style.color = "#0fb05b";
             } else {
-              document.getElementById('meterStatusMsg').innerText = currentLang === 'kn' ? "ನಿಮ್ಮ ವಾಹನವನ್ನು ನಿಂತಿದೆ ಅಂತ ಲಿಪ್ತಿನಲ್ಲಿ ತೋರಿಸಬೇಕು: ವಾಹನ ನಿಂತಿದೆ" : "Your vehicle is stopped: Vehicle Stopped";
+              document.getElementById('meterStatusMsg').innerText = currentLang === 'kn' ? "ವಾಹನ ನಿಂತಿದೆ" : "Vehicle Stopped";
               document.getElementById('meterStatusMsg').style.color = "#d69e2e";
             }
           }
@@ -898,12 +896,24 @@
       distanceKm = 0.0;
       lastCustPos = null;
       document.getElementById('distCount').innerText = '0.0';
-      document.getElementById('liveAmount').innerText = getBaseFare(document.getElementById('meterVehicleType').value);
+      document.getElementById('liveAmount').innerText = calculateFare(document.getElementById('meterVehicleType').value, 0);
       document.getElementById('meterStatusMsg').innerText = currentLang === 'kn' ? "ವಾಹನ ನಿಂತಿದೆ" : "Vehicle Stopped";
     }
 
-    function getBaseFare(type) {
-      return type === 'Auto' ? 50 : 80;
+    function calculateFare(type, dist) {
+      if (type === 'Auto') {
+        if (dist <= 2.0) {
+          return 50;
+        } else {
+          return 50 + ((dist - 2.0) * 12);
+        }
+      } else { // Car
+        if (dist <= 3.0) {
+          return 200;
+        } else {
+          return 200 + ((dist - 3.0) * 15);
+        }
+      }
     }
 
     function fileToBase64(file) {
@@ -1142,7 +1152,7 @@
       driverDistanceKm = 0.0;
       lastDrvPos = null;
       document.getElementById('driverDistCount').innerText = driverDistanceKm.toFixed(1);
-      document.getElementById('driverLiveAmount').innerText = getBaseFare(document.getElementById('driverMeterVehicleType').value);
+      document.getElementById('driverLiveAmount').innerText = calculateFare(document.getElementById('driverMeterVehicleType').value, driverDistanceKm);
       document.getElementById('driverMeterStatusMsg').innerText = currentLang === 'kn' ? "ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಆನ್ ಆಗಿದೆ..." : "GPS Location Enabled...";
       document.getElementById('driverMeterStatusMsg').style.color = "#3182ce";
 
@@ -1154,13 +1164,11 @@
 
           if (lastDrvPos) {
             let distMoved = calculateDistance(lastDrvPos.lat, lastDrvPos.lng, lat, lng);
-            // If moved more than 5 meters (0.005 km)
             if (distMoved > 0.005) {
               driverDistanceKm += distMoved;
               document.getElementById('driverDistCount').innerText = driverDistanceKm.toFixed(1);
-              let base = getBaseFare(document.getElementById('driverMeterVehicleType').value);
-              let ratePerKm = document.getElementById('driverMeterVehicleType').value === 'Auto' ? 15 : 22;
-              let total = base + (driverDistanceKm * ratePerKm);
+              let vehType = document.getElementById('driverMeterVehicleType').value;
+              let total = calculateFare(vehType, driverDistanceKm);
               document.getElementById('driverLiveAmount').innerText = Math.round(total);
               
               document.getElementById('driverMeterStatusMsg').innerText = currentLang === 'kn' ? "ವಾಹನ ಚಲಿಸುತ್ತಿದೆ..." : "Vehicle Moving...";
@@ -1193,7 +1201,7 @@
       driverDistanceKm = 0.0;
       lastDrvPos = null;
       document.getElementById('driverDistCount').innerText = '0.0';
-      document.getElementById('driverLiveAmount').innerText = getBaseFare(document.getElementById('driverMeterVehicleType').value);
+      document.getElementById('driverLiveAmount').innerText = calculateFare(document.getElementById('driverMeterVehicleType').value, 0);
       document.getElementById('driverMeterStatusMsg').innerText = currentLang === 'kn' ? "ವಾಹನ ನಿಂತಿದೆ" : "Vehicle Stopped";
     }
 
