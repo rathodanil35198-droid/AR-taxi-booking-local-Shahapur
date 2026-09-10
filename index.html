@@ -165,7 +165,7 @@
         - ಡ್ರೈವರ್ ಮತ್ತು ಕಸ್ಟಮರ್ ನಡುವೆ ಏನಾದರೂ ವೈಯಕ್ತಿಕ ಜಗಳಗಳಾದರೆ ಅದಕ್ಕೆ ನಮ್ಮ ಆ್ಯಪ್ ಹೊಣೆಯಲ್ಲ.<br>
         - ಸರಿಯಾದ ಮೀಟರ್ ಚಾರ್ಜಸ್ ಕೊಡಿ, ಅನಾವಶ್ಯಕ ಜಗಳಗಳಿಗೆ ಹೋಗಬೇಡಿ.<br>
         - ಡ್ರೈವರ್‌ಗಳಿಂದ ತೊಂದರೆಯಾದರೆ ಆ್ಯಪ್‌ನಲ್ಲಿರುವ ವಾಟ್ಸಾಪ್ ಬಟನ್ ಮೂಲಕ ಕಂಪ್ಲೇಂಟ್ ನೀಡಿ.<br>
-        - ಡ್ರೈವರ್ ವಾಹನ ನಂಬರ್ ನೀಡಿದರೆ ತಕ್ಷಣ ಆ್ಯಪ್‌ನಿಂದ ಅವರನ್ನು ಡಿಲೀಟ್ ಮಾಡಲಾಗುವುದು.<br>
+        - ಡ್ರೈವರ್‌ಗಳಿಂದ ತೊಂದರೆ ಸಾಬೀತಾದರೆ ತಕ್ಷಣ ಆ್ಯಪ್‌ನಿಂದ ಅವರನ್ನು ಡಿಲೀಟ್ ಮಾಡಲಾಗುವುದು.<br>
         - ಡ್ರೈವರ್ ದಾಖಲೆಗಳು ನಮ್ಮ ಬಳಿ ಇರುತ್ತವೆ. ಕಂಪ್ಲೇಂಟ್ ಬಂದರೆ ಪೊಲೀಸ್ ಸ್ಟೇಷನ್‌ಗೆ ಮಾತ್ರ ನೀಡಲಾಗುವುದು.<br><br>
 
         <strong style="color: #60a5fa;">2. ಡ್ರೈವರ್‌ಗಳಿಗೆ ಸೂಚನೆಗಳು:</strong><br>
@@ -401,14 +401,13 @@
         <h2>🔒 ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್ (ಸೆಕ್ಯೂರಿಟಿ ಲಾಕ್)</h2>
         <div class="form-group" id="adminLoginBox">
           <label>ಅಡ್ಮಿನ್ ಪಾಸ್ವರ್ಡ್ ನಮೂದಿಸಿ:</label>
-          <input type="password" id="adminPasswordInput" placeholder="Password">
+          <input type="password" id="adminPasswordInput" placeholder="Secret Code ನಮೂದಿಸಿ">
           <button class="btn-submit" onclick="verifyAdminPassword()" style="margin-top:6px;">ಅಡ್ಮಿನ್ ಲಾಗಿನ್</button>
         </div>
 
         <div id="adminDashboardContent" style="display:none;">
           <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 8px;">ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ ವೀಕ್ಷಣೆ ಅಥವಾ ಡಿಲೀಟ್ ಮಾಡಲು ಇಲ್ಲಿದೆ:</p>
           
-          <!-- ಸರ್ಚ್ ಬಾರ್ ಸೇರಿಸಲಾಗಿದೆ -->
           <input type="text" id="adminSearchInput" class="admin-search-bar" placeholder="🔍 ಡ್ರೈವರ್ ಹೆಸರು ಅಥವಾ ನಂಬರ್ ಮೂಲಕ ಹುಡುಕಿ..." onkeyup="filterAdminDrivers()">
 
           <div id="adminDriversListContainer"></div>
@@ -517,17 +516,24 @@
           <div class="nav-tab active" onclick="switchSection('profileSection', this)">🚗 ಪ್ರೊಫೈಲ್</div>
           <div class="nav-tab" onclick="switchSection('liveSection', this)">📢 ಲೈವ್ (2KM)</div>
           <div class="nav-tab" onclick="switchSection('driverMeterSection', this)">⏱️ ಮೀಟರ್</div>
-          <div class="nav-tab" onclick="switchSection('adminSection', this)">🔒 ಅಡ್ಮಿನ್</div>
+          <div class="nav-tab" onclick="switchSection('adminSection', this, true)">🔒 ಅಡ್ಮಿನ್</div>
         `;
         switchSection('profileSection', navContainer.children[0]);
       }
     }
 
-    function switchSection(sectionId, element) {
+    function switchSection(sectionId, element, isAdminTab = false) {
       document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
       document.getElementById(sectionId).classList.add('active');
       document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
       if(element) element.classList.add('active');
+
+      if(isAdminTab) {
+        let isAdminLoggedIn = document.getElementById('adminDashboardContent').style.display === 'block';
+        if(!isAdminLoggedIn) {
+          alert('ದಯವಿಟ್ಟು ಅಡ್ಮಿನ್ ಓಪನ್ ಮಾಡಲು ಸೀಕ್ರೆಟ್ ಕೋಡ್ ನಮೂದಿಸಿ!');
+        }
+      }
     }
 
     function filterAdminDrivers() {
@@ -605,11 +611,12 @@
     function verifyAdminPassword() {
       const pass = document.getElementById('adminPasswordInput').value;
       if(pass === '8105010768') {
+        alert('ಸರಿಯಾದ ಕೋಡ್! ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್ ಓಪನ್ ಆಗಿದೆ.');
         document.getElementById('adminLoginBox').style.display = 'none';
         document.getElementById('adminDashboardContent').style.display = 'block';
         loadAdminDriversList();
       } else {
-        alert('ತಪ್ಪು ಕೋಡ್! ದಯವಿಟ್ಟು ಸರಿಯಾದ ಕೋಡ್ (8105010768) ನಮೂದಿಸಿ.');
+        alert('ತಪ್ಪು ಕೋಡ್! ದಯವಿಟ್ಟು ಸರಿಯಾದ ಕೋಡ್ ನಮೂದಿಸಿ.');
       }
     }
 
@@ -627,7 +634,7 @@
             <img src="https://via.placeholder.com/150" onclick="openImageModal(this.src)" title="DL Photo">
             <img src="https://via.placeholder.com/150" onclick="openImageModal(this.src)" title="Aadhaar Photo">
             <img src="https://via.placeholder.com/150" onclick="openImageModal(this.src)" title="Driver Photo">
-            <img src="https://via.placeholder.com/150" onclick="openImageModal(this.src)" title="Vehicle Photo">
+            <img src="https://via.placeholder.com/150" onclick="openImageModal(this.src)" title="вето Photo">
           </div>
 
           <button class="btn-submit" style="background:#dc2626; margin-top:8px; padding:6px;" onclick="deleteDriverPrompt('5003')">🗑️ ಡ್ರೈವರ್ ಡಿಲೀಟ್ ಮಾಡಿ</button>
@@ -639,7 +646,6 @@
       let enteredCode = prompt("ಡ್ರೈವರ್ ಡಿಲೀಟ್ ಮಾಡಲು ದಯವಿಟ್ಟು ಕೋಡ್ (8105010768) ನಮೂದಿಸಿ:");
       if(enteredCode === "8105010768") {
         alert("ಡ್ರೈವರ್ ಯಶಸ್ವಿಯಾಗಿ ಡಿಲೀಟ್ ಮಾಡಲಾಗಿದೆ!");
-        // ಇಲ್ಲಿ ಫೈರ್‌ಬೇಸ್ ಡಿಲೀಟ್ ಕೋಡ್ ಬರೆಯಬಹುದು
       } else if(enteredCode !== null) {
         alert("ತಪ್ಪು ಕೋಡ್! ಡ್ರೈವರ್ ಡಿಲೀಟ್ ಆಗಿಲ್ಲ.");
       }
