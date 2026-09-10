@@ -139,9 +139,15 @@
     .btn-gps { background: #ebf8ff; color: #3182ce; border: 1px solid #bee3f8; }
     .btn-submit { background: linear-gradient(45deg, #0fb05b, #41c91d); color: white; }
     .card { background: #fff; border: 1px solid #cbd5e0; padding: 10px; border-radius: 8px; margin-bottom: 8px; }
-    .preview-img { width: 50px; height: 50px; object-fit: contain; border-radius: 50%; border: 2px solid #cbd5e0; margin-right: 8px; }
+    .preview-img { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; border: 1px solid #cbd5e0; margin-right: 5px; cursor: pointer; display: inline-block; }
     .footer { text-align: center; font-size: 0.7rem; color: #7f8c8d; margin-top: 10px; border-top: 1px solid #eee; padding-top: 5px; }
     .back-home-btn { background: #718096; color: white; border: none; padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; margin-bottom: 8px; }
+
+    /* Fullscreen Image Modal */
+    #imageModal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); text-align: center; padding: 20px; }
+    #fullImage { max-width: 100%; max-height: 80vh; margin-top: 40px; border-radius: 8px; }
+    #modalClose { position: absolute; top: 20px; right: 25px; color: #fff; font-size: 35px; font-weight: bold; cursor: pointer; }
+    #downloadBtn { display: inline-block; margin-top: 20px; background: #0fb05b; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; }
   </style>
 </head>
 <body>
@@ -149,6 +155,14 @@
   <a href="javascript:void(0);" onclick="shareAppOnWhatsApp()" class="floating-share-btn" title="WhatsApp Share">
     💬
   </a>
+
+  <!-- Fullscreen Image Modal -->
+  <div id="imageModal">
+    <span id="modalClose" onclick="closeImageModal()">&times;</span>
+    <img id="fullImage" src="" alt="Full View">
+    <br>
+    <a id="downloadBtn" href="" download="driver_photo.jpg">ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ (Download)</a>
+  </div>
 
   <div class="container">
     
@@ -392,6 +406,7 @@
     let currentCustomerLng = null;
     let currentDriverLat = null;
     let currentDriverLng = null;
+    let isAdminUnlocked = false;
 
     function shareAppOnWhatsApp() {
       const appUrl = window.location.href;
@@ -582,6 +597,7 @@
 
     function selectRole(role) {
       currentUserRole = role;
+      isAdminUnlocked = false; // Reset admin lock on role change
       document.getElementById('roleSelectionScreen').style.display = 'none';
       document.getElementById('mainAppContent').style.display = 'block';
       renderTabs();
@@ -590,7 +606,6 @@
         switchSection('customerSection');
       } else {
         switchSection('profileSection');
-        loadAdminDrivers();
       }
     }
 
@@ -602,6 +617,7 @@
       document.getElementById('mainAppContent').style.display = 'none';
       document.getElementById('roleSelectionScreen').style.display = 'block';
       currentUserRole = '';
+      isAdminUnlocked = false;
     }
 
     function renderTabs() {
@@ -621,12 +637,31 @@
           <div class="nav-tab active" onclick="switchSection('profileSection')" id="tabProfile">${t.tabProfile}</div>
           <div class="nav-tab" onclick="switchSection('liveSection')" id="tabLive">${t.tabLive}</div>
           <div class="nav-tab" onclick="switchSection('driverMeterSection')" id="tabDrvMeter">${t.tabDrvMeter}</div>
-          <div class="nav-tab" onclick="switchSection('adminSection')" id="tabAdmin">${t.tabAdmin}</div>
+          <div class="nav-tab" onclick="handleAdminTabClick()" id="tabAdmin">${t.tabAdmin}</div>
         `;
       }
     }
 
+    function handleAdminTabClick() {
+      if (!isAdminUnlocked) {
+        let enteredCode = prompt(currentLang === 'kn' ? "ಕೋಡ್ ನಮೂದಿಸಿ ಸರಿಯಾಗಿ ಅಂತು:" : "Enter code:");
+        if (enteredCode === "8105010768") {
+          isAdminUnlocked = true;
+          switchSection('adminSection');
+        } else {
+          alert(currentLang === 'kn' ? "ತಪ್ಪಾದ ಕೋಡ್!" : "Incorrect code!");
+        }
+      } else {
+        switchSection('adminSection');
+      }
+    }
+
     function switchSection(sectionId) {
+      if (sectionId === 'adminSection' && !isAdminUnlocked) {
+        handleAdminTabClick();
+        return;
+      }
+
       document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
       document.getElementById(sectionId).classList.add('active');
       
@@ -638,7 +673,7 @@
       if (sectionId === 'driverMeterSection') highlightTab(2);
       if (sectionId === 'adminSection') highlightTab(3);
 
-      if (sectionId === 'adminSection' && currentUserRole === 'driver') {
+      if (sectionId === 'adminSection' && currentUserRole === 'driver' && isAdminUnlocked) {
         loadAdminDrivers();
       }
     }
@@ -729,7 +764,7 @@
         document.getElementById('customerStatusContainer').innerHTML = `
           <div class="card" style="text-align:center; background:#e8f8f0; border:2px solid #0fb05b;">
             <p style="font-weight:bold; color:#065f46; margin-bottom:8px;">${currentLang === 'kn' ? '🎉 ನಿಮ್ಮ ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸಲ್ಲಿಸಲಾಗಿದೆ!' : '🎉 Booking submitted successfully!'}</p>
-            <p style="font-size:0.8rem; color:#2d3748; margin-bottom:10px;">${currentLang === 'kn' ? 'ಹತ್ತಿರದ ಡ್ರೈವರ್‌ಗಳು ನಿಮ್ಮ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಲು ಕಾಯಲಾಗುತ್ತಿದೆ...' : 'Waiting for nearby drivers to accept...'}</p>
+            <p style="font-size:0.8rem; color:#2d3748; margin-bottom:10px;">${currentLang === 'kn' ? 'ಹತ್ತಿರದ ಡ್ರೈವರ್‌ಗಳು ನಿಮ್ಮ ಬುಕಿంగ్ ಸ್ವೀಕರಿಸಲು ಕಾಯಲಾಗುತ್ತಿದೆ...' : 'Waiting for nearby drivers to accept...'}</p>
             <button class="btn-submit" onclick="cancelCustomerBooking()" style="background:#e53e3e;">${currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ರದ್ದುಗೊಳಿಸಿ' : 'Cancel Booking'}</button>
           </div>
         `;
@@ -814,7 +849,6 @@
       return type === 'Auto' ? 50 : 80;
     }
 
-    // ಫೋಟೋ ಗಾತ್ರದ ಮೇಲೆ ಯಾವುದೇ ನಿರ್ಬಂಧವಿಲ್ಲದೆ ಯಾವುದೇ ಸೈಜ್‌ನ (ಚಿಕ್ಕದು/ದೊಡ್ಡದು, ಕಲರ್ ಅಥವಾ ಜೆರಾಕ್ಸ್ ವೈಟ್) ಫೋಟೋಗಳನ್ನು ಸ್ವೀಕರಿಸಲು ಕಂಪ್ರೆಸ್ ಅಥವಾ ರಿಸ್ಟ್ರಿಕ್ಷನ್ ತೆಗೆದುಹಾಕಲಾಗಿದೆ
     function fileToBase64(file) {
       return new Promise((resolve, reject) => {
         if (!file) { resolve(''); return; }
@@ -1083,7 +1117,7 @@
           html += `
             <div class="card" style="border: 1px solid #cbd5e0; margin-bottom:8px;">
               <div style="display:flex; align-items:center; margin-bottom:6px;">
-                ${d.selfiePhoto ? `<img src="${d.selfiePhoto}" class="preview-img">` : ''}
+                ${d.selfiePhoto ? `<img src="${d.selfiePhoto}" class="preview-img" onclick="openImageModal('${d.selfiePhoto}')">` : ''}
                 <div>
                   <p><b>${currentLang === 'kn' ? 'ಹೆಸರು:' : 'Name:'}</b> ${d.drvName}</p>
                   <p><b>${currentLang === 'kn' ? 'ಫೋನ್:' : 'Phone:'}</b> ${d.drvPhone} | <b>ID:</b> ${d.driverId || '-'}</p>
@@ -1091,9 +1125,9 @@
               </div>
               <p><b>${currentLang === 'kn' ? 'ವಾಹನ ನಂಬರ್:' : 'Vehicle No:'}</b> ${d.drvVehNo} (${d.drvVehType})</p>
               <div style="display:flex; gap:5px; margin-top:5px; flex-wrap:wrap;">
-                ${d.vehPhoto ? `<a href="${d.vehPhoto}" target="_blank" style="font-size:0.75rem;">Vehicle Photo</a>` : ''}
-                ${d.rcPhoto ? `<a href="${d.rcPhoto}" target="_blank" style="font-size:0.75rem;">RC Photo</a>` : ''}
-                ${d.dlPhoto ? `<a href="${d.dlPhoto}" target="_blank" style="font-size:0.75rem;">DL Photo</a>` : ''}
+                ${d.vehPhoto ? `<img src="${d.vehPhoto}" class="preview-img" onclick="openImageModal('${d.vehPhoto}')" title="Vehicle Photo">` : ''}
+                ${d.rcPhoto ? `<img src="${d.rcPhoto}" class="preview-img" onclick="openImageModal('${d.rcPhoto}')" title="RC Photo">` : ''}
+                ${d.dlPhoto ? `<img src="${d.dlPhoto}" class="preview-img" onclick="openImageModal('${d.dlPhoto}')" title="DL Photo">` : ''}
               </div>
               <button class="btn-submit" onclick="deleteDriver('${docSnap.id}')" style="background:#e53e3e; margin-top:8px; padding:6px; font-size:0.75rem;">${currentLang === 'kn' ? 'ಪ್ರೊಫೈಲ್ ಡಿಲೀಟ್ ಮಾಡಿ' : 'Delete Profile'}</button>
             </div>
@@ -1105,14 +1139,31 @@
       }
     }
 
+    function openImageModal(imgSrc) {
+      const modal = document.getElementById('imageModal');
+      const modalImg = document.getElementById('fullImage');
+      const downloadBtn = document.getElementById('downloadBtn');
+      modal.style.display = 'block';
+      modalImg.src = imgSrc;
+      downloadBtn.href = imgSrc;
+    }
+
+    function closeImageModal() {
+      document.getElementById('imageModal').style.display = 'none';
+    }
+
     async function deleteDriver(docId) {
-      if (confirm(currentLang === 'kn' ? 'ಖಂಡಿತವಾಗಿ ಈ ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ ಡಿಲೀಟ್ ಮಾಡಲು ಬಯಸುವಿರಾ?' : 'Are you sure you want to delete this driver profile?')) {
+      let enteredCode = prompt(currentLang === 'kn' ? "ಕೋಡ್ ನಮೂದಿಸಿ ಸರಿಯಾಗಿ ಅಂತು:" : "Enter code to delete:");
+      if (enteredCode === "8105010768") {
         try {
           await window.deleteDoc(window.doc(window.db, "drivers", docId));
           loadAdminDrivers();
+          alert(currentLang === 'kn' ? "ಪ್ರೊಫೈಲ್ ಯಶಸ್ವಿಯಾಗಿ ಡಿಲೀಟ್ ಆಗಿದೆ." : "Profile deleted successfully.");
         } catch (e) {
           alert('Error: ' + e.message);
         }
+      } else {
+        alert(currentLang === 'kn' ? "ತಪ್ಪಾದ ಕೋಡ್! ಡಿಲೀಟ್ ಮಾಡಲಾಗಿಲ್ಲ." : "Incorrect code! Deletion cancelled.");
       }
     }
   </script>
