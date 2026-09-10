@@ -257,7 +257,7 @@
         <ul>
           <li><b>ಡ್ರೈವರ್‌ಗಳಿಗೆ ಗೌರವ ನೀಡಿ:</b> ಡ್ರೈವರ್‌ಗಳನ್ನು ದೇವರ ಸಮಾನ ಎಂದು ಭಾವಿಸಿ ಅವರೊಂದಿಗೆ ಗೌರವದಿಂದ ನಡೆದುಕೊಳ್ಳಿ ಮತ್ತು ಪ್ರೀತಿಯಿಂದ ಮಾತನಾಡಿಸಿ. ಒಂದು ಸ್ಥಳದಿಂದ ಮತ್ತೊಂದು ಸ್ಥಳಕ್ಕೆ ಸುರಕ್ಷಿತವಾಗಿ ತಲುಪಲು ಅವರು ನಿಮಗೆ ಸಹಾಯ ಮಾಡುತ್ತಾರೆ.</li>
           <li><b>ವೈಯಕ್ತಿಕ ಜಗಳಗಳಿಗೆ ಆ್ಯಪ್ ಜವಾಬ್ದಾರಿಯಲ್ಲ:</b> ಪ್ರಯಾಣದ ಸಮಯದಲ್ಲಿ ಕಸ್ಟಮರ್ ಹಾಗೂ ಡ್ರೈವರ್ ನಡುವೆ ಏನಾದರೂ ವೈಯಕ್ತಿಕ ಜಗಳ ಅಥವಾ ಗಲಾಟೆಗಳು ನಡೆದರೆ, ಅದಕ್ಕೆ ನಮ್ಮ ಆ್ಯಪ್ ಅಥವಾ ನಿರ್ವಾಹಕರು ಜವಾಬ್ದಾರರಾಗಿರುವುದಿಲ್ಲ.</li>
-          <li><b>ದೂರು ದಾಖಲಿಸುವಿಕೆ:</b> ಡ್ರೈವರ್‌ಗಳಿಂದ ನಿಮಗೆ ಯಾವುದೇ ರೀತಿಯ ಸಮಸ್ಯೆ ಅಥವಾ ಅಸಭ್ಯ ವರ್ತನೆ ಎದುರಾದರೆ, ತಕ್ಷಣ ನಮ್ಮ ವಾಟ್ಸಾಪ್ ಗುಪ್ ಮೂಲಕ ಅಥವಾ ತುರ್ತು ಸಹಾಯವಾಣಿಗೆ ಕರೆ ಮಾಡಿ ದೂರು ನೀಡಬಹುದು.</li>
+          <li><b>ದೂರು ದಾಖಲಿಸುವಿಕೆ:</b> ಡ್ರೈವರ್‌ಗಳಿಂದ ನಿಮಗೆ ಯಾವುದೇ ರೀತಿಯ ಸಮಸ್ಯೆ ಅಥವಾ ಅಸಭ್ಯ ವರ್ತನೆ ಎದುರಾದರೆ, ತಕ್ಷಣ ನಮ್ಮ ವಾಟ್ಸಾಪ್ ಗುಂಪು ಮೂಲಕ ಅಥವಾ ತುರ್ತು ಸಹಾಯವಾಣಿಗೆ ಕರೆ ಮಾಡಿ ದೂರು ನೀಡಬಹುದು.</li>
           <li><b>ಕಠಿಣ ಕ್ರಮ:</b> ಡ್ರೈವರ್‌ನ ವಾಹನ ನಂಬರ್, ಮೊಬೈಲ್ ನಂಬರ್ ಅಥವಾ ಐಡಿ ಬಳಸಿ ಯಾರಾದರೂ ಕಸ್ಟಮರ್‌ಗಳಿಗೆ ತೊಂದರೆ ನೀಡಿದರೆ, ಅಂತಹವರನ್ನು ನಮ್ಮ ಆ್ಯಪ್‌ನಿಂದ ಶಾಶ್ವತವಾಗಿ ತೆಗೆದುಹಾಕಲಾಗುತ್ತದೆ.</li>
         </ul>
 
@@ -530,7 +530,6 @@
   <audio id="alertSound" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" preload="auto" loop></audio>
 
   <script>
-    // Check if user already accepted terms on this mobile
     window.addEventListener('DOMContentLoaded', () => {
       const hasAcceptedTerms = localStorage.getItem('ar_taxi_terms_accepted');
       if (hasAcceptedTerms === 'true') {
@@ -938,7 +937,7 @@
           <div class="card" style="text-align:center; background:#e8f8f0; border:2px solid #0fb05b;">
             <p style="font-weight:bold; color:#065f46; margin-bottom:8px;">${currentLang === 'kn' ? '🎉 ನಿಮ್ಮ ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸಲ್ಲಿಸಲಾಗಿದೆ!' : '🎉 Booking submitted successfully!'}</p>
             <p style="font-size:0.8rem; color:#2d3748; margin-bottom:10px;">${currentLang === 'kn' ? 'ಹತ್ತಿರದ ಡ್ರೈವರ್‌ಗಳು ನಿಮ್ಮ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಲು ಕಾಯಲಾಗುತ್ತಿದೆ...' : 'Waiting for nearby drivers to accept...'}</p>
-            <button class="btn-submit" onclick="cancelCustomerBooking()" style="background:#e53e3e;">${currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ರದ್ದುಗೊಳಿಸಿ' : 'Cancel Booking'}</button>
+            <button class="btn-submit" onclick="cancelCustomerBooking()" style="background:#e53e3e;">${currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ರದ್ದುಗೊಳಿಸಿ (Cancel)' : 'Cancel Booking'}</button>
           </div>
         `;
         listenToMyBookingStatus(myActiveBookingId);
@@ -952,13 +951,26 @@
         if (docSnap.exists()) {
           const data = docSnap.data();
           if (data.status === 'Accepted') {
+            const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${data.pickupLat},${data.pickupLng}`;
             document.getElementById('customerStatusContainer').innerHTML = `
               <div class="card" style="text-align:center; background:#f0fff4; border:2px solid #38a169;">
                 <p style="font-size:1rem; font-weight:bold; color:#22543d; margin-bottom:5px;">${currentLang === 'kn' ? '✅ ಡ್ರೈವರ್ ನಿಮ್ಮ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿದ್ದಾರೆ!' : '✅ Driver accepted your booking!'}</p>
-                <p style="font-size:0.85rem; color:#2d3748;"><b>${currentLang === 'kn' ? 'ಡ್ರೈವರ್ ಹೆಸರು:' : 'Driver Name:'}</b> ${data.driverName || ''}</p>
-                <p style="font-size:0.85rem; color:#2d3748;"><b>${currentLang === 'kn' ? 'ಫೋನ್ ನಂಬರ್:' : 'Phone:'}</b> <a href="tel:${data.driverPhone}">${data.driverPhone || ''}</a></p>
+                
+                ${data.driverPhoto ? `<img src="${data.driverPhoto}" style="width:70px; height:70px; border-radius:50%; object-fit:cover; border:2px solid #0fb05b; margin: 5px 0;" onclick="openImageModal('${data.driverPhoto}')">` : ''}
+                
+                <p style="font-size:0.85rem; color:#2d3748;"><b>${currentLang === 'kn' ? 'ಡ್ರೈವರ್ ಹೆಸರು (ದೇವರು):' : 'Driver Name:'}</b> ${data.driverName || ''}</p>
+                <p style="font-size:0.85rem; color:#2d3748;"><b>${currentLang === 'kn' ? 'ಮೊಬೈಲ್ ನಂಬರ್:' : 'Phone:'}</b> ${data.driverPhone || ''} 
+                  <a href="tel:${data.driverPhone}" style="background:#0fb05b; color:white; padding:2px 8px; border-radius:4px; text-decoration:none; font-size:0.75rem; margin-left:5px;">📞 ಕಾಲ್ ಮಾಡಿ</a>
+                </p>
                 <p style="font-size:0.85rem; color:#2d3748;"><b>${currentLang === 'kn' ? 'ವಾಹನ ನಂಬರ್:' : 'Vehicle No:'}</b> ${data.driverVehNo || ''}</p>
-                <button class="btn-submit" onclick="resetCustomerBookingForm()" style="background:#3182ce; margin-top:10px;">${currentLang === 'kn' ? 'ಹೊಸ ಬುಕಿಂಗ್ ಮಾಡಿ' : 'New Booking'}</button>
+                
+                <div style="background:#fff3cd; padding:8px; border-radius:6px; margin:8px 0; font-size:0.8rem; color:#856404; font-weight:bold;">
+                  ${currentLang === 'kn' ? '⚠️ ಎಲ್ಲಾ ದಾಖಲೆಗಳು ಪರಿಶೀಲಿಸಲಾಗಿದೆ. ಡ್ರೈವರ್ 2 ನಿಮಿಷದಲ್ಲಿ ನಿಮ್ಮ ಹತ್ತಿರ ಬರುತ್ತಿದ್ದಾರೆ. ಜಿಪಿಎಸ್ ಮೂಲಕ ಟ್ರ್ಯಾಕ್ ಮಾಡಿ.' : 'Driver is on the way. Check GPS location.'}
+                </div>
+
+                <a href="${googleMapsUrl}" target="_blank" class="btn-submit" style="display:block; background:#3182ce; text-decoration:none; margin-bottom:8px; text-align:center;">${currentLang === 'kn' ? '🗺️ ಡ್ರೈವರ್ ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ನೋಡಿ' : 'View Driver GPS Location'}</a>
+                
+                <button class="btn-submit" onclick="cancelCustomerBooking()" style="background:#e53e3e;">${currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ರದ್ದುಗೊಳಿಸಿ (Cancel)' : 'Cancel Booking'}</button>
               </div>
             `;
           }
@@ -990,21 +1002,15 @@
 
     function startMeter() {
       if (custMeterWatchId) return;
-
-      if (!navigator.geolocation) {
-        alert(currentLang === 'kn' ? "ನಿಮ್ಮ ಮೊಬೈಲ್‌ನಲ್ಲಿ ಜಿಪಿಎಸ್ ಲಭ್ಯವಿಲ್ಲ!" : "GPS not supported!");
-        return;
-      }
-
-      let confirmGps = confirm(currentLang === 'kn' ? "ಜಿಪಿಎಸ್ ಆನ್ ಆಗಬೇಕು. ಮುಂದುವರಿಯಲು OK ಒತ್ತಿ." : "GPS needs to be turned on. Click OK to proceed.");
+      if (!navigator.geolocation) { alert("GPS not supported!"); return; }
+      let confirmGps = confirm("GPS needs to be turned on. Click OK.");
       if (!confirmGps) return;
 
       distanceKm = 0.0;
       lastCustPos = null;
       document.getElementById('distCount').innerText = distanceKm.toFixed(1);
       document.getElementById('liveAmount').innerText = calculateFare(document.getElementById('meterVehicleType').value, distanceKm);
-      document.getElementById('meterStatusMsg').innerText = currentLang === 'kn' ? "ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಆನ್ ಆಗಿದೆ..." : "GPS Location Enabled...";
-      document.getElementById('meterStatusMsg').style.color = "#3182ce";
+      document.getElementById('meterStatusMsg').innerText = "GPS Enabled...";
 
       custMeterWatchId = navigator.geolocation.watchPosition(
         (position) => {
@@ -1017,22 +1023,14 @@
             if (distMoved > 0.005) {
               distanceKm += distMoved;
               document.getElementById('distCount').innerText = distanceKm.toFixed(1);
-              let vehType = document.getElementById('meterVehicleType').value;
-              let total = calculateFare(vehType, distanceKm);
+              let total = calculateFare(document.getElementById('meterVehicleType').value, distanceKm);
               document.getElementById('liveAmount').innerText = Math.round(total);
-              
-              document.getElementById('meterStatusMsg').innerText = currentLang === 'kn' ? "ವಾಹನ ಚಲಿಸುತ್ತಿದೆ..." : "Vehicle Moving...";
-              document.getElementById('meterStatusMsg').style.color = "#0fb05b";
-            } else {
-              document.getElementById('meterStatusMsg').innerText = currentLang === 'kn' ? "ವಾಹನ ನಿಂತಿದೆ" : "Vehicle Stopped";
-              document.getElementById('meterStatusMsg').style.color = "#d69e2e";
+              document.getElementById('meterStatusMsg').innerText = "Vehicle Moving...";
             }
           }
           lastCustPos = { lat, lng };
         },
-        (error) => {
-          alert(currentLang === 'kn' ? "ಜಿಪಿಎಸ್ ಸಿಗ್ನಲ್ ಸಿಗುತ್ತಿಲ್ಲ!" : "GPS signal lost!");
-        },
+        (error) => { alert("GPS signal lost!"); },
         { enableHighAccuracy: true, maximumAge: 0, timeout: 10000 }
       );
     }
@@ -1042,8 +1040,7 @@
         navigator.geolocation.clearWatch(custMeterWatchId);
         custMeterWatchId = null;
       }
-      document.getElementById('meterStatusMsg').innerText = currentLang === 'kn' ? "ವಾಹನ ನಿಂತಿದೆ" : "Vehicle Stopped";
-      document.getElementById('meterStatusMsg').style.color = "#d69e2e";
+      document.getElementById('meterStatusMsg').innerText = "Vehicle Stopped";
     }
 
     function resetMeterRate() {
@@ -1052,22 +1049,13 @@
       lastCustPos = null;
       document.getElementById('distCount').innerText = '0.0';
       document.getElementById('liveAmount').innerText = calculateFare(document.getElementById('meterVehicleType').value, 0);
-      document.getElementById('meterStatusMsg').innerText = currentLang === 'kn' ? "ವಾಹನ ನಿಂತಿದೆ" : "Vehicle Stopped";
     }
 
     function calculateFare(type, dist) {
       if (type === 'Auto') {
-        if (dist <= 2.0) {
-          return 50;
-        } else {
-          return 50 + ((dist - 2.0) * 12);
-        }
+        return dist <= 2.0 ? 50 : 50 + ((dist - 2.0) * 12);
       } else {
-        if (dist <= 3.0) {
-          return 200;
-        } else {
-          return 200 + ((dist - 3.0) * 15);
-        }
+        return dist <= 3.0 ? 200 : 200 + ((dist - 3.0) * 15);
       }
     }
 
@@ -1098,29 +1086,12 @@
       if (!name) { document.getElementById('errDrvName').style.display = 'block'; hasError = true; }
       if (!phone || phone.length < 10) { document.getElementById('errDrvPhone').style.display = 'block'; hasError = true; }
       if (!vehNo) { document.getElementById('errDrvVehNo').style.display = 'block'; hasError = true; }
-
       if (hasError) return;
 
       const btn = document.getElementById('btnRegisterDriver');
-      btn.innerText = currentLang === 'kn' ? 'ಪರಿಶೀಲಿಸಲಾಗುತ್ತಿದೆ...' : 'Processing...';
+      btn.innerText = 'Processing...';
 
       try {
-        const qPhone = window.query(window.collection(window.db, "drivers"), window.where("drvPhone", "==", phone));
-        const qVeh = window.query(window.collection(window.db, "drivers"), window.where("drvVehNo", "==", vehNo));
-        
-        const [phoneSnap, vehSnap] = await Promise.all([window.getDocs(qPhone), window.getDocs(qVeh)]);
-
-        if (!phoneSnap.empty) {
-          document.getElementById('errDrvPhone').style.display = 'block';
-          btn.innerText = texts[currentLang].btnRegisterDriver;
-          return;
-        }
-        if (!vehSnap.empty) {
-          document.getElementById('errDrvVehNo').style.display = 'block';
-          btn.innerText = texts[currentLang].btnRegisterDriver;
-          return;
-        }
-
         const [vehPhoto, rcPhoto, dlPhoto, selfiePhoto] = await Promise.all([
           fileToBase64(vehPhotoFile),
           fileToBase64(rcPhotoFile),
@@ -1143,15 +1114,11 @@
           timestamp: window.serverTimestamp()
         });
 
-        alert(`ನಿಮ್ಮ ಐಡಿಯು ಯಶಸ್ವಿಯಾಗಿದೆ: ${driverId}\n\nಈ ನಾಲ್ಕು ಡಿಜಿಟಲ್ ಐಡಿಯನ್ನು ನೀವು ಗಮನದಲ್ಲಿ ಇಟ್ಟುಕೊಳ್ಳಿ, ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸುವಾಗ ನಿಮಗೆ ಬೇಕಾಗುತ್ತೆ.`);
+        alert(`ನಿಮ್ಮ ಡ್ರೈವರ್ ಐಡಿ ಯಶಸ್ವಿಯಾಗಿದೆ: ${driverId}\nದಯವಿಟ್ಟು ಇದನ್ನು ನೆನಪಿನಲ್ಲಿಡಿ.`);
 
         document.getElementById('drvName').value = '';
         document.getElementById('drvPhone').value = '';
         document.getElementById('drvVehNo').value = '';
-        document.getElementById('vehPhotoFile').value = '';
-        document.getElementById('rcPhotoFile').value = '';
-        document.getElementById('dlPhotoFile').value = '';
-        document.getElementById('selfiePhotoFile').value = '';
         btn.innerText = texts[currentLang].btnRegisterDriver;
 
         switchSection('liveSection');
@@ -1159,7 +1126,7 @@
         checkDriverIdAndListen();
 
       } catch (e) {
-        alert(currentLang === 'kn' ? 'ದೋಷ: ' + e.message : 'Error: ' + e.message);
+        alert('Error: ' + e.message);
         btn.innerText = texts[currentLang].btnRegisterDriver;
       }
     }
@@ -1169,7 +1136,7 @@
       const listDiv = document.getElementById('driverBookingsList');
 
       if (inputId.length !== 4) {
-        listDiv.innerHTML = `<p style="color: #e53e3e; font-weight: bold;" id="txtEnterIdPrompt">${texts[currentLang].txtEnterIdPrompt}</p>`;
+        listDiv.innerHTML = `<p style="color: #e53e3e; font-weight: bold;">${texts[currentLang].txtEnterIdPrompt}</p>`;
         if (bookingsUnsubscribe) { bookingsUnsubscribe(); bookingsUnsubscribe = null; }
         stopDriverLocationTracking();
         return;
@@ -1180,15 +1147,13 @@
         const snap = await window.getDocs(q);
 
         if (snap.empty) {
-          listDiv.innerHTML = `<p style="color: #e53e3e; font-weight: bold;">${currentLang === 'kn' ? 'ತಪ್ಪಾದ ಡ್ರೈವರ್ ಐಡಿ! ದಯವಿಟ್ಟು ಸರಿಯಾದ ಐಡಿ ನಮೂದಿಸಿ.' : 'Invalid Driver ID! Please enter correct ID.'}</p>`;
+          listDiv.innerHTML = `<p style="color: #e53e3e; font-weight: bold;">ತಪ್ಪಾದ ಡ್ರೈವರ್ ಐಡಿ!</p>`;
           if (bookingsUnsubscribe) { bookingsUnsubscribe(); bookingsUnsubscribe = null; }
           stopDriverLocationTracking();
           return;
         }
 
         const driverData = snap.docs[0].data();
-        listDiv.innerHTML = `<p style="color: #3182ce; font-weight: bold;">${currentLang === 'kn' ? 'ಸ್ವಾಗತ ' + driverData.drvName + '! ನಿಮ್ಮ ಜಿಪಿಎಸ್ ಮೂಲಕ ಹತ್ತಿರದ ಬುಕಿಂಗ್ ಹುಡುಕಲಾಗುತ್ತಿದೆ...' : 'Welcome ' + driverData.drvName + '! Searching for nearby bookings via GPS...'}</p>`;
-
         startDriverLocationTracking(driverData);
 
       } catch (e) {
@@ -1205,12 +1170,10 @@
             listenToBookingsForDriver(driverData);
           },
           (error) => {
-            document.getElementById('driverBookingsList').innerHTML = `<p style="color: #e53e3e;">${currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ತೋರಿಸಲು ಲೈವ್ ಜಿಪಿಎಸ್ ಕಡ್ಡಾಯವಾಗಿದೆ. ದಯವಿಟ್ಟು ಲೊಕೇಶನ್ ಆನ್ ಮಾಡಿ.' : 'Live GPS is mandatory to show bookings. Please enable location.'}</p>`;
+            document.getElementById('driverBookingsList').innerHTML = `<p style="color: #e53e3e;">ಲೈವ್ ಜಿಪಿಎಸ್ ಕಡ್ಡಾಯ.</p>`;
           },
           { enableHighAccuracy: true }
         );
-      } else {
-        alert('Geolocation not supported');
       }
     }
 
@@ -1238,14 +1201,14 @@
               count++;
               html += `
                 <div class="card" style="border: 2px solid #0fb05b; background:#f7fafc; margin-bottom:10px;">
-                  <p><b>${currentLang === 'kn' ? 'ವಾಹನ ಅಗತ್ಯ:' : 'Vehicle Required:'}</b> ${b.vehicleType}</p>
-                  <p><b>${currentLang === 'kn' ? 'ಕಸ್ಟಮರ್ ಹೆಸರು:' : 'Customer Name:'}</b> ${b.customerName}</p>
-                  <p><b>${currentLang === 'kn' ? 'ಫೋನ್ ನಂಬರ್:' : 'Phone:'}</b> <a href="tel:${b.customerPhone}">${b.customerPhone}</a></p>
-                  <p><b>${currentLang === 'kn' ? 'ಪ್ರಯಾಣಿಕರು:' : 'Passengers:'}</b> ${b.passengers}</p>
-                  <p><b>${currentLang === 'kn' ? 'ಪ್ರಸ್ತುತ ಸ್ಥಳ:' : 'Current Loc:'}</b> ${b.currentLocationText || '-'}</p>
-                  <p><b>${currentLang === 'kn' ? 'ಪಿಕೋಪ್ ಸ್ಥಳ:' : 'Pickup:'}</b> ${b.pickupLocation} (~${dist.toFixed(2)} KM)</p>
-                  <p><b>${currentLang === 'kn' ? 'ಡ್ರಾಪ್ ಸ್ಥಳ:' : 'Drop:'}</b> ${b.dropLocation}</p>
-                  <button class="btn-submit" onclick="acceptBooking('${docSnap.id}', '${driverData.drvName}', '${driverData.drvPhone}', '${driverData.drvVehNo}')" style="margin-top:8px;">${currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ (Accept)' : 'Accept Booking'}</button>
+                  <p><b>ವಾಹನ:</b> ${b.vehicleType}</p>
+                  <p><b>ಕಸ್ಟಮರ್ ಹೆಸರು (ದೇವರು):</b> ${b.customerName}</p>
+                  <p><b>ಮೊಬೈಲ್ ನಂಬರ್:</b> ${b.customerPhone} 
+                    <a href="tel:${b.customerPhone}" style="background:#0fb05b; color:white; padding:2px 8px; border-radius:4px; text-decoration:none; font-size:0.75rem; margin-left:5px;">📞 ಕಾಲ್ ಮಾಡಿ</a>
+                  </p>
+                  <p><b>ಪ್ರಯಾಣಿಕರ ಸಂಖ್ಯೆ:</b> ${b.passengers}</p>
+                  <p><b>ಸ್ಥಳ:</b> ${b.pickupLocation} (~${dist.toFixed(2)} KM)</p>
+                  <button class="btn-submit" onclick="acceptBooking('${docSnap.id}', '${driverData.drvName}', '${driverData.drvPhone}', '${driverData.drvVehNo}', '${driverData.selfiePhoto || ''}', ${b.pickupLat}, ${b.pickupLng})" style="margin-top:8px;">ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ (Accept)</button>
                 </div>
               `;
             }
@@ -1253,7 +1216,7 @@
         });
 
         if (count === 0) {
-          listDiv.innerHTML = `<p style="color: #718096; font-weight: bold;">${currentLang === 'kn' ? 'ನಿಮ್ಮ 2 ಕಿ.ಮೀ ಒಳಗೆ ಯಾವುದೇ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.' : 'No bookings within 2 KM of your location.'}</p>`;
+          listDiv.innerHTML = `<p style="color: #718096; font-weight: bold;">ಹತ್ತಿರದಲ್ಲಿ ಯಾವುದೇ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.</p>`;
         } else {
           listDiv.innerHTML = html;
           const audio = document.getElementById('alertSound');
@@ -1264,29 +1227,30 @@
 
     function calculateDistance(lat1, lon1, lat2, lon2) {
       const R = 6371;
-      const dLat = deg2rad(lat2 - lat1);
-      const dLon = deg2rad(lon2 - lon1);
-      const a = 
-        Math.sin(dLat/2) * Math.sin(dLat/2) +
-        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
-        Math.sin(dLon/2) * Math.sin(dLon/2); 
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-      return R * c;
+      const dLat = (lat2 - lat1) * (Math.PI/180);
+      const dLon = (lon2 - lon1) * (Math.PI/180);
+      const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * (Math.PI/180)) * Math.cos(lat2 * (Math.PI/180)) * Math.sin(dLon/2) * Math.sin(dLon/2);
+      return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     }
 
-    function deg2rad(deg) {
-      return deg * (Math.PI/180);
-    }
+    async function acceptBooking(bookingId, driverName, driverPhone, driverVehNo, driverPhoto, pickupLat, pickupLng) {
+      let confirmAccept = confirm("ನೀವು ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿದ್ದೀರಾ? (OK ಒತ್ತಿ ಲೊಕೇಶನ್ ಆನ್ ಮಾಡಲು)");
+      if (!confirmAccept) return;
 
-    async function acceptBooking(bookingId, driverName, driverPhone, driverVehNo) {
       try {
         await window.updateDoc(window.doc(window.db, "bookings", bookingId), {
           status: 'Accepted',
           driverName: driverName,
           driverPhone: driverPhone,
-          driverVehNo: driverVehNo
+          driverVehNo: driverVehNo,
+          driverPhoto: driverPhoto
         });
-        alert(currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸ್ವೀಕರಿಸಲಾಗಿದೆ!' : 'Booking accepted successfully!');
+
+        // ಆಟೋಮ್ಯಾಟಿಕ್ ಗೂಗಲ್ ಮ್ಯಾಪ್ ರೂಟ್ ಓಪನ್ ಆಗಿ ಕಸ್ಟಮರ್ ಹತ್ತಿರ ಕರೆದುಕೊಂಡು ಹೋಗುತ್ತದೆ
+        const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${pickupLat},${pickupLng}`;
+        window.open(mapsUrl, '_blank');
+
+        alert('ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸ್ವೀಕರಿಸಲಾಗಿದೆ! ಲೈವ್ ಲೊಕೇಶನ್ ಆನ್ ಆಗಿದೆ.');
       } catch (e) {
         alert('Error: ' + e.message);
       }
@@ -1294,21 +1258,15 @@
 
     function startDriverMeter() {
       if (drvMeterWatchId) return;
-
-      if (!navigator.geolocation) {
-        alert(currentLang === 'kn' ? "ನಿಮ್ಮ ಮೊಬೈಲ್‌ನಲ್ಲಿ ಜಿಪಿಎಸ್ ಲಭ್ಯವಿಲ್ಲ!" : "GPS not supported!");
-        return;
-      }
-
-      let confirmGps = confirm(currentLang === 'kn' ? "ಜಿಪಿಎಸ್ ಆನ್ ಆಗಬೇಕು. ಮುಂದುವರಿಯಲು OK ಒತ್ತಿ." : "GPS needs to be turned on. Click OK to proceed.");
+      if (!navigator.geolocation) { alert("GPS not supported!"); return; }
+      let confirmGps = confirm("GPS needs to be turned on. Click OK.");
       if (!confirmGps) return;
 
       driverDistanceKm = 0.0;
       lastDrvPos = null;
       document.getElementById('driverDistCount').innerText = driverDistanceKm.toFixed(1);
       document.getElementById('driverLiveAmount').innerText = calculateFare(document.getElementById('driverMeterVehicleType').value, driverDistanceKm);
-      document.getElementById('driverMeterStatusMsg').innerText = currentLang === 'kn' ? "ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಆನ್ ಆಗಿದೆ..." : "GPS Location Enabled...";
-      document.getElementById('driverMeterStatusMsg').style.color = "#3182ce";
+      document.getElementById('driverMeterStatusMsg').innerText = "GPS Enabled...";
 
       drvMeterWatchId = navigator.geolocation.watchPosition(
         (position) => {
@@ -1321,22 +1279,14 @@
             if (distMoved > 0.005) {
               driverDistanceKm += distMoved;
               document.getElementById('driverDistCount').innerText = driverDistanceKm.toFixed(1);
-              let vehType = document.getElementById('driverMeterVehicleType').value;
-              let total = calculateFare(vehType, driverDistanceKm);
+              let total = calculateFare(document.getElementById('driverMeterVehicleType').value, driverDistanceKm);
               document.getElementById('driverLiveAmount').innerText = Math.round(total);
-              
-              document.getElementById('driverMeterStatusMsg').innerText = currentLang === 'kn' ? "ವಾಹನ ಚಲಿಸುತ್ತಿದೆ..." : "Vehicle Moving...";
-              document.getElementById('driverMeterStatusMsg').style.color = "#0fb05b";
-            } else {
-              document.getElementById('driverMeterStatusMsg').innerText = currentLang === 'kn' ? "ವಾಹನ ನಿಂತಿದೆ" : "Vehicle Stopped";
-              document.getElementById('driverMeterStatusMsg').style.color = "#d69e2e";
+              document.getElementById('driverMeterStatusMsg').innerText = "Vehicle Moving...";
             }
           }
           lastDrvPos = { lat, lng };
         },
-        (error) => {
-          alert(currentLang === 'kn' ? "ಜಿಪಿಎಸ್ ಸಿಗ್ನಲ್ ಸಿಗುತ್ತಿಲ್ಲ!" : "GPS signal lost!");
-        },
+        (error) => { alert("GPS signal lost!"); },
         { enableHighAccuracy: true, maximumAge: 0, timeout: 10000 }
       );
     }
@@ -1346,8 +1296,7 @@
         navigator.geolocation.clearWatch(drvMeterWatchId);
         drvMeterWatchId = null;
       }
-      document.getElementById('driverMeterStatusMsg').innerText = currentLang === 'kn' ? "ವಾಹನ ನಿಂತಿದೆ" : "Vehicle Stopped";
-      document.getElementById('driverMeterStatusMsg').style.color = "#d69e2e";
+      document.getElementById('driverMeterStatusMsg').innerText = "Vehicle Stopped";
     }
 
     function resetDriverMeterRate() {
@@ -1356,20 +1305,17 @@
       lastDrvPos = null;
       document.getElementById('driverDistCount').innerText = '0.0';
       document.getElementById('driverLiveAmount').innerText = calculateFare(document.getElementById('driverMeterVehicleType').value, 0);
-      document.getElementById('driverMeterStatusMsg').innerText = currentLang === 'kn' ? "ವಾಹನ ನಿಂತಿದೆ" : "Vehicle Stopped";
     }
 
     async function loadAdminDrivers() {
       const adminDiv = document.getElementById('adminDriversList');
-      adminDiv.innerHTML = currentLang === 'kn' ? 'ಡ್ರೈವರ್‌ಗಳ ಮಾಹಿತಿ ಲೋಡ್ ಆಗುತ್ತಿದೆ...' : 'Loading drivers info...';
-
+      adminDiv.innerHTML = 'ಲೋಡ್ ಆಗುತ್ತಿದೆ...';
       try {
         const querySnapshot = await window.getDocs(window.collection(window.db, "drivers"));
         allDriversData = [];
         querySnapshot.forEach((docSnap) => {
           allDriversData.push({ id: docSnap.id, ...docSnap.data() });
         });
-
         renderAdminDriverList(allDriversData);
       } catch (e) {
         adminDiv.innerHTML = `<p style="color: #e53e3e;">Error: ${e.message}</p>`;
@@ -1380,7 +1326,7 @@
       const adminDiv = document.getElementById('adminDriversList');
       let html = '';
       if (driversList.length === 0) {
-        adminDiv.innerHTML = `<p style="color: #718096;">${currentLang === 'kn' ? 'ಯಾವುದೇ ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ಗಳು ಸಿಗಲಿಲ್ಲ.' : 'No driver profiles found.'}</p>`;
+        adminDiv.innerHTML = `<p style="color: #718096;">ಯಾವುದೇ ಡ್ರೈವರ್‌ಗಳಿಲ್ಲ.</p>`;
         return;
       }
 
@@ -1390,17 +1336,12 @@
             <div style="display:flex; align-items:center; margin-bottom:6px;">
               ${d.selfiePhoto ? `<img src="${d.selfiePhoto}" class="preview-img" onclick="openImageModal('${d.selfiePhoto}')">` : ''}
               <div>
-                <p><b>${currentLang === 'kn' ? 'ಹೆಸರು:' : 'Name:'}</b> ${d.drvName}</p>
-                <p><b>${currentLang === 'kn' ? 'ಫೋನ್:' : 'Phone:'}</b> ${d.drvPhone} | <b>ID:</b> ${d.driverId || '-'}</p>
+                <p><b>ಹೆಸರು:</b> ${d.drvName}</p>
+                <p><b>ಫೋನ್:</b> ${d.drvPhone} | <b>ID:</b> ${d.driverId || '-'}</p>
               </div>
             </div>
-            <p><b>${currentLang === 'kn' ? 'ವಾಹನ ನಂಬರ್:' : 'Vehicle No:'}</b> ${d.drvVehNo} (${d.drvVehType})</p>
-            <div style="display:flex; gap:5px; margin-top:5px; flex-wrap:wrap;">
-              ${d.vehPhoto ? `<img src="${d.vehPhoto}" class="preview-img" onclick="openImageModal('${d.vehPhoto}')" title="Vehicle Photo">` : ''}
-              ${d.rcPhoto ? `<img src="${d.rcPhoto}" class="preview-img" onclick="openImageModal('${d.rcPhoto}')" title="RC Photo">` : ''}
-              ${d.dlPhoto ? `<img src="${d.dlPhoto}" class="preview-img" onclick="openImageModal('${d.dlPhoto}')" title="DL Photo">` : ''}
-            </div>
-            <button class="btn-submit" onclick="deleteDriver('${d.id}')" style="background:#e53e3e; margin-top:8px; padding:6px; font-size:0.75rem;">${currentLang === 'kn' ? 'ಪ್ರೊಫೈಲ್ ಡಿಲೀಟ್ ಮಾಡಿ' : 'Delete Profile'}</button>
+            <p><b>ವಾಹನ ನಂಬರ್:</b> ${d.drvVehNo} (${d.drvVehType})</p>
+            <button class="btn-submit" onclick="deleteDriver('${d.id}')" style="background:#e53e3e; margin-top:8px; padding:6px; font-size:0.75rem;">ಪ್ರೊಫೈಲ್ ಡಿಲೀಟ್ ಮಾಡಿ</button>
           </div>
         `;
       });
@@ -1409,17 +1350,8 @@
 
     function filterAdminDrivers() {
       const queryText = document.getElementById('adminSearchInput').value.trim().toLowerCase();
-      if (!queryText) {
-        renderAdminDriverList(allDriversData);
-        return;
-      }
-
-      const filtered = allDriversData.filter(d => {
-        const phone = (d.drvPhone || '').toLowerCase();
-        const driverId = (d.driverId || '').toLowerCase();
-        return phone.includes(queryText) || driverId.includes(queryText);
-      });
-
+      if (!queryText) { renderAdminDriverList(allDriversData); return; }
+      const filtered = allDriversData.filter(d => (d.drvPhone || '').toLowerCase().includes(queryText) || (d.driverId || '').toLowerCase().includes(queryText));
       renderAdminDriverList(filtered);
     }
 
@@ -1437,17 +1369,15 @@
     }
 
     async function deleteDriver(docId) {
-      let enteredCode = prompt(currentLang === 'kn' ? "ಕೋಡ್ ನಮೂದಿಸಿ ಸರಿಯಾಗಿ ಅಂತು:" : "Enter code to delete:");
+      let enteredCode = prompt("ಕೋಡ್ ನಮೂದಿಸಿ:");
       if (enteredCode === "8105010768") {
         try {
           await window.deleteDoc(window.doc(window.db, "drivers", docId));
           loadAdminDrivers();
-          alert(currentLang === 'kn' ? "ಪ್ರೊಫೈಲ್ ಯಶಸ್ವಿಯಾಗಿ ಡಿಲೀಟ್ ಆಗಿದೆ." : "Profile deleted successfully.");
-        } catch (e) {
-          alert('Error: ' + e.message);
-        }
+          alert("ಪ್ರೊಫೈಲ್ ಡಿಲೀಟ್ ಆಗಿದೆ.");
+        } catch (e) { alert('Error: ' + e.message); }
       } else {
-        alert(currentLang === 'kn' ? "ತಪ್ಪಾದ ಕೋಡ್! ಡಿಲೀಟ್ ಮಾಡಲಾಗಿಲ್ಲ." : "Incorrect code! Deletion cancelled.");
+        alert("ತಪ್ಪಾದ ಕೋಡ್!");
       }
     }
   </script>
