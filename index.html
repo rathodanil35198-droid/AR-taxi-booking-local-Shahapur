@@ -286,7 +286,9 @@
         <button class="btn-submit" onclick="startMeter()" style="background:#3182ce; margin-bottom:8px;" id="btnStartMeter">ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
         <div class="card" style="text-align:center; background:#f7fafc;">
           <p style="font-size:0.8rem; color:#718096;"><span id="txtDistCovered">ಪ್ರಯಾಣಿಸಿದ ದೂರ:</span> <span id="distCount">0.0</span> ಕಿ.ಮೀ</p>
+          <p style="font-size:0.9rem; font-weight:bold; color:#d69e2e; margin: 4px 0;" id="meterStatusMsg">ವಾಹನ ನಿಂತಿದೆ</p>
           <p style="font-size:1.2rem; font-weight:bold; color:#0fb05b;"><span id="txtEstFare">ಅಂದಾಜು ಶುಲ್ಕ:</span> ₹<span id="liveAmount">0</span></p>
+          <p style="font-size:0.75rem; color:#4a5568; margin-top:5px;" id="liveGpsCoord">GPS: ಕಾಯಲಾಗುತ್ತಿದೆ...</p>
         </div>
         <button class="btn-submit" onclick="stopMeterOnly()" style="background:#e53e3e;" id="btnStopMeter">ಮೀಟರ್ ಆಫ್ ಮಾಡಿ</button>
       </div>
@@ -371,7 +373,9 @@
         <button class="btn-submit" onclick="startDriverMeter()" style="background:#3182ce; margin-bottom:8px;" id="btnDrvStartMeter">ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
         <div class="card" style="text-align:center; background:#f7fafc;">
           <p style="font-size:0.8rem; color:#718096;"><span id="txtDrvDist">ಪ್ರಯಾಣಿಸಿದ ದೂರ:</span> <span id="driverDistCount">0.0</span> ಕಿ.ಮೀ</p>
+          <p style="font-size:0.9rem; font-weight:bold; color:#d69e2e; margin: 4px 0;" id="driverMeterStatusMsg">ವಾಹನ ನಿಂತಿದೆ</p>
           <p style="font-size:1.2rem; font-weight:bold; color:#0fb05b;"><span id="txtDrvFare">ಅಂದಾಜು ಶುಲ್ಕ:</span> ₹<span id="driverLiveAmount">0</span></p>
+          <p style="font-size:0.75rem; color:#4a5568; margin-top:5px;" id="driverLiveGpsCoord">GPS: ಕಾಯಲಾಗುತ್ತಿದೆ...</p>
         </div>
         <button class="btn-submit" onclick="stopDriverMeterOnly()" style="background:#e53e3e;" id="btnDrvStopMeter">ಮೀಟರ್ ಆಫ್ ಮಾಡಿ</button>
       </div>
@@ -413,7 +417,13 @@
     let currentDriverLat = null;
     let currentDriverLng = null;
     let isAdminUnlocked = false;
-    let allDriversData = []; // Store loaded drivers for searching
+    let allDriversData = []; 
+
+    // Meter GPS tracking variables
+    let custMeterWatchId = null;
+    let drvMeterWatchId = null;
+    let lastCustPos = null;
+    let lastDrvPos = null;
 
     function shareAppOnWhatsApp() {
       const appUrl = window.location.href;
@@ -822,34 +832,74 @@
       currentCustomerLng = null;
     }
 
+    // CUSTOMER LIVE GPS METER
     function startMeter() {
-      if (meterInterval) return;
+      if (custMeterWatchId) return;
+
+      if (!navigator.geolocation) {
+        alert(currentLang === 'kn' ? "ನಿಮ್ಮ ಮೊಬೈಲ್‌ನಲ್ಲಿ ಜಿಪಿಎಸ್ ಲಭ್ಯವಿಲ್ಲ!" : "GPS not supported!");
+        return;
+      }
+
+      let confirmGps = confirm(currentLang === 'kn' ? "ಜಿಪಿಎಸ್ ಆನ್ ಆಗಬೇಕು. ಮುಂದುವರಿಯಲು OK ಒತ್ತಿ." : "GPS needs to be turned on. Click OK to proceed.");
+      if (!confirmGps) return;
+
       distanceKm = 0.0;
+      lastCustPos = null;
       document.getElementById('distCount').innerText = distanceKm.toFixed(1);
       document.getElementById('liveAmount').innerText = getBaseFare(document.getElementById('meterVehicleType').value);
-      
-      meterInterval = setInterval(() => {
-        distanceKm += 0.1;
-        document.getElementById('distCount').innerText = distanceKm.toFixed(1);
-        let base = getBaseFare(document.getElementById('meterVehicleType').value);
-        let ratePerKm = document.getElementById('meterVehicleType').value === 'Auto' ? 15 : 22;
-        let total = base + (distanceKm * ratePerKm);
-        document.getElementById('liveAmount').innerText = Math.round(total);
-      }, 1000);
+      document.getElementById('meterStatusMsg').innerText = currentLang === 'kn' ? "ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಆನ್ ಆಗಿದೆ..." : "GPS Location Enabled...";
+      document.getElementById('meterStatusMsg').style.color = "#3182ce";
+
+      custMeterWatchId = navigator.geolocation.watchPosition(
+        (position) => {
+          let lat = position.coords.latitude;
+          let lng = position.coords.longitude;
+          document.getElementById('liveGpsCoord').innerText = `GPS: Lat ${lat.toFixed(4)}, Lng ${lng.toFixed(4)}`;
+
+          if (lastCustPos) {
+            let distMoved = calculateDistance(lastCustPos.lat, lastCustPos.lng, lat, lng);
+            // If moved more than 5 meters (0.005 km)
+            if (distMoved > 0.005) {
+              distanceKm += distMoved;
+              document.getElementById('distCount').innerText = distanceKm.toFixed(1);
+              let base = getBaseFare(document.getElementById('meterVehicleType').value);
+              let ratePerKm = document.getElementById('meterVehicleType').value === 'Auto' ? 15 : 22;
+              let total = base + (distanceKm * ratePerKm);
+              document.getElementById('liveAmount').innerText = Math.round(total);
+              
+              document.getElementById('meterStatusMsg').innerText = currentLang === 'kn' ? "ವಾಹನ ಚಲಿಸುತ್ತಿದೆ..." : "Vehicle Moving...";
+              document.getElementById('meterStatusMsg').style.color = "#0fb05b";
+            } else {
+              document.getElementById('meterStatusMsg').innerText = currentLang === 'kn' ? "ನಿಮ್ಮ ವಾಹನವನ್ನು ನಿಂತಿದೆ ಅಂತ ಲಿಪ್ತಿನಲ್ಲಿ ತೋರಿಸಬೇಕು: ವಾಹನ ನಿಂತಿದೆ" : "Your vehicle is stopped: Vehicle Stopped";
+              document.getElementById('meterStatusMsg').style.color = "#d69e2e";
+            }
+          }
+          lastCustPos = { lat, lng };
+        },
+        (error) => {
+          alert(currentLang === 'kn' ? "ಜಿಪಿಎಸ್ ಸಿಗ್ನಲ್ ಸಿಗುತ್ತಿಲ್ಲ!" : "GPS signal lost!");
+        },
+        { enableHighAccuracy: true, maximumAge: 0, timeout: 10000 }
+      );
     }
 
     function stopMeterOnly() {
-      if (meterInterval) {
-        clearInterval(meterInterval);
-        meterInterval = null;
+      if (custMeterWatchId !== null) {
+        navigator.geolocation.clearWatch(custMeterWatchId);
+        custMeterWatchId = null;
       }
+      document.getElementById('meterStatusMsg').innerText = currentLang === 'kn' ? "ವಾಹನ ನಿಂತಿದೆ" : "Vehicle Stopped";
+      document.getElementById('meterStatusMsg').style.color = "#d69e2e";
     }
 
     function resetMeterRate() {
       stopMeterOnly();
       distanceKm = 0.0;
+      lastCustPos = null;
       document.getElementById('distCount').innerText = '0.0';
       document.getElementById('liveAmount').innerText = getBaseFare(document.getElementById('meterVehicleType').value);
+      document.getElementById('meterStatusMsg').innerText = currentLang === 'kn' ? "ವಾಹನ ನಿಂತಿದೆ" : "Vehicle Stopped";
     }
 
     function getBaseFare(type) {
@@ -1077,34 +1127,74 @@
       }
     }
 
+    // DRIVER LIVE GPS METER
     function startDriverMeter() {
-      if (driverMeterInterval) return;
+      if (drvMeterWatchId) return;
+
+      if (!navigator.geolocation) {
+        alert(currentLang === 'kn' ? "ನಿಮ್ಮ ಮೊಬೈಲ್‌ನಲ್ಲಿ ಜಿಪಿಎಸ್ ಲಭ್ಯವಿಲ್ಲ!" : "GPS not supported!");
+        return;
+      }
+
+      let confirmGps = confirm(currentLang === 'kn' ? "ಜಿಪಿಎಸ್ ಆನ್ ಆಗಬೇಕು. ಮುಂದುವರಿಯಲು OK ಒತ್ತಿ." : "GPS needs to be turned on. Click OK to proceed.");
+      if (!confirmGps) return;
+
       driverDistanceKm = 0.0;
+      lastDrvPos = null;
       document.getElementById('driverDistCount').innerText = driverDistanceKm.toFixed(1);
       document.getElementById('driverLiveAmount').innerText = getBaseFare(document.getElementById('driverMeterVehicleType').value);
-      
-      driverMeterInterval = setInterval(() => {
-        driverDistanceKm += 0.1;
-        document.getElementById('driverDistCount').innerText = driverDistanceKm.toFixed(1);
-        let base = getBaseFare(document.getElementById('driverMeterVehicleType').value);
-        let ratePerKm = document.getElementById('driverMeterVehicleType').value === 'Auto' ? 15 : 22;
-        let total = base + (driverDistanceKm * ratePerKm);
-        document.getElementById('driverLiveAmount').innerText = Math.round(total);
-      }, 1000);
+      document.getElementById('driverMeterStatusMsg').innerText = currentLang === 'kn' ? "ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಆನ್ ಆಗಿದೆ..." : "GPS Location Enabled...";
+      document.getElementById('driverMeterStatusMsg').style.color = "#3182ce";
+
+      drvMeterWatchId = navigator.geolocation.watchPosition(
+        (position) => {
+          let lat = position.coords.latitude;
+          let lng = position.coords.longitude;
+          document.getElementById('driverLiveGpsCoord').innerText = `GPS: Lat ${lat.toFixed(4)}, Lng ${lng.toFixed(4)}`;
+
+          if (lastDrvPos) {
+            let distMoved = calculateDistance(lastDrvPos.lat, lastDrvPos.lng, lat, lng);
+            // If moved more than 5 meters (0.005 km)
+            if (distMoved > 0.005) {
+              driverDistanceKm += distMoved;
+              document.getElementById('driverDistCount').innerText = driverDistanceKm.toFixed(1);
+              let base = getBaseFare(document.getElementById('driverMeterVehicleType').value);
+              let ratePerKm = document.getElementById('driverMeterVehicleType').value === 'Auto' ? 15 : 22;
+              let total = base + (driverDistanceKm * ratePerKm);
+              document.getElementById('driverLiveAmount').innerText = Math.round(total);
+              
+              document.getElementById('driverMeterStatusMsg').innerText = currentLang === 'kn' ? "ವಾಹನ ಚಲಿಸುತ್ತಿದೆ..." : "Vehicle Moving...";
+              document.getElementById('driverMeterStatusMsg').style.color = "#0fb05b";
+            } else {
+              document.getElementById('driverMeterStatusMsg').innerText = currentLang === 'kn' ? "ವಾಹನ ನಿಂತಿದೆ" : "Vehicle Stopped";
+              document.getElementById('driverMeterStatusMsg').style.color = "#d69e2e";
+            }
+          }
+          lastDrvPos = { lat, lng };
+        },
+        (error) => {
+          alert(currentLang === 'kn' ? "ಜಿಪಿಎಸ್ ಸಿಗ್ನಲ್ ಸಿಗುತ್ತಿಲ್ಲ!" : "GPS signal lost!");
+        },
+        { enableHighAccuracy: true, maximumAge: 0, timeout: 10000 }
+      );
     }
 
     function stopDriverMeterOnly() {
-      if (driverMeterInterval) {
-        clearInterval(driverMeterInterval);
-        driverMeterInterval = null;
+      if (drvMeterWatchId !== null) {
+        navigator.geolocation.clearWatch(drvMeterWatchId);
+        drvMeterWatchId = null;
       }
+      document.getElementById('driverMeterStatusMsg').innerText = currentLang === 'kn' ? "ವಾಹನ ನಿಂತಿದೆ" : "Vehicle Stopped";
+      document.getElementById('driverMeterStatusMsg').style.color = "#d69e2e";
     }
 
     function resetDriverMeterRate() {
       stopDriverMeterOnly();
       driverDistanceKm = 0.0;
+      lastDrvPos = null;
       document.getElementById('driverDistCount').innerText = '0.0';
       document.getElementById('driverLiveAmount').innerText = getBaseFare(document.getElementById('driverMeterVehicleType').value);
+      document.getElementById('driverMeterStatusMsg').innerText = currentLang === 'kn' ? "ವಾಹನ ನಿಂತಿದೆ" : "Vehicle Stopped";
     }
 
     async function loadAdminDrivers() {
