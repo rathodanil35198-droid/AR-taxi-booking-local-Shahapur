@@ -48,7 +48,6 @@
     body { background-color: var(--bg); color: var(--text); padding: 8px; padding-bottom: 70px; }
     .container { width: 100%; max-width: 480px; margin: 0 auto; background: #fff; padding: 12px; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.4); position: relative; }
 
-    /* ಮಿಂಚುವ ಕರ್ನಾಟಕ ಅನಿಮೇಷನ್ ಶೈಲಿ */
     @keyframes glowText {
       0% { color: #ffeb3b; text-shadow: 0 0 5px #ff9800, 0 0 10px #ff5722; }
       50% { color: #00e676; text-shadow: 0 0 10px #00e676, 0 0 20px #1de9b6; }
@@ -64,7 +63,6 @@
       text-align: center;
     }
 
-    /* ನಿಯಮಗಳ ಪುಟ ಸ್ಟೈಲ್ */
     #termsScreen { text-align: left; padding: 15px; background: #1e293b; border-radius: 10px; color: #f8fafc; }
     .terms-box { border: 1px solid #475569; padding: 10px; height: 210px; overflow-y: scroll; font-size: 0.8rem; background: #0f172a; color: #cbd5e1; margin-bottom: 12px; border-radius: 6px; line-height: 1.4; }
 
@@ -110,7 +108,6 @@
     .footer { text-align: center; font-size: 0.7rem; color: #64748b; margin-top: 10px; border-top: 1px solid #eee; padding-top: 5px; }
     .back-home-btn { background: #64748b; color: white; border: none; padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; margin-bottom: 8px; }
 
-    /* ಫ್ಲೋಟಿಂಗ್ ವಾಟ್ಸಾಪ್ ಶೇರಿಂಗ್ ಬಟನ್ */
     .global-floating-share {
       position: fixed;
       bottom: 10px;
@@ -135,8 +132,6 @@
     }
 
     .admin-search-bar { width: 100%; padding: 8px 12px; margin-bottom: 10px; border: 2px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem; }
-    .driver-photo-thumbnails { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
-    .driver-photo-thumbnails img { width: 45px; height: 45px; object-fit: cover; border-radius: 4px; border: 1px solid #cbd5e1; cursor: pointer; }
     
     .modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); text-align: center; padding-top: 40px; }
     .modal-content { max-width: 90%; max-height: 70vh; border-radius: 6px; margin-bottom: 15px; }
@@ -278,7 +273,6 @@
           </div>
           <button class="btn-submit" onclick="submitBooking()" id="btnSubmitBooking">ಬುಕ್ ಮಾಡಿ</button>
         </div>
-        <div id="customerStatusContainer" style="margin-top: 10px;"></div>
       </div>
 
       <!-- ಕಸ್ಟಮರ್ ಲೈವ್ ಮೀಟರ್ ಸೆಕ್ಷನ್ -->
@@ -334,31 +328,11 @@
             <option value="Car">🚗 ಕಾರ್ (Car)</option>
           </select>
         </div>
-        <div class="form-group">
-          <label>ವೆಹಿಕಲ್ RC ಕಾರ್ಡ್ ಫೋಟೋ ಅಪ್‌ಲೋಡ್:</label>
-          <input type="file" id="rcPhotoFile" accept="image/*">
-        </div>
-        <div class="form-group">
-          <label>ಡಿ ಎಲ್ ಫೋಟೋ ಅಪ್‌ಲೋಡ್:</label>
-          <input type="file" id="dlPhotoFile" accept="image/*">
-        </div>
-        <div class="form-group">
-          <label>ಆಧಾರ್ ಕಾರ್ಡ್ ಫೋಟೋಸ್:</label>
-          <input type="file" id="aadhaarPhotoFile" accept="image/*">
-        </div>
-        <div class="form-group">
-          <label>ಡ್ರೈವರ್ ಫೋಟೋ ಅಪ್‌ಲೋಡ್:</label>
-          <input type="file" id="driverPhotoFile" accept="image/*">
-        </div>
-        <div class="form-group">
-          <label id="lblDrvPhoto">ವಾಹನ ಫೋಟೋ ಅಪ್‌ಲೋಡ್:</label>
-          <input type="file" id="vehPhotoFile" accept="image/*">
-        </div>
         <button class="btn-submit" onclick="registerDriver()" id="btnSubmitDriver">ಪ್ರೊಫೈಲ್ ಸೇವ್ ಮಾಡಿ</button>
         <div id="driverRegStatus" style="margin-top:8px; font-size:0.8rem; font-weight:bold; text-align:center;"></div>
       </div>
 
-      <!-- ಡ್ರೈವರ್ ಲೈವ್ ಬುಕಿಂಗ್ಸ್ ಸೆಕ್ಷನ್ (ಸೆಕ್ಯೂರ್ಡ್ ಕೋಡ್ ಲಾಕ್ ಜತೆ) -->
+      <!-- ಡ್ರೈವರ್ ಲೈವ್ ಬುಕಿಂಗ್ಸ್ ಸೆಕ್ಷನ್ -->
       <div id="ordersSection" class="section">
         <h2>🔒 ಡ್ರೈವರ್ ಲೈವ್ ಬುಕಿಂಗ್ಸ್ & ಸೆಕ್ಯುರಿಟಿ ಕೋಡ್</h2>
         
@@ -408,15 +382,6 @@
 
   </div>
 
-  <!-- ಇಮೇಜ್ ವ್ಯೂವರ್ ಮಾಡಲ್ -->
-  <div id="photoModal" class="modal">
-    <span class="modal-close" onclick="closeModal()">&times;</span>
-    <img class="modal-content" id="modalImage">
-    <div style="margin-top:10px;">
-      <a id="modalDownloadLink" href="#" target="_blank" class="modal-download-btn">ಫೋಟೋ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ (Download)</a>
-    </div>
-  </div>
-
   <button class="global-floating-share" onclick="shareAppOnWhatsApp()">
     💬 ಈ ಆಪ್ ಅನ್ನು ವಾಟ್ಸಾಪ್‌ನಲ್ಲಿ ಶೇರ್ ಮಾಡಿ (ಮ್ಯಾಪ್ ಲಿಂಕ್)
   </button>
@@ -435,11 +400,6 @@
         waBtnText: "💬 Join Driver WhatsApp Group",
         emergencyBoxText: "ತುರ್ತು ಸಹಾಯ ಬೇಕಿದ್ದರೆ ಕಾಲ್ ಮಾಡಿ ವೆಹಿಕಲ್ ನಂಬರ್ ತಿಳಿಸಿ:",
         emergencyBtnText: "📞 24/7 ತುರ್ತು ಕಾಲ್ (Emergency Call)",
-        tabBooking: "👤 ಬುಕಿಂಗ್",
-        tabMeter: "⏱️ ಲೈವ್ (2KM)",
-        tabProfile: "🚗 ಪ್ರೊಫೈಲ್",
-        tabOrders: "📢 ಲೈವ್ ಆರ್ಡರ್ಸ್",
-        tabAdmin: "🔒 ಅಡ್ಮಿನ್",
         h2Booking: "ಯಾತ್ರೆ ಬುಕ್ ಮಾಡಿ",
         lblVehSelect: "ವಾಹನ ಆಯ್ಕೆಮಾಡಿ (ಚಿತ್ರದ ಮೇಲೆ ಕ್ಲಿಕ್ ಮಾಡಿ):",
         lblAutoCard: "ಆಟೋ (Auto)",
@@ -464,7 +424,6 @@
         lblDrvPhone: "ಮೊಬೈಲ್ ನಂಬರ್:",
         lblDrvVehNo: "ವಾಹನ ನಂಬರ್:",
         lblDrvVehType: "ವಾಹನ ಪ್ರಭೇದ:",
-        lblDrvPhoto: "ವಾಹನ ಫೋಟೋ ಅಪ್‌ಲೋಡ್:",
         btnSubmitDriver: "ಪ್ರೊಫೈಲ್ ಸೇವ್ ಮಾಡಿ",
         langToggleBtn: "English"
       },
@@ -477,11 +436,6 @@
         waBtnText: "💬 Join Driver WhatsApp Group",
         emergencyBoxText: "For emergency help call & provide vehicle number:",
         emergencyBtnText: "📞 24/7 Emergency Call",
-        tabBooking: "👤 Booking",
-        tabMeter: "⏱️ Live (2KM)",
-        tabProfile: "🚗 Profile",
-        tabOrders: "📢 Live Orders",
-        tabAdmin: "🔒 Admin",
         h2Booking: "Book Your Ride",
         lblVehSelect: "Select Vehicle (Click on image):",
         lblAutoCard: "Auto",
@@ -506,9 +460,8 @@
         lblDrvPhone: "Mobile Number:",
         lblDrvVehNo: "Vehicle Number:",
         lblDrvVehType: "Vehicle Type:",
-        lblDrvPhoto: "Upload Vehicle Photo:",
         btnSubmitDriver: "Save Profile",
-        langToggleBtnಕನ್ನಡ
+        langToggleBtn: "ಕನ್ನಡ"
       }
     };
 
@@ -591,10 +544,6 @@
       if (sectionId === 'ordersSection') document.getElementById('tabO')?.classList.add('active');
       if (sectionId === 'profileSection') document.getElementById('tabP')?.classList.add('active');
       if (sectionId === 'adminSection') document.getElementById('tabA')?.classList.add('active');
-
-      if (sectionId === 'ordersSection') {
-        // Automatically trigger code verification check or focus
-      }
     }
 
     function populatePassengers() {
@@ -658,14 +607,12 @@
       document.getElementById('lblDrvPhone').innerText = t.lblDrvPhone;
       document.getElementById('lblDrvVehNo').innerText = t.lblDrvVehNo;
       document.getElementById('lblDrvVehType').innerText = t.lblDrvVehType;
-      document.getElementById('lblDrvPhoto').innerText = t.lblDrvPhoto;
       document.getElementById('btnSubmitDriver').innerText = t.btnSubmitDriver;
       document.getElementById('langToggleBtn').innerText = t.langToggleBtn;
       
       populatePassengers();
     }
 
-    // GPS Location Fetch for Customer Booking
     function getCustomerLocation() {
       if (navigator.geolocation) {
         alert(currentLang === 'kn' ? "ಜಿಪಿಎಸ್ ಆನ್ ಆಗುತ್ತಿದೆ... ದಯವಿಟ್ಟು ಅನುಮತಿ ನೀಡಿ." : "Turning on GPS... Please allow location access.");
@@ -682,11 +629,10 @@
           { enableHighAccuracy: true }
         );
       } else {
-        alert("Geolocation is not supported by this browser.");
+        alert("Geolocation is not supported.");
       }
     }
 
-    // Submit Booking to Firestore
     async function submitBooking() {
       const vehicleType = document.getElementById('vehicleType').value;
       const custName = document.getElementById('custName').value.trim();
@@ -724,7 +670,6 @@
       }
     }
 
-    // Driver Code Verification (4-digit passcode lock)
     function moveToNext(current, nextFieldID) {
       if (current.value.length >= 1) {
         document.getElementById(nextFieldID)?.focus();
@@ -738,7 +683,6 @@
       const d4 = document.getElementById('code4').value;
       const enteredCode = d1 + d2 + d3 + d4;
 
-      // You can define valid driver code or IDs here (e.g., "5003" or universal driver code "1234")
       if (enteredCode.length === 4) {
         if (enteredCode === "1234" || enteredCode === "5003") {
           document.getElementById('driverCodeLockBox').style.display = 'none';
@@ -762,7 +706,6 @@
       document.getElementById('driverCodeLockBox').style.display = 'block';
     }
 
-    // Load Live Bookings for Drivers (Within 2KM / Shahapur range)
     function loadLiveBookings() {
       const listContainer = document.getElementById('driverOrdersList');
       window.onSnapshot(window.collection(window.db, "bookings"), (snapshot) => {
@@ -788,8 +731,6 @@
       });
     }
 
-    // Customer Live Meter & GPS Running
-    let meterInterval = null;
     let distanceKm = 0.0;
     let currentFare = 0;
 
@@ -799,7 +740,7 @@
       currentFare = baseFare;
       distanceKm = 0.0;
 
-      document.getElementById('custGpsStatusText.innerText = "ಜಿಪಿಎಸ್ ಆನ್ ಆಗಿದೆ (GPS Active)";
+      document.getElementById('custGpsStatusText').innerText = "ಜಿಪಿಎಸ್ ಆನ್ ಆಗಿದೆ (GPS Active)";
       document.getElementById('custGpsStatusText').style.color = "#059669";
       document.getElementById('custMeterStatusText').innerText = "ಮೀಟರ್ ರನ್ ಆಗುತ್ತಿದೆ...";
       document.getElementById('custMeterStatusText').style.color = "#059669";
@@ -807,7 +748,6 @@
 
       if (navigator.geolocation) {
         navigator.geolocation.watchPosition((pos) => {
-          // Simulation or live increment based on movement
           distanceKm += 0.1;
           currentFare = baseFare + Math.floor(distanceKm * 15);
           document.getElementById('distCount').innerText = distanceKm.toFixed(1);
@@ -833,7 +773,6 @@
       document.getElementById('liveAmount').innerText = "0";
     }
 
-    // Driver Registration with File uploads
     async function registerDriver() {
       const drvName = document.getElementById('drvName').value.trim();
       const drvPhone = document.getElementById('drvPhone').value.trim();
@@ -851,7 +790,7 @@
           drvPhone,
           drvVehNo,
           drvVehType,
-          idCode: drvPhone.slice(-4), // 4 digit code from phone number
+          idCode: drvPhone.slice(-4),
           timestamp: window.serverTimestamp()
         });
         document.getElementById('driverRegStatus').innerText = "ಪ್ರೊಫೈಲ್ ಯಶಸ್ವಿಯಾಗಿ ಸೇವ್ ಆಯಿತು! ನಿಮ್ಮ 4 ಅಂಕಿಯ ಐಡಿ ಕೋಡ್: " + drvPhone.slice(-4);
@@ -861,7 +800,6 @@
       }
     }
 
-    // Admin Login & Management
     function loginAdmin() {
       const pass = document.getElementById('adminPasswordInput').value;
       if (pass === "123456" || pass === "admin") {
@@ -909,10 +847,6 @@
         const text = card.innerText.toLowerCase();
         card.style.display = text.includes(queryText) ? 'block' : 'none';
       });
-    }
-
-    function closeModal() {
-      document.getElementById('photoModal').style.display = 'none';
     }
 
     function shareAppOnWhatsApp() {
