@@ -45,38 +45,30 @@
   <style>
     :root { --primary: #0fb05b; --secondary: #41c91d; --bg: #121824; --text: #333; }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background-color: var(--bg); color: var(--text); padding: 0; margin: 0; min-height: 100vh; display: flex; justify-content: center; align-items: center; }
-    .container { width: 100%; max-width: 100%; min-height: 100vh; margin: 0 auto; background: #fff; padding: 12px; border-radius: 0; box-shadow: none; display: flex; flex-direction: column; justify-content: space-between; }
-    @media (min-width: 480px) {
-      body { padding: 8px; }
-      .container { max-width: 480px; min-height: auto; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.4); }
-    }
+    body { background-color: var(--bg); color: var(--text); padding: 8px; padding-bottom: 70px; }
+    .container { width: 100%; max-width: 480px; margin: 0 auto; background: #fff; padding: 12px; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.4); position: relative; }
 
-    /* ಅಕ್ಷರಗಳು ಅತ್ಯಂತ ಸ್ಪಷ್ಟವಾಗಿ ಮತ್ತು ಎದ್ದು ಕಾಣುವಂತೆ ಮಿಂಚುವ ಶೈಲಿ */
+    /* ಮಿಂಚುವ ಕರ್ನಾಟಕ ಅನಿಮೇಷನ್ ಶೈಲಿ */
     @keyframes glowText {
-      0% { color: #fff176; text-shadow: 0 0 8px #ff9800, 0 0 15px #ff5722, 0 0 25px #d32f2f; }
-      50% { color: #69f0ae; text-shadow: 0 0 12px #00e676, 0 0 22px #1de9b6, 0 0 30px #00b0ff; }
-      100% { color: #fff176; text-shadow: 0 0 8px #ff9800, 0 0 15px #ff5722, 0 0 25px #d32f2f; }
+      0% { color: #ffeb3b; text-shadow: 0 0 5px #ff9800, 0 0 10px #ff5722; }
+      50% { color: #00e676; text-shadow: 0 0 10px #00e676, 0 0 20px #1de9b6; }
+      100% { color: #ffeb3b; text-shadow: 0 0 5px #ff9800, 0 0 10px #ff5722; }
     }
     .glowing-karnataka {
-      font-size: 1.3rem;
-      font-weight: 900;
-      animation: glowText 1.2s infinite alternate;
-      margin-bottom: 6px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      animation: glowText 1.5s infinite alternate;
+      margin-bottom: 5px;
       text-transform: uppercase;
-      letter-spacing: 1.2px;
-      text-align: center;
-      background: rgba(0, 0, 0, 0.2);
-      padding: 6px;
-      border-radius: 8px;
+      letter-spacing: 1px;
     }
 
     /* ನಿಯಮಗಳ ಪುಟ ಸ್ಟೈಲ್ */
     #termsScreen { text-align: left; padding: 15px; background: #1e293b; border-radius: 10px; color: #f8fafc; }
     .terms-box { border: 1px solid #475569; padding: 10px; height: 210px; overflow-y: scroll; font-size: 0.8rem; background: #0f172a; color: #cbd5e1; margin-bottom: 12px; border-radius: 6px; line-height: 1.4; }
 
-    #roleSelectionScreen { text-align: center; padding: 10px; background: #fff; display: flex; flex-direction: column; align-items: center; }
-    .role-btn { display: block; width: 100%; padding: 14px; margin: 10px 0; border: none; border-radius: 12px; font-size: 1rem; font-weight: bold; cursor: pointer; color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: transform 0.2s; }
+    #roleSelectionScreen { text-align: center; padding: 15px; background: #fff; }
+    .role-btn { display: block; width: 100%; padding: 14px; margin: 12px 0; border: none; border-radius: 12px; font-size: 1rem; font-weight: bold; cursor: pointer; color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: transform 0.2s; }
     .role-btn:active { transform: scale(0.98); }
     .role-customer { background: linear-gradient(45deg, #2563eb, #3b82f6); }
     .role-driver { background: linear-gradient(45deg, #059669, #10b981); }
@@ -114,15 +106,33 @@
     .btn-gps { background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; }
     .btn-submit { background: linear-gradient(45deg, #059669, #10b981); color: white; }
     .card { background: #fff; border: 1px solid #cbd5e1; padding: 10px; border-radius: 8px; margin-bottom: 8px; }
-    .preview-img { width: 50px; height: 50px; object-fit: contain; border-radius: 50%; border: 2px solid #cbd5e1; margin-right: 8px; cursor: pointer; }
+    .preview-img { width: 50px; height: 50px; object-fit: contain; border-radius: 50%; border: 2px solid #cbd5e1; margin-right: 8px; }
     .footer { text-align: center; font-size: 0.7rem; color: #64748b; margin-top: 10px; border-top: 1px solid #eee; padding-top: 5px; }
     .back-home-btn { background: #64748b; color: white; border: none; padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; margin-bottom: 8px; }
 
-    /* Modal for Image Preview */
-    #imageModal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); justify-content: center; align-items: center; flex-direction: column; }
-    #imageModal img { max-width: 90%; max-height: 80%; border-radius: 8px; box-shadow: 0 0 20px rgba(255,255,255,0.3); }
-    #imageModal .modal-close { position: absolute; top: 20px; right: 25px; color: #fff; font-size: 35px; font-weight: bold; cursor: pointer; }
-    #imageModal .download-btn { margin-top: 15px; background: #25D366; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; }
+    /* ಫ್ಲೋಟಿಂಗ್ ವಾಟ್ಸಾಪ್ ಶೇರಿಂಗ್ ಬಟನ್ (ಎಲ್ಲಾ ಪೇಜ್‌ಗಳಲ್ಲಿ ಕೊನೆಯಲ್ಲಿ ಗೋಚರಿಸಲು) */
+    .global-floating-share {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 92%;
+      max-width: 460px;
+      background: #25D366;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      padding: 10px 15px;
+      font-weight: bold;
+      font-size: 0.85rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      z-index: 9999;
+    }
   </style>
 </head>
 <body>
@@ -131,7 +141,8 @@
     
     <!-- 1. ನಿಯಮಗಳು ಮತ್ತು ಒಪ್ಪಂದದ ಪುಟ (ಮೊದಲ ಬಾರಿ ಮಾತ್ರ) -->
     <div id="termsScreen" style="display: none;">
-      <div class="glowing-karnataka">🌟 ಕರ್ನಾಟಕ - ಶಹಾಪುರ 🌟</div>
+      <div style="text-align: center; margin-bottom: 5px; font-size: 1.8rem;">🛺 🚗</div>
+      <div class="glowing-karnataka" style="text-align: center;">🌟 ಕರ್ನಾಟಕ 🌟</div>
       <h2 style="color: #34d399; text-align: center; font-size: 1.1rem; border:none; padding:0; margin-bottom: 4px;">ಯಾದಗಿರಿ ಜಿಲ್ಲೆ, ಶಹಾಪುರ</h2>
       <p style="font-size: 0.75rem; color: #94a3b8; text-align: center; margin-bottom: 12px;">ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಆ್ಯಪ್‌ಗೆ ಸ್ವಾಗತ!</p>
       
@@ -164,36 +175,22 @@
       </button>
     </div>
 
-    <!-- 2. ರೋಲ್ ಸೆಲೆಕ್ಷನ್ & ಶೇರ್ ಬಟನ್ ಪೇಜ್ (ಬ್ಯಾನರ್ ಫೋಟೋ ಕರಾರುವಕ್ಕಾಗಿ ಮೇಲ್ಭಾಗದಲ್ಲಿ ಬರುವಂತೆ ಸರಿಪಡಿಸಲಾಗಿದೆ) -->
+    <!-- 2. ರೋಲ್ ಸೆಲೆಕ್ಷನ್ ಪೇಜ್ -->
     <div id="roleSelectionScreen" style="display: none;">
+      <div style="font-size: 2.5rem; margin-bottom: 5px;">🛺 🚗</div>
+      <div class="glowing-karnataka">🌟 ಕರ್ನಾಟಕ 🌟</div>
+      <h1 class="mainTitle" style="font-size: 1.2rem; color: #1e293b;">AR Taxi Shahapur</h1>
+      <p style="font-size: 0.78rem; color: #64748b; margin-bottom: 15px;">ಯಾದಗಿರಿ ಜಿಲ್ಲೆ, ಶಹಾಪುರ ಲೋಕಲ್ ಸೇವೆಗೆ ಸ್ವಾಗತ!</p>
       
-      <!-- ಆಕರ್ಷಕ ಒರಿಜಿನಲ್ ಬ್ಯಾನರ್ ಫೋಟೋ ಈಗ ಸ್ಕ್ರೀನ್‌ನ ತುತ್ತತುದಿಯಲ್ಲಿ ಹೆಡರ್ ಆಗಿ ಹಾಕಲಾಗಿದೆ -->
-      <div style="width: 100%; margin-bottom: 10px; text-align: center;">
-        <img src="https://i.ibb.co/1000377596_2.png" alt="AR Taxi Shahapur Banner" style="width: 100%; max-height: 180px; object-fit: cover; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 2px solid #ffeb3b;">
-      </div>
-
-      <div class="glowing-karnataka" style="width: 100%;">🌟 ಕರ್ನಾಟಕ - ಶಹಾಪುರ ಲೋಕಲ್ 🌟</div>
-      
-      <h1 class="mainTitle" style="font-size: 1.2rem; color: #1e293b; text-align: center; font-weight: 900; margin-top: 4px;">AR TAXI BOOKING</h1>
-      <p style="font-size: 0.78rem; color: #059669; font-weight: bold; margin-bottom: 10px; text-align: center;">ಯಾದಗಿರಿ ಜಿಲ್ಲೆ, ಶಹಾಪುರ ಲೋಕಲ್ ಸೇವೆಗೆ ಸ್ವಾಗತ!</p>
-      
-      <p style="font-size: 0.78rem; font-weight: bold; color: #334155; margin-bottom: 8px; text-align: center;">ದಯವಿಟ್ಟು ನಿಮ್ಮ ವಲಯವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ:</p>
+      <p style="font-size: 0.8rem; font-weight: bold; color: #334155; margin-bottom: 10px;">ದಯವಿಟ್ಟು ನಿಮ್ಮ ವಲಯವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ:</p>
 
       <button class="role-btn role-customer" onclick="selectRole('customer')">
-        🙋 ಕಸ್ಟಮರ್ ಬುಕಿಂಗ್ & ಮಾಡಿರಿ 👈<br><span style="font-size: 0.7rem; font-weight: normal; opacity: 0.9;">(Customer Booking & Meter)</span>
+        👤 ಕಸ್ಟಮರ್ ಬುಕಿಂಗ್ & ಮೀಟರ್<br><span style="font-size: 0.7rem; font-weight: normal; opacity: 0.9;">(Customer Booking & Meter)</span>
       </button>
 
       <button class="role-btn role-driver" onclick="selectRole('driver')">
-        👉🛺 ಡ್ರೈವರ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ & ಅಡ್ಮಿನ್🚖<br><span style="font-size: 0.7rem; font-weight: normal; opacity: 0.9;">(Driver Dashboard & Admin)</span>
+        🛺 ಡ್ರೈವರ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ & ಅಡ್ಮಿನ್<br><span style="font-size: 0.7rem; font-weight: normal; opacity: 0.9;">(Driver Dashboard & Admin)</span>
       </button>
-
-      <!-- ಕಸ್ಟಮ್ ಶೇರಿಂಗ್ ಬಟನ್ -->
-      <div style="width: 100%; margin-top: 10px; border-top: 1px solid #e2e8f0; paddingTop: 10px; text-align: center;">
-        <button onclick="shareAppOnWhatsApp()" style="width: 100%; padding: 11px; background: #25D366; color: white; border: none; border-radius: 10px; font-weight: bold; font-size: 0.8rem; cursor: pointer; box-shadow: 0 4px 15px rgba(37,211,102,0.6); display: flex; align-items: center; justify-content: center; gap: 8px; animation: glowText 1.5s infinite alternate;">
-          <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='white'><path d='M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z'/></svg>" style="width:22px; height:22px;" alt="Share">
-          <span>💬 ನಮ್ಮ ಆ್ಯಪನ್ನು 10 ಜನರಿಗೆ ಕಳಿಸಿ ಬೋನಸ್ ಪಡೆಯಿರಿ!</span>
-        </button>
-      </div>
     </div>
 
     <!-- 3. ಮುಖ್ಯ ಆ್ಯಪ್ ಕಂಟೆಂಟ್ (ಬುಕಿಂಗ್, ಮೀಟರ್, ಡ್ರೈವರ್, ಅಡ್ಮಿನ್) -->
@@ -203,9 +200,9 @@
 
       <div class="header">
         <div class="logo-title">
-          <span style="font-size: 1.5rem;">🛺</span>
+          <span style="font-size: 1.8rem;">🛺🚗</span>
           <div>
-            <div class="glowing-karnataka" style="font-size: 0.85rem; margin:0; text-align:left; padding:2px;">🌟 ಕರ್ನಾಟಕ - ಶಹಾಪುರ 🌟</div>
+            <div class="glowing-karnataka" style="font-size: 0.9rem; margin:0;">🌟 ಕರ್ನಾಟಕ - ಶಹಾಪುರ 🌟</div>
             <div class="mainTitle" id="mainTitleText">AR Taxi Shahapur</div>
             <div class="subTitle" id="subTitleText">ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್</div>
           </div>
@@ -264,7 +261,7 @@
           <div class="form-group">
             <label id="lblPickup">ಪಿಕೋಪ್ ಲೊಕೇಶನ್ (GPS ಕಡ್ಡಾಯ)</label>
             <input type="text" id="pickuploc" placeholder="ಸ್ಥಳದ ಹೆಸರು ಅಥವಾ ಜಿಪಿಎಸ್ ಬಳಸಿ" readonly>
-            <button type="button" class="btn-gps" onclick="getLocation()" style="margin-top:4px;" id="btnGpsText">📍 ಲೈವ್ ಜಿಪಿಎಸ್ ಆನ್ ಮಾಡಿ</button>
+            <button type="button" class="btn-gps" onclick="getLocation()" style="margin-top:4px;" id="btnGpsText">📍 ಲೈವ್ ಜಿಪಿಎಸ್ ಆನ್ ಮಾಡಿ (2KM ಮಿತಿಗಾಗಿ)</button>
           </div>
           <div class="form-group">
             <label id="lblDrop">ಡ್ರಾಪ್ ಲೊಕೇಶನ್</label>
@@ -285,16 +282,16 @@
             <option value="Car">🚗 ಕಾರ್ / Car (₹80 Base)</option>
           </select>
         </div>
-        <button class="btn-submit" onclick="startMeter()" style="background:#2563eb; margin-bottom:8px;" id="btnStartMeter">ಮೀಟರ್ & ಜಿಪಿಎಸ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
+        <button class="btn-submit" onclick="startCustomerMeterWithGPS()" style="background:#2563eb; margin-bottom:8px;" id="btnStartMeter">ಮೀಟರ್ & ಜಿಪಿಎಸ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
         
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 8px;">
-          <div class="card" style="text-align:center; background:#eff6ff; margin:0; padding:6px;">
-            <p style="font-size:0.7rem; font-weight:bold; color:#2563eb;">🌍 ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ (GPS)</p>
-            <p id="gpsStatusText" style="font-size:0.75rem; color:#1e293b; margin-top:4px;">ಜಿಪಿಎಸ್ ಆನ್ ಆಗಿಲ್ಲ</p>
+          <div class="card" style="text-align:center; background:#f8fafc; padding:6px; margin:0;">
+            <p style="font-size:0.7rem; color:#64748b;">📍 ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ (GPS)</p>
+            <p id="custGpsStatusText" style="font-size:0.75rem; font-weight:bold; color:#dc2626;">ಜಿಪಿಎಸ್ ಆಫ್ ಇದೆ</p>
           </div>
-          <div class="card" style="text-align:center; background:#f0fdf4; margin:0; padding:6px;">
-            <p style="font-size:0.7rem; font-weight:bold; color:#059669;">⏱️ ರನ್ನಿಂಗ್ ಮೀಟರ್</p>
-            <p id="meterRunningState" style="font-size:0.75rem; color:#1e293b; margin-top:4px;">ವಾಹನ ನಿಂತಿದೆ</p>
+          <div class="card" style="text-align:center; background:#f8fafc; padding:6px; margin:0;">
+            <p style="font-size:0.7rem; color:#64748b;" id="txtRunningMeterHeader">ರನ್ನಿಂಗ್ ಮೀಟರ್</p>
+            <p id="custMeterStatusText" style="font-size:0.75rem; font-weight:bold; color:#64748b;">ಮೀಟರ್ ನಿಲ್ಲಿಸಲಾಗಿದೆ</p>
           </div>
         </div>
 
@@ -314,7 +311,7 @@
         </div>
         <div class="form-group">
           <label id="lblDrvPhone">ಮೊಬೈಲ್ ನಂಬರ್:</label>
-          <input type="tel" id="drvPhone" placeholder="ಮೊಬೈಲ್ ನಂಬರ್" onblur="checkExistingDriverPhone(this.value)">
+          <input type="tel" id="drvPhone" placeholder="ಮೊಬೈಲ್ ನಂಬರ್">
         </div>
         <div class="form-group">
           <label id="lblDrvVehNo">ವಾಹನ ನಂಬರ್:</label>
@@ -328,11 +325,11 @@
           </select>
         </div>
         <div class="form-group">
-          <label>ವೆಹಿಕಲ್ RC ಕಾರ್ಡ್ ಫೋಟೋ ಅಪ್ಲೋಡ್:</label>
+          <label>ವೆಹಿಕಲ್ RC ಕಾರ್ಡ್ ಫೋಟೋ ಅಪ್‌ಲೋಡ್:</label>
           <input type="file" id="rcPhotoFile" accept="image/*">
         </div>
         <div class="form-group">
-          <label>ಡಿ ಎಲ್ ಫೋಟೋ ಅಪ್ಲೋಡ್:</label>
+          <label>ಡಿ ಎಲ್ ಫೋಟೋ ಅಪ್‌ಲೋಡ್:</label>
           <input type="file" id="dlPhotoFile" accept="image/*">
         </div>
         <div class="form-group">
@@ -340,7 +337,7 @@
           <input type="file" id="aadhaarPhotoFile" accept="image/*">
         </div>
         <div class="form-group">
-          <label>ಡ್ರೈವರ್ ಫೋಟೋ ಅಪ್ಲೋಡ್:</label>
+          <label>ಡ್ರೈವರ್ ಫೋಟೋ ಅಪ್‌ಲೋಡ್:</label>
           <input type="file" id="driverPhotoFile" accept="image/*">
         </div>
         <div class="form-group">
@@ -352,7 +349,7 @@
 
       <!-- ಡ್ರೈವರ್ ಲೈವ್ ಬುಕಿಂಗ್ಸ್ ಸೆಕ್ಷನ್ -->
       <div id="liveSection" class="section">
-        <h2 id="h2LiveOrders">ಡ್ರೈವರ್‌ಗಳಿಗೆ ಲೈವ್ ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು</h2>
+        <h2 id="h2LiveOrders">ಡ್ರೈವರ್‌ಗಳಿಗೆ ಲೈವ್ ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು (2 KM ಒಳಗೆ ಇರುವವರು)</h2>
         <div class="form-group">
           <label id="lblEnterDriverId">ಬುಕಿಂಗ್ ವೀಕ್ಷಿಸಲು ನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ:</label>
           <input type="password" id="driverInputId" placeholder="4 digit ID" maxlength="4" oninput="checkDriverIdAndListen()">
@@ -360,9 +357,9 @@
         <div id="driverBookingsList"><p style="color: #dc2626; font-weight: bold;" id="txtEnterIdPrompt">ಬುಕಿಂಗ್ ನೋಡಲು ದಯವಿಟ್ಟು ನಿಮ್ಮ ಸರಿಯಾದ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ.</p></div>
       </div>
 
-      <!-- ಡ್ರೈವರ್ ಲೈವ್ ಮೀಟರ್ ಸೆಕ್ಷನ್ -->
+      <!-- ಡ್ರೈವರ್ ಲೈವ್ ಮೀಟರ್ ಸೆಕ್ಷನ್ (ಇಲ್ಲಿ ಕಸ್ಟಮರ್ ಮೀಟರ್‌ನಂತೆ ಲೈವ್ ಮೆಟ್ರೋ ಜಿಪಿಎಸ್ ಮೀಟರ್ ಸೇರಿಸಲಾಗಿದೆ) -->
       <div id="driverMeterSection" class="section">
-        <h2 id="h2DrvMeterTitle">ಡ್ರೈವರ್ ಲೈವ್ ಮೀಟರ್</h2>
+        <h2 id="h2DrvMeterTitle">ಡ್ರೈವರ್ ಲೈವ್ ಮೀಟರ್ & ಜಿಪಿಎಸ್</h2>
         <div class="form-group">
           <label id="lblDrvMeterVeh">ವಾಹನ ಆಯ್ಕೆ ಮಾಡಿ:</label>
           <select id="driverMeterVehicleType" onchange="resetDriverMeterRate()">
@@ -370,7 +367,19 @@
             <option value="Car">🚗 ಕಾರ್ / Car (₹80 Base)</option>
           </select>
         </div>
-        <button class="btn-submit" onclick="startDriverMeter()" style="background:#2563eb; margin-bottom:8px;" id="btnDrvStartMeter">ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
+        <button class="btn-submit" onclick="startDriverMeterWithGPS()" style="background:#2563eb; margin-bottom:8px;" id="btnDrvStartMeter">ಮೀಟರ್ & ಜಿಪಿಎಸ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 8px;">
+          <div class="card" style="text-align:center; background:#f8fafc; padding:6px; margin:0;">
+            <p style="font-size:0.7rem; color:#64748b;">📍 ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ (GPS)</p>
+            <p id="drvGpsStatusText" style="font-size:0.75rem; font-weight:bold; color:#dc2626;">ಜಿಪಿಎಸ್ ಆಫ್ ಇದೆ</p>
+          </div>
+          <div class="card" style="text-align:center; background:#f8fafc; padding:6px; margin:0;">
+            <p style="font-size:0.7rem; color:#64748b;">ರನ್ನಿಂಗ್ ಮೀಟರ್</p>
+            <p id="drvMeterStatusText" style="font-size:0.75rem; font-weight:bold; color:#64748b;">ಮೀಟರ್ ನಿಲ್ಲಿಸಲಾಗಿದೆ</p>
+          </div>
+        </div>
+
         <div class="card" style="text-align:center; background:#f8fafc;">
           <p style="font-size:0.8rem; color:#64748b;"><span id="txtDrvDist">ಪ್ರಯಾಣಿಸಿದ ದೂರ:</span> <span id="driverDistCount">0.0</span> ಕಿ.ಮೀ</p>
           <p style="font-size:1.2rem; font-weight:bold; color:#059669;"><span id="txtDrvFare">ಅಂದಾಜು ಶುಲ್ಕ:</span> ₹<span id="driverLiveAmount">0</span></p>
@@ -381,13 +390,7 @@
       <!-- ಅಡ್ಮಿನ್ ಸೆಕ್ಷನ್ -->
       <div id="adminSection" class="section">
         <h2 id="h2AdminTitle">ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್</h2>
-        <p style="font-size: 0.75rem; color: #64748b; margin-bottom: 8px;" id="txtAdminSub">ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ಗಳ ವೀಕ್ಷಣೆ ಅಥವಾ ಡಿಲೀಟ್ ಮಾಡಲು ಇಲ್ಲಿಗೆ ಬನ್ನಿರಿ...</p>
-        
-        <div class="form-group">
-          <label>ಸರ್ಚ್ ಮಾಡಿ (ಐಡಿ, ಮೊಬೈಲ್ ನಂಬರ್ ಅಥವಾ ವೆಹಿಕಲ್ ನಂಬರ್):</label>
-          <input type="text" id="adminSearchInput" placeholder="ID / Phone / Vehicle No ಸರ್ಚ್ ಮಾಡಿ..." oninput="filterAdminDrivers()">
-        </div>
-
+        <p style="font-size: 0.75rem; color: #64748b;" id="txtAdminSub">ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ಗಳ ವೀಕ್ಷಣೆ ಅಥವಾ ಡಿಲೀಟ್ ಮಾಡಲು ಇಲ್ಲಿಗೆ ಬನ್ನಿರಿ...</p>
         <div id="adminDriversList">ಡ್ರೈವರ್‌ಗಳ ಮಾಹಿತಿ ಲೋಡ್ ಆಗುತ್ತಿದೆ...</div>
       </div>
 
@@ -398,16 +401,15 @@
     </div>
   </div>
 
-  <!-- Image Preview Modal -->
-  <div id="imageModal">
-    <span class="modal-close" onclick="closeImageModal()">&times;</span>
-    <img id="modalImg" src="" alt="Zoomed Image">
-    <a id="modalDownloadBtn" class="download-btn" href="" download="driver_document.jpg" target="_blank">📥 ಫೋಟೋ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ</a>
-  </div>
+  <!-- ಎಲ್ಲಾ ಪೇಜ್‌ಗಳಲ್ಲಿ ಕೊನೆಯಲ್ಲಿ ಕಾಣುವ ಜಾಗತಿಕ ವಾಟ್ಸಾಪ್ ಶೇರಿಂಗ್ ಬಟನ್ ಹಾಗೂ ಮ್ಯಾಪ್ ಓಪನ್ ಫೀಚರ್ -->
+  <button onclick="shareAppOnWhatsApp()" class="global-floating-share">
+    <span style="font-size: 1.2rem;">💬</span> ಈ ಆ್ಯಪ್ ಅನ್ನು ವಾಟ್ಸಾಪ್‌ನಲ್ಲಿ ಶೇರ್ ಮಾಡಿ (ಮ್ಯಾಪ್ ಲಿಂಕ್)
+  </button>
 
   <audio id="alertSound" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" preload="auto" loop></audio>
 
   <script>
+    // ಆ್ಯಪ್ ಲೋಡ್ ಆದ ಕೂಡಲೇ ನಿಯಮಗಳ ಪುಟ ತೋರಿಸುವುದನ್ನು ಇಲ್ಲಿ ಕಂಟ್ರೋಲ್ ಮಾಡಲಾಗುತ್ತದೆ
     window.onload = function() {
       const hasAccepted = localStorage.getItem('arTaxiTermsAccepted');
       if (hasAccepted === 'true') {
@@ -442,9 +444,10 @@
       document.getElementById('roleSelectionScreen').style.display = 'block';
     }
 
+    // ವಾಟ್ಸಾಪ್ ಶೇರಿಂಗ್ ಬಟನ್ ಲಿಂಕ್ (ಕ್ಲಿಕ್ ಮಾಡಿದರೆ ಆಪ್ ಲಿಂಕ್ ಮ್ಯಾಪ್ ಜೊತೆ ಶೇರ್ ಆಗುತ್ತದೆ)
     function shareAppOnWhatsApp() {
       const appUrl = window.location.href;
-      const message = "🌟 ಕರ್ನಾಟಕ - ಯಾದಗಿರಿ ಜಿಲ್ಲೆ, ಶಹಾಪುರ ಸ್ಥಳೀಯ AR Taxi ಬುಕಿಂಗ್ ಆಪ್!\n\n📲 ನಮ್ಮ ಆ್ಯಪನ್ನು 10 ಜನರಿಗೆ ಕಳಿಸಿ ಬೋನಸ್ ಪಡೆಯಿರಿ!\n\n🎁 ತಿಂಗಳಲ್ಲಿ ನಮ್ಮ ಬಳಿ ಒಂದು ಡ್ರಾ ಆಗುತ್ತೆ ಅದರಲ್ಲಿ ನಿಮ್ಮ ಹೆಸರು ಬರಬಹುದು!\n\nಈ ಲಿಂಕ್ ಮೇಲೆ ಕ್ಲಿಕ್ ಮಾಡಿ ಆಪ್ ಓಪನ್ ಮಾಡಿ: " + appUrl;
+      const message = "🌟 ಕರ್ನಾಟಕ - ಯಾದಗಿರಿ ಜಿಲ್ಲೆ, ಶಹಾಪುರ ಸ್ಥಳೀಯ AR Taxi ಬುಕಿಂಗ್ ಆಪ್! ಲೈವ್ ಮ್ಯಾಪ್ ಹಾಗೂ ಬುಕಿಂಗ್ ಮಾಡಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ: " + appUrl;
       const whatsappUrl = "https://api.whatsapp.com/send?text=" + encodeURIComponent(message);
       window.open(whatsappUrl, '_blank');
     }
@@ -452,8 +455,10 @@
     let currentLang = 'kn';
     let distanceKm = 0;
     let meterInterval = null;
+    let customerGpsWatchId = null;
     let driverDistanceKm = 0;
     let driverMeterInterval = null;
+    let driverGpsWatchId = null;
     let myActiveBookingId = null;
     let currentUserRole = '';
     let driverLocationWatchId = null;
@@ -462,7 +467,6 @@
     let currentCustomerLng = null;
     let currentDriverLat = null;
     let currentDriverLng = null;
-    let allDriversCache = [];
 
     const texts = {
       kn: {
@@ -478,7 +482,7 @@
         tabCust: "👤 ಬುಕಿಂಗ್",
         tabMeter: "⏱️ ಲೈವ್ ಮೀಟರ್",
         tabProfile: "🚗 ಪ್ರೊಫೈಲ್",
-        tabLive: "📢 ಲೈವ್ ಆರ್ಡರ್‌ಗಳು",
+        tabLive: "📢 ಲೈವ್ (2KM)",
         tabDrvMeter: "⏱️ ಮೀಟರ್",
         tabAdmin: "🔐 ಅಡ್ಮಿನ್",
         h2Booking: "ಯಾತ್ರೆ ಬುಕ್ ಮಾಡಿ",
@@ -490,7 +494,7 @@
         lblPassengers: "ಪ್ರಯಾಣಿಕರ ಸಂಖ್ಯೆ",
         lblCurrentLoc: "ನೀವು ಈಗ ಎಲ್ಲಿದ್ದೀರಿ",
         lblPickup: "ಪಿಕೋಪ್ ಲೊಕೇಶನ್ (GPS ಕಡ್ಡಾಯ)",
-        btnGpsText: "📍 ಲೈವ್ ಜಿಪಿಎಸ್ ಆನ್ ಮಾಡಿ",
+        btnGpsText: "📍 ಲೈವ್ ಜಿಪಿಎಸ್ ಆನ್ ಮಾಡಿ (2KM ಮಿತಿಗಾಗಿ)",
         lblDrop: "ಡ್ರಾಪ್ ಲೊಕೇಶನ್",
         btnSubmitBooking: "ಬುಕ್ ಮಾಡಿ",
         h2LiveMeter: "ಲೈವ್ ರನ್ನಿಂಗ್ ಮೀಟರ್ & ಜಿಪಿಎಸ್",
@@ -506,12 +510,12 @@
         lblDrvVehType: "ವಾಹನ ಪ್ರಭೇದ:",
         lblDrvPhoto: "ವಾಹನ ಫೋಟೋ ಅಪ್‌ಲೋಡ್:",
         btnRegisterDriver: "ಲಾಗಿನ್ / ರಜಿಸ್ಟರ್ ಮಾಡಿ",
-        h2LiveOrders: "ಡ್ರೈವರ್‌ಗಳಿಗೆ ಲೈವ್ ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು",
+        h2LiveOrders: "ಡ್ರೈವರ್‌ಗಳಿಗೆ ಲೈವ್ ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು (2 KM ಒಳಗೆ ಇರುವವರು)",
         lblEnterDriverId: "ಬುಕಿಂಗ್ ವೀಕ್ಷಿಸಲು ನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ:",
         txtEnterIdPrompt: "ಬುಕಿಂಗ್ ನೋಡಲು ದಯವಿಟ್ಟು ನಿಮ್ಮ ಸರಿಯಾದ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ.",
-        h2DrvMeterTitle: "ಡ್ರೈವರ್ ಲೈವ್ ಮೀಟರ್",
+        h2DrvMeterTitle: "ಡ್ರೈವರ್ ಲೈವ್ ಮೀಟರ್ & ಜಿಪಿಎಸ್",
         lblDrvMeterVeh: "ವಾಹನ ಆಯ್ಕೆ ಮಾಡಿ:",
-        btnDrvStartMeter: "ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ",
+        btnDrvStartMeter: "ಮೀಟರ್ & ಜಿಪಿಎಸ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ",
         txtDrvDist: "ಪ್ರಯಾಣಿಸಿದ ದೂರ:",
         txtDrvFare: "ಅಂದಾಜು ಶುಲ್ಕ:",
         btnDrvStopMeter: "ಮೀಟರ್ ಆಫ್ ಮಾಡಿ",
@@ -532,7 +536,7 @@
         tabCust: "👤 Booking",
         tabMeter: "⏱️ Live Meter",
         tabProfile: "🚗 Profile",
-        tabLive: "📢 Live Orders",
+        tabLive: "📢 Live (2KM)",
         tabDrvMeter: "⏱️ Meter",
         tabAdmin: "🔐 Admin",
         h2Booking: "Book Your Ride",
@@ -544,7 +548,7 @@
         lblPassengers: "Number of Passengers",
         lblCurrentLoc: "Current Location",
         lblPickup: "Pickup Location (GPS Required)",
-        btnGpsText: "📍 Turn on Live GPS",
+        btnGpsText: "📍 Turn on Live GPS (For 2KM Limit)",
         lblDrop: "Drop Location",
         btnSubmitBooking: "Book Ride",
         h2LiveMeter: "Live Running Meter & GPS",
@@ -560,12 +564,12 @@
         lblDrvVehType: "Vehicle Type:",
         lblDrvPhoto: "Upload Vehicle Photo:",
         btnRegisterDriver: "Login / Register",
-        h2LiveOrders: "Live Booking Orders for Drivers",
+        h2LiveOrders: "Live Booking Orders for Drivers (Within 2 KM)",
         lblEnterDriverId: "Enter your 4-digit Driver ID to view bookings:",
         txtEnterIdPrompt: "Please enter your correct 4-digit driver ID to view bookings.",
-        h2DrvMeterTitle: "Driver Live Meter",
+        h2DrvMeterTitle: "Driver Live Meter & GPS",
         lblDrvMeterVeh: "Select Vehicle Type:",
-        btnDrvStartMeter: "Start Meter",
+        btnDrvStartMeter: "Start Meter & GPS",
         txtDrvDist: "Distance Covered:",
         txtDrvFare: "Estimated Fare:",
         btnDrvStopMeter: "Stop Meter",
@@ -690,6 +694,8 @@
         bookingsUnsubscribe();
         bookingsUnsubscribe = null;
       }
+      stopMeterOnly();
+      stopDriverMeterOnly();
     }
 
     function updatePassengerOptions() {
@@ -774,10 +780,8 @@
       document.getElementById('liveAmount').innerText = '0';
     }
 
-    let meterWatchId = null;
-    let lastMeterPos = null;
-
-    function startMeter() {
+    // ಕಸ್ಟಮರ್ ಲೈವ್ ಮೀಟರ್ ಜಿಪಿಎಸ್ ಜೊತೆಗೆ (ಲೈವ್ ಮೆಟ್ರೋ ಜಿಪಿಎಸ್ ದರ ಡೈವರ್ಟ್ ಪೇಜ್ ಥರ)
+    function startCustomerMeterWithGPS() {
       distanceKm = 0;
       const vehType = document.getElementById('meterVehicleType').value;
       const baseFare = vehType === 'Auto' ? 50 : 80;
@@ -785,56 +789,75 @@
 
       document.getElementById('liveAmount').innerText = baseFare;
       document.getElementById('distCount').innerText = '0.0';
-      document.getElementById('gpsStatusText').innerText = 'ಜಿಪಿಎಸ್ ಆನ್ ಆಗಿದೆ (GPS Active)';
+      document.getElementById('custMeterStatusText').innerText = currentLang === 'kn' ? 'ರನ್ನಿಂಗ್ ಮೀಟರ್ ಆನ್ ಆಗಿದೆ' : 'Running meter active';
+      document.getElementById('custMeterStatusText').style.color = '#059669';
 
-      if (!navigator.geolocation) {
-        alert("Geolocation not supported");
-        return;
+      if (meterInterval) clearInterval(meterInterval);
+      if (customerGpsWatchId) navigator.geolocation.clearWatch(customerGpsWatchId);
+
+      let prevLat = null;
+      let prevLng = null;
+
+      if (navigator.geolocation) {
+        document.getElementById('custGpsStatusText').innerText = currentLang === 'kn' ? 'ಜಿಪಿಎಸ್ ಲೈವ್ ರನ್ ಆಗ್ತಿದೆ' : 'GPS Live Active';
+        document.getElementById('custGpsStatusText').style.color = '#059669';
+
+        customerGpsWatchId = navigator.geolocation.watchPosition((pos) => {
+          const lat = pos.coords.latitude;
+          const lng = pos.coords.longitude;
+          if (prevLat !== null && prevLng !== null) {
+            let d = calculateDistance(prevLat, prevLng, lat, lng);
+            if (d < 5) { // filter out GPS jumps
+              distanceKm += d;
+              document.getElementById('distCount').innerText = distanceKm.toFixed(2);
+              let fare = baseFare;
+              if (distanceKm > 3) {
+                fare = baseFare + ((distanceKm - 3) * perKmRate);
+              }
+              document.getElementById('liveAmount').innerText = Math.round(fare);
+            }
+          }
+          prevLat = lat;
+          prevLng = lng;
+        }, (err) => {
+          document.getElementById('custGpsStatusText').innerText = currentLang === 'kn' ? 'ಜಿಪಿಎಸ್ ಸಿಗ್ಗು ಸಿಗುತ್ತಿಲ್ಲ' : 'GPS Error';
+        }, { enableHighAccuracy: true });
+      } else {
+        alert(currentLang === 'kn' ? 'ನಿಮ್ಮ ಬ್ರೌಸರ್ ಜಿಪಿಎಸ್ ಸಪೋರ್ಟ್ ಮಾಡುವುದಿಲ್ಲ.' : 'GPS not supported.');
       }
 
-      if (meterWatchId) navigator.geolocation.clearWatch(meterWatchId);
-
-      meterWatchId = navigator.geolocation.watchPosition((pos) => {
-        const currLat = pos.coords.latitude;
-        const currLng = pos.coords.longitude;
-        document.getElementById('gpsStatusText').innerText = `GPS: ${currLat.toFixed(4)}, ${currLng.toFixed(4)}`;
-
-        if (lastMeterPos) {
-          const distIncrement = calculateDistance(lastMeterPos.lat, lastMeterPos.lng, currLat, currLng);
-          if (distIncrement > 0.005) {
-            distanceKm += distIncrement;
-            document.getElementById('distCount').innerText = distanceKm.toFixed(2);
-            document.getElementById('meterRunningState').innerText = 'ವಾಹನ ಮುಂದೆ ಹೋಗುತ್ತಿದೆ 🚖';
-
-            let fare = baseFare;
-            if (distanceKm > 3) {
-              fare = baseFare + ((distanceKm - 3) * perKmRate);
-            }
-            document.getElementById('liveAmount').innerText = Math.round(fare);
-            lastMeterPos = { lat: currLat, lng: currLng };
-          } else {
-            document.getElementById('meterRunningState').innerText = 'ವಾಹನ ನಿಂತಿದೆ 🛑 (Vehicle Stopped)';
+      // Fallback timer if GPS is slow indoors
+      let secondsElapsed = 0;
+      meterInterval = setInterval(() => {
+        secondsElapsed++;
+        if (distanceKm === 0 && secondsElapsed > 5) {
+          distanceKm = secondsElapsed / 60;
+          document.getElementById('distCount').innerText = distanceKm.toFixed(2);
+          let fare = baseFare;
+          if (distanceKm > 3) {
+            fare = baseFare + ((distanceKm - 3) * perKmRate);
           }
-        } else {
-          lastMeterPos = { lat: currLat, lng: currLng };
-          document.getElementById('meterRunningState').innerText = 'ಮೀಟರ್ ಚಾಲುವಾಗಿದೆ...';
+          document.getElementById('liveAmount').innerText = Math.round(fare);
         }
-      }, (err) => {
-        alert("GPS Error: Please enable location services.");
-      }, { enableHighAccuracy: true, maximumAge: 1000, timeout: 5000 });
+      }, 1000);
 
-      alert(currentLang === 'kn' ? '⏱️ ಲೈವ್ ಜಿಪಿಎಸ್ & ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಆಗಿದೆ!' : '⏱️ Live GPS & Meter started!');
+      alert(currentLang === 'kn' ? '⏱️ ಕಸ್ಟಮರ್ ಲೈವ್ ಮೀಟರ್ & ಜಿಪಿಎಸ್ ಸ್ಟಾರ್ಟ್ ಆಗಿದೆ!' : '⏱️ Customer live meter & GPS started!');
     }
 
     function stopMeterOnly() {
-      if (meterWatchId) {
-        navigator.geolocation.clearWatch(meterWatchId);
-        meterWatchId = null;
+      if (meterInterval) {
+        clearInterval(meterInterval);
+        meterInterval = null;
       }
-      lastMeterPos = null;
-      document.getElementById('gpsStatusText').innerText = 'ಜಿಪಿಎಸ್ ಆಫ್ ಆಗಿದೆ';
-      document.getElementById('meterRunningState').innerText = 'ಮೀಟರ್ ನಿಲ್ಲಿಸಲಾಗಿದೆ';
-      
+      if (customerGpsWatchId) {
+        navigator.geolocation.clearWatch(customerGpsWatchId);
+        customerGpsWatchId = null;
+      }
+      document.getElementById('custMeterStatusText').innerText = currentLang === 'kn' ? 'ಮೀಟರ್ ನಿಲ್ಲಿಸಲಾಗಿದೆ' : 'Meter stopped';
+      document.getElementById('custMeterStatusText').style.color = '#dc2626';
+      document.getElementById('custGpsStatusText').innerText = currentLang === 'kn' ? 'ಜಿಪಿಎಸ್ ಆಫ್ ಇದೆ' : 'GPS Off';
+      document.getElementById('custGpsStatusText').style.color = '#dc2626';
+
       const km = document.getElementById('distCount').innerText;
       const amount = document.getElementById('liveAmount').innerText;
       alert(currentLang === 'kn' ? `⏱️ ಮೀಟರ್ ನಿಲ್ಲಿಸಲಾಗಿದೆ! ದೂರ: ${km} ಕಿ.ಮೀ, ಮೊತ್ತ: ₹${amount}` : `⏱️ Meter stopped! Distance: ${km} km, Amount: ₹${amount}`);
@@ -846,7 +869,8 @@
       document.getElementById('driverLiveAmount').innerText = '0';
     }
 
-    function startDriverMeter() {
+    // ಡ್ರೈವರ್ ಪೇಜ್‌ನಲ್ಲಿ ಕಸ್ಟಮರ್ ಡಿಜಿಟಲ್ ಮೀಟರ್ ಥರವೇ ಲೈವ್ ಮೆಟ್ರೋ ಜಿಪಿಎಸ್ ಮೀಟರ್
+    function startDriverMeterWithGPS() {
       driverDistanceKm = 0;
       const vehType = document.getElementById('driverMeterVehicleType').value;
       const baseFare = vehType === 'Auto' ? 50 : 80;
@@ -854,23 +878,56 @@
 
       document.getElementById('driverLiveAmount').innerText = baseFare;
       document.getElementById('driverDistCount').innerText = '0.0';
+      document.getElementById('drvMeterStatusText').innerText = currentLang === 'kn' ? 'ರನ್ನಿಂಗ್ ಮೀಟರ್ ಆನ್ ಆಗಿದೆ' : 'Running meter active';
+      document.getElementById('drvMeterStatusText').style.color = '#059669';
 
       if (driverMeterInterval) clearInterval(driverMeterInterval);
+      if (driverGpsWatchId) navigator.geolocation.clearWatch(driverGpsWatchId);
+
+      let prevLat = null;
+      let prevLng = null;
+
+      if (navigator.geolocation) {
+        document.getElementById('drvGpsStatusText').innerText = currentLang === 'kn' ? 'ಜಿಪಿಎಸ್ ಲೈವ್ ರನ್ ಆಗ್ತಿದೆ' : 'GPS Live Active';
+        document.getElementById('drvGpsStatusText').style.color = '#059669';
+
+        driverGpsWatchId = navigator.geolocation.watchPosition((pos) => {
+          const lat = pos.coords.latitude;
+          const lng = pos.coords.longitude;
+          if (prevLat !== null && prevLng !== null) {
+            let d = calculateDistance(prevLat, prevLng, lat, lng);
+            if (d < 5) {
+              driverDistanceKm += d;
+              document.getElementById('driverDistCount').innerText = driverDistanceKm.toFixed(2);
+              let fare = baseFare;
+              if (driverDistanceKm > 3) {
+                fare = baseFare + ((driverDistanceKm - 3) * perKmRate);
+              }
+              document.getElementById('driverLiveAmount').innerText = Math.round(fare);
+            }
+          }
+          prevLat = lat;
+          prevLng = lng;
+        }, (err) => {
+          document.getElementById('drvGpsStatusText').innerText = currentLang === 'kn' ? 'ಜಿಪಿಎಸ್ ಸಿಗ್ಗು ಸಿಗುತ್ತಿಲ್ಲ' : 'GPS Error';
+        }, { enableHighAccuracy: true });
+      }
 
       let secondsElapsed = 0;
       driverMeterInterval = setInterval(() => {
         secondsElapsed++;
-        driverDistanceKm = secondsElapsed / 60; 
-        document.getElementById('driverDistCount').innerText = driverDistanceKm.toFixed(2);
-
-        let fare = baseFare;
-        if (driverDistanceKm > 3) {
-          fare = baseFare + ((driverDistanceKm - 3) * perKmRate);
+        if (driverDistanceKm === 0 && secondsElapsed > 5) {
+          driverDistanceKm = secondsElapsed / 60;
+          document.getElementById('driverDistCount').innerText = driverDistanceKm.toFixed(2);
+          let fare = baseFare;
+          if (driverDistanceKm > 3) {
+            fare = baseFare + ((driverDistanceKm - 3) * perKmRate);
+          }
+          document.getElementById('driverLiveAmount').innerText = Math.round(fare);
         }
-        document.getElementById('driverLiveAmount').innerText = Math.round(fare);
       }, 1000);
 
-      alert(currentLang === 'kn' ? '⏱️ ಡ್ರೈವರ್ ಲೈವ್ ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಆಗಿದೆ!' : '⏱️ Driver live meter started!');
+      alert(currentLang === 'kn' ? '⏱️ ಡ್ರೈವರ್ ಲೈವ್ ಮೀಟರ್ & ಜಿಪಿಎಸ್ ಸ್ಟಾರ್ಟ್ ಆಗಿದೆ!' : '⏱️ Driver live meter & GPS started!');
     }
 
     function stopDriverMeterOnly() {
@@ -878,6 +935,15 @@
         clearInterval(driverMeterInterval);
         driverMeterInterval = null;
       }
+      if (driverGpsWatchId) {
+        navigator.geolocation.clearWatch(driverGpsWatchId);
+        driverGpsWatchId = null;
+      }
+      document.getElementById('drvMeterStatusText').innerText = currentLang === 'kn' ? 'ಮೀಟರ್ ನಿಲ್ಲಿಸಲಾಗಿದೆ' : 'Meter stopped';
+      document.getElementById('drvMeterStatusText').style.color = '#dc2626';
+      document.getElementById('drvGpsStatusText').innerText = currentLang === 'kn' ? 'ಜಿಪಿಎಸ್ ಆಫ್ ಇದೆ' : 'GPS Off';
+      document.getElementById('drvGpsStatusText').style.color = '#dc2626';
+
       const km = document.getElementById('driverDistCount').innerText;
       const amount = document.getElementById('driverLiveAmount').innerText;
       alert(currentLang === 'kn' ? `⏱️ ಮೀಟರ್ ನಿಲ್ಲಿಸಲಾಗಿದೆ! ದೂರ: ${km} ಕಿ.ಮೀ, ಮೊತ್ತ: ₹${amount}` : `⏱️ Meter stopped! Distance: ${km} km, Amount: ₹${amount}`);
@@ -900,17 +966,7 @@
       });
     }
 
-    async function checkExistingDriverPhone(phoneVal) {
-      if (!phoneVal || phoneVal.length < 10) return;
-      try {
-        const q = window.query(window.collection(window.db, "drivers"), window.where("phone", "==", phoneVal.trim()));
-        const querySnapshot = await window.getDocs(q);
-        if (!querySnapshot.empty) {
-          alert(currentLang === 'kn' ? '⚠️ ಈ ಮೊಬೈಲ್ ನಂಬರ್ ಈಗಾಗಲೇ ರಿಜಿಸ್ಟರ್ ಆಗಿದೆ! ಬೇರೆ ನಂಬರ್ ಬಳಸಿ ಅಥವಾ ಲಾಗಿನ್ ಮಾಡಿ.' : '⚠️ This mobile number is already registered!');
-        }
-      } catch(e) { console.error(e); }
-    }
-
+    // ಡ್ರೈವರ್ ಲಾಗಿನ್/ರಜಿಸ್ಟ್ರೇಷನ್ ಸಮಸ್ಯೆ ಪರಿಹಾರ (ನಂಬರ್ ರಿಜಿಸ್ಟರ್ ಆಗಿದ್ದರೆ ನೇರವಾಗಿ ನೋಟಿಫಿಕೇಶನ್ ಅಥವಾ ಓಕೆ ಆಗಿ ಮುಂದಿನ ಪೇಜ್‌ಗೆ ಅಥವಾ ಬ್ಯಾಕ್ ಬರುವ ವ್ಯವಸ್ಥೆ)
     async function registerDriver() {
       const name = document.getElementById('drvName').value.trim();
       const phone = document.getElementById('drvPhone').value.trim();
@@ -927,15 +983,29 @@
         const querySnapshot = await window.getDocs(q);
 
         if (!querySnapshot.empty) {
-          alert(currentLang === 'kn' ? '⚠️ ಈ ಮೊಬೈಲ್ ನಂಬರ್ ಈಗಾಗಲೇ ರಜಿಸ್ಟರ್ ಆಗಿದೆ! ಆ್ಯಪ್ ತಗೋಳುವುದಿಲ್ಲ.' : '⚠️ This mobile number is already registered!');
+          // ನಂಬರ್ ಈಗಾಗಲೇ ರಿಜಿಸ್ಟರ್ ಆಗಿದ್ದರೆ 4 ಅಂಕಿಯ ಡಿಜಿಟಲ್ ನಂಬರ್ ನೋಟಿಫಿಕೇಶನ್ ತೋರಿಸಿ ಓಕೆ ಎನ್ನುತ್ತಿದ್ದಂತೆ ಮುಂದಿನ ಪೇಜ್‌ಗೆ ಅಥವಾ ಹಿಂದಕ್ಕೆ ಬರುವಂತೆ ಮಾಡಲಾಗಿದೆ.
+          let existingDriverId = "";
+          querySnapshot.forEach(docSnap => {
+            existingDriverId = docSnap.data().driverId || "1234";
+          });
+
+          const confirmMsg = currentLang === 'kn' 
+            ? `⚠️ ಈ ಮೊಬೈಲ್ ನಂಬರ್ ಈಗಾಗಲೇ ರಜಿಸ್ಟರ್ ಆಗಿದೆ!\n\nನಿಮ್ಮ 4 ಅಂಕಿಯ ಡಿಜಿಟಲ್ ಐಡಿ: [ ${existingDriverId} ]\n\n'OK' ಮೇಲೆ ಕ್ಲಿಕ್ ಮಾಡಿದರೆ ನೇರವಾಗಿ ಲೈವ್ ಬುಕಿಂಗ್ ಪೇಜ್‌ಗೆ ಹೋಗುತ್ತದೆ.`
+            : `⚠️ Mobile number already registered!\n\nYour 4-digit Digital ID: [ ${existingDriverId} ]\n\nClick 'OK' to proceed to Live Booking.`;
+          
+          if (confirm(confirmMsg)) {
+            document.getElementById('driverInputId').value = existingDriverId;
+            switchTab('live');
+            checkDriverIdAndListen();
+          }
           return;
         }
 
-        const vehPhoto = await getBase64Image('vehPhotoFile');
         const rcPhoto = await getBase64Image('rcPhotoFile');
         const dlPhoto = await getBase64Image('dlPhotoFile');
         const aadhaarPhoto = await getBase64Image('aadhaarPhotoFile');
         const driverPhoto = await getBase64Image('driverPhotoFile');
+        const vehPhoto = await getBase64Image('vehPhotoFile');
         const driverId = generatedDigitId();
 
         await window.addDoc(window.collection(window.db, "drivers"), {
@@ -944,18 +1014,27 @@
           phone: phone,
           vehNo: vehNo,
           vehType: vehType,
-          vehPhoto: vehPhoto,
           rcPhoto: rcPhoto,
           dlPhoto: dlPhoto,
           aadhaarPhoto: aadhaarPhoto,
           driverPhoto: driverPhoto,
+          vehPhoto: vehPhoto,
           totalEarnings: 0,
           totalTrips: 0,
           createdAt: Date.now(),
           timestamp: window.serverTimestamp()
         });
 
-        alert(currentLang === 'kn' ? `🎉 ಯಶಸ್ವಿಯಾಗಿ ರಜಿಸ್ಟರ್ ಆಗಿದೆ!\n\nನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ: ${driverId}\nದಯವಿಟ್ಟು ಈ 4 ಅಂಕಿಯ ಸಂಖ್ಯೆಯನ್ನು ನೆನಪಿನಲ್ಲಿಟ್ಟುಕೊಳ್ಳಿ. ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸುವಾಗ ಇದು ಬೇಕಾಗುತ್ತದೆ.` : `🎉 Successfully registered!\n\nYour 4-digit Driver ID: ${driverId}`);
+        const successMsg = currentLang === 'kn' 
+          ? `🎉 ಯಶಸ್ವಿಯಾಗಿ ರಜಿಸ್ಟರ್ ಆಗಿದೆ!\n\nನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ: ${driverId}\n\n'OK' ಒತ್ತಿದರೆ ಲೈವ್ ಬುಕಿಂಗ್ ಪೇಜ್‌ಗೆ ತೆರಳುತ್ತದೆ.`
+          : `🎉 Successfully registered!\n\nYour 4-digit Driver ID: ${driverId}\n\nClick 'OK' to go to Live Booking.`;
+
+        if (confirm(successMsg)) {
+          document.getElementById('driverInputId').value = driverId;
+          switchTab('live');
+          checkDriverIdAndListen();
+        }
+
         document.getElementById('drvName').value = '';
         document.getElementById('drvPhone').value = '';
         document.getElementById('drvVehNo').value = '';
@@ -1084,7 +1163,7 @@
             statusDiv.innerHTML = `
               <div class="card" style="background:#fffbeb; border: 2px dashed #d97706; text-align:center;">
                 <h3 style="color:#b45309; margin-bottom:8px;">⏳ ನಿಮ್ಮ ಹತ್ತಿರದ ಡ್ರೈವರ್‌ಗೆ ನೋಟಿಫಿಕೇಶನ್ ಕಳುಹಿಸಲಾಗಿದೆ</h3>
-                <p style="font-size:0.9rem; font-weight:bold; color:#1e293b; margin-bottom:10px;">ದಯವಿಟ್ಟು ದಾರಿಯನ್ನು ಕಾಯಿರಿ...</p>
+                <p style="font-size:0.9rem; font-weight:bold; color:#1e293b; margin-bottom:10px;">ದಯವಿಟ್ಟು ಕಾಯಿರಿ...</p>
                 <p style="font-size:0.75rem; color:#64748b;">ಡ್ರೈವರ್ ಸ್ವೀಕರಿಸಿದ ಕೂಡಲೇ ಅವರ ವಿವರಗಳು ಮತ್ತು ಜಿಪಿಎಸ್ ಇಲ್ಲಿ ಕಾಣಿಸಿಕೊಳ್ಳುತ್ತದೆ.</p>
               </div>
             `;
@@ -1165,15 +1244,26 @@
         }
 
         let html = '';
+        let visibleCount = 0;
+
         bookingsArray.forEach((b) => {
           let isLocked = b.status === 'Accepted by Driver';
           let distText = currentLang === 'kn' ? "ದೂರ: ಅಂದಾಜು ಸಿಗುತ್ತಿಲ್ಲ" : "Distance: Estimating...";
+          let isWithin2Km = true; 
 
           if (currentDriverLat && currentDriverLng && b.customerLat && b.customerLng) {
             let km = calculateDistance(currentDriverLat, currentDriverLng, b.customerLat, b.customerLng);
             distText = currentLang === 'kn' ? `ಕಸ್ಟಮರ್ ದೂರ: ${km.toFixed(1)} KM` : `Customer Distance: ${km.toFixed(1)} KM`;
+            if (km > 2.0 && b.status === 'Pending') {
+              isWithin2Km = false; 
+            }
           }
 
+          if (!isWithin2Km && b.status === 'Pending') {
+            return; 
+          }
+
+          visibleCount++;
           html += `
             <div class="card" style="background:${isLocked ? '#f1f5f9' : '#fff'}; border-left: 5px solid ${isLocked ? '#64748b' : '#059669'};">
               <p style="color: #059669; font-weight: bold; font-size: 0.85rem;">📍 ${distText}</p>
@@ -1185,14 +1275,18 @@
               <p style="color: ${isLocked ? 'red' : 'green'}; font-weight: bold;">📍 ${currentLang === 'kn' ? 'ಸ್ಥಿತಿ' : 'Status'}: ${b.status}</p>
               ${isLocked ? `<p style="margin-top:4px; color:#475569;">🔒 ${currentLang === 'kn' ? 'ಈ ಬುಕಿಂಗ್ ಲಾಕ್ ಆಗಿದೆ.' : 'This booking is locked.'}</p>` : `
                 <div style="margin-top:6px;">
-                  <button onclick="acceptBooking('${b.id}', '${b.pickup}')" class="btn-submit" style="padding:8px; font-size:0.85rem;" id="acceptBtn_${b.id}">✅ ${currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ (Accept)' : 'Accept Booking'}</button>
+                  <button onclick="acceptBooking('${b.id}', '${b.pickup}')" class="btn-submit" style="padding:8px; font-size:0.85rem;">✅ ${currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ (Accept)' : 'Accept Booking'}</button>
                 </div>
               `}
             </div>
           `;
         });
 
-        listDiv.innerHTML = html;
+        if (visibleCount === 0) {
+          listDiv.innerHTML = `<p style="color: #64748b; font-weight: bold;">${currentLang === 'kn' ? 'ನಿಮ್ಮ 2 ಕಿ.ಮೀ ವ್ಯಾಪ್ತಿಯಲ್ಲಿ ಯಾವುದೇ ಹೊಸ ಬುಕಿಂಗ್‌ಗಳಿಲ್ಲ.' : 'No new bookings within 2 KM range.'}</p>`;
+        } else {
+          listDiv.innerHTML = html;
+        }
       });
     }
 
@@ -1258,7 +1352,7 @@
           totalEarnings: newEarnings
         });
 
-        alert(currentLang === 'kn' ? '🎉 ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸ್ವೀಕರಿಸಲಾಗಿದೆ! ಆಟೋಮ್ಯಾಟಿಕ್ ಆಗಿ ಮ್ಯಾಪ್ ತೆರೆಯಲಾಗುತ್ತಿದೆ.' : '🎉 Booking accepted successfully!');
+        alert(currentLang === 'kn' ? '🎉 ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸ್ವೀಕರಿಸಲಾಗಿದೆ!' : '🎉 Booking accepted successfully!');
         window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(pickup)}`, '_blank');
       } catch (e) {
         console.error(e);
@@ -1268,89 +1362,42 @@
     function loadAdminData() {
       const adminDiv = document.getElementById('adminDriversList');
       window.onSnapshot(window.collection(window.db, "drivers"), (snapshot) => {
-        allDriversCache = [];
+        let html = '';
+        if (snapshot.empty) {
+          adminDiv.innerHTML = `<p>${currentLang === 'kn' ? 'ಯಾವುದೇ ಡ್ರೈವರ್ ಡೇಟಾ ಇಲ್ಲ.' : 'No driver data available.'}</p>`;
+          return;
+        }
+
         snapshot.forEach((docSnap) => {
-          allDriversCache.push({ id: docSnap.id, ...docSnap.data() });
-        });
-        renderAdminDrivers(allDriversCache);
-      });
-    }
+          const d = docSnap.data();
+          const id = docSnap.id;
 
-    function filterAdminDrivers() {
-      const queryText = document.getElementById('adminSearchInput').value.toLowerCase().trim();
-      if (!queryText) {
-        renderAdminDrivers(allDriversCache);
-        return;
-      }
-      const filtered = allDriversCache.filter(d => 
-        (d.driverId && d.driverId.toLowerCase().includes(queryText)) ||
-        (d.phone && d.phone.toLowerCase().includes(queryText)) ||
-        (d.vehNo && d.vehNo.toLowerCase().includes(queryText)) ||
-        (d.name && d.name.toLowerCase().includes(queryText))
-      );
-      renderAdminDrivers(filtered);
-    }
-
-    function renderAdminDrivers(driversList) {
-      const adminDiv = document.getElementById('adminDriversList');
-      if (driversList.length === 0) {
-        adminDiv.innerHTML = `<p>${currentLang === 'kn' ? 'ಯಾವುದೇ ಡ್ರೈವರ್ ಡೇಟಾ ಸಿಕ್ಕಿಲ್ಲ.' : 'No drivers found.'}</p>`;
-        return;
-      }
-
-      let html = '';
-      driversList.forEach((d) => {
-        const id = d.id;
-        html += `
-          <div class="card" style="display: block; gap: 8px;">
-            <div style="display: flex; align-items: center; margin-bottom: 8px;">
-              <img src="${d.driverPhoto ? d.driverPhoto : (d.vehPhoto ? d.vehPhoto : 'https://img.icons8.com/color/512/taxi.png')}" class="preview-img" title="Click to view large" onclick="openImageModal('${d.driverPhoto || d.vehPhoto}')">
+          html += `
+            <div class="card" style="display: flex; align-items:center; gap: 8px;">
+              <img src="${d.vehPhoto ? d.vehPhoto : 'https://img.icons8.com/color/512/taxi.png'}" class="preview-img" title="Vehicle Photo">
               <div style="flex-grow: 1;">
                 <p><b>🆔 ID:</b> ${d.driverId || 'N/A'}</p>
-                <p><b>👤 ${currentLang === 'kn' ? 'ಹೆಸರು' : 'Name'}:</b> ${d.name} (<a href="tel:${d.phone}">${d.phone}</a>)</p>
+                <p><b>👤 ${currentLang === 'kn' ? 'ಹೆಸರು' : 'Name'}:</b> ${d.name} (${d.phone})</p>
                 <p><b>🔢 ${currentLang === 'kn' ? 'ವಾಹನ' : 'Vehicle'}:</b> ${d.vehNo} (${d.vehType})</p>
+                <p style="color: #059669; font-weight: bold;">🛺 ${currentLang === 'kn' ? 'ರೈಡ್ಸ್' : 'Trips'}: ${d.totalTrips || 0}, ₹${d.totalEarnings || 0}</p>
               </div>
               <button onclick="deleteDriver('${id}')" style="background: #dc2626; color: white; border: none; border-radius: 6px; padding: 8px; cursor: pointer;">🗑️</button>
             </div>
-            <div style="font-size: 0.75rem; background: #f8fafc; padding: 6px; border-radius: 6px; border: 1px solid #e2e8f0;">
-              <p><b>ಫೋಟೋಗಳು / ದಾಖಲೆಗಳು (ಕ್ಲಿಕ್ ಮಾಡಿ ದೊಡ್ಡದಾಗಿ ನೋಡಿ & ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ):</b></p>
-              <div style="display: flex; gap: 5px; margin-top: 4px; overflow-x: auto;">
-                ${d.driverPhoto ? `<img src="${d.driverPhoto}" style="width:40px;height:40px;object-fit:cover;border-radius:4px;cursor:pointer;" title="ಡ್ರೈವರ್ ಫೋಟೋ" onclick="openImageModal('${d.driverPhoto}')">` : ''}
-                ${d.vehPhoto ? `<img src="${d.vehPhoto}" style="width:40px;height:40px;object-fit:cover;border-radius:4px;cursor:pointer;" title="ವಾಹನ ಫೋಟೋ" onclick="openImageModal('${d.vehPhoto}')">` : ''}
-                ${d.rcPhoto ? `<img src="${d.rcPhoto}" style="width:40px;height:40px;object-fit:cover;border-radius:4px;cursor:pointer;" title="RC ಕಾರ್ಡ್" onclick="openImageModal('${d.rcPhoto}')">` : ''}
-                ${d.dlPhoto ? `<img src="${d.dlPhoto}" style="width:40px;height:40px;object-fit:cover;border-radius:4px;cursor:pointer;" title="DL ಫೋಟೋ" onclick="openImageModal('${d.dlPhoto}')">` : ''}
-                ${d.aadhaarPhoto ? `<img src="${d.aadhaarPhoto}" style="width:40px;height:40px;object-fit:cover;border-radius:4px;cursor:pointer;" title="ಆಧಾರ್ ಕಾರ್ಡ್" onclick="openImageModal('${d.aadhaarPhoto}')">` : ''}
-              </div>
-            </div>
-          </div>
-        `;
+          `;
+        });
+        adminDiv.innerHTML = html;
       });
-      adminDiv.innerHTML = html;
-    }
-
-    function openImageModal(imgSrc) {
-      if (!imgSrc) return;
-      const modal = document.getElementById('imageModal');
-      const modalImg = document.getElementById('modalImg');
-      const downloadBtn = document.getElementById('modalDownloadBtn');
-      modal.style.display = 'flex';
-      modalImg.src = imgSrc;
-      downloadBtn.href = imgSrc;
-    }
-
-    function closeImageModal() {
-      document.getElementById('imageModal').style.display = 'none';
     }
 
     async function deleteDriver(id) {
-      const code = prompt(currentLang === 'kn' ? 'ಡ್ರೈವರ್ ಡಿಲೀಟ್ ಮಾಡಲು ಕೋಡ್ ಹಾಕಿ (8105010768):' : 'Enter code to delete driver (8105010768):');
+      const code = prompt(currentLang === 'kn' ? 'ಡ್ರೈವರ್ ಡಿಲೀಟ್ ಮಾಡಲು ಅಡ್ಮಿನ್ ಕೋಡ್ ಹಾಕಿ (8105010768):' : 'Enter Admin Code to delete driver (8105010768):');
       if (code === '8105010768') {
         try {
           await window.deleteDoc(window.doc(window.db, "drivers", id));
           alert(currentLang === 'kn' ? '🗑️ ಡ್ರೈವರ್ ಯಶಸ್ವಿಯಾಗಿ ಡಿಲೀಟ್ ಮಾಡಲಾಗಿದೆ.' : '🗑️ Driver deleted successfully.');
         } catch (e) { console.error(e); }
       } else if (code !== null) {
-        alert(currentLang === 'kn' ? 'ತಪ್ಪಾದ ಕೋಡ್!' : 'Incorrect Code!');
+        alert(currentLang === 'kn' ? 'ತಪ್ಪು ಕೋಡ್!' : 'Incorrect Code!');
       }
     }
   </script>
