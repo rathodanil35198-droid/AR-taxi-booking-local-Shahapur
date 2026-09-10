@@ -43,129 +43,70 @@
   </script>
 
   <style>
-    :root { --primary: #0fb05b; --secondary: #41c91d; --bg: #0b1120; --text: #1e293b; }
+    :root { --primary: #0fb05b; --secondary: #41c91d; --bg: #121824; --text: #333; }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    
-    body { 
-      background-color: var(--bg); 
-      color: var(--text); 
-      padding: 0; 
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* ಫುಲ್ ಸ್ಕ್ರೀನ್ ಲುಕ್ ನೀಡಲು ಕಂಟೇನರ್ ಮಾರ್ಪಾಡು */
-    .container { 
-      width: 100%; 
-      max-width: 100%; 
-      min-height: 100vh; 
-      margin: 0 auto; 
-      background: #ffffff; 
-      padding: 20px 16px; 
-      border-radius: 0; 
-      box-shadow: none; 
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
+    body { background-color: var(--bg); color: var(--text); padding: 8px; }
+    .container { width: 100%; max-width: 480px; margin: 0 auto; background: #fff; padding: 12px; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.4); }
 
     @keyframes glowText {
-      0% { color: #ffeb3b; text-shadow: 0 0 8px #ff9800, 0 0 15px #ff5722; }
-      50% { color: #00e676; text-shadow: 0 0 15px #00e676, 0 0 25px #1de9b6; }
-      100% { color: #ffeb3b; text-shadow: 0 0 8px #ff9800, 0 0 15px #ff5722; }
+      0% { color: #ffeb3b; text-shadow: 0 0 5px #ff9800, 0 0 10px #ff5722; }
+      50% { color: #00e676; text-shadow: 0 0 10px #00e676, 0 0 20px #1de9b6; }
+      100% { color: #ffeb3b; text-shadow: 0 0 5px #ff9800, 0 0 10px #ff5722; }
     }
     .glowing-karnataka {
-      font-size: 1.5rem;
-      font-weight: 800;
+      font-size: 1.2rem;
+      font-weight: bold;
       animation: glowText 1.5s infinite alternate;
-      margin-bottom: 8px;
+      margin-bottom: 5px;
       text-transform: uppercase;
-      letter-spacing: 2px;
-      text-align: center;
+      letter-spacing: 1px;
     }
 
-    #termsScreen { text-align: left; padding: 15px; background: #1e293b; border-radius: 12px; color: #f8fafc; flex: 1; }
-    .terms-box { border: 1px solid #475569; padding: 12px; height: 260px; overflow-y: scroll; font-size: 0.85rem; background: #0f172a; color: #cbd5e1; margin-bottom: 15px; border-radius: 8px; line-height: 1.5; }
+    #termsScreen { text-align: left; padding: 15px; background: #1e293b; border-radius: 10px; color: #f8fafc; }
+    .terms-box { border: 1px solid #475569; padding: 10px; height: 210px; overflow-y: scroll; font-size: 0.8rem; background: #0f172a; color: #cbd5e1; margin-bottom: 12px; border-radius: 6px; line-height: 1.4; }
 
-    /* ರೋಲ್ ಸೆಲೆಕ್ಷನ್ ಸ್ಕ್ರೀನ್ ಫುಲ್ ಸ್ಕ್ರೀನ್ ಹಾಗೂ ದೊಡ್ಡ ಬಟನ್‌ಗಳು */
-    #roleSelectionScreen { 
-      text-align: center; 
-      padding: 20px 10px; 
-      background: #ffffff; 
-      flex: 1; 
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
+    #roleSelectionScreen { text-align: center; padding: 15px; background: #fff; }
+    .role-btn { display: block; width: 100%; padding: 14px; margin: 12px 0; border: none; border-radius: 12px; font-size: 1rem; font-weight: bold; cursor: pointer; color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: transform 0.2s; }
+    .role-btn:active { transform: scale(0.98); }
+    .role-customer { background: linear-gradient(45deg, #2563eb, #3b82f6); }
+    .role-driver { background: linear-gradient(45deg, #059669, #10b981); }
 
-    .role-btn { 
-      display: block; 
-      width: 100%; 
-      max-width: 420px;
-      padding: 18px 20px; 
-      margin: 14px 0; 
-      border: none; 
-      border-radius: 16px; 
-      font-size: 1.1rem; 
-      font-weight: bold; 
-      cursor: pointer; 
-      color: white; 
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2); 
-      transition: transform 0.2s, box-shadow 0.2s; 
-      text-align: center;
-    }
-    .role-btn:active { transform: scale(0.97); }
+    .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+    .logo-title { display: flex; align-items: center; gap: 8px; }
+    .mainTitle { font-size: 1.1rem; font-weight: bold; color: #1e293b; }
+    .subTitle { font-size: 0.75rem; color: #64748b; }
+    .lang-btn { background: #f1f5f9; border: 1px solid #cbd5e1; padding: 5px 10px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 0.75rem; }
+
+    .whatsapp-box { background: #ecfdf5; border: 2px dashed #10b981; padding: 8px; border-radius: 10px; text-align: center; margin-bottom: 10px; }
+    .whatsapp-btn { display: inline-block; background: #059669; color: white; padding: 6px 12px; border-radius: 20px; text-decoration: none; font-size: 0.8rem; font-weight: bold; margin-top: 5px; }
     
-    .role-customer { 
-      background: linear-gradient(135deg, #2563eb, #1d4ed8); 
-      border-bottom: 4px solid #1e40af;
-    }
-    .role-driver { 
-      background: linear-gradient(135deg, #059669, #047857); 
-      border-bottom: 4px solid #065f46;
-    }
+    .support-box { background: #fef2f2; border: 2px solid #f87171; padding: 8px; border-radius: 10px; text-align: center; margin-bottom: 10px; }
+    .support-btn { display: inline-block; background: #dc2626; color: white; padding: 6px 12px; border-radius: 20px; text-decoration: none; font-size: 0.8rem; font-weight: bold; margin-top: 5px; }
 
-    .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; }
-    .logo-title { display: flex; align-items: center; gap: 10px; }
-    .mainTitle { font-size: 1.3rem; font-weight: 800; color: #0f172a; }
-    .subTitle { font-size: 0.8rem; color: #64748b; font-weight: 500; }
-    .lang-btn { background: #f1f5f9; border: 1px solid #cbd5e1; padding: 6px 14px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 0.8rem; }
+    .nav-tabs { display: grid; gap: 4px; margin-bottom: 8px; }
+    .nav-tab { background: #f8fafc; border: 1px solid #cbd5e1; padding: 6px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; cursor: pointer; text-align: center; color: #475569; }
+    .nav-tab.active { background: #059669; color: white; border-color: #059669; }
 
-    .whatsapp-box { background: #ecfdf5; border: 2px dashed #10b981; padding: 12px; border-radius: 12px; text-align: center; margin-bottom: 12px; }
-    .whatsapp-btn { display: inline-block; background: #059669; color: white; padding: 8px 16px; border-radius: 25px; text-decoration: none; font-size: 0.85rem; font-weight: bold; margin-top: 8px; box-shadow: 0 4px 10px rgba(5,150,105,0.3); }
-    
-    .support-box { background: #fef2f2; border: 2px solid #f87171; padding: 12px; border-radius: 12px; text-align: center; margin-bottom: 12px; }
-    .support-btn { display: inline-block; background: #dc2626; color: white; padding: 8px 16px; border-radius: 25px; text-decoration: none; font-size: 0.85rem; font-weight: bold; margin-top: 8px; box-shadow: 0 4px 10px rgba(220,38,38,0.3); }
-
-    .nav-tabs { display: grid; gap: 6px; margin-bottom: 12px; }
-    .nav-tab { background: #f8fafc; border: 1px solid #cbd5e1; padding: 10px; border-radius: 8px; font-size: 0.8rem; font-weight: bold; cursor: pointer; text-align: center; color: #475569; }
-    .nav-tab.active { background: #059669; color: white; border-color: #059669; box-shadow: 0 4px 10px rgba(5,150,105,0.3); }
-
-    .section { display: none; flex: 1; }
+    .section { display: none; }
     .section.active { display: block; }
-    h2 { font-size: 1.1rem; margin-bottom: 10px; color: #1e293b; border-left: 5px solid var(--primary); padding-left: 8px; }
-    .form-group { margin-bottom: 12px; }
-    label { display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 4px; color: #334155; }
-    input, select { width: 100%; padding: 10px 12px; border: 2px solid #cbd5e1; border-radius: 8px; font-size: 0.9rem; background: #f8fafc; }
-    input:focus, select:focus { border-color: var(--primary); outline: none; background: #fff; }
+    h2 { font-size: 0.95rem; margin-bottom: 8px; color: #1e293b; border-left: 4px solid var(--primary); padding-left: 6px; }
+    .form-group { margin-bottom: 8px; }
+    label { display: block; font-size: 0.78rem; font-weight: 700; margin-bottom: 2px; color: #334155; }
+    input, select { width: 100%; padding: 8px; border: 2px solid #e2e8f0; border-radius: 6px; font-size: 0.85rem; }
     
-    .vehicle-logo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 10px; }
-    .vehicle-card { border: 2px solid #cbd5e1; border-radius: 12px; padding: 14px; text-align: center; cursor: pointer; background: #fff; transition: all 0.2s; }
-    .vehicle-card.selected { border-color: var(--primary); background: #ecfdf5; box-shadow: 0 0 12px rgba(16, 185, 129, 0.3); }
-    .vehicle-card .vehicle-icon { font-size: 3.5rem; margin-bottom: 4px; display: block; }
-    .vehicle-card span { display: block; font-size: 0.9rem; font-weight: bold; color: #1e293b; }
+    .vehicle-logo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px; }
+    .vehicle-card { border: 2px solid #cbd5e1; border-radius: 8px; padding: 10px; text-align: center; cursor: pointer; background: #fff; transition: all 0.2s; }
+    .vehicle-card.selected { border-color: var(--primary); background: #ecfdf5; box-shadow: 0 0 8px rgba(16, 185, 129, 0.3); }
+    .vehicle-card .vehicle-icon { font-size: 2.8rem; margin-bottom: 2px; display: block; }
+    .vehicle-card span { display: block; font-size: 0.85rem; font-weight: bold; color: #1e293b; }
 
-    .btn-gps, .btn-submit { width: 100%; padding: 12px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 0.95rem; }
-    .btn-gps { background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; margin-top: 6px; }
-    .btn-submit { background: linear-gradient(45deg, #059669, #10b981); color: white; box-shadow: 0 4px 12px rgba(5,150,105,0.3); }
-    
-    .card { background: #fff; border: 1px solid #cbd5e1; padding: 12px; border-radius: 10px; margin-bottom: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-    .preview-img { width: 60px; height: 60px; object-fit: contain; border-radius: 50%; border: 2px solid #cbd5e1; margin-right: 8px; background: #f1f5f9; }
-    .footer { text-align: center; font-size: 0.75rem; color: #64748b; margin-top: 15px; border-top: 1px solid #e2e8f0; padding-top: 10px; }
-    .back-home-btn { background: #64748b; color: white; border: none; padding: 8px 16px; border-radius: 25px; font-size: 0.8rem; cursor: pointer; margin-bottom: 12px; font-weight: bold; }
+    .btn-gps, .btn-submit { width: 100%; padding: 10px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+    .btn-gps { background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; }
+    .btn-submit { background: linear-gradient(45deg, #059669, #10b981); color: white; }
+    .card { background: #fff; border: 1px solid #cbd5e1; padding: 10px; border-radius: 8px; margin-bottom: 8px; }
+    .preview-img { width: 50px; height: 50px; object-fit: contain; border-radius: 50%; border: 2px solid #cbd5e1; margin-right: 8px; }
+    .footer { text-align: center; font-size: 0.7rem; color: #64748b; margin-top: 10px; border-top: 1px solid #eee; padding-top: 5px; }
+    .back-home-btn { background: #64748b; color: white; border: none; padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; margin-bottom: 8px; }
   </style>
 </head>
 <body>
@@ -174,9 +115,9 @@
     
     <!-- 1. ನಿಯಮಗಳು ಮತ್ತು ಒಪ್ಪಂದದ ಪುಟ -->
     <div id="termsScreen" style="display: none;">
-      <div class="glowing-karnataka" style="text-align: center; margin-top: 10px;">🌟 ಕರ್ನಾಟಕ 🌟</div>
-      <h2 style="color: #34d399; text-align: center; font-size: 1.3rem; border:none; padding:0; margin-bottom: 6px;">ಯಾದಗಿರಿ ಜಿಲ್ಲೆ, ಶಹಾಪುರ</h2>
-      <p style="font-size: 0.85rem; color: #94a3b8; text-align: center; margin-bottom: 15px;">ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಆ್ಯಪ್‌ಗೆ ಸ್ವಾಗತ!</p>
+      <div class="glowing-karnataka" style="text-align: center;">🌟 ಕರ್ನಾಟಕ 🌟</div>
+      <h2 style="color: #34d399; text-align: center; font-size: 1.1rem; border:none; padding:0; margin-bottom: 4px;">ಯಾದಗಿರಿ ಜಿಲ್ಲೆ, ಶಹಾಪುರ</h2>
+      <p style="font-size: 0.75rem; color: #94a3b8; text-align: center; margin-bottom: 12px;">ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಆ್ಯಪ್‌ಗೆ ಸ್ವಾಗತ!</p>
       
       <div class="terms-box">
         <strong style="color: #fbbf24;">ಎಲ್ಲರಿಗೂ ಸ್ವಾಗತ!</strong><br>
@@ -197,77 +138,68 @@
         - ವ್ಯವಹಾರವನ್ನು ಪ್ರಾಮಾಣಿಕವಾಗಿ ನಡೆಸಿದರೆ ಪ್ರತಿದಿನ ಹೆಚ್ಚು ಬುಕಿಂಗ್‌ಗಳು ಸಿಗುತ್ತವೆ.
       </div>
 
-      <div style="margin-bottom: 15px; font-size: 0.85rem; color: #fff; display: flex; align-items: center; gap: 10px;">
-        <input type="checkbox" id="agreeCheckbox" onclick="toggleNextButton()" style="width: 20px; height: 20px; cursor: pointer;">
+      <div style="margin-bottom: 12px; font-size: 0.8rem; color: #fff; display: flex; align-items: center; gap: 8px;">
+        <input type="checkbox" id="agreeCheckbox" onclick="toggleNextButton()" style="width: 18px; height: 18px; cursor: pointer;">
         <span>ಮೇಲಿನ ಎಲ್ಲಾ ನಿಯಮಗಳನ್ನು ನಾನು ಒಪ್ಪುತ್ತೇನೆ (I Agree)</span>
       </div>
 
-      <button id="nextBtn" disabled style="width: 100%; padding: 14px; background: #334155; color: #94a3b8; border: none; border-radius: 10px; font-weight: bold; font-size: 1rem; cursor: not-allowed; margin-bottom: 15px;" onclick="acceptTerms()">
+      <button id="nextBtn" disabled style="width: 100%; padding: 12px; background: #334155; color: #94a3b8; border: none; border-radius: 8px; font-weight: bold; font-size: 0.95rem; cursor: not-allowed;" onclick="acceptTerms()">
         ಮುಂದೆ ಹೋಗಿ (Next)
       </button>
     </div>
 
-    <!-- 2. ರೋಲ್ ಸೆಲೆಕ್ಷನ್ ಪುಟ (ಲೋಗೋ ಹಾಗೂ ಬಟನ್‌ಗಳು ದೊಡ್ಡದಾಗಿ) -->
+    <!-- 2. ರೋಲ್ ಸೆಲೆಕ್ಷನ್ ಪುಟ -->
     <div id="roleSelectionScreen" style="display: none;">
-      <div style="width: 100%; max-width: 420px; text-align: center;">
-        <div class="glowing-karnataka">🌟 ಕರ್ನಾಟಕ 🌟</div>
-        
-        <!-- ದೊಡ್ಡದಾದ ಆಪ್ ಲೋಗೋ / ಎಮೋಜಿಗಳು -->
-        <div style="font-size: 4.5rem; margin: 10px 0; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));">🛺 🚗</div>
-        
-        <h1 class="mainTitle" style="font-size: 1.6rem; color: #0f172a; margin-bottom: 4px;">AR Taxi Shahapur</h1>
-        <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 25px; font-weight: 500;">ಯಾದಗಿರಿ ಜಿಲ್ಲೆ, ಶಹಾಪುರ ಲೋಕಲ್ ಸೇವೆಗೆ ಸ್ವಾಗತ!</p>
-        
-        <p style="font-size: 0.95rem; font-weight: 700; color: #334155; margin-bottom: 15px;">ದಯವಿಟ್ಟು ನಿಮ್ಮ ವಲಯವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ:</p>
+      <div class="glowing-karnataka">🌟 ಕರ್ನಾಟಕ 🌟</div>
+      <div style="font-size: 3rem; margin-bottom: 5px;">🛺🚗</div>
+      <h1 class="mainTitle" style="font-size: 1.2rem; color: #1e293b;">AR Taxi Shahapur</h1>
+      <p style="font-size: 0.78rem; color: #64748b; margin-bottom: 15px;">ಯಾದಗಿರಿ ಜಿಲ್ಲೆ, ಶಹಾಪುರ ಲೋಕಲ್ ಸೇವೆಗೆ ಸ್ವಾಗತ!</p>
+      
+      <p style="font-size: 0.8rem; font-weight: bold; color: #334155; margin-bottom: 10px;">ದಯವಿಟ್ಟು ನಿಮ್ಮ ವಲಯವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ:</p>
 
-        <button class="role-btn role-customer" onclick="selectRole('customer')">
-          👤 ಕಸ್ಟಮರ್ ಬುಕಿంగ్ & ಮೀಟರ್<br>
-          <span style="font-size: 0.78rem; font-weight: normal; opacity: 0.95; display: inline-block; margin-top: 4px;">(Customer Booking & Meter)</span>
+      <button class="role-btn role-customer" onclick="selectRole('customer')">
+        👤 ಕಸ್ಟಮರ್ ಬುಕಿಂಗ್ & ಮೀಟರ್<br><span style="font-size: 0.7rem; font-weight: normal; opacity: 0.9;">(Customer Booking & Meter)</span>
+      </button>
+
+      <button class="role-btn role-driver" onclick="selectRole('driver')">
+        🛺 ಡ್ರೈವರ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ & ಅಡ್ಮಿನ್<br><span style="font-size: 0.7rem; font-weight: normal; opacity: 0.9;">(Driver Dashboard & Admin)</span>
+      </button>
+
+      <div style="margin-top: 15px; border-top: 1px solid #e2e8f0; padding-top: 15px;">
+        <button onclick="shareAppOnWhatsApp()" style="width: 100%; padding: 12px; background: #25D366; color: white; border: none; border-radius: 10px; font-weight: bold; font-size: 0.85rem; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; gap: 6px;">
+          <span>💬</span> ಈ ಆ್ಯಪ್ ಅನ್ನು ವಾಟ್ಸಾಪ್‌ನಲ್ಲಿ ಶೇರ್ ಮಾಡಿ
         </button>
-
-        <button class="role-btn role-driver" onclick="selectRole('driver')">
-          🛺 ಡ್ರೈವರ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ & ಅಡ್ಮಿನ್<br>
-          <span style="font-size: 0.78rem; font-weight: normal; opacity: 0.95; display: inline-block; margin-top: 4px;">(Driver Dashboard & Admin)</span>
-        </button>
-
-        <div style="margin-top: 25px; border-top: 1px solid #e2e8f0; padding-top: 20px;">
-          <button onclick="shareAppOnWhatsApp()" style="width: 100%; padding: 14px; background: #25D366; color: white; border: none; border-radius: 14px; font-weight: bold; font-size: 0.95rem; cursor: pointer; box-shadow: 0 6px 15px rgba(37, 211, 102, 0.3); display: flex; align-items: center; justify-content: center; gap: 8px;">
-            <span style="font-size: 1.2rem;">💬</span> ಈ ಆ್ಯಪ್ ಅನ್ನು ವಾಟ್ಸಾಪ್‌ನಲ್ಲಿ ಶೇರ್ ಮಾಡಿ
-          </button>
-        </div>
       </div>
     </div>
 
-    <!-- 3. ಮುಖ್ಯ ಆಪ್ ಕಂಟೆಂಟ್ -->
-    <div id="mainAppContent" style="display: none; flex-direction: column; flex: 1;">
+    <!-- 3. ಮುಖ್ಯ ಆ್ಯಪ್ ಕಂಟೆಂಟ್ -->
+    <div id="mainAppContent" style="display: none;">
       
-      <div>
-        <button class="back-home-btn" onclick="goBackToRoleSelection()" id="backBtnText">⬅ ಹಿಂದಕ್ಕೆ (Change Role)</button>
+      <button class="back-home-btn" onclick="goBackToRoleSelection()" id="backBtnText">⬅ ಹಿಂದಕ್ಕೆ (Change Role)</button>
 
-        <div class="header">
-          <div class="logo-title">
-            <span style="font-size: 2rem;">🛺</span>
-            <div>
-              <div class="glowing-karnataka" style="font-size: 1rem; margin:0; text-align: left;">🌟 ಶಹಾಪುರ 🌟</div>
-              <div class="mainTitle" id="mainTitleText">AR Taxi Shahapur</div>
-              <div class="subTitle" id="subTitleText">ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್</div>
-            </div>
+      <div class="header">
+        <div class="logo-title">
+          <span style="font-size: 1.5rem;">🛺</span>
+          <div>
+            <div class="glowing-karnataka" style="font-size: 0.9rem; margin:0;">🌟 ಕರ್ನಾಟಕ - ಶಹಾಪುರ 🌟</div>
+            <div class="mainTitle" id="mainTitleText">AR Taxi Shahapur</div>
+            <div class="subTitle" id="subTitleText">ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್</div>
           </div>
-          <button class="lang-btn" onclick="toggleLanguage()" id="langToggleBtn">English</button>
         </div>
-
-        <div class="whatsapp-box">
-          <div style="font-size: 0.78rem; font-weight: bold; color: #065f46;" id="waBoxText">ದಯವಿಟ್ಟು ಡ್ರೈವರ್‌ಗಳು ಮಾತ್ರ ಈ ವಾಟ್ಸಾಪ್ ಗುಂಪಿಗೆ ಜಾಯಿನ್ ಆಗಿ.</div>
-          <a href="https://chat.whatsapp.com/G11Yw7T0QxwKS5Njv8gReI?s=cl&p=a&mlu=4&ilr=4" target="_blank" class="whatsapp-btn" id="waBtnText">💬 Join Driver WhatsApp Group</a>
-        </div>
-
-        <div class="support-box">
-          <div style="font-size: 0.78rem; font-weight: bold; color: #9b2c2c;" id="emergencyBoxText">ತುರ್ತು ಸಹಾಯ ಬೇಕಿದ್ದರೆ ಕಾಲ್ ಮಾಡಿ ವೆಹಿಕಲ್ ನಂಬರ್ ತಿಳಿಸಿ:</div>
-          <a href="tel:8105010768" class="support-btn" id="emergencyBtnText">📞 24/7 ತುರ್ತು ಕಾಲ್ (Emergency Call)</a>
-        </div>
-
-        <div class="nav-tabs" id="navTabsContainer"></div>
+        <button class="lang-btn" onclick="toggleLanguage()" id="langToggleBtn">English</button>
       </div>
+
+      <div class="whatsapp-box">
+        <div style="font-size: 0.72rem; font-weight: bold; color: #065f46;" id="waBoxText">ದಯವಿಟ್ಟು ಡ್ರೈವರ್‌ಗಳು ಮಾತ್ರ ಈ ವಾಟ್ಸಾಪ್ ಗುಂಪಿಗೆ ಜಾಯಿನ್ ಆಗಿ.</div>
+        <a href="https://chat.whatsapp.com/G11Yw7T0QxwKS5Njv8gReI?s=cl&p=a&mlu=4&ilr=4" target="_blank" class="whatsapp-btn" id="waBtnText">💬 Join Driver WhatsApp Group</a>
+      </div>
+
+      <div class="support-box">
+        <div style="font-size: 0.72rem; font-weight: bold; color: #9b2c2c;" id="emergencyBoxText">ತುರ್ತು ಸಹಾಯ ಬೇಕಿದ್ದರೆ ಕಾಲ್ ಮಾಡಿ ವೆಹಿಕಲ್ ನಂಬರ್ ತಿಳಿಸಿ:</div>
+        <a href="tel:8105010768" class="support-btn" id="emergencyBtnText">📞 24/7 ತುರ್ತು ಕಾಲ್ (Emergency Call)</a>
+      </div>
+
+      <div class="nav-tabs" id="navTabsContainer"></div>
 
       <!-- ಕಸ್ಟಮರ್ ಬುಕಿಂಗ್ ಸೆಕ್ಷನ್ -->
       <div id="customerSection" class="section">
@@ -308,13 +240,13 @@
           <div class="form-group">
             <label id="lblPickup">ಪಿಕೋಪ್ ಲೊಕೇಶನ್ (GPS ಕಡ್ಡಾಯ)</label>
             <input type="text" id="pickuploc" placeholder="ಸ್ಥಳದ ಹೆಸರು ಅಥವಾ ಜಿಪಿಎಸ್ ಬಳಸಿ" readonly>
-            <button type="button" class="btn-gps" onclick="getLocation()" id="btnGpsText">📍 ಲೈವ್ ಜಿಪಿಎಸ್ ಆನ್ ಮಾಡಿ (2KM ಮಿತಿಗಾಗಿ)</button>
+            <button type="button" class="btn-gps" onclick="getLocation()" style="margin-top:4px;" id="btnGpsText">📍 ಲೈವ್ ಜಿಪಿಎಸ್ ಆನ್ ಮಾಡಿ (2KM ಮಿತಿಗಾಗಿ)</button>
           </div>
           <div class="form-group">
             <label id="lblDrop">ಡ್ರಾಪ್ ಲೊಕೇಶನ್</label>
             <input type="text" id="droploc" placeholder="ತಲುಪಬೇಕಾದ ಸ್ಥಳ">
           </div>
-          <button class="btn-submit" onclick="submitBooking()" id="btnSubmitBooking" style="margin-top: 8px;">ಬುಕ್ ಮಾಡಿ</button>
+          <button class="btn-submit" onclick="submitBooking()" id="btnSubmitBooking">ಬುಕ್ ಮಾಡಿ</button>
         </div>
         <div id="customerStatusContainer" style="margin-top: 10px;"></div>
       </div>
@@ -329,15 +261,15 @@
             <option value="Car">🚗 ಕಾರ್ / Car (₹80 Base)</option>
           </select>
         </div>
-        <button class="btn-submit" onclick="startMeter()" style="background:#2563eb; margin-bottom:12px;" id="btnStartMeter">ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
-        <div class="card" style="text-align:center; background:#f8fafc; padding: 20px;">
-          <p style="font-size:0.9rem; color:#64748b; margin-bottom: 8px;"><span id="txtDistCovered">ಪ್ರಯಾಣಿಸಿದ ದೂರ:</span> <span id="distCount" style="font-weight:bold; color:#0f172a;">0.0</span> ಕಿ.ಮೀ</p>
-          <p style="font-size:1.4rem; font-weight:bold; color:#059669;"><span id="txtEstFare">ಅಂದಾಜು ಶುಲ್ಕ:</span> ₹<span id="liveAmount">0</span></p>
+        <button class="btn-submit" onclick="startMeter()" style="background:#2563eb; margin-bottom:8px;" id="btnStartMeter">ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
+        <div class="card" style="text-align:center; background:#f8fafc;">
+          <p style="font-size:0.8rem; color:#64748b;"><span id="txtDistCovered">ಪ್ರಯಾಣಿಸಿದ ದೂರ:</span> <span id="distCount">0.0</span> ಕಿ.ಮೀ</p>
+          <p style="font-size:1.2rem; font-weight:bold; color:#059669;"><span id="txtEstFare">ಅಂದಾಜು ಶುಲ್ಕ:</span> ₹<span id="liveAmount">0</span></p>
         </div>
         <button class="btn-submit" onclick="stopMeterOnly()" style="background:#dc2626;" id="btnStopMeter">ಮೀಟರ್ ಆಫ್ ಮಾಡಿ</button>
       </div>
 
-      <!-- ಡ್ರೈವರ್ ರಜಿಸ್ಟ್ರೇಷನ್ / ಪ್ರೊಫೈಲ್ ಸೆಕ್ಷನ್ -->
+      <!-- ಡ್ರೈವರ್ ರಜಿಸ್ಟ್ರೇಷನ್ / ಪ್ರೊಫೈಲ್ ಸೆಕ್ಷನ್ (ಹೊಸ ದಾಖಲೆಗಳೊಂದಿಗೆ) -->
       <div id="profileSection" class="section">
         <h2 id="h2DriverProfile">ಡ್ರೈವರ್ ರಜಿಸ್ಟ್ರೇಷನ್ / ಪ್ರೊಫೈಲ್</h2>
         <div class="form-group">
@@ -375,13 +307,13 @@
           <label>ಡ್ರೈವರ್ ಸ್ವಂತ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ (Driver Photo):</label>
           <input type="file" id="driverPhotoFile" accept="image/*">
         </div>
-        <button class="btn-submit" onclick="registerDriver()" id="btnRegisterDriver" style="margin-top: 8px;">ಲಾಗಿನ್ / ರಜಿಸ್ಟರ್ ಮಾಡಿ</button>
+        <button class="btn-submit" onclick="registerDriver()" id="btnRegisterDriver">ಲಾಗಿನ್ / ರಜಿಸ್ಟರ್ ಮಾಡಿ</button>
         <div id="driverRegResult" style="margin-top: 10px;"></div>
       </div>
 
       <!-- ಡ್ರೈವರ್ ಲೈವ್ ಬುಕಿಂಗ್ಸ್ ಸೆಕ್ಷನ್ -->
       <div id="liveSection" class="section">
-        <h2 id="h2LiveOrders">ಡ್ರೈವರ್‌ಗಳಿಗೆ ಲೈವ್ ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು</h2>
+        <h2 id="h2LiveOrders">ಡ್ರೈವರ್‌ಗಳಿಗೆ ಲೈವ್ ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು (2 KM ಒಳಗೆ ಇರುವವರು)</h2>
         <div class="form-group">
           <label id="lblEnterDriverId">ಬುಕಿಂಗ್ ವೀಕ್ಷಿಸಲು ನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ:</label>
           <input type="password" id="driverInputId" placeholder="4 digit ID" maxlength="4" oninput="checkDriverIdAndListen()">
@@ -399,18 +331,18 @@
             <option value="Car">🚗 ಕಾರ್ / Car (₹80 Base)</option>
           </select>
         </div>
-        <button class="btn-submit" onclick="startDriverMeter()" style="background:#2563eb; margin-bottom:12px;" id="btnDrvStartMeter">ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
-        <div class="card" style="text-align:center; background:#f8fafc; padding: 20px;">
-          <p style="font-size:0.9rem; color:#64748b; margin-bottom: 8px;"><span id="txtDrvDist">ಪ್ರಯಾಣಿಸಿದ ದೂರ:</span> <span id="driverDistCount" style="font-weight:bold; color:#0f172a;">0.0</span> ಕಿ.ಮೀ</p>
-          <p style="font-size:1.4rem; font-weight:bold; color:#059669;"><span id="txtDrvFare">ಅಂದಾಜು ಶುಲ್ಕ:</span> ₹<span id="driverLiveAmount">0</span></p>
+        <button class="btn-submit" onclick="startDriverMeter()" style="background:#2563eb; margin-bottom:8px;" id="btnDrvStartMeter">ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
+        <div class="card" style="text-align:center; background:#f8fafc;">
+          <p style="font-size:0.8rem; color:#64748b;"><span id="txtDrvDist">ಪ್ರಯಾಣಿಸಿದ ದೂರ:</span> <span id="driverDistCount">0.0</span> ಕಿ.ಮೀ</p>
+          <p style="font-size:1.2rem; font-weight:bold; color:#059669;"><span id="txtDrvFare">ಅಂದಾಜು ಶುಲ್ಕ:</span> ₹<span id="driverLiveAmount">0</span></p>
         </div>
         <button class="btn-submit" onclick="stopDriverMeterOnly()" style="background:#dc2626;" id="btnDrvStopMeter">ಮೀಟರ್ ಆಫ್ ಮಾಡಿ</button>
       </div>
 
-      <!-- ಅಡ್ಮಿನ್ ಸೆಕ್ಷನ್ -->
+      <!-- ಅಡ್ಮಿನ್ ಸೆಕ್ಷನ್ (ಸೆಕ್ಯೂರಿಟಿ ಕೋಡ್ ಮತ್ತು ಸರ್ಚ್ ಬಾರ್‌ನೊಂದಿಗೆ) -->
       <div id="adminSection" class="section">
         <h2 id="h2AdminTitle">ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್</h2>
-        <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 10px;" id="txtAdminSub">ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ ಹಾಗೂ ಅಪ್‌ಲೋಡ್ ಮಾಡಿದ ದಾಖಲೆಗಳನ್ನು ವೀಕ್ಷಿಸಲು ಸೆಕ್ಯೂರಿಟಿ ಕೋಡ್ ನಮೂದಿಸಿ:</p>
+        <p style="font-size: 0.75rem; color: #64748b; margin-bottom: 8px;" id="txtAdminSub">ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ ಹಾಗೂ ಅಪ್‌ಲೋಡ್ ಮಾಡಿದ ದಾಖಲೆಗಳನ್ನು ವೀಕ್ಷಿಸಲು ಸೆಕ್ಯೂರಿಟಿ ಕೋಡ್ ನಮೂದಿಸಿ:</p>
         
         <div class="form-group" id="adminAuthBox">
           <label>ಸೆಕ್ಯೂರಿಟಿ ಕೋಡ್ ನಮೂದಿಸಿ (Enter Security Code):</label>
@@ -419,23 +351,22 @@
 
         <div id="adminDashboardContent" style="display: none;">
           <div class="form-group" style="margin-top: 10px;">
-            <label>🔍 ಡ್ರೈವರ್ ಹುಡುಕಿ (Search by Vehicle No or ID):</label>
+            <label>🔍 ಡ್ರೈವರ್ ಹುಡುಕಿ (Search by Vehicle No or 4-Digit ID):</label>
             <input type="text" id="adminSearchInput" placeholder="ವೆಹಿಕಲ್ ನಂಬರ್ ಅಥವಾ 4-ಅಂಕಿಯ ಐಡಿ ಹಾಕಿ..." oninput="filterAdminDrivers()">
           </div>
           <div id="adminDriversList">ಡ್ರೈವರ್‌ಗಳ ಮಾಹಿತಿ ಲೋಡ್ ಆಗುತ್ತಿದೆ...</div>
         </div>
       </div>
 
-      <div>
-        <div class="footer" id="footerText">
-          © 2026 AR Taxi Shahapur. All rights reserved.
-        </div>
+      <div class="footer" id="footerText">
+        © 2026 AR Taxi Shahapur. All rights reserved.
       </div>
 
     </div>
   </div>
 
   <script>
+    // ಜಾಗತಿಕ ವೇರಿಯೇಬಲ್‌ಗಳು
     let currentRole = localStorage.getItem('ar_taxi_role') || '';
     let currentLang = 'kn';
     let globalUserLat = 16.7099;
@@ -446,12 +377,13 @@
     let driverMeterDistance = 0.0;
     let allDriversCache = [];
 
+    // ಆಪ್ ಲೋಡ್ ಆದಾಗ ಸ್ಕ್ರೀನ್ ನಿರ್ಧರಿಸುವುದು
     window.addEventListener('DOMContentLoaded', () => {
       let agreed = localStorage.getItem('ar_taxi_terms_agreed');
       if (!agreed) {
         document.getElementById('termsScreen').style.display = 'block';
       } else if (!currentRole) {
-        document.getElementById('roleSelectionScreen').style.display = 'flex';
+        document.getElementById('roleSelectionScreen').style.display = 'block';
       } else {
         openAppWithRole(currentRole);
       }
@@ -477,7 +409,7 @@
     function acceptTerms() {
       localStorage.setItem('ar_taxi_terms_agreed', 'true');
       document.getElementById('termsScreen').style.display = 'none';
-      document.getElementById('roleSelectionScreen').style.display = 'flex';
+      document.getElementById('roleSelectionScreen').style.display = 'block';
     }
 
     function selectRole(role) {
@@ -491,11 +423,11 @@
       localStorage.removeItem('ar_taxi_role');
       currentRole = '';
       document.getElementById('mainAppContent').style.display = 'none';
-      document.getElementById('roleSelectionScreen').style.display = 'flex';
+      document.getElementById('roleSelectionScreen').style.display = 'block';
     }
 
     function openAppWithRole(role) {
-      document.getElementById('mainAppContent').style.display = 'flex';
+      document.getElementById('mainAppContent').style.display = 'block';
       setupTabs(role);
     }
 
@@ -542,6 +474,7 @@
       }
     }
 
+    // ವಾಹನ ಆಯ್ಕೆ (ಕಸ್ಟಮರ್)
     function selectVehicle(type) {
       document.getElementById('vehicleType').value = type;
       if (type === 'Auto') {
@@ -574,13 +507,14 @@
           document.getElementById('pickuploc').value = `Lat: ${globalUserLat.toFixed(4)}, Lng: ${globalUserLng.toFixed(4)} (GPS Active)`;
           alert(currentLang === 'kn' ? 'ಲೈವ್ ಜಿಪಿಎಸ್ ಯಶಸ್ವಿಯಾಗಿ ಪಡೆಯಲಾಗಿದೆ!' : 'GPS Location captured successfully!');
         }, err => {
-          alert(currentLang === 'kn' ? 'ಜಿಪಿಎಸ್ ಪಡೆದುಕೊಳ್ಳಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ.' : 'Unable to retrieve location.');
+          alert(currentLang === 'kn' ? 'ಜಿಪಿಎಸ್ ಪಡೆದುಕೊಳ್ಳಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ. ಸ್ಥಳವನ್ನು ನೀವೇ ಟೈಪ್ ಮಾಡಿ.' : 'Unable to retrieve location.');
         });
       } else {
-        alert('Geolocation is not supported');
+        alert('Geolocation is not supported by your browser');
       }
     }
 
+    // ಫೈಲ್ ಅನ್ನು Base64 ಗೆ ಪರಿವರ್ತಿಸುವ ಫಂಕ್ಷನ್ (ಯಾವುದೇ ಸೈಜ್ ಲಿಮಿಟ್ ಇಲ್ಲದೆ)
     function convertFileToBase64(file) {
       return new Promise((resolve, reject) => {
         if (!file) {
@@ -594,6 +528,7 @@
       });
     }
 
+    // ಡ್ರೈವರ್ ರಜಿಸ್ಟ್ರೇಷನ್ (Duplicate Check & No Size Limit)
     async function registerDriver() {
       const name = document.getElementById('drvName').value.trim();
       const phone = document.getElementById('drvPhone').value.trim();
@@ -605,6 +540,7 @@
         return;
       }
 
+      // ಫೈಲ್ ಇನ್‌ಪುಟ್‌ಗಳು
       const rcFile = document.getElementById('rcPhotoFile').files[0];
       const dlFile = document.getElementById('dlPhotoFile').files[0];
       const aadharFile = document.getElementById('aadharPhotoFile').files[0];
@@ -615,47 +551,63 @@
       submitBtn.innerText = currentLang === 'kn' ? 'ರಿಜಿಸ್ಟರ್ ಆಗುತ್ತಿದೆ...' : 'Registering...';
 
       try {
+        // ನಕಲಿ (Duplicate) ತಡೆಗಟ್ಟಲು ವೆಹಿಕಲ್ ನಂಬರ್ ಅಥವಾ ಮೊಬೈಲ್ ನಂಬರ್ ಈಗಾಗಲೇ ಇದೆಯೇ ಎಂದು ಪರಿಶೀಲಿಸುವುದು
         const qPhone = window.query(window.collection(window.db, "drivers"), window.where("phone", "==", phone));
         const qVeh = window.query(window.collection(window.db, "drivers"), window.where("vehNo", "==", vehNo));
         
         const [phoneSnap, vehSnap] = await Promise.all([window.getDocs(qPhone), window.getDocs(qVeh)]);
 
         if (!phoneSnap.empty || !vehSnap.empty) {
-          alert(currentLang === 'kn' ? '❌ ಈ ಮೊಬೈಲ್ ನಂಬರ್ ಅಥವಾ ವೆಹಿಕಲ್ ನಂಬರ್ ಈಗಾಗಲೇ ರಜಿಸ್ಟರ್ ಆಗಿದೆ!' : '❌ Duplicate Registration!');
+          alert(currentLang === 'kn' ? '❌ ಈ ಮೊಬೈಲ್ ನಂಬರ್ ಅಥವಾ ವೆಹಿಕಲ್ ನಂಬರ್ ಈಗಾಗಲೇ ರಜಿಸ್ಟರ್ ಆಗಿದೆ! ಇದು ನಕಲಿ (Duplicate) ಪ್ರೊಫೈಲ್ ಎಂದು ಗುರುತಿಸಲಾಗಿದೆ.' : '❌ Duplicate Registration! This mobile number or vehicle number already exists.');
           submitBtn.disabled = false;
           submitBtn.innerText = currentLang === 'kn' ? 'ಲಾಗಿನ್ / ರಜಿಸ್ಟರ್ ಮಾಡಿ' : 'Login / Register';
           return;
         }
 
+        // ಫೋಟೋಗಳನ್ನು Base64 ಗೆ ಪರಿವರ್ತಿಸುವುದು (ಯಾವುದೇ ಸೈಜ್ ನಿರ್ಬಂಧವಿಲ್ಲ)
         const rcPhoto = await convertFileToBase64(rcFile);
         const dlPhoto = await convertFileToBase64(dlFile);
         const aadharPhoto = await convertFileToBase64(aadharFile);
         const driverPhoto = await convertFileToBase64(driverFile);
 
+        // 4 ಅಂಕಿಯ ಡಿಜಿಟಲ್ ಐಡಿ ಜನರೇಟ್ ಮಾಡುವುದು (1000 ರಿಂದ 9999)
         const digitalId = Math.floor(1000 + Math.random() * 9000).toString();
 
         await window.addDoc(window.collection(window.db, "drivers"), {
-          name, phone, vehNo, vehType, rcPhoto, dlPhoto, aadharPhoto, driverPhoto, digitalId,
-          lat: globalUserLat, lng: globalUserLng, createdAt: window.serverTimestamp()
+          name,
+          phone,
+          vehNo,
+          vehType,
+          rcPhoto,
+          dlPhoto,
+          aadharPhoto,
+          driverPhoto,
+          digitalId,
+          lat: globalUserLat,
+          lng: globalUserLng,
+          createdAt: window.serverTimestamp()
         });
 
         const resDiv = document.getElementById('driverRegResult');
         resDiv.innerHTML = `
           <div style="background: #ecfdf5; border: 2px solid #10b981; padding: 12px; border-radius: 8px; text-align: center; margin-top: 10px;">
-            <p style="color: #065f46; font-weight: bold; font-size: 0.95rem;">✅ ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ಯಶಸ್ವಿಯಾಗಿ ರಜಿಸ್ಟರ್ ಆಗಿದೆ!</p>
-            <p style="color: #1e293b; font-size: 0.9rem; margin-top: 6px;">ನಿಮ್ಮ 4 ಅಂಕಿಯ ಡಿಜಿಟಲ್ ಐಡಿ: <strong style="color: #dc2626; font-size: 1.3rem; background: #fee2e2; padding: 2px 10px; border-radius: 6px;">${digitalId}</strong></p>
+            <p style="color: #065f46; font-weight: bold; font-size: 0.9rem;">✅ ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ಯಶಸ್ವಿಯಾಗಿ ರಜಿಸ್ಟರ್ ಆಗಿದೆ!</p>
+            <p style="color: #1e293b; font-size: 0.85rem; margin-top: 4px;">ನಿಮ್ಮ 4 ಅಂಕಿಯ ಡಿಜಿಟಲ್ ಐಡಿ (Digital ID): <strong style="color: #dc2626; font-size: 1.2rem; background: #fee2e2; padding: 2px 8px; border-radius: 4px;">${digitalId}</strong></p>
+            <p style="color: #64748b; font-size: 0.75rem; margin-top: 4px;">ಈ ಐಡಿಯನ್ನು ನೆನಪಿನಲ್ಲಿಟ್ಟುಕೊಳ್ಳಿ. ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಲು ಇದು ಬೇಕಾಗುತ್ತದೆ.</p>
           </div>
         `;
         alert(currentLang === 'kn' ? `ಪ್ರೊಫೈಲ್ ಸಕ್ಸಸ್! ನಿಮ್ಮ 4 ಅಂಕಿಯ ಐಡಿ: ${digitalId}` : `Success! Your 4-digit ID is ${digitalId}`);
 
       } catch (e) {
-        alert('Error occurred. Please try again.');
+        console.error(e);
+        alert(currentLang === 'kn' ? 'ದೋಷ ಸಂಭವಿಸಿದೆ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.' : 'Error occurred. Please try again.');
       } finally {
         submitBtn.disabled = false;
         submitBtn.innerText = currentLang === 'kn' ? 'ಲಾಗಿನ್ / ರಜಿಸ್ಟರ್ ಮಾಡಿ' : 'Login / Register';
       }
     }
 
+    // ಕಸ್ಟಮರ್ ಬುಕಿಂಗ್ ಸಬ್ಮಿಟ್
     async function submitBooking() {
       const vehicleType = document.getElementById('vehicleType').value;
       const custName = document.getElementById('custName').value.trim();
@@ -666,19 +618,29 @@
       const droploc = document.getElementById('droploc').value.trim();
 
       if (!custName || !custPhone || !pickuploc || !droploc) {
-        alert(currentLang === 'kn' ? 'ದಯವಿಟ್ಟು ಎಲ್ಲಾ ವಿವರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ ಹಾಗೂ ಜಿಪಿಎಸ್ ಆನ್ ಮಾಡಿ!' : 'Please fill all details!');
+        alert(currentLang === 'kn' ? 'ದಯವಿಟ್ಟು ಎಲ್ಲಾ ವಿವರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ ಹಾಗೂ ಜಿಪಿಎಸ್ ಆನ್ ಮಾಡಿ!' : 'Please fill all details and enable GPS!');
         return;
       }
 
       try {
         await window.addDoc(window.collection(window.db, "bookings"), {
-          vehicleType, custName, custPhone, passengerCount, currentLoc, pickuploc, droploc,
-          lat: globalUserLat, lng: globalUserLng, status: 'PENDING', timestamp: window.serverTimestamp()
+          vehicleType,
+          custName,
+          custPhone,
+          passengerCount,
+          currentLoc,
+          pickuploc,
+          droploc,
+          lat: globalUserLat,
+          lng: globalUserLng,
+          status: 'PENDING',
+          timestamp: window.serverTimestamp()
         });
 
         document.getElementById('customerStatusContainer').innerHTML = `
-          <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; border-radius: 8px; text-align: center;">
-            <p style="color: #166534; font-weight: bold; font-size: 0.9rem;">✅ ನಿಮ್ಮ ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸ್ವೀಕರಿಸಲಾಗಿದೆ!</p>
+          <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 10px; border-radius: 6px; text-align: center;">
+            <p style="color: #166534; font-weight: bold; font-size: 0.85rem;">✅ ನಿಮ್ಮ ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸ್ವೀಕರಿಸಲಾಗಿದೆ!</p>
+            <p style="color: #15803d; font-size: 0.75rem;">ಹತ್ತಿರದ ಡ್ರೈವರ್‌ಗಳು ಶೀಘ್ರದಲ್ಲೇ ನಿಮ್ಮನ್ನು ಸಂಪರ್ಕಿಸುತ್ತಾರೆ.</p>
           </div>
         `;
         alert(currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿದೆ!' : 'Booking successful!');
@@ -687,6 +649,7 @@
       }
     }
 
+    // ಡ್ರೈವರ್ 4-ಅಂಕಿಯ ಐಡಿ ಪರಿಶೀಲನೆ ಮತ್ತು ಲೈವ್ ಬುಕಿಂಗ್ ಲಿಸನ್ ಮಾಡುವುದು
     function checkDriverIdAndListen() {
       const inputId = document.getElementById('driverInputId').value.trim();
       const listDiv = document.getElementById('driverBookingsList');
@@ -696,24 +659,25 @@
         return;
       }
 
+      // ಡೇಟಾಬೇಸ್‌ನಲ್ಲಿ ಈ ಐಡಿ ಇದೆಯೇ ಎಂದು ಪರಿಶೀಲಿಸಿ ಬುಕಿಂಗ್ ತೋರಿಸುವುದು
       window.onSnapshot(window.collection(window.db, "bookings"), snapshot => {
         let html = '';
         if (snapshot.empty) {
-          listDiv.innerHTML = '<p style="font-size:0.85rem; color:#64748b;">ಯಾವುದೇ ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.</p>';
+          listDiv.innerHTML = '<p style="font-size:0.8rem; color:#64748b;">ಯಾವುದೇ ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.</p>';
           return;
         }
 
         snapshot.forEach(docSnap => {
           const b = docSnap.data();
           html += `
-            <div class="card" style="background: #f8fafc; border-left: 5px solid #059669;">
+            <div class="card" style="background: #f8fafc; border-left: 4px solid #059669;">
               <p><strong>ವಾಹನ:</strong> ${b.vehicleType}</p>
               <p><strong>ಕಸ್ಟಮರ್ ಹೆಸರು:</strong> ${b.custName}</p>
               <p><strong>ಫೋನ್:</strong> <a href="tel:${b.custPhone}">${b.custPhone}</a></p>
               <p><strong>ಸ್ಥಳ:</strong> ${b.currentLoc}</p>
               <p><strong>ಪಿಕೋಪ್:</strong> ${b.pickuploc}</p>
               <p><strong>ಡ್ರಾಪ್:</strong> ${b.droploc}</p>
-              <button class="btn-submit" style="margin-top:8px; padding:8px; font-size:0.8rem;" onclick="acceptBooking('${b.custPhone}')">ಬುಕಿಂಗ್ ಒಪ್ಪಿಕೊಳ್ಳಿ (Accept)</button>
+              <button class="btn-submit" style="margin-top:6px; padding:6px; font-size:0.75rem;" onclick="acceptBooking('${docSnap.id}', '${b.custPhone}')">ಬುಕಿಂಗ್ ಒಪ್ಪಿಕೊಳ್ಳಿ (Accept)</button>
             </div>
           `;
         });
@@ -721,10 +685,12 @@
       });
     }
 
-    function acceptBooking(phone) {
+    function acceptBooking(bookingId, phone) {
+      alert(currentLang === 'kn' ? `ಬುಕಿಂಗ್ ಒಪ್ಪಿಕೊಳ್ಳಲಾಗಿದೆ! ಕಸ್ಟಮರ್ ನಂಬರ್: ${phone}` : `Booking accepted! Customer phone: ${phone}`);
       window.location.href = `tel:${phone}`;
     }
 
+    // ಕಸ್ಟಮರ್ ಲೈವ್ ಮೀಟರ್
     function startMeter() {
       if (meterInterval) return;
       meterDistance = 0.0;
@@ -743,7 +709,7 @@
       if (meterInterval) {
         clearInterval(meterInterval);
         meterInterval = null;
-        alert(currentLang === 'kn' ? `ಮೀಟರ್ ನಿಲ್ಲಿಸಲಾಗಿದೆ. ಒಟ್ಟು ಶುಲ್ಕ: ₹${document.getElementById('liveAmount').innerText}` : `Meter stopped.`);
+        alert(currentLang === 'kn' ? `ಮೀಟರ್ ನಿಲ್ಲಿಸಲಾಗಿದೆ. ಒಟ್ಟು ಶುಲ್ಕ: ₹${document.getElementById('liveAmount').innerText}` : `Meter stopped. Total fare: ₹${document.getElementById('liveAmount').innerText}`);
       }
     }
 
@@ -753,6 +719,7 @@
       document.getElementById('liveAmount').innerText = '0';
     }
 
+    // ಡ್ರೈವರ್ ಲೈವ್ ಮೀಟರ್
     function startDriverMeter() {
       if (driverMeterInterval) return;
       driverMeterDistance = 0.0;
@@ -771,7 +738,7 @@
       if (driverMeterInterval) {
         clearInterval(driverMeterInterval);
         driverMeterInterval = null;
-        alert(currentLang === 'kn' ? `ಮೀಟರ್ ನಿಲ್ಲಿಸಲಾಗಿದೆ. ಒಟ್ಟು ಶುಲ್ಕ: ₹${document.getElementById('driverLiveAmount').innerText}` : `Meter stopped.`);
+        alert(currentLang === 'kn' ? `ಮೀಟರ್ ನಿಲ್ಲಿಸಲಾಗಿದೆ. ಒಟ್ಟು ಶುಲ್ಕ: ₹${document.getElementById('driverLiveAmount').innerText}` : `Meter stopped. Total fare: ₹${document.getElementById('driverLiveAmount').innerText}`);
       }
     }
 
@@ -781,6 +748,7 @@
       document.getElementById('driverLiveAmount').innerText = '0';
     }
 
+    // ಅಡ್ಮಿನ್ ಸೆಕ್ಯೂರಿಟಿ ಕೋಡ್ ಪರಿಶೀಲನೆ (8105010768)
     function verifyAdminCode() {
       const code = document.getElementById('adminSecurityCodeInput').value.trim();
       const content = document.getElementById('adminDashboardContent');
@@ -795,6 +763,7 @@
       }
     }
 
+    // ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್‌ನಲ್ಲಿ ಡ್ರೈವರ್‌ಗಳನ್ನು ಲೋಡ್ ಮಾಡುವುದು ಮತ್ತು ದಾಖಲೆಗಳ ಫೋಟೋಗಳನ್ನು ತೋರಿಸುವುದು
     function loadAdminDrivers() {
       const listDiv = document.getElementById('adminDriversList');
       listDiv.innerHTML = 'ಲೋಡ್ ಆಗುತ್ತಿದೆ...';
@@ -811,31 +780,31 @@
     function renderDriversList(drivers) {
       const listDiv = document.getElementById('adminDriversList');
       if (drivers.length === 0) {
-        listDiv.innerHTML = '<p style="font-size:0.85rem; color:#64748b;">ಯಾವುದೇ ಡ್ರೈವರ್‌ಗಳು ರಜಿಸ್ಟರ್ ಆಗಿಲ್ಲ.</p>';
+        listDiv.innerHTML = '<p style="font-size:0.8rem; color:#64748b;">ಯಾವುದೇ ಡ್ರೈವರ್‌ಗಳು ರಜಿಸ್ಟರ್ ಆಗಿಲ್ಲ.</p>';
         return;
       }
 
       let html = '';
       drivers.forEach(d => {
         html += `
-          <div class="card" style="background: #f8fafc; margin-bottom: 10px;">
+          <div class="card" style="background: #f8fafc; margin-bottom: 10px; border: 1px solid #cbd5e1;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
               <div>
-                <p style="font-weight: bold; color: #1e293b; font-size: 0.95rem;">${d.name} (${d.vehType})</p>
-                <p style="font-size: 0.8rem; color: #64748b;">ಫೋನ್: <a href="tel:${d.phone}">${d.phone}</a></p>
-                <p style="font-size: 0.8rem; color: #64748b;">ವೆಹಿಕಲ್ ನಂಬರ್: <strong style="color:#059669;">${d.vehNo}</strong></p>
-                <p style="font-size: 0.8rem; color: #dc2626;">ಡಿಜಿಟಲ್ ಐಡಿ: <strong>${d.digitalId || 'N/A'}</strong></p>
+                <p style="font-weight: bold; color: #1e293b;">${d.name} (${d.vehType})</p>
+                <p style="font-size: 0.75rem; color: #64748b;">ಫೋನ್: <a href="tel:${d.phone}">${d.phone}</a></p>
+                <p style="font-size: 0.75rem; color: #64748b;">ವೆಹಿಕಲ್ ನಂಬರ್: <strong style="color:#059669;">${d.vehNo}</strong></p>
+                <p style="font-size: 0.75rem; color: #dc2626;">ಡಿಜಿಟಲ್ ಐಡಿ (Digital ID): <strong>${d.digitalId || 'N/A'}</strong></p>
               </div>
-              <button onclick="deleteDriver('${d.id}')" style="background: #dc2626; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 0.75rem; cursor: pointer; font-weight: bold;">ಡಿಲೀಟ್</button>
+              <button onclick="deleteDriver('${d.id}')" style="background: #dc2626; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; cursor: pointer;">ಡಿಲೀಟ್</button>
             </div>
 
-            <div style="margin-top: 10px; border-top: 1px dashed #cbd5e1; padding-top: 8px;">
-              <p style="font-size: 0.78rem; font-weight: bold; color: #334155; margin-bottom: 6px;">ಅಪ್‌ಲೋಡ್ ಮಾಡಿದ ದಾಖಲೆಗಳು:</p>
-              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                ${d.rcPhoto ? `<a href="${d.rcPhoto}" target="_blank"><img src="${d.rcPhoto}" class="preview-img" title="RC Photo"></a>` : '<span style="font-size:0.75rem; color:#94a3b8;">[RC ಇಲ್ಲ]</span>'}
-                ${d.dlPhoto ? `<a href="${d.dlPhoto}" target="_blank"><img src="${d.dlPhoto}" class="preview-img" title="DL Photo"></a>` : '<span style="font-size:0.75rem; color:#94a3b8;">[DL ಇಲ್ಲ]</span>'}
-                ${d.aadharPhoto ? `<a href="${d.aadharPhoto}" target="_blank"><img src="${d.aadharPhoto}" class="preview-img" title="Aadhar Photo"></a>` : '<span style="font-size:0.75rem; color:#94a3b8;">[ಆಧಾರ್ ಇಲ್ಲ]</span>'}
-                ${d.driverPhoto ? `<a href="${d.driverPhoto}" target="_blank"><img src="${d.driverPhoto}" class="preview-img" title="Driver Photo"></a>` : '<span style="font-size:0.75rem; color:#94a3b8;">[ಫೋಟೋ ಇಲ್ಲ]</span>'}
+            <div style="margin-top: 8px; border-top: 1px dashed #cbd5e1; padding-top: 6px;">
+              <p style="font-size: 0.72rem; font-weight: bold; color: #334155; margin-bottom: 4px;">ಅಪ್‌ಲೋಡ್ ಮಾಡಿದ ದಾಖಲೆಗಳು (Click to view):</p>
+              <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                ${d.rcPhoto ? `<a href="${d.rcPhoto}" target="_blank"><img src="${d.rcPhoto}" class="preview-img" title="RC Photo"></a>` : '<span style="font-size:0.7rem; color:#94a3b8;">[RC ಇಲ್ಲ]</span>'}
+                ${d.dlPhoto ? `<a href="${d.dlPhoto}" target="_blank"><img src="${d.dlPhoto}" class="preview-img" title="DL Photo"></a>` : '<span style="font-size:0.7rem; color:#94a3b8;">[DL ಇಲ್ಲ]</span>'}
+                ${d.aadharPhoto ? `<a href="${d.aadharPhoto}" target="_blank"><img src="${d.aadharPhoto}" class="preview-img" title="Aadhar Photo"></a>` : '<span style="font-size:0.7rem; color:#94a3b8;">[ಆಧಾರ್ ಇಲ್ಲ]</span>'}
+                ${d.driverPhoto ? `<a href="${d.driverPhoto}" target="_blank"><img src="${d.driverPhoto}" class="preview-img" title="Driver Photo"></a>` : '<span style="font-size:0.7rem; color:#94a3b8;">[ಡ್ರೈವರ್ ಫೋಟೋ ಇಲ್ಲ]</span>'}
               </div>
             </div>
           </div>
@@ -844,26 +813,29 @@
       listDiv.innerHTML = html;
     }
 
+    // ಅಡ್ಮಿನ್ ಸರ್ಚ್ ಬಾರ್ (ವೆಹಿಕಲ್ ನಂಬರ್ ಅಥವಾ 4-ಅಂಕಿಯ ಡಿಜಿಟಲ್ ಐಡಿ ಮೂಲಕ ಹುಡುಕಲು)
     function filterAdminDrivers() {
       const queryText = document.getElementById('adminSearchInput').value.trim().toLowerCase();
       if (!queryText) {
         renderDriversList(allDriversCache);
         return;
       }
+
       const filtered = allDriversCache.filter(d => {
         const veh = (d.vehNo || '').toLowerCase();
         const did = (d.digitalId || '').toLowerCase();
         const name = (d.name || '').toLowerCase();
         return veh.includes(queryText) || did.includes(queryText) || name.includes(queryText);
       });
+
       renderDriversList(filtered);
     }
 
     async function deleteDriver(id) {
-      if (confirm('ಖಂಡಿತವಾಗಿ ಈ ಡ್ರೈವರ್ ಅನ್ನು ಡಿಲೀಟ್ ಮಾಡಲು ಬಯಸುತ್ತೀರಾ?')) {
+      if (confirm(currentLang === 'kn' ? 'ಖಂಡಿತವಾಗಿ ಈ ಡ್ರೈವರ್ ಅನ್ನು ಡಿಲೀಟ್ ಮಾಡಲು ಬಯಸುತ್ತೀರಾ?' : 'Are you sure you want to delete this driver?')) {
         try {
           await window.deleteDoc(window.doc(window.db, "drivers", id));
-          alert('ಡ್ರೈವರ್ ಯಶಸ್ವಿಯಾಗಿ ಡಿಲೀಟ್ ಆಗಿದ್ದಾರೆ.');
+          alert(currentLang === 'kn' ? 'ಡ್ರೈವರ್ ಯಶಸ್ವಿಯಾಗಿ ಡಿಲೀಟ್ ಆಗಿದ್ದಾರೆ.' : 'Driver deleted successfully.');
         } catch (e) {
           alert('Error: ' + e.message);
         }
