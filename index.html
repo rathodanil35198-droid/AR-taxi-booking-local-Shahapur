@@ -148,9 +148,137 @@
     #fullImage { max-width: 100%; max-height: 80vh; margin-top: 40px; border-radius: 8px; }
     #modalClose { position: absolute; top: 20px; right: 25px; color: #fff; font-size: 35px; font-weight: bold; cursor: pointer; }
     #downloadBtn { display: inline-block; margin-top: 20px; background: #0fb05b; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; }
+
+    /* Fullscreen Terms & Conditions Modal Styling */
+    #termsModalOverlay {
+      display: flex;
+      position: fixed;
+      z-index: 99999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.85);
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+    }
+    .terms-modal-box {
+      background: #fff;
+      width: 100%;
+      max-width: 480px;
+      height: 90vh;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    }
+    .terms-header {
+      background: linear-gradient(135deg, #11998e, #38ef7d);
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+    .terms-content {
+      padding: 15px;
+      overflow-y: auto;
+      flex-grow: 1;
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: #2d3748;
+    }
+    .terms-content h3 {
+      font-size: 0.9rem;
+      color: #0fb05b;
+      margin-top: 10px;
+      margin-bottom: 5px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 3px;
+    }
+    .terms-content ul {
+      padding-left: 18px;
+      margin-bottom: 10px;
+    }
+    .terms-footer {
+      padding: 12px 15px;
+      background: #f7fafc;
+      border-top: 1px solid #e2e8f0;
+      text-align: center;
+    }
+    .terms-checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      color: #2d3748;
+      cursor: pointer;
+      margin-bottom: 10px;
+      text-align: left;
+    }
+    .terms-checkbox-label input {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+    .btn-terms-continue {
+      width: 100%;
+      padding: 12px;
+      background: #cbd5e0;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 0.95rem;
+      cursor: not-allowed;
+      transition: background 0.2s;
+    }
+    .btn-terms-continue.active {
+      background: linear-gradient(45deg, #0fb05b, #41c91d);
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
+
+  <!-- Fullscreen Terms & Conditions Modal -->
+  <div id="termsModalOverlay">
+    <div class="terms-modal-box">
+      <div class="terms-header">
+        🛺 AR Taxi Shahapur - ನಿಯಮಗಳು ಮತ್ತು ನಿಬಂಧನೆಗಳು 🚗
+      </div>
+      <div class="terms-content">
+        <p style="margin-bottom: 8px; font-weight: bold;">ನಮ್ಮ ಕರ್ನಾಟಕದ ಯಾದಗಿರಿ ಜಿಲ್ಲೆ ಶಹಾಪುರ ತಾಲ್ಲೂಕು ಜನಸೇವಕ ಕೇಂದ್ರದ 'AR Taxi Shahapur' ಆ್ಯಪ್‌ಗೆ ಸ್ವಾಗತ. ಆ್ಯಪ್ ಬಳಸುವ ಮುನ್ನ ಕಸ್ಟಮರ್‌ಗಳು ಹಾಗೂ ಡ್ರೈವರ್‌ಗಳು ಈ ಕೆಳಗಿನ ಎಲ್ಲಾ ನಿಯಮಗಳನ್ನು ಕಡ್ಡಾಯವಾಗಿ ಓದಿ ಒಪ್ಪಿಕೊಳ್ಳಬೇಕು.</p>
+        
+        <h3>೧. ಕಸ್ಟಮರ್‌ಗಳಿಗೆ (ಪ್ರಯಾಣಿಕರಿಗೆ) ಸಂದೇಶ ಹಾಗೂ ನಿಯಮಗಳು</h3>
+        <ul>
+          <li><b>ಡ್ರೈವರ್‌ಗಳಿಗೆ ಗೌರವ ನೀಡಿ:</b> ಡ್ರೈವರ್‌ಗಳನ್ನು ದೇವರ ಸಮಾನ ಎಂದು ಭಾವಿಸಿ ಅವರೊಂದಿಗೆ ಗೌರವದಿಂದ ನಡೆದುಕೊಳ್ಳಿ ಮತ್ತು ಪ್ರೀತಿಯಿಂದ ಮಾತನಾಡಿಸಿ. ಒಂದು ಸ್ಥಳದಿಂದ ಮತ್ತೊಂದು ಸ್ಥಳಕ್ಕೆ ಸುರಕ್ಷಿತವಾಗಿ ತಲುಪಲು ಅವರು ನಿಮಗೆ ಸಹಾಯ ಮಾಡುತ್ತಾರೆ.</li>
+          <li><b>ವೈಯಕ್ತಿಕ ಜಗಳಗಳಿಗೆ ಆ್ಯಪ್ ಜವಾಬ್ದಾರಿಯಲ್ಲ:</b> ಪ್ರಯಾಣದ ಸಮಯದಲ್ಲಿ ಕಸ್ಟಮರ್ ಹಾಗೂ ಡ್ರೈವರ್ ನಡುವೆ ಏನಾದರೂ ವೈಯಕ್ತಿಕ ಜಗಳ ಅಥವಾ ಗಲಾಟೆಗಳು ನಡೆದರೆ, ಅದಕ್ಕೆ ನಮ್ಮ ಆ್ಯಪ್ ಅಥವಾ ನಿರ್ವಾಹಕರು ಜವಾಬ್ದಾರರಾಗಿರುವುದಿಲ್ಲ.</li>
+          <li><b>ದೂರು ದಾಖಲಿಸುವಿಕೆ:</b> ಡ್ರೈವರ್‌ಗಳಿಂದ ನಿಮಗೆ ಯಾವುದೇ ರೀತಿಯ ಸಮಸ್ಯೆ ಅಥವಾ ಅಸಭ್ಯ ವರ್ತನೆ ಎದುರಾದರೆ, ತಕ್ಷಣ ನಮ್ಮ ವಾಟ್ಸಾಪ್ ಗುಪ್ ಮೂಲಕ ಅಥವಾ ತುರ್ತು ಸಹಾಯವಾಣಿಗೆ ಕರೆ ಮಾಡಿ ದೂರು ನೀಡಬಹುದು.</li>
+          <li><b>ಕಠಿಣ ಕ್ರಮ:</b> ಡ್ರೈವರ್‌ನ ವಾಹನ ನಂಬರ್, ಮೊಬೈಲ್ ನಂಬರ್ ಅಥವಾ ಐಡಿ ಬಳಸಿ ಯಾರಾದರೂ ಕಸ್ಟಮರ್‌ಗಳಿಗೆ ತೊಂದರೆ ನೀಡಿದರೆ, ಅಂತಹವರನ್ನು ನಮ್ಮ ಆ್ಯಪ್‌ನಿಂದ ಶಾಶ್ವತವಾಗಿ ತೆಗೆದುಹಾಕಲಾಗುತ್ತದೆ.</li>
+        </ul>
+
+        <h3>೨. ಡ್ರೈವರ್‌ಗಳಿಗೆ ಸಂದೇಶ ಹಾಗೂ ನಿಯಮಗಳು</h3>
+        <ul>
+          <li><b>ಕಸ್ಟಮರ್‌ಗಳೇ ದೇವರು:</b> ಕಸ್ಟಮರ್‌ಗಳು ನಮಗೆ ದೇವರ ಸಮಾನ. ಅವರ ಮೂಲಕವೇ ನಮಗೆ ಆದಾಯ ಬರುತ್ತದೆ. ಆದ್ದರಿಂದ ಕಸ್ಟಮರ್‌ಗಳೊಂದಿಗೆ ಅತ್ಯಂತ ಗೌರವದಿಂದ ವರ್ತಿಸಿ. ಅವರನ್ನು ಚೆನ್ನಾಗಿ ನೋಡಿಕೊಂಡರೆ ಮಾತ್ರ ನಿಮಗೆ ಮುಂದಿನ ಬುಕಿಂಗ್‌ಗಳು ಸಿಗುತ್ತವೆ.</li>
+          <li><b>ವಾಹನ ದಾಖಲೆಗಳು ಕಡ್ಡಾಯ:</b> ನಿಮ್ಮ ವಾಹನದ ಎಲ್ಲಾ ದಾಖಲೆಗಳು ಯಾವಾಗಲೂ ಸರಿಯಾಗಿ ಇರಬೇಕು. ದಾಖಲೆಗಳು ಸರಿಯಿಲ್ಲದೆ ಇದ್ದರೆ ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ಅನ್ನು ಆ್ಯಪ್‌ನಿಂದ ತಕ್ಷಣ ಡಿಲೀಟ್ ಮಾಡಲಾಗುತ್ತದೆ.</li>
+          <li><b>ವೈಯಕ್ತಿಕ ಜಗಳಗಳಿಗೆ ನೀವೇ ಜವಾಬ್ದಾರರು:</b> ಕಸ್ಟಮರ್ ಜೊತೆ ನೀವೇನಾದರೂ ವೈಯಕ್ತಿಕ ಗಲಾಟೆ ಅಥವಾ ಅನಾಹುತ ಮಾಡಿಕೊಂಡರೆ, ಅದಕ್ಕೆ ಸಂಪೂರ್ಣ ಜವಾಬ್ದಾರಿ ಆಯಾ ಡ್ರೈವರ್‌ಗಳೇ ಹೊರತು ನಮ್ಮ ಆ್ಯಪ್ ಅಲ್ಲ.</li>
+          <li><b>ಪ್ರೊಫೈಲ್ ಭದ್ರತೆ ಮತ್ತು ದೂರುಗಳು:</b> ನಿಮ್ಮ ಎಲ್ಲಾ ಪ್ರೊಫೈಲ್ ವಿವರಗಳು ನಮ್ಮ ಬಳಿ ಇರುತ್ತವೆ. ಕಸ್ಟಮರ್‌ಗಳಿಂದ ನಿಮ್ಮ ಬಗ್ಗೆ ದೂರುಗಳು ಬಂದರೆ, ಯಾವುದೇ ಮುನ್ಸೂಚನೆ ಇಲ್ಲದೆ ನಿಮ್ಮನ್ನು ಆ್ಯಪ್‌ನಿಂದ ತೆಗೆದುಹಾಕುವ ಹಕ್ಕು ನಮ್ಮ ಸಂಸ್ಥೆಗೆ ಇರುತ್ತದೆ.</li>
+          <li><b>ಯಾವ ಚಾರ್ಜಸ್ ಅಥವಾ ಕಮಿಷನ್ ಇಲ್ಲ:</b> ನಮ್ಮ ಆ್ಯಪ್ ಮೂಲಕ ನಡೆಯುವ ಸೇವೆಗೆ ಯಾವುದೇ ರೀತಿಯ ಎಕ್ಸ್ಟ್ರಾ ಚಾರ್ಜಸ್ ಅಥವಾ ಕಮಿಷನ್ ಪಡೆಯುವುದಿಲ್ಲ.</li>
+        </ul>
+      </div>
+      <div class="terms-footer">
+        <label class="terms-checkbox-label">
+          <input type="checkbox" id="termsCheckbox" onchange="toggleTermsCheckbox()">
+          ಮೇಲಿನ ಎಲ್ಲಾ ನಿಯಮಗಳು ಮತ್ತು ನಿಬಂಧನೆಗಳನ್ನು ನಾನು ಓದಿ ಒಪ್ಪಿಕೊಂಡಿದ್ದೇನೆ.
+        </label>
+        <button type="button" id="termsContinueBtn" class="btn-terms-continue" onclick="acceptTermsAndProceed()" disabled>ಮುಂದೆ (Continue)</button>
+      </div>
+    </div>
+  </div>
 
   <a href="javascript:void(0);" onclick="shareAppOnWhatsApp()" class="floating-share-btn" title="WhatsApp Share">
     💬
@@ -385,7 +513,6 @@
         <h2 id="h2AdminTitle">ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್</h2>
         <p style="font-size: 0.75rem; color: #7f8c8d; margin-bottom: 8px;" id="txtAdminSub">ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ಗಳ ವೀಕ್ಷಣೆ ಅಥವಾ ಡಿಲೀಟ್ ಮಾಡಲು ಇಲ್ಲಿಗೆ ಬನ್ನಿರಿ...</p>
         
-        <!-- Search Box Added Here -->
         <div class="form-group" style="margin-bottom: 12px;">
           <input type="text" id="adminSearchInput" placeholder="ಮೊಬೈಲ್ ನಂಬರ್ ಅಥವಾ ಐಡಿ ನಂಬರ್ ಮೂಲಕ ಹುಡುಕಿ..." oninput="filterAdminDrivers()">
         </div>
@@ -403,6 +530,36 @@
   <audio id="alertSound" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" preload="auto" loop></audio>
 
   <script>
+    // Check if user already accepted terms on this mobile
+    window.addEventListener('DOMContentLoaded', () => {
+      const hasAcceptedTerms = localStorage.getItem('ar_taxi_terms_accepted');
+      if (hasAcceptedTerms === 'true') {
+        document.getElementById('termsModalOverlay').style.display = 'none';
+      } else {
+        document.getElementById('termsModalOverlay').style.display = 'flex';
+      }
+    });
+
+    function toggleTermsCheckbox() {
+      const checkbox = document.getElementById('termsCheckbox');
+      const continueBtn = document.getElementById('termsContinueBtn');
+      if (checkbox.checked) {
+        continueBtn.disabled = false;
+        continueBtn.classList.add('active');
+      } else {
+        continueBtn.disabled = true;
+        continueBtn.classList.remove('active');
+      }
+    }
+
+    function acceptTermsAndProceed() {
+      const checkbox = document.getElementById('termsCheckbox');
+      if (checkbox.checked) {
+        localStorage.setItem('ar_taxi_terms_accepted', 'true');
+        document.getElementById('termsModalOverlay').style.display = 'none';
+      }
+    }
+
     let currentLang = 'kn';
     let distanceKm = 0;
     let meterInterval = null;
@@ -419,7 +576,6 @@
     let isAdminUnlocked = false;
     let allDriversData = []; 
 
-    // Meter GPS tracking variables
     let custMeterWatchId = null;
     let drvMeterWatchId = null;
     let lastCustPos = null;
@@ -832,7 +988,6 @@
       currentCustomerLng = null;
     }
 
-    // CUSTOMER LIVE GPS METER
     function startMeter() {
       if (custMeterWatchId) return;
 
@@ -907,7 +1062,7 @@
         } else {
           return 50 + ((dist - 2.0) * 12);
         }
-      } else { // Car
+      } else {
         if (dist <= 3.0) {
           return 200;
         } else {
@@ -1137,7 +1292,6 @@
       }
     }
 
-    // DRIVER LIVE GPS METER
     function startDriverMeter() {
       if (drvMeterWatchId) return;
 
