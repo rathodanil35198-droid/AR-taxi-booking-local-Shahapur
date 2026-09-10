@@ -437,7 +437,6 @@
   </button>
 
   <script>
-    // ಬೇಸಿಕ್ ಆ್ಯಪ್ ಲಾಜಿಕ್ ಮತ್ತು ಅಡ್ಮಿನ್ ಸರ್ಚ್ / ಫೋಟೋ ವ್ಯೂವರ್ ಸ್ಕ್ರಿಪ್ಟ್
     let currentLang = 'kn';
 
     function toggleLanguage() {
@@ -531,7 +530,6 @@
       if(element) element.classList.add('active');
     }
 
-    // ಅಡ್ಮಿನ್ ಸರ್ಚ್ ಫಿಲ್ಟರ್ ಫಂಕ್ಷನ್
     function filterAdminDrivers() {
       let query = document.getElementById('adminSearchInput').value.toLowerCase();
       let cards = document.getElementsByClassName('admin-driver-card');
@@ -545,7 +543,6 @@
       }
     }
 
-    // ಫೋಟೋ ಫುಲ್ ಸ್ಕ್ರೀನ್ ಓಪನ್ ಮಾಡುವ ಫಂಕ್ಷನ್
     function openImageModal(imgSrc) {
       const modal = document.getElementById('imageModal');
       const modalImg = document.getElementById('modalImageElement');
@@ -607,19 +604,17 @@
 
     function verifyAdminPassword() {
       const pass = document.getElementById('adminPasswordInput').value;
-      if(pass === '1234' || pass === 'admin') {
+      if(pass === '8105010768') {
         document.getElementById('adminLoginBox').style.display = 'none';
         document.getElementById('adminDashboardContent').style.display = 'block';
         loadAdminDriversList();
       } else {
-        alert('ತಪ್ಪು ಪಾಸ್ವರ್ಡ್! (Incorrect Password)');
+        alert('ತಪ್ಪು ಕೋಡ್! ದಯವಿಟ್ಟು ಸರಿಯಾದ ಕೋಡ್ (8105010768) ನಮೂದಿಸಿ.');
       }
     }
 
-    // ಡ್ರೈವರ್ ಲಿಸ್ಟ್ ಮತ್ತು ಅಪ್ಲೋಡ್ ಮಾಡಿದ ಫೋಟೋಗಳನ್ನು ಥಂಬ್‌ನೆಲ್ ರೂಪದಲ್ಲಿ ತೋರಿಸಲು
     function loadAdminDriversList() {
       const container = document.getElementById('adminDriversListContainer');
-      // ಉದಾಹರಣೆಗೆ ಫೈರ್‌ಬೇಸ್ ಅಥವಾ ಲೋಕಲ್ ಡಾಟಾದಿಂದ ಬರುವ ಡ್ರೈವರ್ ಕಾರ್ಡ್‌ಗಳು ಹೀಗಿರುತ್ತವೆ:
       container.innerHTML = `
         <div class="card admin-driver-card" style="margin-bottom:10px;">
           <strong>ID: 5003</strong><br>
@@ -635,12 +630,21 @@
             <img src="https://via.placeholder.com/150" onclick="openImageModal(this.src)" title="Vehicle Photo">
           </div>
 
-          <button class="btn-submit" style="background:#dc2626; margin-top:8px; padding:6px;" onclick="alert('Driver deleted')">🗑️ ಡ್ರೈವರ್ ಡಿಲೀಟ್ ಮಾಡಿ</button>
+          <button class="btn-submit" style="background:#dc2626; margin-top:8px; padding:6px;" onclick="deleteDriverPrompt('5003')">🗑️ ಡ್ರೈವರ್ ಡಿಲೀಟ್ ಮಾಡಿ</button>
         </div>
       `;
     }
 
-    // ಇತರೆ ಫಂಕ್ಷನ್‌ಗಳ ಡಮ್ಮಿ ಸ್ಟಬ್ಸ್
+    function deleteDriverPrompt(driverId) {
+      let enteredCode = prompt("ಡ್ರೈವರ್ ಡಿಲೀಟ್ ಮಾಡಲು ದಯವಿಟ್ಟು ಕೋಡ್ (8105010768) ನಮೂದಿಸಿ:");
+      if(enteredCode === "8105010768") {
+        alert("ಡ್ರೈವರ್ ಯಶಸ್ವಿಯಾಗಿ ಡಿಲೀಟ್ ಮಾಡಲಾಗಿದೆ!");
+        // ಇಲ್ಲಿ ಫೈರ್‌ಬೇಸ್ ಡಿಲೀಟ್ ಕೋಡ್ ಬರೆಯಬಹುದು
+      } else if(enteredCode !== null) {
+        alert("ತಪ್ಪು ಕೋಡ್! ಡ್ರೈವರ್ ಡಿಲೀಟ್ ಆಗಿಲ್ಲ.");
+      }
+    }
+
     function getLocation() { alert('GPS Location fetched'); }
     function submitBooking() { alert('Booking submitted successfully'); }
     function startCustomerMeterWithGPS() {}
