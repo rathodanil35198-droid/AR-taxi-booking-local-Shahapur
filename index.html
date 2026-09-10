@@ -379,7 +379,13 @@
       <!-- 6. ADMIN SECTION -->
       <div id="adminSection" class="section">
         <h2 id="h2AdminTitle">ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್</h2>
-        <p style="font-size: 0.75rem; color: #7f8c8d;" id="txtAdminSub">ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ಗಳ ವೀಕ್ಷಣೆ ಅಥವಾ ಡಿಲೀಟ್ ಮಾಡಲು ಇಲ್ಲಿಗೆ ಬನ್ನಿರಿ...</p>
+        <p style="font-size: 0.75rem; color: #7f8c8d; margin-bottom: 8px;" id="txtAdminSub">ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ಗಳ ವೀಕ್ಷಣೆ ಅಥವಾ ಡಿಲೀಟ್ ಮಾಡಲು ಇಲ್ಲಿಗೆ ಬನ್ನಿರಿ...</p>
+        
+        <!-- Search Box Added Here -->
+        <div class="form-group" style="margin-bottom: 12px;">
+          <input type="text" id="adminSearchInput" placeholder="ಮೊಬೈಲ್ ನಂಬರ್ ಅಥವಾ ಐಡಿ ನಂಬರ್ ಮೂಲಕ ಹುಡುಕಿ..." oninput="filterAdminDrivers()">
+        </div>
+
         <div id="adminDriversList">ಡ್ರೈವರ್‌ಗಳ ಮಾಹಿತಿ ಲೋಡ್ ಆಗುತ್ತಿದೆ...</div>
       </div>
 
@@ -407,6 +413,7 @@
     let currentDriverLat = null;
     let currentDriverLng = null;
     let isAdminUnlocked = false;
+    let allDriversData = []; // Store loaded drivers for searching
 
     function shareAppOnWhatsApp() {
       const appUrl = window.location.href;
@@ -597,7 +604,7 @@
 
     function selectRole(role) {
       currentUserRole = role;
-      isAdminUnlocked = false; // Reset admin lock on role change
+      isAdminUnlocked = false; 
       document.getElementById('roleSelectionScreen').style.display = 'none';
       document.getElementById('mainAppContent').style.display = 'block';
       renderTabs();
@@ -764,7 +771,7 @@
         document.getElementById('customerStatusContainer').innerHTML = `
           <div class="card" style="text-align:center; background:#e8f8f0; border:2px solid #0fb05b;">
             <p style="font-weight:bold; color:#065f46; margin-bottom:8px;">${currentLang === 'kn' ? '🎉 ನಿಮ್ಮ ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸಲ್ಲಿಸಲಾಗಿದೆ!' : '🎉 Booking submitted successfully!'}</p>
-            <p style="font-size:0.8rem; color:#2d3748; margin-bottom:10px;">${currentLang === 'kn' ? 'ಹತ್ತಿರದ ಡ್ರೈವರ್‌ಗಳು ನಿಮ್ಮ ಬುಕಿంగ్ ಸ್ವೀಕರಿಸಲು ಕಾಯಲಾಗುತ್ತಿದೆ...' : 'Waiting for nearby drivers to accept...'}</p>
+            <p style="font-size:0.8rem; color:#2d3748; margin-bottom:10px;">${currentLang === 'kn' ? 'ಹತ್ತಿರದ ಡ್ರೈವರ್‌ಗಳು ನಿಮ್ಮ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಲು ಕಾಯಲಾಗುತ್ತಿದೆ...' : 'Waiting for nearby drivers to accept...'}</p>
             <button class="btn-submit" onclick="cancelCustomerBooking()" style="background:#e53e3e;">${currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ರದ್ದುಗೊಳಿಸಿ' : 'Cancel Booking'}</button>
           </div>
         `;
@@ -1106,37 +1113,62 @@
 
       try {
         const querySnapshot = await window.getDocs(window.collection(window.db, "drivers"));
-        let html = '';
-        if (querySnapshot.empty) {
-          adminDiv.innerHTML = `<p style="color: #718096;">${currentLang === 'kn' ? 'ಯಾವುದೇ ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ಗಳು ಲಭ್ಯವಿಲ್ಲ.' : 'No driver profiles available.'}</p>`;
-          return;
-        }
-
+        allDriversData = [];
         querySnapshot.forEach((docSnap) => {
-          const d = docSnap.data();
-          html += `
-            <div class="card" style="border: 1px solid #cbd5e0; margin-bottom:8px;">
-              <div style="display:flex; align-items:center; margin-bottom:6px;">
-                ${d.selfiePhoto ? `<img src="${d.selfiePhoto}" class="preview-img" onclick="openImageModal('${d.selfiePhoto}')">` : ''}
-                <div>
-                  <p><b>${currentLang === 'kn' ? 'ಹೆಸರು:' : 'Name:'}</b> ${d.drvName}</p>
-                  <p><b>${currentLang === 'kn' ? 'ಫೋನ್:' : 'Phone:'}</b> ${d.drvPhone} | <b>ID:</b> ${d.driverId || '-'}</p>
-                </div>
-              </div>
-              <p><b>${currentLang === 'kn' ? 'ವಾಹನ ನಂಬರ್:' : 'Vehicle No:'}</b> ${d.drvVehNo} (${d.drvVehType})</p>
-              <div style="display:flex; gap:5px; margin-top:5px; flex-wrap:wrap;">
-                ${d.vehPhoto ? `<img src="${d.vehPhoto}" class="preview-img" onclick="openImageModal('${d.vehPhoto}')" title="Vehicle Photo">` : ''}
-                ${d.rcPhoto ? `<img src="${d.rcPhoto}" class="preview-img" onclick="openImageModal('${d.rcPhoto}')" title="RC Photo">` : ''}
-                ${d.dlPhoto ? `<img src="${d.dlPhoto}" class="preview-img" onclick="openImageModal('${d.dlPhoto}')" title="DL Photo">` : ''}
-              </div>
-              <button class="btn-submit" onclick="deleteDriver('${docSnap.id}')" style="background:#e53e3e; margin-top:8px; padding:6px; font-size:0.75rem;">${currentLang === 'kn' ? 'ಪ್ರೊಫೈಲ್ ಡಿಲೀಟ್ ಮಾಡಿ' : 'Delete Profile'}</button>
-            </div>
-          `;
+          allDriversData.push({ id: docSnap.id, ...docSnap.data() });
         });
-        adminDiv.innerHTML = html;
+
+        renderAdminDriverList(allDriversData);
       } catch (e) {
         adminDiv.innerHTML = `<p style="color: #e53e3e;">Error: ${e.message}</p>`;
       }
+    }
+
+    function renderAdminDriverList(driversList) {
+      const adminDiv = document.getElementById('adminDriversList');
+      let html = '';
+      if (driversList.length === 0) {
+        adminDiv.innerHTML = `<p style="color: #718096;">${currentLang === 'kn' ? 'ಯಾವುದೇ ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ಗಳು ಸಿಗಲಿಲ್ಲ.' : 'No driver profiles found.'}</p>`;
+        return;
+      }
+
+      driversList.forEach((d) => {
+        html += `
+          <div class="card" style="border: 1px solid #cbd5e0; margin-bottom:8px;">
+            <div style="display:flex; align-items:center; margin-bottom:6px;">
+              ${d.selfiePhoto ? `<img src="${d.selfiePhoto}" class="preview-img" onclick="openImageModal('${d.selfiePhoto}')">` : ''}
+              <div>
+                <p><b>${currentLang === 'kn' ? 'ಹೆಸರು:' : 'Name:'}</b> ${d.drvName}</p>
+                <p><b>${currentLang === 'kn' ? 'ಫೋನ್:' : 'Phone:'}</b> ${d.drvPhone} | <b>ID:</b> ${d.driverId || '-'}</p>
+              </div>
+            </div>
+            <p><b>${currentLang === 'kn' ? 'ವಾಹನ ನಂಬರ್:' : 'Vehicle No:'}</b> ${d.drvVehNo} (${d.drvVehType})</p>
+            <div style="display:flex; gap:5px; margin-top:5px; flex-wrap:wrap;">
+              ${d.vehPhoto ? `<img src="${d.vehPhoto}" class="preview-img" onclick="openImageModal('${d.vehPhoto}')" title="Vehicle Photo">` : ''}
+              ${d.rcPhoto ? `<img src="${d.rcPhoto}" class="preview-img" onclick="openImageModal('${d.rcPhoto}')" title="RC Photo">` : ''}
+              ${d.dlPhoto ? `<img src="${d.dlPhoto}" class="preview-img" onclick="openImageModal('${d.dlPhoto}')" title="DL Photo">` : ''}
+            </div>
+            <button class="btn-submit" onclick="deleteDriver('${d.id}')" style="background:#e53e3e; margin-top:8px; padding:6px; font-size:0.75rem;">${currentLang === 'kn' ? 'ಪ್ರೊಫೈಲ್ ಡಿಲೀಟ್ ಮಾಡಿ' : 'Delete Profile'}</button>
+          </div>
+        `;
+      });
+      adminDiv.innerHTML = html;
+    }
+
+    function filterAdminDrivers() {
+      const queryText = document.getElementById('adminSearchInput').value.trim().toLowerCase();
+      if (!queryText) {
+        renderAdminDriverList(allDriversData);
+        return;
+      }
+
+      const filtered = allDriversData.filter(d => {
+        const phone = (d.drvPhone || '').toLowerCase();
+        const driverId = (d.driverId || '').toLowerCase();
+        return phone.includes(queryText) || driverId.includes(queryText);
+      });
+
+      renderAdminDriverList(filtered);
     }
 
     function openImageModal(imgSrc) {
