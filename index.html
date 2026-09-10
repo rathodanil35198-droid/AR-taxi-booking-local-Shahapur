@@ -143,6 +143,13 @@
     .footer { text-align: center; font-size: 0.7rem; color: #7f8c8d; margin-top: 10px; border-top: 1px solid #eee; padding-top: 5px; }
     .back-home-btn { background: #718096; color: white; border: none; padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; margin-bottom: 8px; }
 
+    /* Custom Popup Modal */
+    #customPopupModal { display: none; position: fixed; z-index: 99999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); align-items: center; justify-content: center; padding: 20px; }
+    .popup-box { background: #fff; width: 100%; max-width: 360px; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.3); }
+    .popup-box h3 { font-size: 1.1rem; color: #0fb05b; margin-bottom: 10px; }
+    .popup-box p { font-size: 0.85rem; color: #2d3748; line-height: 1.5; margin-bottom: 20px; }
+    .btn-popup-ok { width: 100%; padding: 10px; background: linear-gradient(45deg, #0fb05b, #41c91d); color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 0.95rem; cursor: pointer; }
+
     /* Fullscreen Image Modal */
     #imageModal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); text-align: center; padding: 20px; }
     #fullImage { max-width: 100%; max-height: 80vh; margin-top: 40px; border-radius: 8px; }
@@ -243,6 +250,15 @@
   </style>
 </head>
 <body>
+
+  <!-- Custom Popup Modal -->
+  <div id="customPopupModal">
+    <div class="popup-box">
+      <h3 id="popupTitle">ಸೂಚನೆ / Notice</h3>
+      <p id="popupMessage">ಸಂದೇಶ ಇಲ್ಲಿ...</p>
+      <button type="button" class="btn-popup-ok" onclick="closeCustomPopup()">ಸರಿ (OK)</button>
+    </div>
+  </div>
 
   <!-- Fullscreen Terms & Conditions Modal -->
   <div id="termsModalOverlay">
@@ -537,6 +553,7 @@
       } else {
         document.getElementById('termsModalOverlay').style.display = 'flex';
       }
+      updatePassengerDropdown();
     });
 
     function toggleTermsCheckbox() {
@@ -579,6 +596,16 @@
     let drvMeterWatchId = null;
     let lastCustPos = null;
     let lastDrvPos = null;
+
+    function showCustomPopup(title, message) {
+      document.getElementById('popupTitle').innerText = title;
+      document.getElementById('popupMessage').innerText = message;
+      document.getElementById('customPopupModal').style.display = 'flex';
+    }
+
+    function closeCustomPopup() {
+      document.getElementById('customPopupModal').style.display = 'none';
+    }
 
     function shareAppOnWhatsApp() {
       const appUrl = window.location.href;
@@ -765,6 +792,7 @@
       document.getElementById('footerText').innerText = t.footerText;
 
       renderTabs();
+      updatePassengerDropdown();
     }
 
     function selectRole(role) {
@@ -864,14 +892,21 @@
         document.getElementById('cardCar').classList.add('selected');
         document.getElementById('cardAuto').classList.remove('selected');
       }
+      updatePassengerDropdown();
     }
 
-    const sel = document.getElementById('passengerCount');
-    for (let i = 1; i <= 10; i++) {
-      let opt = document.createElement('option');
-      opt.value = i;
-      opt.text = i + (currentLang === 'kn' ? ' ಪ್ರಯಾಣಿಕರು' : ' Passengers');
-      sel.appendChild(opt);
+    function updatePassengerDropdown() {
+      const vehicleType = document.getElementById('vehicleType').value;
+      const sel = document.getElementById('passengerCount');
+      const maxPassengers = (vehicleType === 'Auto') ? 3 : 4;
+      
+      sel.innerHTML = '';
+      for (let i = 1; i <= maxPassengers; i++) {
+        let opt = document.createElement('option');
+        opt.value = i;
+        opt.text = i + (currentLang === 'kn' ? ' ಪ್ರಯಾಣಿಕರು' : ' Passengers');
+        sel.appendChild(opt);
+      }
     }
 
     function getLocation() {
@@ -940,9 +975,16 @@
             <button class="btn-submit" onclick="cancelCustomerBooking()" style="background:#e53e3e;">${currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ರದ್ದುಗೊಳಿಸಿ (Cancel)' : 'Cancel Booking'}</button>
           </div>
         `;
+
+        // ಕಸ್ಟಮರ್ ಬುಕಿಂಗ್ ಸಬ್ಮಿಟ್ ಆದ ತಕ್ಷಣ ಬರುವ ಮೊದಲನೇ ಪಾಪ್‌ಅಪ್ ನೋಟಿಫಿಕೇಶನ್
+        showCustomPopup(
+          currentLang === 'kn' ? "ಬುಕಿಂಗ್ ಸಲ್ಲಿಕೆಯಾಗಿದೆ" : "Booking Submitted",
+          currentLang === 'kn' ? "ಡ್ರೈವರ್‌ಗಳಿಗೆ ನಿಮ್ಮ ಬುಕಿಂಗ್ ಕಳುಹಿಸಲಾಗಿದೆ. ಡ್ರೈವರ್‌ಗಳು ಸ್ವೀಕರಿಸಿದಾಗ ನಿಮಗೆ ನೋಟಿಫಿಕೇಶನ್ ಕಾಣುತ್ತದೆ. ದಯವಿಟ್ಟು ಸಮಾಧಾನದಿಂದ ಕಾಯಿರಿ, 'ಓಕೆ' ಬಟನ್ ಒತ್ತಿ." : "Your booking has been sent to drivers. You will receive a notification when accepted. Please wait patiently and click OK."
+        );
+
         listenToMyBookingStatus(myActiveBookingId);
       } catch (e) {
-        alert(currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ದೋಷ: ' : 'Booking error: ' + e.message);
+        alert(currentLang === 'kn' ? 'ಬುಕಿంగ్ ದೋಷ: ' : 'Booking error: ' + e.message);
       }
     }
 
@@ -959,13 +1001,14 @@
                 ${data.driverPhoto ? `<img src="${data.driverPhoto}" style="width:70px; height:70px; border-radius:50%; object-fit:cover; border:2px solid #0fb05b; margin: 5px 0;" onclick="openImageModal('${data.driverPhoto}')">` : ''}
                 
                 <p style="font-size:0.85rem; color:#2d3748;"><b>${currentLang === 'kn' ? 'ಡ್ರೈವರ್ ಹೆಸರು (ದೇವರು):' : 'Driver Name:'}</b> ${data.driverName || ''}</p>
-                <p style="font-size:0.85rem; color:#2d3748;"><b>${currentLang === 'kn' ? 'ಮೊಬೈಲ್ ನಂಬರ್:' : 'Phone:'}</b> ${data.driverPhone || ''} 
-                  <a href="tel:${data.driverPhone}" style="background:#0fb05b; color:white; padding:2px 8px; border-radius:4px; text-decoration:none; font-size:0.75rem; margin-left:5px;">📞 ಕಾಲ್ ಮಾಡಿ</a>
-                </p>
+                <p style="font-size:0.85rem; color:#2d3748;"><b>${currentLang === 'kn' ? 'ಡ್ರೈವರ್ ಡಿಜಿಟಲ್ ಐಡಿ:' : 'Driver ID:'}</b> ${data.driverId || ''}</p>
                 <p style="font-size:0.85rem; color:#2d3748;"><b>${currentLang === 'kn' ? 'ವಾಹನ ನಂಬರ್:' : 'Vehicle No:'}</b> ${data.driverVehNo || ''}</p>
+                <p style="font-size:0.85rem; color:#2d3748;"><b>${currentLang === 'kn' ? 'ಮೊಬೈಲ್ ನಂಬರ್:' : 'Phone:'}</b> ${data.driverPhone || ''} 
+                  <a href="tel:${data.driverPhone}" style="background:#0fb05b; color:white; padding:4px 10px; border-radius:4px; text-decoration:none; font-size:0.8rem; margin-left:5px; font-weight:bold;">📞 ಕಾಲ್ ಮಾಡಿ</a>
+                </p>
                 
                 <div style="background:#fff3cd; padding:8px; border-radius:6px; margin:8px 0; font-size:0.8rem; color:#856404; font-weight:bold;">
-                  ${currentLang === 'kn' ? '⚠️ ಎಲ್ಲಾ ದಾಖಲೆಗಳು ಪರಿಶೀಲಿಸಲಾಗಿದೆ. ಡ್ರೈವರ್ 2 ನಿಮಿಷದಲ್ಲಿ ನಿಮ್ಮ ಹತ್ತಿರ ಬರುತ್ತಿದ್ದಾರೆ. ಜಿಪಿಎಸ್ ಮೂಲಕ ಟ್ರ್ಯಾಕ್ ಮಾಡಿ.' : 'Driver is on the way. Check GPS location.'}
+                  ${currentLang === 'kn' ? '⚠️ ನಿಮ್ಮ ಡ್ರೈವರ್ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿದ್ದಾರೆ, ಸ್ವಲ್ಪ ನಿಂತುಕೊಳ್ಳಿ. ನಿಮ್ಮ ಗಾಡಿ ಎಲ್ಲಿ ಬರ್ತಿದೆ ಅಂತ ಜಿಪಿಎಸ್ ಮೂಲಕ ನೋಡಬಹುದು, ದಯವಿಟ್ಟು ಕಾಯಿರಿ.' : 'Driver accepted your booking. Please wait and track location.'}
                 </div>
 
                 <a href="${googleMapsUrl}" target="_blank" class="btn-submit" style="display:block; background:#3182ce; text-decoration:none; margin-bottom:8px; text-align:center;">${currentLang === 'kn' ? '🗺️ ಡ್ರೈವರ್ ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ನೋಡಿ' : 'View Driver GPS Location'}</a>
@@ -1208,7 +1251,7 @@
                   </p>
                   <p><b>ಪ್ರಯಾಣಿಕರ ಸಂಖ್ಯೆ:</b> ${b.passengers}</p>
                   <p><b>ಸ್ಥಳ:</b> ${b.pickupLocation} (~${dist.toFixed(2)} KM)</p>
-                  <button class="btn-submit" onclick="acceptBooking('${docSnap.id}', '${driverData.drvName}', '${driverData.drvPhone}', '${driverData.drvVehNo}', '${driverData.selfiePhoto || ''}', ${b.pickupLat}, ${b.pickupLng})" style="margin-top:8px;">ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ (Accept)</button>
+                  <button class="btn-submit" onclick="acceptBooking('${docSnap.id}', '${driverData.drvName}', '${driverData.drvPhone}', '${driverData.drvVehNo}', '${driverData.selfiePhoto || ''}', '${driverData.driverId}', ${b.pickupLat}, ${b.pickupLng})" style="margin-top:8px;">ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ (Accept)</button>
                 </div>
               `;
             }
@@ -1233,7 +1276,7 @@
       return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     }
 
-    async function acceptBooking(bookingId, driverName, driverPhone, driverVehNo, driverPhoto, pickupLat, pickupLng) {
+    async function acceptBooking(bookingId, driverName, driverPhone, driverVehNo, driverPhoto, driverId, pickupLat, pickupLng) {
       let confirmAccept = confirm("ನೀವು ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿದ್ದೀರಾ? (OK ಒತ್ತಿ ಲೊಕೇಶನ್ ಆನ್ ಮಾಡಲು)");
       if (!confirmAccept) return;
 
@@ -1243,10 +1286,10 @@
           driverName: driverName,
           driverPhone: driverPhone,
           driverVehNo: driverVehNo,
-          driverPhoto: driverPhoto
+          driverPhoto: driverPhoto,
+          driverId: driverId
         });
 
-        // ಆಟೋಮ್ಯಾಟಿಕ್ ಗೂಗಲ್ ಮ್ಯಾಪ್ ರೂಟ್ ಓಪನ್ ಆಗಿ ಕಸ್ಟಮರ್ ಹತ್ತಿರ ಕರೆದುಕೊಂಡು ಹೋಗುತ್ತದೆ
         const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${pickupLat},${pickupLng}`;
         window.open(mapsUrl, '_blank');
 
