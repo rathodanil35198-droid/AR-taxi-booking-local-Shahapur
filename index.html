@@ -48,7 +48,6 @@
     body { background-color: var(--bg); color: var(--text); padding: 8px; padding-bottom: 70px; }
     .container { width: 100%; max-width: 480px; margin: 0 auto; background: #fff; padding: 12px; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.4); position: relative; }
 
-    /* ಮಿಂಚುವ ಕರ್ನಾಟಕ ಅನಿಮೇಷನ್ ಶೈಲಿ */
     @keyframes glowText {
       0% { color: #ffeb3b; text-shadow: 0 0 5px #ff9800, 0 0 10px #ff5722; }
       50% { color: #00e676; text-shadow: 0 0 10px #00e676, 0 0 20px #1de9b6; }
@@ -63,7 +62,6 @@
       letter-spacing: 1px;
     }
 
-    /* ನಿಯಮಗಳ ಪುಟ ಸ್ಟೈಲ್ */
     #termsScreen { text-align: left; padding: 15px; background: #1e293b; border-radius: 10px; color: #f8fafc; }
     .terms-box { border: 1px solid #475569; padding: 10px; height: 210px; overflow-y: scroll; font-size: 0.8rem; background: #0f172a; color: #cbd5e1; margin-bottom: 12px; border-radius: 6px; line-height: 1.4; }
 
@@ -109,7 +107,6 @@
     .preview-img { width: 45px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1; cursor: pointer; transition: transform 0.2s; }
     .preview-img:hover { transform: scale(1.05); }
     
-    /* ಫುಲ್ ಸ್ಕ್ರೀನ್ ಇಮೇಜ್ ಮೋಡಲ್ */
     #imageModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10000; justify-content: center; align-items: center; flex-direction: column; }
     #imageModal img { max-width: 90%; max-height: 80%; border-radius: 8px; margin-bottom: 15px; }
     .modal-close { background: #dc2626; color: white; border: none; padding: 8px 20px; border-radius: 20px; font-weight: bold; cursor: pointer; }
@@ -117,7 +114,6 @@
     .footer { text-align: center; font-size: 0.7rem; color: #64748b; margin-top: 10px; border-top: 1px solid #eee; padding-top: 5px; }
     .back-home-btn { background: #64748b; color: white; border: none; padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; margin-bottom: 8px; }
 
-    /* ಫ್ಲೋಟಿಂಗ್ ವಾಟ್ಸಾಪ್ ಶೇರಿಂಗ್ ಬಟನ್ */
     .global-floating-share {
       position: fixed;
       bottom: 10px;
@@ -328,14 +324,13 @@
         <div id="driverBookingsList"><p style="color: #dc2626; font-weight: bold;">ಬುಕಿಂಗ್ ನೋಡಲು ನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ.</p></div>
       </div>
 
-      <!-- ಅಡ್ಮಿನ್ ಸೆಕ್ಷನ್ (ಸರ್ಚ್ ಹಾಗೂ ಫೋಟೋ ವೀವರ್ ಸೇರಿಸಲಾಗಿದೆ) -->
+      <!-- ಅಡ್ಮಿನ್ ಸೆಕ್ಷನ್ -->
       <div id="adminSection" class="section">
         <h2>ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್</h2>
         <p style="font-size: 0.75rem; color: #64748b; margin-bottom: 8px;">ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್‌ಗಳ ವೀಕ್ಷಣೆ ಅಥವಾ ಡಿಲೀಟ್ ಮಾಡಲು ಇಲ್ಲಿಗೆ ಬನ್ನಿರಿ...</p>
         
-        <!-- ಸರ್ಚ್ ಆಪ್ಷನ್ -->
         <div class="form-group">
-          <label>🔍 ಡ್ರೈವರ್ ಹುಡುಕಿ (வெகಿಕಲ್ ನಂಬರ್ / ಐಡಿ / ಮೊಬೈಲ್):</label>
+          <label>🔍 ಡ್ರೈವರ್ ಹುಡುಕಿ (வெಹಿಕಲ್ ನಂಬರ್ / ಐಡಿ / ಮೊಬೈಲ್):</label>
           <input type="text" id="adminSearchInput" placeholder="ನಂಬರ್ ಅಥವಾ ಐಡಿ ಹಾಕಿ ಹುಡುಕಿ..." oninput="filterDriversList()">
         </div>
 
@@ -352,14 +347,12 @@
     <button class="modal-close" onclick="closeImageModal()">ಮುಚ್ಚಿ (Close)</button>
   </div>
 
-  <!-- ಜಾಗತಿಕ ವಾಟ್ಸಾಪ್ ಶೇರ್ ಬಟನ್ -->
   <button class="global-floating-share" onclick="shareOnWhatsApp()">
     💬 ಈ ಆಪ್ ಅನ್ನು ವಾಟ್ಸಾಪ್‌ನಲ್ಲಿ ಶೇರ್ ಮಾಡಿ (ಮ್ಯಾಪ್ ಲಿಂಕ್)
   </button>
 
   <script>
-    // ಜಾಗತಿಕ ವೇರಿಯೇಬಲ್‌ಗಳು
-    let allDriversData = []; // ಅಡ್ಮಿನ್ ಸರ್ಚ್ ಗಾಗಿ ಡಾಟಾ ಸ್ಟೋರ್ ಮಾಡಲು
+    let allDriversData = [];
 
     function acceptTerms() {
       if (document.getElementById('agreeCheckbox').checked) {
@@ -525,7 +518,6 @@
       }
     }
 
-    // ಲೈವ್ ಮೀಟರ್ ವೇರಿಯೇಬಲ್‌ಗಳು
     let meterInterval = null;
     let currentDistance = 0.0;
     let currentFare = 50;
@@ -548,7 +540,7 @@
       if (meterInterval) clearInterval(meterInterval);
       
       meterInterval = setInterval(() => {
-        currentDistance += 0.1; // ಪ್ರತಿ ಸೆಕೆಂಡಿಗೆ ಅಂದಾಜು ಅಂತರ ಹೆಚ್ಚಳ (ಜಿಪಿಎಸ್ ಆಧಾರಿತವಾಗಿ ಬದಲಾಯಿಸಬಹುದು)
+        currentDistance += 0.1;
         let vType = document.getElementById('meterVehicleType').value;
         let base = (vType === 'Auto') ? 50 : 80;
         let perKmRate = (vType === 'Auto') ? 15 : 22;
@@ -569,7 +561,6 @@
       alert(`🏁 ಯಾತ್ರೆ ಮುಕ್ತಾಯಗೊಂಡಿದೆ. ಒಟ್ಟು ಶುಲ್ಕ: ₹${currentFare}`);
     }
 
-    // ಫೈಲ್ ಅನ್ನು Base64 ಗೆ ಪರಿವರ್ತಿಸುವ ಹೆಲ್ಪರ್ ಫಂಕ್ಷನ್
     function convertFileToBase64(file) {
       return new Promise((resolve, reject) => {
         if (!file) { resolve(''); return; }
@@ -668,7 +659,6 @@
       });
     }
 
-    // ಅಡ್ಮಿನ್ ಸೆಕ್ಷನ್‌ನಲ್ಲಿ ಎಲ್ಲಾ ಡ್ರೈವರ್‌ಗಳನ್ನು ತೋರಿಸುವುದು ಹಾಗೂ ಸರ್ಚ್ ಮಾಡುವ ಲಾಜಿಕ್
     function loadAdminDriversList() {
       let adminListDiv = document.getElementById('adminDriversList');
       adminListDiv.innerHTML = '<p>ಮಾಹಿತಿ ಲೋಡ್ ಆಗುತ್ತಿದೆ...</p>';
@@ -692,14 +682,13 @@
       let html = '';
       drivers.forEach((data, index) => {
         let dId = data.driverId || 'N/A';
-        let name = data.name || ' ಹೆಸರು ಇಲ್ಲ';
+        let name = data.name || 'ಹೆಸರು ಇಲ್ಲ';
         let phone = data.phone || '';
         let vehNo = data.vehicleNo || 'ವೇಹಿಕಲ್ ನಂಬರ್ ಇಲ್ಲ';
         let vehType = data.vehicleType || '';
         let rides = data.ridesCount || 0;
         let earnings = data.totalEarnings || 0;
 
-        // ಫೋಟೋಗಳ ಥಂಬ್‌ನೇಲ್ ಲಿಂಕ್‌ಗಳು (ಇಲ್ಲದಿದ್ದರೆ ಡಿಫಾಲ್ಟ್ ಅಥವಾ ಖಾಲಿ)
         let rc = data.rcPhoto || '';
         let dl = data.dlPhoto || '';
         let aadhaar = data.aadhaarPhoto || '';
@@ -709,7 +698,7 @@
         html += `
           <div class="card" style="display: flex; flex-direction: column; gap: 6px;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
-              <span style="font-weight: bold; background: #e2e8f0; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem;">ಸೀರಿಯಲ್ ನಂಬರ್: #${index + 1}</span>
+              <span style="font-weight: bold; background: #e2e8f0; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem;">ಕ್ರಸ.ನಂ: #${index + 1}</span>
               <span style="font-weight: bold; color: #7c3aed; font-size: 0.8rem;">🆔 ID: ${dId}</span>
               <button onclick="deleteDriver('${data.id}')" style="background:#dc2626; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:0.75rem; cursor:pointer;">🗑️ ಡಿಲೀಟ್</button>
             </div>
@@ -721,7 +710,6 @@
               <p style="font-size: 0.75rem; color: #059669;">ರೈಡ್ಸ್: ${rides}, ₹${earnings}</p>
             </div>
 
-            <!-- ಎಲ್ಲಾ ಅಪ್ಲೋಡ್ ಮಾಡಿದ ಫೋಟೋಗಳು ಚಿಕ್ಕದಾಗಿ ಕಾಣಲು -->
             <div style="display: flex; gap: 5px; flex-wrap: wrap; margin-top: 4px; border-top: 1px solid #eee; padding-top: 6px;">
               ${rc ? `<div style="text-align:center;"><span style="font-size:0.65rem; display:block;">RC</span><img src="${rc}" class="preview-img" onclick="openImageModal('${rc}')"></div>` : ''}
               ${dl ? `<div style="text-align:center;"><span style="font-size:0.65rem; display:block;">DL</span><img src="${dl}" class="preview-img" onclick="openImageModal('${dl}')"></div>` : ''}
@@ -735,7 +723,6 @@
       adminListDiv.innerHTML = html;
     }
 
-    // ಸರ್ಚ್ ಫಿಲ್ಟರ್ ಲಾಜಿಕ್ (ವೆಹಿಕಲ್ ನಂಬರ್, ಐಡಿ ನಂಬರ್, ಮೊಬೈಲ್ ನಂಬರ್)
     function filterDriversList() {
       let queryText = document.getElementById('adminSearchInput').value.toLowerCase().trim();
       if (!queryText) {
@@ -755,7 +742,6 @@
       renderDriversList(filtered);
     }
 
-    // ಫುಲ್ ಸ್ಕ್ರೀನ್ ಇಮೇಜ್ ಮೋಡಲ್ ಓಪನ್ ಮತ್ತು ಕ್ಲೋಸ್
     function openImageModal(imgSrc) {
       document.getElementById('modalImg').src = imgSrc;
       document.getElementById('modalDownloadBtn').href = imgSrc;
@@ -787,9 +773,6 @@
     function toggleLanguage() {
       isEnglish = !isEnglish;
       document.getElementById('langToggleBtn').innerText = isEnglish ? 'ಕನ್ನಡ' : 'English';
-      document.getElementById('mainTitleText').innerText = isEnglish ? 'AR Taxi Shahapur' : 'AR Taxi Shahapur';
-      document.getElementById('subTitleText').innerText = isEnglish ? 'Local Auto & Cab Booking' : 'ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್';
-      document.getElementById('backBtnText').innerText = isEnglish ? '⬅ Change Role' : '⬅ ಹಿಂದಕ್ಕೆ (Change Role)';
     }
   </script>
 </body>
