@@ -127,7 +127,6 @@
     label { display: block; font-size: 0.78rem; font-weight: 700; margin-bottom: 2px; color: #4a5568; }
     input, select { width: 100%; padding: 8px; border: 2px solid #e2e8f0; border-radius: 6px; font-size: 0.85rem; }
     
-    /* ಕೆಂಪು ಬಣ್ಣದ ದೋಷ ಸಂದೇಶ ಸ್ಟೈಲ್ */
     .error-msg { color: #e53e3e; font-size: 0.75rem; font-weight: bold; margin-top: 2px; display: none; }
 
     .vehicle-logo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px; }
@@ -309,26 +308,26 @@
         </div>
 
         <div class="form-group">
-          <label id="lblDrvPhoto">ವಾಹನ ಫೋಟೋ ಅಪ್‌ಲೋಡ್:</label>
+          <label id="lblDrvPhoto">ವಾಹನ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ (ಕ್ಯಾಮೆರಾ ಅಥವಾ ಗ್ಯಾಲರಿ):</label>
           <input type="file" id="vehPhotoFile" accept="image/*">
           <div id="errVehPhoto" class="error-msg">ವಾಹನ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ ಮಾಡುವಲ್ಲಿ ದೋಷವಿದೆ</div>
         </div>
 
         <div class="form-group">
-          <label id="lblRcPhoto">ಆರ್ ಸಿ ಕಾರ್ಡ್ ಫೋಟೋ ಅಪ್‌ಲೋಡ್:</label>
+          <label id="lblRcPhoto">ಆರ್ ಸಿ ಕಾರ್ಡ್ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ (ಕ್ಯಾಮೆರಾ ಅಥವಾ ಗ್ಯಾಲರಿ):</label>
           <input type="file" id="rcPhotoFile" accept="image/*">
           <div id="errRcPhoto" class="error-msg">ಆರ್ ಸಿ ಕಾರ್ಡ್ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ ಮಾಡುವಲ್ಲಿ ದೋಷವಿದೆ</div>
         </div>
 
         <div class="form-group">
-          <label id="lblDlPhoto">ಡಿ ಎಲ್ ಫೋಟೋ ಅಪ್‌ಲೋಡ್:</label>
+          <label id="lblDlPhoto">ಡಿ ಎಲ್ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ (ಕ್ಯಾಮೆರಾ ಅಥವಾ ಗ್ಯಾಲರಿ):</label>
           <input type="file" id="dlPhotoFile" accept="image/*">
           <div id="errDlPhoto" class="error-msg">ಡಿ ಎಲ್ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ ಮಾಡುವಲ್ಲಿ ದೋಷವಿದೆ</div>
         </div>
 
         <div class="form-group">
-          <label id="lblSelfiePhoto">ಡ್ರೈವರ್ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ (ಸೆಲ್ಫಿ / ಕ್ಯಾಮೆರಾ ಆನ್):</label>
-          <input type="file" id="selfiePhotoFile" accept="image/*" capture="user">
+          <label id="lblSelfiePhoto">ಡ್ರೈವರ್ ಸೆಲ್ಫಿ / ಫೋಟೋ (ಕ್ಯಾಮೆರಾ ಅಥವಾ ಗ್ಯಾಲರಿ ಆಯ್ಕೆ):</label>
+          <input type="file" id="selfiePhotoFile" accept="image/*">
           <div id="errSelfiePhoto" class="error-msg">ಸೆಲ್ಫಿ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ ಮಾಡುವಲ್ಲಿ ದೋಷವಿದೆ</div>
         </div>
 
@@ -441,10 +440,10 @@
         lblDrvPhone: "ಮೊಬೈಲ್ ನಂಬರ್:",
         lblDrvVehNo: "ವಾಹನ ನಂಬರ್:",
         lblDrvVehType: "ವಾಹನ ಪ್ರಭೇದ:",
-        lblDrvPhoto: "ವಾಹನ ಫೋಟೋ ಅಪ್‌ಲೋಡ್:",
-        lblRcPhoto: "ಆರ್ ಸಿ ಕಾರ್ಡ್ ಫೋಟೋ ಅಪ್‌ಲೋಡ್:",
-        lblDlPhoto: "ಡಿ ಎಲ್ ಫೋಟೋ ಅಪ್‌ಲೋಡ್:",
-        lblSelfiePhoto: "ಡ್ರೈವರ್ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ (ಸೆಲ್ಫಿ / ಕ್ಯಾಮೆರಾ ಆನ್):",
+        lblDrvPhoto: "ವಾಹನ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ (ಕ್ಯಾಮೆರಾ ಅಥವಾ ಗ್ಯಾಲರಿ):",
+        lblRcPhoto: "ಆರ್ ಸಿ ಕಾರ್ಡ್ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ (ಕ್ಯಾಮೆರಾ ಅಥವಾ ಗ್ಯಾಲರಿ):",
+        lblDlPhoto: "ಡಿ ಎಲ್ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ (ಕ್ಯಾಮೆರಾ ಅಥವಾ ಗ್ಯಾಲರಿ):",
+        lblSelfiePhoto: "ಡ್ರೈವರ್ ಸೆಲ್ಫಿ / ಫೋಟೋ (ಕ್ಯಾಮೆರಾ ಅಥವಾ ಗ್ಯಾಲರಿ ಆಯ್ಕೆ):",
         btnRegisterDriver: "ಲಾಗಿನ್ / ರಜಿಸ್ಟರ್ ಮಾಡಿ",
         h2LiveOrders: "ಡ್ರೈವರ್‌ಗಳಿಗೆ ಲೈವ್ ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು (2 KM ಒಳಗೆ ಇರುವವರು)",
         lblEnterDriverId: "ಬುಕಿಂಗ್ ವೀಕ್ಷಿಸಲು ನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ:",
@@ -498,10 +497,10 @@
         lblDrvPhone: "Mobile Number:",
         lblDrvVehNo: "Vehicle Number:",
         lblDrvVehType: "Vehicle Type:",
-        lblDrvPhoto: "Vehicle Photo Upload:",
-        lblRcPhoto: "RC Card Photo Upload:",
-        lblDlPhoto: "DL Photo Upload:",
-        lblSelfiePhoto: "Driver Photo Upload (Selfie / Camera On):",
+        lblDrvPhoto: "Vehicle Photo Upload (Camera or Gallery):",
+        lblRcPhoto: "RC Card Photo Upload (Camera or Gallery):",
+        lblDlPhoto: "DL Photo Upload (Camera or Gallery):",
+        lblSelfiePhoto: "Driver Selfie / Photo (Camera or Gallery option):",
         btnRegisterDriver: "Login / Register",
         h2LiveOrders: "Live Booking Orders for Drivers (Within 2 KM)",
         lblEnterDriverId: "Enter your 4-digit Driver ID to view bookings:",
@@ -815,6 +814,7 @@
       return type === 'Auto' ? 50 : 80;
     }
 
+    // ಫೋಟೋ ಗಾತ್ರದ ಮೇಲೆ ಯಾವುದೇ ನಿರ್ಬಂಧವಿಲ್ಲದೆ ಯಾವುದೇ ಸೈಜ್‌ನ (ಚಿಕ್ಕದು/ದೊಡ್ಡದು, ಕಲರ್ ಅಥವಾ ಜೆರಾಕ್ಸ್ ವೈಟ್) ಫೋಟೋಗಳನ್ನು ಸ್ವೀಕರಿಸಲು ಕಂಪ್ರೆಸ್ ಅಥವಾ ರಿಸ್ಟ್ರಿಕ್ಷನ್ ತೆಗೆದುಹಾಕಲಾಗಿದೆ
     function fileToBase64(file) {
       return new Promise((resolve, reject) => {
         if (!file) { resolve(''); return; }
@@ -887,10 +887,8 @@
           timestamp: window.serverTimestamp()
         });
 
-        // ನೀವು ಕೇಳಿದಂತೆ ಯಶಸ್ವಿ ಸಂದೇಶ ಮತ್ತು 4 ಡಿಜಿಟ್ ಐಡಿಯೊಂದಿಗೆ ಅಲರ್ಟ್ ಬಾಕ್ಸ್ ಹಾಗೂ ಓಕೆ ಬಟನ್
         alert(`ನಿಮ್ಮ ಐಡಿಯು ಯಶಸ್ವಿಯಾಗಿದೆ: ${driverId}\n\nಈ ನಾಲ್ಕು ಡಿಜಿಟಲ್ ಐಡಿಯನ್ನು ನೀವು ಗಮನದಲ್ಲಿ ಇಟ್ಟುಕೊಳ್ಳಿ, ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸುವಾಗ ನಿಮಗೆ ಬೇಕಾಗುತ್ತೆ.`);
 
-        // ಫಾರ್ಮ್ ಕ್ಲಿಯರ್ ಮಾಡಿ
         document.getElementById('drvName').value = '';
         document.getElementById('drvPhone').value = '';
         document.getElementById('drvVehNo').value = '';
@@ -900,7 +898,6 @@
         document.getElementById('selfiePhotoFile').value = '';
         btn.innerText = texts[currentLang].btnRegisterDriver;
 
-        // ನೇರವಾಗಿ ಬುಕಿಂಗ್ ಲೈವ್ ಪೇಜ್‌ಗೆ ಆಟೋಮೆಟಿಕ್ ಹೋಗುತ್ತದೆ ಮತ್ತು ಐಡಿ ಆಟೋ ಫಿಲ್ ಆಗುತ್ತದೆ
         switchSection('liveSection');
         document.getElementById('driverInputId').value = driverId;
         checkDriverIdAndListen();
