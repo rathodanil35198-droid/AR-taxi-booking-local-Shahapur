@@ -1154,30 +1154,38 @@
       const q = window.query(window.collection(window.db, "bookings"), window.orderBy("timestamp", "desc"));
       bookingsUnsubscribe = window.onSnapshot(q, (snapshot) => {
         const listDiv = document.getElementById('driverBookingsList');
-        let html = '';
-        let pendingCount = 0;
+        let pendingHtml = '';
+        let acceptedHtml = '';
+        let pendingCountToday = 0;
         let hasActiveAlert = false;
 
-        const todayStr = new Date().toISOString().split('T')[0];
+        const now = new Date();
+        const currentHour = now.getHours();
+        const currentMinute = now.getMinutes();
+        const todayStr = now.toISOString().split('T')[0];
 
         snapshot.forEach((docSnap) => {
           const b = docSnap.data();
+          const bDate = b.dateKey || '';
 
-          if (!b.dateKey || b.dateKey !== todayStr) {
+          if (bDate !== todayStr || (currentHour === 0 && currentMinute < 30)) {
             window.deleteDoc(window.doc(window.db, "bookings", docSnap.id)).catch(err => {});
             return;
           }
 
-          if (b.status === 'Pending') {
-            if (b.pickupLat && b.pickupLng && currentDriverLat && currentDriverLng) {
-              const dist = calculateDistance(currentDriverLat, currentDriverLng, b.pickupLat, b.pickupLng);
-              if (dist <= 2.0) {
-                pendingCount++;
+          if (b.pickupLat && b.pickupLng && currentDriverLat && currentDriverLng) {
+            const dist = calculateDistance(currentDriverLat, currentDriverLng, b.pickupLat, b.pickupLng);
+            if (dist <= 2.0) {
+              let vehLogo = b.vehicleType === 'Car' ? '🚗' : '🛺';
+              let vehNameText = b.vehicleType === 'Car' ? (currentLang === 'kn' ? 'ಕಾರ್ (Car)' : 'Car') : (currentLang === 'kn' ? 'ಆಟೋ (Auto)' : 'Auto');
+
+              if (b.status === 'Pending') {
+                pendingCountToday++;
                 hasActiveAlert = true;
-                html += `
+                pendingHtml += `
                   <div class="card" style="border: 2px solid #0fb05b; background:#f7fafc; margin-bottom:10px;">
                     <p style="background:#e8f8f0; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#065f46;">⚠️ ಎಚ್ಚರಿಕೆ: ನಿಮ್ಮ ಹತ್ತಿರ ಹೊಸ ಬುಕಿಂಗ್ ಬಂದಿದೆ!</p>
-                    <p><b>${currentLang === 'kn' ? 'ವಾಹನ ಅಗತ್ಯ:' : 'Vehicle Required:'}</b> ${b.vehicleType}</p>
+                    <p style="font-size: 1.1rem; margin-bottom: 4px;"><b>ವಾಹನ:</b> ${vehLogo} ${vehNameText}</p>
                     <p><b>${currentLang === 'kn' ? 'ಕಸ್ಟಮರ್ ಹೆಸರು:' : 'Customer Name:'}</b> ${b.customerName}</p>
                     <p><b>${currentLang === 'kn' ? 'ಫೋನ್ ನಂಬರ್:' : 'Phone:'}</b> <a href="tel:${b.customerPhone}">${b.customerPhone}</a> <a href="tel:${b.customerPhone}" style="background:#3182ce; color:white; padding:2px 8px; border-radius:4px; text-decoration:none; font-size:0.75rem; margin-left:5px;">📞 ಕಾಲ್ ಮಾಡಿ</a></p>
                     <p><b>${currentLang === 'kn' ? 'ಪ್ರಯಾಣಿಕರು:' : 'Passengers:'}</b> ${b.passengers}</p>
@@ -1187,15 +1195,36 @@
                     <button class="btn-submit" onclick="acceptBooking('${docSnap.id}', '${driverData.drvName}', '${driverData.drvPhone}', '${driverData.drvVehNo}', '${driverData.driverId}', ${b.pickupLat}, ${b.pickupLng})" style="margin-top:8px;">${currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ (Accept)' : 'Accept Booking'}</button>
                   </div>
                 `;
+              } else if (b.status === 'Accepted') {
+                // ಸ್ವೀಕರಿಸಿದ / ಲಾಕ್ ಆದ ಬುಕಿಂಗ್‌ಗಳು ಕೆಳಗಡೆ ಸಾಲಾಗಿ ಪ್ರದರ್ಶಿಸುವುದು
+                acceptedHtml += `
+                  <div class="card" style="border: 2px solid #38a169; background:#edf2f7; margin-bottom:10px;">
+                    <p style="background:#d4edda; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#155724;">🔒 ಈ ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಲಾಕ್ ಆಗಿದೆ!</p>
+                    <p style="font-size: 1rem; margin-bottom: 4px; color: #2d3748;"><b>ವಾಹನ:</b> ${vehLogo} ${vehNameText}</p>
+                    <p><b>ಸ್ವೀಕರಿಸಿದ ಡ್ರೈವರ್:</b> ${b.driverName || 'Driver'} (ಕೋಡ್: ${b.driverIdNum || ''})</p>
+                    <p><b>ವಾಹನ ನಂಬರ್:</b> ${b.driverVehNo || '-'}</p>
+                    <p><b>ಕಸ್ಟಮರ್ ಹೆಸರು:</b> ${b.customerName} (${b.customerPhone})</p>
+                    <p><b>ಸ್ಥಳ:</b> ${b.pickupLocation}</p>
+                  </div>
+                `;
               }
             }
           }
         });
 
-        if (html === '') {
-          listDiv.innerHTML = `<p style="color: #718096; font-weight: bold;">${currentLang === 'kn' ? 'ನಿಮ್ಮ 2 ಕಿ.ಮೀ ಒಳಗೆ ಯಾವುದೇ ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.' : 'No active bookings within 2 KM.'}</p>`;
+        let summaryHeader = `<div style="background: #e2e8f0; padding: 8px; border-radius: 6px; margin-bottom: 10px; font-weight: bold; text-align: center; color: #2d3748;">
+          📊 ಇವತ್ತಿನ ಒಟ್ಟು ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು: ${pendingCountToday}
+        </div>`;
+
+        let combinedHtml = summaryHeader + pendingHtml;
+        if (acceptedHtml !== '') {
+          combinedHtml += `<hr style="margin: 15px 0; border: 0; border-top: 1px solid #cbd5e0;"><h3 style="font-size: 0.85rem; color: #4a5568; margin-bottom: 8px;">ಲಾಕ್ ಆಗಿರುವ ಬುಕಿಂಗ್‌ಗಳು:</h3>` + acceptedHtml;
+        }
+
+        if (pendingHtml === '' && acceptedHtml === '') {
+          listDiv.innerHTML = summaryHeader + `<p style="color: #718096; font-weight: bold;">${currentLang === 'kn' ? 'ನಿಮ್ಮ 2 ಕಿ.ಮೀ ಒಳಗೆ ಯಾವುದೇ ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.' : 'No active bookings within 2 KM.'}</p>`;
         } else {
-          listDiv.innerHTML = html;
+          listDiv.innerHTML = combinedHtml;
         }
 
         const audio = document.getElementById('alertSound');
@@ -1239,12 +1268,14 @@
         const audio = document.getElementById('alertSound');
         if(audio) { audio.pause(); audio.currentTime = 0; }
 
+        alert(`ನಿಮ್ಮ ಅರ್ಜಿಯನ್ನು ಸ್ವೀಕರಿಸಲಾಗಿದೆ!\n\nಈ ನಾಲ್ಕು ಡಿಜಿಟಲ್ ಐಡಿಯನ್ನು (${driverIdNum}) ನಿಮ್ಮ ಗಮನದಲ್ಲಿಟ್ಟುಕೊಳ್ಳಿ ನೆನಪಿಗೆ. ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿದಾಗ ಬೇಕಾಗುತ್ತದೆ.`);
+
         if (pickupLat && pickupLng) {
           const gmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${pickupLat},${pickupLng}&travelmode=driving`;
           window.open(gmapsUrl, '_blank');
         }
 
-        alert(currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸ್ವೀಕರಿಸಲಾಗಿದೆ! ಕಸ್ಟಮರ್‌ಗೆ ನಿಮ್ಮ ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ತೋರಿಸಲಾಗುತ್ತಿದೆ.' : 'Booking accepted successfully! GPS location shared with customer.');
+        switchSection('liveSection');
       } catch (e) {
         alert('Error: ' + e.message);
       }
