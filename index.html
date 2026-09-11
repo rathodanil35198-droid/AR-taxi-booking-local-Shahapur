@@ -143,11 +143,13 @@
     .footer { text-align: center; font-size: 0.7rem; color: #7f8c8d; margin-top: 10px; border-top: 1px solid #eee; padding-top: 5px; }
     .back-home-btn { background: #718096; color: white; border: none; padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; margin-bottom: 8px; }
 
-    /* Fullscreen Image Modal */
-    #imageModal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); text-align: center; padding: 20px; }
+    /* Fullscreen Image Modal & Custom Alert Popup Modal */
+    #imageModal, #customAlertModal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); text-align: center; padding: 20px; }
     #fullImage { max-width: 100%; max-height: 80vh; margin-top: 40px; border-radius: 8px; }
     #modalClose { position: absolute; top: 20px; right: 25px; color: #fff; font-size: 35px; font-weight: bold; cursor: pointer; }
     #downloadBtn { display: inline-block; margin-top: 20px; background: #0fb05b; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; }
+    
+    .modal-content-box { background: #fff; max-width: 380px; margin: 100px auto; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
   </style>
 </head>
 <body>
@@ -162,6 +164,16 @@
     <img id="fullImage" src="" alt="Full View">
     <br>
     <a id="downloadBtn" href="" download="driver_photo.jpg">ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ (Download)</a>
+  </div>
+
+  <!-- Custom Alert Popup Modal -->
+  <div id="customAlertModal">
+    <div class="modal-content-box">
+      <div style="font-size: 2.5rem; margin-bottom: 10px;">🛺</div>
+      <h3 style="color: #2d3748; margin-bottom: 10px; font-size: 1.1rem;">ಬುಕಿಂಗ್ ಸ್ಥಿತಿ</h3>
+      <p id="customAlertText" style="font-size: 0.9rem; color: #4a5568; line-height: 1.6; margin-bottom: 20px;"></p>
+      <button class="btn-submit" onclick="closeCustomAlert()">ಸರಿ (OK)</button>
+    </div>
   </div>
 
   <div class="container">
@@ -385,7 +397,6 @@
         <h2 id="h2AdminTitle">ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್</h2>
         <p style="font-size: 0.75rem; color: #7f8c8d; margin-bottom: 8px;" id="txtAdminSub">ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ಗಳ ವೀಕ್ಷಣೆ ಅಥವಾ ಡಿಲೀಟ್ ಮಾಡಲು ಇಲ್ಲಿಗೆ ಬನ್ನಿರಿ...</p>
         
-        <!-- Search Box Added Here -->
         <div class="form-group" style="margin-bottom: 12px;">
           <input type="text" id="adminSearchInput" placeholder="ಮೊಬೈಲ್ ನಂಬರ್ ಅಥವಾ ಐಡಿ ನಂಬರ್ ಮೂಲಕ ಹುಡುಕಿ..." oninput="filterAdminDrivers()">
         </div>
@@ -419,7 +430,6 @@
     let isAdminUnlocked = false;
     let allDriversData = []; 
 
-    // Meter GPS tracking variables
     let custMeterWatchId = null;
     let drvMeterWatchId = null;
     let lastCustPos = null;
@@ -610,6 +620,7 @@
       document.getElementById('footerText').innerText = t.footerText;
 
       renderTabs();
+      updatePassengerDropdown();
     }
 
     function selectRole(role) {
@@ -709,15 +720,25 @@
         document.getElementById('cardCar').classList.add('selected');
         document.getElementById('cardAuto').classList.remove('selected');
       }
+      updatePassengerDropdown();
     }
 
-    const sel = document.getElementById('passengerCount');
-    for (let i = 1; i <= 10; i++) {
-      let opt = document.createElement('option');
-      opt.value = i;
-      opt.text = i + (currentLang === 'kn' ? ' ಪ್ರಯಾಣಿಕರು' : ' Passengers');
-      sel.appendChild(opt);
+    function updatePassengerDropdown() {
+      const vehicleType = document.getElementById('vehicleType').value;
+      const sel = document.getElementById('passengerCount');
+      sel.innerHTML = '';
+      
+      // ಆಟೋಗೆ ಗರಿಷ್ಠ 3 ಪ್ರಯಾಣಿಕರು, ಕಾರಿಗೆ ಗರಿಷ್ಠ 4 ಪ್ರಯಾಣಿಕರು
+      const maxPassengers = (vehicleType === 'Auto') ? 3 : 4;
+      
+      for (let i = 1; i <= maxPassengers; i++) {
+        let opt = document.createElement('option');
+        opt.value = i;
+        opt.text = i + (currentLang === 'kn' ? ' ಪ್ರಯಾಣಿಕರು' : ' Passengers');
+        sel.appendChild(opt);
+      }
     }
+    updatePassengerDropdown();
 
     function getLocation() {
       if (navigator.geolocation) {
@@ -762,7 +783,7 @@
       if (hasError) return;
 
       try {
-        const todayStr = new Date().toISOString().split('T')[0]; // ದಿನಾಂಕದ ಆಧಾರದ ಮೇಲೆ ಗುರುತಿಸಲು
+        const todayStr = new Date().toISOString().split('T')[0];
         const docRef = await window.addDoc(window.collection(window.db, "bookings"), {
           vehicleType,
           customerName: name,
@@ -779,6 +800,10 @@
         });
 
         myActiveBookingId = docRef.id;
+        
+        // ಸ್ಕ್ರೀನ್ ಮೇಲೆ ನೋಟಿಫಿಕೇಶನ್ ಪಾಪ್‌ಅಪ್ ತೋರಿಸುವುದು
+        showCustomAlert("ನಿಮ್ಮ ಮೀಟಿಂಗ್ ಅನ್ನು ಸ್ವೀಕರಿಸಲಾಗಿದೆ. ಹತ್ತಿರದ ಡ್ರೈವರ್‌ಗಳಿಗೆ ಕಳಿಸಲಾಗಿದೆ. ಕಾಯಿರಿ.");
+
         document.getElementById('bookingFormContainer').style.display = 'none';
         document.getElementById('customerStatusContainer').innerHTML = `
           <div class="card" style="text-align:center; background:#e8f8f0; border:2px solid #0fb05b;">
@@ -793,6 +818,15 @@
       }
     }
 
+    function showCustomAlert(msg) {
+      document.getElementById('customAlertText').innerText = msg;
+      document.getElementById('customAlertModal').style.display = 'block';
+    }
+
+    function closeCustomAlert() {
+      document.getElementById('customAlertModal').style.display = 'none';
+    }
+
     function listenToMyBookingStatus(bookingId) {
       window.onSnapshot(window.doc(window.db, "bookings", bookingId), (docSnap) => {
         if (docSnap.exists()) {
@@ -802,10 +836,11 @@
               <div class="card" style="text-align:center; background:#f0fff4; border:2px solid #38a169;">
                 <p style="font-size:1rem; font-weight:bold; color:#22543d; margin-bottom:5px;">${currentLang === 'kn' ? '✅ ಡ್ರೈವರ್ ನಿಮ್ಮ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿದ್ದಾರೆ!' : '✅ Driver accepted your booking!'}</p>
                 <p style="font-size:0.85rem; color:#2d3748;"><b>${currentLang === 'kn' ? 'ಡ್ರೈವರ್ ಹೆಸರು:' : 'Driver Name:'}</b> ${data.driverName || ''}</p>
-                <p style="font-size:0.85rem; color:#2d3748;"><b>${currentLang === 'kn' ? 'ಕೋಡ್ ನಂಬರ್:' : 'Driver ID:'}</b> ${data.driverIdNum || ''}</p>
-                <p style="font-size:0.85rem; color:#2d3748;"><b>${currentLang === 'kn' ? 'ಫೋನ್ ನಂಬರ್:' : 'Phone:'}</b> <a href="tel:${data.driverPhone}">${data.driverPhone || ''}</a></p>
+                <p style="font-size:0.85rem; color:#2d3748;"><b>${currentLang === 'kn' ? 'ಐಡಿ ನಂಬರ್:' : 'Driver ID:'}</b> ${data.driverIdNum || ''}</p>
+                <p style="font-size:0.85rem; color:#2d3748;"><b>${currentLang === 'kn' ? 'ಮೊಬೈಲ್ ನಂಬರ್:' : 'Phone:'}</b> <a href="tel:${data.driverPhone}">${data.driverPhone || ''}</a></p>
                 <p style="font-size:0.85rem; color:#2d3748;"><b>${currentLang === 'kn' ? 'ವಾಹನ ನಂಬರ್:' : 'Vehicle No:'}</b> ${data.driverVehNo || ''}</p>
-                <button class="btn-submit" onclick="resetCustomerBookingForm()" style="background:#3182ce; margin-top:10px;">${currentLang === 'kn' ? 'ಹೊಸ ಬುಕಿಂಗ್ ಮಾಡಿ' : 'New Booking'}</button>
+                <a href="tel:${data.driverPhone}" class="btn-submit" style="display:block; text-decoration:none; background:#3182ce; margin-top:10px; text-align:center;">📞 ಕಾಲ್ ಮಾಡಿ (Call Driver)</a>
+                <button class="btn-submit" onclick="resetCustomerBookingForm()" style="background:#718096; margin-top:8px;">${currentLang === 'kn' ? 'ಹೊಸ ಬುಕಿಂಗ್ ಮಾಡಿ' : 'New Booking'}</button>
               </div>
             `;
           }
@@ -835,7 +870,6 @@
       currentCustomerLng = null;
     }
 
-    // CUSTOMER LIVE GPS METER
     function startMeter() {
       if (custMeterWatchId) return;
 
@@ -910,7 +944,7 @@
         } else {
           return 50 + ((dist - 2.0) * 12);
         }
-      } else { // Car
+      } else {
         if (dist <= 3.0) {
           return 200;
         } else {
@@ -1084,7 +1118,6 @@
         snapshot.forEach((docSnap) => {
           const b = docSnap.data();
 
-          // ರಾತ್ರಿ 12 ಗಂಟೆ ದಾಟಿದ ಹಳೆಯ ಬುಕಿಂಗ್‌ಗಳನ್ನು ಅಥವಾ ಇಂದಿನ ದಿನಾಂಕವಿಲ್ಲದ್ದನ್ನು ಆಟೋಮ್ಯಾಟಿಕ್ ಡಿಲೀಟ್ ಮಾಡುವುದು
           if (!b.dateKey || b.dateKey !== todayStr) {
             window.deleteDoc(window.doc(window.db, "bookings", docSnap.id)).catch(err => {});
             return;
@@ -1098,6 +1131,7 @@
                 hasActiveAlert = true;
                 html += `
                   <div class="card" style="border: 2px solid #0fb05b; background:#f7fafc; margin-bottom:10px;">
+                    <p style="background:#e8f8f0; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#065f46;">⚠️ ಎಚ್ಚರಿಕೆ: ನಿಮ್ಮ ಹತ್ತಿರ ಹೊಸ ಬುಕಿಂಗ್ ಬಂದಿದೆ! ದಯವಿಟ್ಟು ತಪ್ಪಿಸಬೇಡಿ.</p>
                     <p><b>${currentLang === 'kn' ? 'ವಾಹನ ಅಗತ್ಯ:' : 'Vehicle Required:'}</b> ${b.vehicleType}</p>
                     <p><b>${currentLang === 'kn' ? 'ಕಸ್ಟಮರ್ ಹೆಸರು:' : 'Customer Name:'}</b> ${b.customerName}</p>
                     <p><b>${currentLang === 'kn' ? 'ಫೋನ್ ನಂಬರ್:' : 'Phone:'}</b> <a href="tel:${b.customerPhone}">${b.customerPhone}</a></p>
@@ -1105,13 +1139,12 @@
                     <p><b>${currentLang === 'kn' ? 'ಪ್ರಸ್ತುತ ಸ್ಥಳ:' : 'Current Loc:'}</b> ${b.currentLocationText || '-'}</p>
                     <p><b>${currentLang === 'kn' ? 'ಪಿಕೋಪ್ ಸ್ಥಳ:' : 'Pickup:'}</b> ${b.pickupLocation} (~${dist.toFixed(2)} KM)</p>
                     <p><b>${currentLang === 'kn' ? 'ಡ್ರಾಪ್ ಸ್ಥಳ:' : 'Drop:'}</b> ${b.dropLocation}</p>
-                    <button class="btn-submit" onclick="acceptBooking('${docSnap.id}', '${driverData.drvName}', '${driverData.drvPhone}', '${driverData.drvVehNo}', '${driverData.driverId}')" style="margin-top:8px;">${currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ (Accept)' : 'Accept Booking'}</button>
+                    <button class="btn-submit" onclick="acceptBooking('${docSnap.id}', '${driverData.drvName}', '${driverData.drvPhone}', '${driverData.drvVehNo}', '${driverData.driverId}', ${b.pickupLat}, ${b.pickupLng})" style="margin-top:8px;">${currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ (Accept)' : 'Accept Booking'}</button>
                   </div>
                 `;
               }
             }
           } else if (b.status === 'Accepted') {
-            // ಒಬ್ಬರು ಸ್ವೀಕರಿಸಿದರೆ ಎಲ್ಲರ ಫೋನ್‌ನಲ್ಲಿ ಲಾಕ್ ಆಗಿ ಯಶಸ್ವಿಯಾಗಿದೆ ಎಂದು ಕಾಣಿಸುವುದು ಹಾಗೂ ಯಾವ ಡ್ರೈವರ್ ತಗೊಂಡಿದ್ದಾರೆ ಅವರ ಹೆಸರು ಮತ್ತು ಕೋಡ್ ಕಾಣುವುದು
             html += `
               <div class="card" style="border: 2px solid #38a169; background:#f0fff4; margin-bottom:10px;">
                 <p style="color: #22543d; font-weight: bold; margin-bottom: 5px;">🔒 ಈ ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಲಾಕ್ ಆಗಿದೆ!</p>
@@ -1130,7 +1163,6 @@
           listDiv.innerHTML = html;
         }
 
-        // ಸೈರನ್ ಶಬ್ದ ನಿಯಂತ್ರಣ (Pending ಬುಕಿಂಗ್ ಇದ್ದರೆ ಮಾತ್ರ ಸೈರನ್ ಬರುತ್ತದೆ, ಸ್ವೀಕರಿಸಿದ ಕೂಡಲೇ ಸೈರನ್ ಆಟೋಮ್ಯಾಟಿಕ್ ಆಫ್ ಆಗುತ್ತದೆ)
         const audio = document.getElementById('alertSound');
         if (audio) {
           if (hasActiveAlert) {
@@ -1159,7 +1191,7 @@
       return deg * (Math.PI/180);
     }
 
-    async function acceptBooking(bookingId, driverName, driverPhone, driverVehNo, driverIdNum) {
+    async function acceptBooking(bookingId, driverName, driverPhone, driverVehNo, driverIdNum, pickupLat, pickupLng) {
       try {
         await window.updateDoc(window.doc(window.db, "bookings", bookingId), {
           status: 'Accepted',
@@ -1169,17 +1201,21 @@
           driverIdNum: driverIdNum
         });
         
-        // ಸೈರನ್ ಕೂಡಲೇ ನಿಲ್ಲಿಸಲು
         const audio = document.getElementById('alertSound');
         if(audio) { audio.pause(); audio.currentTime = 0; }
 
-        alert(currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸ್ವೀಕರಿಸಲಾಗಿದೆ ಮತ್ತು ಲಾಕ್ ಮಾಡಲಾಗಿದೆ!' : 'Booking accepted and locked successfully!');
+        // ಜಿಪಿಎಸ್ ನೆವಿಗೇಶನ್ ಆನ್ ಮಾಡಿ ಕಸ್ಟಮರ್ ಹತ್ತಿರ ಕರೆದುಕೊಂಡು ಹೋಗಲು ಗೂಗಲ್ ಮ್ಯಾಪ್ಸ್ ಓಪನ್ ಮಾಡುವುದು
+        if (pickupLat && pickupLng) {
+          const gmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${pickupLat},${pickupLng}&travelmode=driving`;
+          window.open(gmapsUrl, '_blank');
+        }
+
+        alert(currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸ್ವೀಕರಿಸಲಾಗಿದೆ! ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಆನ್ ಮಾಡಲಾಗಿದೆ.' : 'Booking accepted successfully! GPS location opened.');
       } catch (e) {
         alert('Error: ' + e.message);
       }
     }
 
-    // DRIVER LIVE GPS METER
     function startDriverMeter() {
       if (drvMeterWatchId) return;
 
