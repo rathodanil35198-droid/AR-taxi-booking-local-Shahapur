@@ -762,6 +762,7 @@
       if (hasError) return;
 
       try {
+        const todayStr = new Date().toISOString().split('T')[0]; // ದಿನಾಂಕದ ಆಧಾರದ ಮೇಲೆ ಗುರುತಿಸಲು
         const docRef = await window.addDoc(window.collection(window.db, "bookings"), {
           vehicleType,
           customerName: name,
@@ -773,6 +774,7 @@
           pickupLat: currentCustomerLat,
           pickupLng: currentCustomerLng,
           status: 'Pending',
+          dateKey: todayStr,
           timestamp: window.serverTimestamp()
         });
 
@@ -800,6 +802,7 @@
               <div class="card" style="text-align:center; background:#f0fff4; border:2px solid #38a169;">
                 <p style="font-size:1rem; font-weight:bold; color:#22543d; margin-bottom:5px;">${currentLang === 'kn' ? '✅ ಡ್ರೈವರ್ ನಿಮ್ಮ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿದ್ದಾರೆ!' : '✅ Driver accepted your booking!'}</p>
                 <p style="font-size:0.85rem; color:#2d3748;"><b>${currentLang === 'kn' ? 'ಡ್ರೈವರ್ ಹೆಸರು:' : 'Driver Name:'}</b> ${data.driverName || ''}</p>
+                <p style="font-size:0.85rem; color:#2d3748;"><b>${currentLang === 'kn' ? 'ಕೋಡ್ ನಂಬರ್:' : 'Driver ID:'}</b> ${data.driverIdNum || ''}</p>
                 <p style="font-size:0.85rem; color:#2d3748;"><b>${currentLang === 'kn' ? 'ಫೋನ್ ನಂಬರ್:' : 'Phone:'}</b> <a href="tel:${data.driverPhone}">${data.driverPhone || ''}</a></p>
                 <p style="font-size:0.85rem; color:#2d3748;"><b>${currentLang === 'kn' ? 'ವಾಹನ ನಂಬರ್:' : 'Vehicle No:'}</b> ${data.driverVehNo || ''}</p>
                 <button class="btn-submit" onclick="resetCustomerBookingForm()" style="background:#3182ce; margin-top:10px;">${currentLang === 'kn' ? 'ಹೊಸ ಬುಕಿಂಗ್ ಮಾಡಿ' : 'New Booking'}</button>
@@ -1069,40 +1072,73 @@
     function listenToBookingsForDriver(driverData) {
       if (bookingsUnsubscribe) bookingsUnsubscribe();
 
-      const q = window.query(window.collection(window.db, "bookings"), window.where("status", "==", "Pending"));
+      const q = window.query(window.collection(window.db, "bookings"));
       bookingsUnsubscribe = window.onSnapshot(q, (snapshot) => {
         const listDiv = document.getElementById('driverBookingsList');
         let html = '';
-        let count = 0;
+        let pendingCount = 0;
+        let hasActiveAlert = false;
+
+        const todayStr = new Date().toISOString().split('T')[0];
 
         snapshot.forEach((docSnap) => {
           const b = docSnap.data();
-          if (b.pickupLat && b.pickupLng && currentDriverLat && currentDriverLng) {
-            const dist = calculateDistance(currentDriverLat, currentDriverLng, b.pickupLat, b.pickupLng);
-            if (dist <= 2.0) {
-              count++;
-              html += `
-                <div class="card" style="border: 2px solid #0fb05b; background:#f7fafc; margin-bottom:10px;">
-                  <p><b>${currentLang === 'kn' ? 'ವಾಹನ ಅಗತ್ಯ:' : 'Vehicle Required:'}</b> ${b.vehicleType}</p>
-                  <p><b>${currentLang === 'kn' ? 'ಕಸ್ಟಮರ್ ಹೆಸರು:' : 'Customer Name:'}</b> ${b.customerName}</p>
-                  <p><b>${currentLang === 'kn' ? 'ಫೋನ್ ನಂಬರ್:' : 'Phone:'}</b> <a href="tel:${b.customerPhone}">${b.customerPhone}</a></p>
-                  <p><b>${currentLang === 'kn' ? 'ಪ್ರಯಾಣಿಕರು:' : 'Passengers:'}</b> ${b.passengers}</p>
-                  <p><b>${currentLang === 'kn' ? 'ಪ್ರಸ್ತುತ ಸ್ಥಳ:' : 'Current Loc:'}</b> ${b.currentLocationText || '-'}</p>
-                  <p><b>${currentLang === 'kn' ? 'ಪಿಕೋಪ್ ಸ್ಥಳ:' : 'Pickup:'}</b> ${b.pickupLocation} (~${dist.toFixed(2)} KM)</p>
-                  <p><b>${currentLang === 'kn' ? 'ಡ್ರಾಪ್ ಸ್ಥಳ:' : 'Drop:'}</b> ${b.dropLocation}</p>
-                  <button class="btn-submit" onclick="acceptBooking('${docSnap.id}', '${driverData.drvName}', '${driverData.drvPhone}', '${driverData.drvVehNo}')" style="margin-top:8px;">${currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ (Accept)' : 'Accept Booking'}</button>
-                </div>
-              `;
+
+          // ರಾತ್ರಿ 12 ಗಂಟೆ ದಾಟಿದ ಹಳೆಯ ಬುಕಿಂಗ್‌ಗಳನ್ನು ಅಥವಾ ಇಂದಿನ ದಿನಾಂಕವಿಲ್ಲದ್ದನ್ನು ಆಟೋಮ್ಯಾಟಿಕ್ ಡಿಲೀಟ್ ಮಾಡುವುದು
+          if (!b.dateKey || b.dateKey !== todayStr) {
+            window.deleteDoc(window.doc(window.db, "bookings", docSnap.id)).catch(err => {});
+            return;
+          }
+
+          if (b.status === 'Pending') {
+            if (b.pickupLat && b.pickupLng && currentDriverLat && currentDriverLng) {
+              const dist = calculateDistance(currentDriverLat, currentDriverLng, b.pickupLat, b.pickupLng);
+              if (dist <= 2.0) {
+                pendingCount++;
+                hasActiveAlert = true;
+                html += `
+                  <div class="card" style="border: 2px solid #0fb05b; background:#f7fafc; margin-bottom:10px;">
+                    <p><b>${currentLang === 'kn' ? 'ವಾಹನ ಅಗತ್ಯ:' : 'Vehicle Required:'}</b> ${b.vehicleType}</p>
+                    <p><b>${currentLang === 'kn' ? 'ಕಸ್ಟಮರ್ ಹೆಸರು:' : 'Customer Name:'}</b> ${b.customerName}</p>
+                    <p><b>${currentLang === 'kn' ? 'ಫೋನ್ ನಂಬರ್:' : 'Phone:'}</b> <a href="tel:${b.customerPhone}">${b.customerPhone}</a></p>
+                    <p><b>${currentLang === 'kn' ? 'ಪ್ರಯಾಣಿಕರು:' : 'Passengers:'}</b> ${b.passengers}</p>
+                    <p><b>${currentLang === 'kn' ? 'ಪ್ರಸ್ತುತ ಸ್ಥಳ:' : 'Current Loc:'}</b> ${b.currentLocationText || '-'}</p>
+                    <p><b>${currentLang === 'kn' ? 'ಪಿಕೋಪ್ ಸ್ಥಳ:' : 'Pickup:'}</b> ${b.pickupLocation} (~${dist.toFixed(2)} KM)</p>
+                    <p><b>${currentLang === 'kn' ? 'ಡ್ರಾಪ್ ಸ್ಥಳ:' : 'Drop:'}</b> ${b.dropLocation}</p>
+                    <button class="btn-submit" onclick="acceptBooking('${docSnap.id}', '${driverData.drvName}', '${driverData.drvPhone}', '${driverData.drvVehNo}', '${driverData.driverId}')" style="margin-top:8px;">${currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ (Accept)' : 'Accept Booking'}</button>
+                  </div>
+                `;
+              }
             }
+          } else if (b.status === 'Accepted') {
+            // ಒಬ್ಬರು ಸ್ವೀಕರಿಸಿದರೆ ಎಲ್ಲರ ಫೋನ್‌ನಲ್ಲಿ ಲಾಕ್ ಆಗಿ ಯಶಸ್ವಿಯಾಗಿದೆ ಎಂದು ಕಾಣಿಸುವುದು ಹಾಗೂ ಯಾವ ಡ್ರೈವರ್ ತಗೊಂಡಿದ್ದಾರೆ ಅವರ ಹೆಸರು ಮತ್ತು ಕೋಡ್ ಕಾಣುವುದು
+            html += `
+              <div class="card" style="border: 2px solid #38a169; background:#f0fff4; margin-bottom:10px;">
+                <p style="color: #22543d; font-weight: bold; margin-bottom: 5px;">🔒 ಈ ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಲಾಕ್ ಆಗಿದೆ!</p>
+                <p><b>${currentLang === 'kn' ? 'ಸ್ವೀಕರಿಸಿದ ಡ್ರೈವರ್:' : 'Accepted Driver:'}</b> ${b.driverName || ''} (ಕೋಡ್: ${b.driverIdNum || ''})</p>
+                <p><b>${currentLang === 'kn' ? 'ವಾಹನ ನಂಬರ್:' : 'Vehicle No:'}</b> ${b.driverVehNo || ''}</p>
+                <p><b>${currentLang === 'kn' ? 'ಕಸ್ಟಮರ್ ಹೆಸರು:' : 'Customer:'}</b> ${b.customerName}</p>
+                <p><b>${currentLang === 'kn' ? 'ಸ್ಥಳ:' : 'Pickup:'}</b> ${b.pickupLocation}</p>
+              </div>
+            `;
           }
         });
 
-        if (count === 0) {
-          listDiv.innerHTML = `<p style="color: #718096; font-weight: bold;">${currentLang === 'kn' ? 'ನಿಮ್ಮ 2 ಕಿ.ಮೀ ಒಳಗೆ ಯಾವುದೇ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.' : 'No bookings within 2 KM of your location.'}</p>`;
+        if (html === '') {
+          listDiv.innerHTML = `<p style="color: #718096; font-weight: bold;">${currentLang === 'kn' ? 'ನಿಮ್ಮ 2 ಕಿ.ಮೀ ಒಳಗೆ ಯಾವುದೇ ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.' : 'No active bookings within 2 KM.'}</p>`;
         } else {
           listDiv.innerHTML = html;
-          const audio = document.getElementById('alertSound');
-          if (audio) { audio.play().catch(e => {}); }
+        }
+
+        // ಸೈರನ್ ಶಬ್ದ ನಿಯಂತ್ರಣ (Pending ಬುಕಿಂಗ್ ಇದ್ದರೆ ಮಾತ್ರ ಸೈರನ್ ಬರುತ್ತದೆ, ಸ್ವೀಕರಿಸಿದ ಕೂಡಲೇ ಸೈರನ್ ಆಟೋಮ್ಯಾಟಿಕ್ ಆಫ್ ಆಗುತ್ತದೆ)
+        const audio = document.getElementById('alertSound');
+        if (audio) {
+          if (hasActiveAlert) {
+            audio.play().catch(e => {});
+          } else {
+            audio.pause();
+            audio.currentTime = 0;
+          }
         }
       });
     }
@@ -1123,15 +1159,21 @@
       return deg * (Math.PI/180);
     }
 
-    async function acceptBooking(bookingId, driverName, driverPhone, driverVehNo) {
+    async function acceptBooking(bookingId, driverName, driverPhone, driverVehNo, driverIdNum) {
       try {
         await window.updateDoc(window.doc(window.db, "bookings", bookingId), {
           status: 'Accepted',
           driverName: driverName,
           driverPhone: driverPhone,
-          driverVehNo: driverVehNo
+          driverVehNo: driverVehNo,
+          driverIdNum: driverIdNum
         });
-        alert(currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸ್ವೀಕರಿಸಲಾಗಿದೆ!' : 'Booking accepted successfully!');
+        
+        // ಸೈರನ್ ಕೂಡಲೇ ನಿಲ್ಲಿಸಲು
+        const audio = document.getElementById('alertSound');
+        if(audio) { audio.pause(); audio.currentTime = 0; }
+
+        alert(currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸ್ವೀಕರಿಸಲಾಗಿದೆ ಮತ್ತು ಲಾಕ್ ಮಾಡಲಾಗಿದೆ!' : 'Booking accepted and locked successfully!');
       } catch (e) {
         alert('Error: ' + e.message);
       }
@@ -1202,7 +1244,7 @@
       lastDrvPos = null;
       document.getElementById('driverDistCount').innerText = '0.0';
       document.getElementById('driverLiveAmount').innerText = calculateFare(document.getElementById('driverMeterVehicleType').value, 0);
-      document.getElementById('driverMeterStatusMsg').innerText = currentLang === 'kn' ? "ವಾಹನ ನಿಂತಿದೆ" : "Vehicle Stopped";
+      document.getElementById('meterStatusMsg').innerText = currentLang === 'kn' ? "ವಾಹನ ನಿಂತಿದೆ" : "Vehicle Stopped";
     }
 
     async function loadAdminDrivers() {
