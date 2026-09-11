@@ -58,7 +58,7 @@
       height: 100%;
       background: #ffffff;
       z-index: 99999;
-      display: none; /* Changed from flex to none by default, controlled via JS localStorage */
+      display: flex;
       flex-direction: column;
       justify-content: space-between;
       padding: 20px;
@@ -233,14 +233,11 @@
       <div class="terms-box">
         <h3>ದಯವಿಟ್ಟು ಕೆಳಗಿನ ಎಲ್ಲಾ ಕಂಡೀಶನ್ಸ್‌ಗಳನ್ನು ಓದಿರಿ:</h3>
         <ul>
-          <li><b>೧. ನೇರ ಮತ್ತು ಮುಕ್ತ ಮಾತುಕತೆ:</b> ಡ್ರೈವರ್ ಜೊತೆ ಗಾಡಿ ಹತ್ತುವ ಮುನ್ನವೇ ಅಥವಾ ಪಿಕಪ್ ಲೊಕೇಶನ್‌ಗೆ ಬಂದಾಗ ನೇರವಾಗಿ ಬಾಡಿಗೆ ಮಾತಾಡಿಕೊಳ್ಳಿ. ನಿಮಗೂ ಡ್ರೈವರ್‌ಗೂ ನಡುವೆ ಯಾವುದೇ ಕಮಿಷನ್ ಗಂಜಾಟ ಇರುವುದಿಲ್ಲ.</li>
-          <li><b>೨. ಗೌರವದ ಒಡನಾಟ:</b> ಡ್ರೈವರ್‌ಗಳಿಗೆ ಮರ್ಯಾದೆ ಕೊಟ್ಟು ಮಾತನಾಡಿ. ವಾಹನದಲ್ಲಿ ಪ್ರಯಾಣಿಸುವಾಗ ಕಿಟಕಿಯಿಂದ ಕೈ ಹೊರಗೆ ಹಾಕುವುದು, ಧೂಮಪಾನ ಮಾಡುವುದು ಮಾಡಬೇಡಿ.</li>
-          <li><b>೩. ನಮ್ಮ ಜವಾಬ್ದಾರಿಯ ಮಿತಿ:</b> ಪ್ರಯಾಣದ ವೇಳೆ ವ್ಯಕ್ತಿಗಳ ನಡುವೆ ಯಾವುದೇ ಜಗಳ, ತೊಂದರೆ ಅಥವಾ ಅನಾಹುತಗಳಾದರೆ ಅದಕ್ಕೆ ನಮ್ಮ ‘A R ಟ್ಯಾಕ್ಸಿ’ ಆ್ಯಪ್‌ಗೆ ಯಾವುದೇ ಸಂಬಂಧವಿರುವುದಿಲ್ಲ. ಕಸ್ಟಮರ್ ಮತ್ತು ಡ್ರೈವರ್ ಇಬ್ಬರೂ ಪರಸ್ಪರ ಜವಾಬ್ದಾರರಾಗಿರಬೇಕು.</li>
-          <li><b>೪. ಬೆಂಬಲ ಮತ್ತು ಸುರಕ್ಷತೆ:</b> ಯಾವುದೇ ಅತಿ ಅಗತ್ಯ ತೊಂದರೆ ಬಂದರೆ ಮಾತ್ರ ನಮ್ಮ ವಾಟ್ಸಾಪ್ ಚಾಟ್ ಅಥವಾ ತುರ್ತು ಸೇವಾ ನಂಬರ್‌ಗೆ ತಿಳಿಸಬಹುದು. ನಮ್ಮ ಬಳಿ ಡ್ರೈವರ್‌ಗಳ ಎಲ್ಲಾ ಪ್ರೂಫ್‌ಗಳು ಸೇಫ್ ಆಗಿ ಇರುತ್ತವೆ.</li>
-          <li><b>೫. ಕಸ್ಟಮರೇ ನಮ್ಮ ದೇವರು:</b> ಕಸ್ಟಮರ್‌ಗಳೊಂದಿಗೆ ಬಹಳ ವಿನಯದಿಂದ, ನಗುತ್ತಾ ಮಾತನಾಡಿ. ಅವರಿಂದಲೇ ನಮಗೆ ಅನ್ನ ಸಿಗುವುದು. ಯಾರೂ ಯಾರಿಗೂ ಕಮಿಷನ್ ಕೊಡಬೇಕಿಲ್ಲ, ನೀವೇ ನೇರವಾಗಿ ಹಣ ಪಡೆದುಕೊಳ್ಳಿ.</li>
-          <li><b>೬. ಕಡ್ಡಾಯ ದಾಖಲೆಗಳು:</b> ನಿಮ್ಮ ವಾಹನ RC ಕಾರ್, ಫೋಟೋ, DL, ಆಧಾರ್ ಕಾರ್ಡ್ ಮತ್ತು ಹೆಸರು ನಮ್ಮ ಆ್ಯಪ್‌ನಲ್ಲಿ ಕ್ಲಿಯರ್ ಆಗಿ ಇರಬೇಕು. ಟ್ರಾಫಿಕ್ ರೂಲ್ಸ್ ಕಟ್ಟುನಿಟ್ಟಾಗಿ ಪಾಲಿಸಿ.</li>
-          <li><b>೭. ನಿಮ್ಮದೇ ಪೂರ್ಣ ಜವಾಬ್ದಾರಿ:</b> ವಾಹನದಲ್ಲಿ ಯಾರ ಜೊತೆಯಾದರೂ ಜಗಳವಾದರೆ, ಹಣದ ವಿಚಾರದಲ್ಲಿ ಅಥವಾ ಬೇರೆ ಯಾವುದೇ ತೊಂದರೆ/ಅನಾಹುತ ಸಂಭವಿಸಿದರೆ, ನಮ್ಮ ಆಪ್ ಯಾವುದೇ ಕಾರಣಕ್ಕೂ ಜವಾಬ್ದಾರನಲ್ಲ. ಇದಕ್ಕೆ ಡ್ರೈವರ್ ಮತ್ತು ಕಸ್ಟಮರ್‌ಗಳೇ ನೇರ ಜವಾಬ್ದಾರರು.</li>
-          <li><b>೮. ಯಾವುದೇ ಭಯವಿಲ್ಲದೆ ಮುಂದೆ ಸಾಗಿ:</b> ಇಲ್ಲಿ ಯಾರೂ ಯಾರಿಗೂ ತೊಂದರೆ ಕೊಡುವ ಮಾತಿಲ್ಲ. ಎಲ್ಲರೂ ಅಣ್ಣ-ತಮ್ಮಂದಿರಂತೆ ಒಟ್ಟಾಗಿ ಕೆಲಸ ಮಾಡೋಣ.</li>
+          <li><b>೧. ಜಿಪಿಎಸ್ ಕಡ್ಡಾಯ:</b> ಕಸ್ಟಮರ್ ಮತ್ತು ಡ್ರೈವರ್ ಇಬ್ಬರೂ ಆ್ಯಪ್ ಬಳಸುವಾಗ ತಮ್ಮ ಮೊಬೈಲ್‌ನಲ್ಲಿ ಲೈವ್ ಜಿಪಿಎಸ್ (GPS) ಆನ್ ಮಾಡಿರಬೇಕು.</li>
+          <li><b>೨. ನಿಖರ ಮಾಹಿತಿ:</b> ಬುಕಿಂಗ್ ಮಾಡುವಾಗ ಅಥವಾ ಡ್ರೈವರ್ ರಿಜಿಸ್ಟ್ರೇಷನ್ ಮಾಡುವಾಗ ನೀಡುವ ಹೆಸರು, ಮೊಬೈಲ್ ನಂಬರ್ ಮತ್ತು ವಾಹನ ವಿವರಗಳು ಸರಿಯಾಗಿರಬೇಕು.</li>
+          <li><b>೩. ಸೇವಾ ಮಿತಿ:</b> ಇದು ಶಹಾಪುರ ತಾಲ್ಲೂಕು ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಕಾರ್ ಜನಸೇವಕ ಕೇಂದ್ರದ ಅಧಿಕೃತ ಬುಕಿಂಗ್ ಸೇವೆಯಾಗಿದೆ.</li>
+          <li><b>೪. ಸುರಕ್ಷತೆ ಮತ್ತು ಶುಲ್ಕ:</b> ಮೀಟರ್ ಆಧಾರಿತ ಅಥವಾ ನಿಗದಿತ ಶುಲ್ಕದ ನಿಯಮಗಳನ್ನು ಕಟ್ಟುನಿಟ್ಟಾಗಿ ಪಾಲಿಸಬೇಕು. ತುರ್ತು ಸಂದರ್ಭದಲ್ಲಿ ಸಹಾಯವಾಳಿಗೆ ಕರೆ ಮಾಡಬಹುದು.</li>
+          <li><b>೫. ಡ್ರೈವರ್ ಜವಾಬ್ದಾರಿ:</b> ಡ್ರೈವರ್‌ಗಳು ವಾಹನ ದಾಖಲೆಗಳು (RC, DL, Photo) ಸರಿಯಾಗಿ ಅಪ್‌ಲೋಡ್ ಮಾಡಬೇಕು ಮತ್ತು ಹತ್ತಿರದ ಬುಕಿಂಗ್‌ಗಳಿಗೆ ಸ್ಪಂದಿಸಬೇಕು.</li>
         </ul>
       </div>
 
@@ -298,8 +295,9 @@
         <span>🛺</span>
       </div>
       <div class="flashing-title">
-        ಕರ್ನಾಟಕ ಯಾದಗಿರಿ ಜಿಲ್ಲೆ ಶಹಾಪುರ ತಾಲೂಕು<br>
-        ‘A R ಟ್ಯಾಕ್ಸಿ’ ಬುಕಿಂಗ್‌ಗೆ ಸುಸ್ವಾಗತ! 🙏
+        ಕರ್ನಾಟಕ ಯಾದಗಿರಿ ಜಿಲ್ಲೆ<br>
+        ಶಹಾಪುರ ತಾಲ್ಲೂಕು ಲೋಕಲ್ ಆಟೋ ಹಾಗೂ ಕಾರ್<br>
+        ಜನಸೇವಕ ಕೇಂದ್ರ
       </div>
     </div>
 
@@ -527,14 +525,6 @@
   <audio id="alertSound" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" preload="auto" loop></audio>
 
   <script>
-    // Check localStorage on page load to show Terms & Conditions only on first visit
-    window.addEventListener('DOMContentLoaded', () => {
-      const hasAgreedTerms = localStorage.getItem('ar_taxi_agreed_terms');
-      if (!hasAgreedTerms) {
-        document.getElementById('termsScreen').style.display = 'flex';
-      }
-    });
-
     // Terms & Conditions Control Functions
     function toggleCheckbox() {
       const chk = document.getElementById('agreeCheckbox');
@@ -559,7 +549,6 @@
     function proceedToApp() {
       const chk = document.getElementById('agreeCheckbox');
       if (chk.checked) {
-        localStorage.setItem('ar_taxi_agreed_terms', 'true');
         document.getElementById('termsScreen').style.display = 'none';
       }
     }
@@ -1377,110 +1366,4 @@
           📊 ಇವತ್ತಿನ ಒಟ್ಟು ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು: ${pendingCountToday}
         </div>`;
 
-        let combinedHtml = '';
-        if (pendingHtml !== '') {
-          combinedHtml += summaryHeader + pendingHtml;
-        } else {
-          combinedHtml += summaryHeader + `<p style="color: #718096; font-weight: bold; margin-bottom: 10px;">${currentLang === 'kn' ? 'ನಿಮ್ಮ 2 ಕಿ.ಮೀ ಒಳಗೆ ಯಾವುದೇ ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.' : 'No active bookings within 2 KM.'}</p>`;
-        }
-
-        if (acceptedHtml !== '') {
-          combinedHtml += `<hr style="margin: 15px 0; border: 0; border-top: 1px solid #cbd5e0;"><h3 style="font-size: 0.85rem; color: #4a5568; margin-bottom: 8px;">ಲಾಕ್ ಆಗಿರುವ ಬುಕಿಂಗ್‌ಗಳು:</h3>` + acceptedHtml;
-        }
-
-        listDiv.innerHTML = combinedHtml;
-
-        const audio = document.getElementById('alertSound');
-        if (audio) {
-          if (hasActiveAlert) {
-            audio.play().catch(e => {});
-          } else {
-            audio.pause();
-            audio.currentTime = 0;
-          }
-        }
-      });
-    }
-
-    function calculateDistance(lat1, lon1, lat2, lon2) {
-      const R = 6371;
-      const dLat = deg2rad(lat2 - lat1);
-      const dLon = deg2rad(lon2 - lon1);
-      const a = 
-        Math.sin(dLat/2) * Math.sin(dLat/2) +
-        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
-        Math.sin(dLon/2) * Math.sin(dLon/2); 
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-      return R * c;
-    }
-
-    function deg2rad(deg) {
-      return deg * (Math.PI/180);
-    }
-
-    async function acceptBooking(bookingId, driverName, driverPhone, driverVehNo, driverIdNum, pickupLat, pickupLng) {
-      try {
-        await window.updateDoc(window.doc(window.db, "bookings", bookingId), {
-          status: 'Accepted',
-          driverName: driverName,
-          driverPhone: driverPhone,
-          driverVehNo: driverVehNo,
-          driverIdNum: driverIdNum
-        });
-        
-        const audio = document.getElementById('alertSound');
-        if(audio) { audio.pause(); audio.currentTime = 0; }
-
-        alert(`ನ್ಯೂ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿದ್ದೀರಿ\nನಿಮ್ಮ ಜಿಪಿಎಸ್ ಮತ್ತೆ ನಿಮ್ಮ ಎಲ್ಲಾ ಐಡಿ ಮೊಬೈಲ್ ನಂಬರನ್ನು ಕಸ್ಟಮರ್ ಗೆ ಕಳಿಸಲಾಗಿದೆ ಪಿಕಪ್ ಮಾಡಿ`);
-
-        if (pickupLat && pickupLng) {
-          const gmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${pickupLat},${pickupLng}&travelmode=driving`;
-          window.open(gmapsUrl, '_blank');
-        }
-
-        switchSection('liveSection');
-      } catch (e) {
-        alert('Error: ' + e.message);
-      }
-    }
-
-    function startDriverMeter() {
-      if (drvMeterWatchId) return;
-
-      if (!navigator.geolocation) {
-        alert(currentLang === 'kn' ? "ನಿಮ್ಮ ಮೊಬೈಲ್‌ನಲ್ಲಿ ಜಿಪಿಎಸ್ ಲಭ್ಯವಿಲ್ಲ!" : "GPS not supported!");
-        return;
-      }
-
-      driverDistanceKm = 0.0;
-      lastDrvPos = null;
-      document.getElementById('driverDistCount').innerText = driverDistanceKm.toFixed(1);
-      document.getElementById('driverLiveAmount').innerText = calculateFare(document.getElementById('driverMeterVehicleType').value, driverDistanceKm);
-      document.getElementById('driverMeterStatusMsg').innerText = currentLang === 'kn' ? "ಮೀಟರ್ ಆನ್ ಆಗಿದೆ, ವಾಹನ ಚಲಿಸುತ್ತಿದೆ..." : "Meter ON, running...";
-      document.getElementById('driverMeterStatusMsg').style.color = "#0fb05b";
-
-      drvMeterWatchId = navigator.geolocation.watchPosition(
-        (position) => {
-          let lat = position.coords.latitude;
-          let lng = position.coords.longitude;
-          document.getElementById('driverLiveGpsCoord').innerText = `GPS: Lat ${lat.toFixed(4)}, Lng ${lng.toFixed(4)}`;
-
-          if (lastDrvPos) {
-            let distMoved = calculateDistance(lastDrvPos.lat, lastDrvPos.lng, lat, lng);
-            if (distMoved > 0.005) {
-              driverDistanceKm += distMoved;
-              document.getElementById('driverDistCount').innerText = driverDistanceKm.toFixed(1);
-              let vehType = document.getElementById('driverMeterVehicleType').value;
-              let total = calculateFare(vehType, driverDistanceKm);
-              document.getElementById('driverLiveAmount').innerText = Math.round(total);
-            }
-          }
-          lastDrvPos = { lat, lng };
-        },
-        (error) => {},
-        { enableHighAccuracy: true, maximumAge: 0, timeout: 10000 }
-      );
-    }
-  </script>
-</body>
-</html>
+   
