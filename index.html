@@ -15,7 +15,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, onSnapshot, updateDoc, doc, deleteDoc, getDocs, serverTimestamp, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, onSnapshot, updateDoc, doc, deleteDoc, getDocs, serverTimestamp, query, where, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAm3HFKu101wex1b025-zJZ2BJ_o1Xvw",
@@ -39,6 +39,7 @@
     window.getDocs = getDocs;
     window.query = query;
     window.where = where;
+    window.orderBy = orderBy;
     window.serverTimestamp = serverTimestamp;
   </script>
 
@@ -143,8 +144,8 @@
     .footer { text-align: center; font-size: 0.7rem; color: #7f8c8d; margin-top: 10px; border-top: 1px solid #eee; padding-top: 5px; }
     .back-home-btn { background: #718096; color: white; border: none; padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; margin-bottom: 8px; }
 
-    /* Fullscreen Image Modal & Custom Alert Popup Modal */
-    #imageModal, #customAlertModal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); text-align: center; padding: 20px; }
+    /* Modals */
+    #imageModal, #customAlertModal, #meterResultModal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); text-align: center; padding: 20px; }
     #fullImage { max-width: 100%; max-height: 80vh; margin-top: 40px; border-radius: 8px; }
     #modalClose { position: absolute; top: 20px; right: 25px; color: #fff; font-size: 35px; font-weight: bold; cursor: pointer; }
     #downloadBtn { display: inline-block; margin-top: 20px; background: #0fb05b; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; }
@@ -173,6 +174,16 @@
       <h3 style="color: #2d3748; margin-bottom: 10px; font-size: 1.1rem;">ಬುಕಿಂಗ್ ಸ್ಥಿತಿ</h3>
       <p id="customAlertText" style="font-size: 0.9rem; color: #4a5568; line-height: 1.6; margin-bottom: 20px;"></p>
       <button class="btn-submit" onclick="closeCustomAlert()">ಸರಿ (OK)</button>
+    </div>
+  </div>
+
+  <!-- Meter Result Modal -->
+  <div id="meterResultModal">
+    <div class="modal-content-box">
+      <div style="font-size: 2.5rem; margin-bottom: 10px;">🏁</div>
+      <h3 style="color: #2d3748; margin-bottom: 10px; font-size: 1.1rem;">ಮೀಟರ್ ಮುಕ್ತಾಯ ವಿವರ</h3>
+      <p id="meterResultText" style="font-size: 0.95rem; color: #2d3748; line-height: 1.6; margin-bottom: 20px; font-weight: bold;"></p>
+      <button class="btn-submit" onclick="closeMeterResultModal()">ಸರಿ (OK)</button>
     </div>
   </div>
 
@@ -416,9 +427,7 @@
   <script>
     let currentLang = 'kn';
     let distanceKm = 0;
-    let meterInterval = null;
     let driverDistanceKm = 0;
-    let driverMeterInterval = null;
     let myActiveBookingId = null;
     let currentUserRole = '';
     let driverLocationWatchId = null;
@@ -728,7 +737,6 @@
       const sel = document.getElementById('passengerCount');
       sel.innerHTML = '';
       
-      // ಆಟೋಗೆ ಗರಿಷ್ಠ 3 ಪ್ರಯಾಣಿಕರು, ಕಾರಿಗೆ ಗರಿಷ್ಠ 4 ಪ್ರಯಾಣಿಕರು
       const maxPassengers = (vehicleType === 'Auto') ? 3 : 4;
       
       for (let i = 1; i <= maxPassengers; i++) {
@@ -801,8 +809,7 @@
 
         myActiveBookingId = docRef.id;
         
-        // ಸ್ಕ್ರೀನ್ ಮೇಲೆ ನೋಟಿಫಿಕೇಶನ್ ಪಾಪ್‌ಅಪ್ ತೋರಿಸುವುದು
-        showCustomAlert("ನಿಮ್ಮ ಮೀಟಿಂಗ್ ಅನ್ನು ಸ್ವೀಕರಿಸಲಾಗಿದೆ. ಹತ್ತಿರದ ಡ್ರೈವರ್‌ಗಳಿಗೆ ಕಳಿಸಲಾಗಿದೆ. ಕಾಯಿರಿ.");
+        showCustomAlert("ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಲಾಗಿದೆ. ಜಿಪಿಎಸ್ ಆನ್ ಮಾಡಿ ಓಕೆ ಬಟನ್ ಹಾಕಿದರೆ ಆಟೋಮೆಟಿಕ್ ಕಸ್ಟಮರ್ ಹತ್ರ ಲೊಕೇಶನ್ ಆನ್ ಆಗಿ ಹೋಗುತ್ತದೆ.");
 
         document.getElementById('bookingFormContainer').style.display = 'none';
         document.getElementById('customerStatusContainer').innerHTML = `
@@ -825,6 +832,10 @@
 
     function closeCustomAlert() {
       document.getElementById('customAlertModal').style.display = 'none';
+    }
+
+    function closeMeterResultModal() {
+      document.getElementById('meterResultModal').style.display = 'none';
     }
 
     function listenToMyBookingStatus(bookingId) {
@@ -920,21 +931,51 @@
     }
 
     function stopMeterOnly() {
+      let vehType = document.getElementById('meterVehicleType').value;
+      let totalAmount = Math.round(calculateFare(vehType, distanceKm));
+      let finalDist = distanceKm.toFixed(1);
+
       if (custMeterWatchId !== null) {
         navigator.geolocation.clearWatch(custMeterWatchId);
         custMeterWatchId = null;
       }
-      document.getElementById('meterStatusMsg').innerText = currentLang === 'kn' ? "ವಾಹನ ನಿಂತಿದೆ" : "Vehicle Stopped";
-      document.getElementById('meterStatusMsg').style.color = "#d69e2e";
+
+      document.getElementById('meterResultText').innerText = `ಹೌದು, ಎಷ್ಟು ಮೀಟರ್ ಓಡಿದೆ: ${finalDist} ಕಿ.ಮೀ\nಮತ್ತು ಎಷ್ಟು ಅಮೌಂಟ್ ಚಾರ್ಜಸ್ ಆಗಿದೆ: ₹${totalAmount}`;
+      document.getElementById('meterResultModal').style.display = 'block';
+
+      resetMeterRate();
     }
 
     function resetMeterRate() {
-      stopMeterOnly();
       distanceKm = 0.0;
       lastCustPos = null;
       document.getElementById('distCount').innerText = '0.0';
       document.getElementById('liveAmount').innerText = calculateFare(document.getElementById('meterVehicleType').value, 0);
       document.getElementById('meterStatusMsg').innerText = currentLang === 'kn' ? "ವಾಹನ ನಿಂತಿದೆ" : "Vehicle Stopped";
+    }
+
+    function stopDriverMeterOnly() {
+      let vehType = document.getElementById('driverMeterVehicleType').value;
+      let totalAmount = Math.round(calculateFare(vehType, driverDistanceKm));
+      let finalDist = driverDistanceKm.toFixed(1);
+
+      if (drvMeterWatchId !== null) {
+        navigator.geolocation.clearWatch(drvMeterWatchId);
+        drvMeterWatchId = null;
+      }
+
+      document.getElementById('meterResultText').innerText = `ಹೌದು, ಎಷ್ಟು ಮೀಟರ್ ಓಡಿದೆ: ${finalDist} ಕಿ.ಮೀ\nಮತ್ತು ಎಷ್ಟು ಅಮೌಂಟ್ ಚಾರ್ಜಸ್ ಆಗಿದೆ: ₹${totalAmount}`;
+      document.getElementById('meterResultModal').style.display = 'block';
+
+      resetDriverMeterRate();
+    }
+
+    function resetDriverMeterRate() {
+      driverDistanceKm = 0.0;
+      lastDrvPos = null;
+      document.getElementById('driverDistCount').innerText = '0.0';
+      document.getElementById('driverLiveAmount').innerText = calculateFare(document.getElementById('driverMeterVehicleType').value, 0);
+      document.getElementById('driverMeterStatusMsg').innerText = currentLang === 'kn' ? "ವಾಹನ ನಿಂತಿದೆ" : "Vehicle Stopped";
     }
 
     function calculateFare(type, dist) {
@@ -1106,7 +1147,7 @@
     function listenToBookingsForDriver(driverData) {
       if (bookingsUnsubscribe) bookingsUnsubscribe();
 
-      const q = window.query(window.collection(window.db, "bookings"));
+      const q = window.query(window.collection(window.db, "bookings"), window.orderBy("timestamp", "desc"));
       bookingsUnsubscribe = window.onSnapshot(q, (snapshot) => {
         const listDiv = document.getElementById('driverBookingsList');
         let html = '';
@@ -1134,26 +1175,16 @@
                     <p style="background:#e8f8f0; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#065f46;">⚠️ ಎಚ್ಚರಿಕೆ: ನಿಮ್ಮ ಹತ್ತಿರ ಹೊಸ ಬುಕಿಂಗ್ ಬಂದಿದೆ! ದಯವಿಟ್ಟು ತಪ್ಪಿಸಬೇಡಿ.</p>
                     <p><b>${currentLang === 'kn' ? 'ವಾಹನ ಅಗತ್ಯ:' : 'Vehicle Required:'}</b> ${b.vehicleType}</p>
                     <p><b>${currentLang === 'kn' ? 'ಕಸ್ಟಮರ್ ಹೆಸರು:' : 'Customer Name:'}</b> ${b.customerName}</p>
-                    <p><b>${currentLang === 'kn' ? 'ಫೋನ್ ನಂಬರ್:' : 'Phone:'}</b> <a href="tel:${b.customerPhone}">${b.customerPhone}</a></p>
+                    <p><b>${currentLang === 'kn' ? 'ಫೋನ್ ನಂಬರ್:' : 'Phone:'}</b> <a href="tel:${b.customerPhone}">${b.customerPhone}</a> <a href="tel:${b.customerPhone}" style="background:#3182ce; color:white; padding:2px 8px; border-radius:4px; text-decoration:none; font-size:0.75rem; margin-left:5px;">📞 ಕಾಲ್ ಮಾಡಿ</a></p>
                     <p><b>${currentLang === 'kn' ? 'ಪ್ರಯಾಣಿಕರು:' : 'Passengers:'}</b> ${b.passengers}</p>
                     <p><b>${currentLang === 'kn' ? 'ಪ್ರಸ್ತುತ ಸ್ಥಳ:' : 'Current Loc:'}</b> ${b.currentLocationText || '-'}</p>
-                    <p><b>${currentLang === 'kn' ? 'ಪಿಕೋಪ್ ಸ್ಥಳ:' : 'Pickup:'}</b> ${b.pickupLocation} (~${dist.toFixed(2)} KM)</p>
+                    <p><b>${currentLang === 'kn' ? 'ಪಿಕೋಪ್ ಸ್ಥಳ:' : 'Pickup:'}</b> <a href="https://www.google.com/maps/search/?api=1&query=${b.pickupLat},${b.pickupLng}" target="_blank" style="color:#3182ce; text-decoration:underline;">${b.pickupLocation} (GPS ಲೊಕೇಶನ್ ನೋಡಿ)</a> (~${dist.toFixed(2)} KM)</p>
                     <p><b>${currentLang === 'kn' ? 'ಡ್ರಾಪ್ ಸ್ಥಳ:' : 'Drop:'}</b> ${b.dropLocation}</p>
                     <button class="btn-submit" onclick="acceptBooking('${docSnap.id}', '${driverData.drvName}', '${driverData.drvPhone}', '${driverData.drvVehNo}', '${driverData.driverId}', ${b.pickupLat}, ${b.pickupLng})" style="margin-top:8px;">${currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ (Accept)' : 'Accept Booking'}</button>
                   </div>
                 `;
               }
             }
-          } else if (b.status === 'Accepted') {
-            html += `
-              <div class="card" style="border: 2px solid #38a169; background:#f0fff4; margin-bottom:10px;">
-                <p style="color: #22543d; font-weight: bold; margin-bottom: 5px;">🔒 ಈ ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಲಾಕ್ ಆಗಿದೆ!</p>
-                <p><b>${currentLang === 'kn' ? 'ಸ್ವೀಕರಿಸಿದ ಡ್ರೈವರ್:' : 'Accepted Driver:'}</b> ${b.driverName || ''} (ಕೋಡ್: ${b.driverIdNum || ''})</p>
-                <p><b>${currentLang === 'kn' ? 'ವಾಹನ ನಂಬರ್:' : 'Vehicle No:'}</b> ${b.driverVehNo || ''}</p>
-                <p><b>${currentLang === 'kn' ? 'ಕಸ್ಟಮರ್ ಹೆಸರು:' : 'Customer:'}</b> ${b.customerName}</p>
-                <p><b>${currentLang === 'kn' ? 'ಸ್ಥಳ:' : 'Pickup:'}</b> ${b.pickupLocation}</p>
-              </div>
-            `;
           }
         });
 
@@ -1204,7 +1235,6 @@
         const audio = document.getElementById('alertSound');
         if(audio) { audio.pause(); audio.currentTime = 0; }
 
-        // ಜಿಪಿಎಸ್ ನೆವಿಗೇಶನ್ ಆನ್ ಮಾಡಿ ಕಸ್ಟಮರ್ ಹತ್ತಿರ ಕರೆದುಕೊಂಡು ಹೋಗಲು ಗೂಗಲ್ ಮ್ಯಾಪ್ಸ್ ಓಪನ್ ಮಾಡುವುದು
         if (pickupLat && pickupLng) {
           const gmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${pickupLat},${pickupLng}&travelmode=driving`;
           window.open(gmapsUrl, '_blank');
@@ -1265,24 +1295,6 @@
       );
     }
 
-    function stopDriverMeterOnly() {
-      if (drvMeterWatchId !== null) {
-        navigator.geolocation.clearWatch(drvMeterWatchId);
-        drvMeterWatchId = null;
-      }
-      document.getElementById('driverMeterStatusMsg').innerText = currentLang === 'kn' ? "ವಾಹನ ನಿಂತಿದೆ" : "Vehicle Stopped";
-      document.getElementById('driverMeterStatusMsg').style.color = "#d69e2e";
-    }
-
-    function resetDriverMeterRate() {
-      stopDriverMeterOnly();
-      driverDistanceKm = 0.0;
-      lastDrvPos = null;
-      document.getElementById('driverDistCount').innerText = '0.0';
-      document.getElementById('driverLiveAmount').innerText = calculateFare(document.getElementById('driverMeterVehicleType').value, 0);
-      document.getElementById('meterStatusMsg').innerText = currentLang === 'kn' ? "ವಾಹನ ನಿಂತಿದೆ" : "Vehicle Stopped";
-    }
-
     async function loadAdminDrivers() {
       const adminDiv = document.getElementById('adminDriversList');
       adminDiv.innerHTML = currentLang === 'kn' ? 'ಡ್ರೈವರ್‌ಗಳ ಮಾಹಿತಿ ಲೋಡ್ ಆಗುತ್ತಿದೆ...' : 'Loading drivers info...';
@@ -1304,7 +1316,7 @@
       const adminDiv = document.getElementById('adminDriversList');
       let html = '';
       if (driversList.length === 0) {
-        adminDiv.innerHTML = `<p style="color: #718096;">${currentLang === 'kn' ? 'ಯಾವುದೇ ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ಗಳು ಸಿಗಲಿಲ್ಲ.' : 'No driver profiles found.'}</p>`;
+        adminDiv.innerHTML = `<p style="color: #718096;">${currentLang === 'kn' ? 'ಯಾವುದೇ ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ಗಳು ಸಿಗಲಿಲ್ಲ.' : 'No driver profiles found.'}'</p>`;
         return;
       }
 
