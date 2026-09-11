@@ -809,7 +809,7 @@
 
         myActiveBookingId = docRef.id;
         
-        showCustomAlert("ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಲಾಗಿದೆ. ಜಿಪಿಎಸ್ ಆನ್ ಮಾಡಿ ಓಕೆ ಬಟನ್ ಹಾಕಿದರೆ ಆಟೋಮೆಟಿಕ್ ಕಸ್ಟಮರ್ ಹತ್ರ ಲೊಕೇಶನ್ ಆನ್ ಆಗಿ ಹೋಗುತ್ತದೆ.");
+        showCustomAlert("ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸಲ್ಲಿಸಲಾಗಿದೆ! ಡ್ರೈವರ್ ಸ್ವೀಕರಿಸಿದಾಗ ಲೈವ್ ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ನಿಮಗೆ ಕಾಣಿಸುತ್ತದೆ.");
 
         document.getElementById('bookingFormContainer').style.display = 'none';
         document.getElementById('customerStatusContainer').innerHTML = `
@@ -850,7 +850,11 @@
                 <p style="font-size:0.85rem; color:#2d3748;"><b>${currentLang === 'kn' ? 'ಐಡಿ ನಂಬರ್:' : 'Driver ID:'}</b> ${data.driverIdNum || ''}</p>
                 <p style="font-size:0.85rem; color:#2d3748;"><b>${currentLang === 'kn' ? 'ಮೊಬೈಲ್ ನಂಬರ್:' : 'Phone:'}</b> <a href="tel:${data.driverPhone}">${data.driverPhone || ''}</a></p>
                 <p style="font-size:0.85rem; color:#2d3748;"><b>${currentLang === 'kn' ? 'ವಾಹನ ನಂಬರ್:' : 'Vehicle No:'}</b> ${data.driverVehNo || ''}</p>
-                <a href="tel:${data.driverPhone}" class="btn-submit" style="display:block; text-decoration:none; background:#3182ce; margin-top:10px; text-align:center;">📞 ಕಾಲ್ ಮಾಡಿ (Call Driver)</a>
+                
+                <a href="https://www.google.com/maps/search/?api=1&query=${data.pickupLat},${data.pickupLng}" target="_blank" class="btn-submit" style="display:block; text-decoration:none; background:#0fb05b; margin-top:10px; text-align:center;">📍 ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ವೀಕ್ಷಿಸಿ (View GPS Location)</a>
+                
+                <a href="tel:${data.driverPhone}" class="btn-submit" style="display:block; text-decoration:none; background:#3182ce; margin-top:8px; text-align:center;">📞 ಕಾಲ್ ಮಾಡಿ (Call Driver)</a>
+                
                 <button class="btn-submit" onclick="resetCustomerBookingForm()" style="background:#718096; margin-top:8px;">${currentLang === 'kn' ? 'ಹೊಸ ಬುಕಿಂಗ್ ಮಾಡಿ' : 'New Booking'}</button>
               </div>
             `;
@@ -889,15 +893,15 @@
         return;
       }
 
-      let confirmGps = confirm(currentLang === 'kn' ? "ಜಿಪಿಎಸ್ ಆನ್ ಆಗಬೇಕು. ಮುಂದುವರಿಯಲು OK ಒತ್ತಿ." : "GPS needs to be turned on. Click OK to proceed.");
+      let confirmGps = confirm(currentLang === 'kn' ? "ಮೀಟರ್ ಆನ್ ಮಾಡಲು ಜಿಪಿಎಸ್ ಕಡ್ಡಾಯವಾಗಿದೆ. OK ಒತ್ತಿ." : "GPS is required to start meter. Click OK.");
       if (!confirmGps) return;
 
       distanceKm = 0.0;
       lastCustPos = null;
       document.getElementById('distCount').innerText = distanceKm.toFixed(1);
       document.getElementById('liveAmount').innerText = calculateFare(document.getElementById('meterVehicleType').value, distanceKm);
-      document.getElementById('meterStatusMsg').innerText = currentLang === 'kn' ? "ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಆನ್ ಆಗಿದೆ..." : "GPS Location Enabled...";
-      document.getElementById('meterStatusMsg').style.color = "#3182ce";
+      document.getElementById('meterStatusMsg').innerText = currentLang === 'kn' ? "ಮೀಟರ್ ಆನ್ ಆಗಿದೆ, ವಾಹನ ಚಲಿಸುತ್ತಿದೆ..." : "Meter ON, running...";
+      document.getElementById('meterStatusMsg').style.color = "#0fb05b";
 
       custMeterWatchId = navigator.geolocation.watchPosition(
         (position) => {
@@ -913,12 +917,6 @@
               let vehType = document.getElementById('meterVehicleType').value;
               let total = calculateFare(vehType, distanceKm);
               document.getElementById('liveAmount').innerText = Math.round(total);
-              
-              document.getElementById('meterStatusMsg').innerText = currentLang === 'kn' ? "ವಾಹನ ಚಲಿಸುತ್ತಿದೆ..." : "Vehicle Moving...";
-              document.getElementById('meterStatusMsg').style.color = "#0fb05b";
-            } else {
-              document.getElementById('meterStatusMsg').innerText = currentLang === 'kn' ? "ವಾಹನ ನಿಂತಿದೆ" : "Vehicle Stopped";
-              document.getElementById('meterStatusMsg').style.color = "#d69e2e";
             }
           }
           lastCustPos = { lat, lng };
@@ -931,14 +929,17 @@
     }
 
     function stopMeterOnly() {
+      if (!custMeterWatchId) {
+        alert(currentLang === 'kn' ? "ಮೀಟರ್ ಈಗಾಗಲೇ ಆಫ್ ಆಗಿದೆ ಅಥವಾ ಸ್ಟಾರ್ಟ್ ಮಾಡಿಲ್ಲ!" : "Meter is not running!");
+        return;
+      }
+
       let vehType = document.getElementById('meterVehicleType').value;
       let totalAmount = Math.round(calculateFare(vehType, distanceKm));
       let finalDist = distanceKm.toFixed(1);
 
-      if (custMeterWatchId !== null) {
-        navigator.geolocation.clearWatch(custMeterWatchId);
-        custMeterWatchId = null;
-      }
+      navigator.geolocation.clearWatch(custMeterWatchId);
+      custMeterWatchId = null;
 
       document.getElementById('meterResultText').innerText = `ಹೌದು, ಎಷ್ಟು ಮೀಟರ್ ಓಡಿದೆ: ${finalDist} ಕಿ.ಮೀ\nಮತ್ತು ಎಷ್ಟು ಅಮೌಂಟ್ ಚಾರ್ಜಸ್ ಆಗಿದೆ: ₹${totalAmount}`;
       document.getElementById('meterResultModal').style.display = 'block';
@@ -955,14 +956,17 @@
     }
 
     function stopDriverMeterOnly() {
+      if (!drvMeterWatchId) {
+        alert(currentLang === 'kn' ? "ಮೀಟರ್ ಈಗಾಗಲೇ ಆಫ್ ಆಗಿದೆ ಅಥವಾ ಸ್ಟಾರ್ಟ್ ಮಾಡಿಲ್ಲ!" : "Meter is not running!");
+        return;
+      }
+
       let vehType = document.getElementById('driverMeterVehicleType').value;
       let totalAmount = Math.round(calculateFare(vehType, driverDistanceKm));
       let finalDist = driverDistanceKm.toFixed(1);
 
-      if (drvMeterWatchId !== null) {
-        navigator.geolocation.clearWatch(drvMeterWatchId);
-        drvMeterWatchId = null;
-      }
+      navigator.geolocation.clearWatch(drvMeterWatchId);
+      drvMeterWatchId = null;
 
       document.getElementById('meterResultText').innerText = `ಹೌದು, ಎಷ್ಟು ಮೀಟರ್ ಓಡಿದೆ: ${finalDist} ಕಿ.ಮೀ\nಮತ್ತು ಎಷ್ಟು ಅಮೌಂಟ್ ಚಾರ್ಜಸ್ ಆಗಿದೆ: ₹${totalAmount}`;
       document.getElementById('meterResultModal').style.display = 'block';
@@ -1172,7 +1176,7 @@
                 hasActiveAlert = true;
                 html += `
                   <div class="card" style="border: 2px solid #0fb05b; background:#f7fafc; margin-bottom:10px;">
-                    <p style="background:#e8f8f0; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#065f46;">⚠️ ಎಚ್ಚರಿಕೆ: ನಿಮ್ಮ ಹತ್ತಿರ ಹೊಸ ಬುಕಿಂಗ್ ಬಂದಿದೆ! ದಯವಿಟ್ಟು ತಪ್ಪಿಸಬೇಡಿ.</p>
+                    <p style="background:#e8f8f0; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#065f46;">⚠️ ಎಚ್ಚರಿಕೆ: ನಿಮ್ಮ ಹತ್ತಿರ ಹೊಸ ಬುಕಿಂಗ್ ಬಂದಿದೆ!</p>
                     <p><b>${currentLang === 'kn' ? 'ವಾಹನ ಅಗತ್ಯ:' : 'Vehicle Required:'}</b> ${b.vehicleType}</p>
                     <p><b>${currentLang === 'kn' ? 'ಕಸ್ಟಮರ್ ಹೆಸರು:' : 'Customer Name:'}</b> ${b.customerName}</p>
                     <p><b>${currentLang === 'kn' ? 'ಫೋನ್ ನಂಬರ್:' : 'Phone:'}</b> <a href="tel:${b.customerPhone}">${b.customerPhone}</a> <a href="tel:${b.customerPhone}" style="background:#3182ce; color:white; padding:2px 8px; border-radius:4px; text-decoration:none; font-size:0.75rem; margin-left:5px;">📞 ಕಾಲ್ ಮಾಡಿ</a></p>
@@ -1240,7 +1244,7 @@
           window.open(gmapsUrl, '_blank');
         }
 
-        alert(currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸ್ವೀಕರಿಸಲಾಗಿದೆ! ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಆನ್ ಮಾಡಲಾಗಿದೆ.' : 'Booking accepted successfully! GPS location opened.');
+        alert(currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸ್ವೀಕರಿಸಲಾಗಿದೆ! ಕಸ್ಟಮರ್‌ಗೆ ನಿಮ್ಮ ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ತೋರಿಸಲಾಗುತ್ತಿದೆ.' : 'Booking accepted successfully! GPS location shared with customer.');
       } catch (e) {
         alert('Error: ' + e.message);
       }
@@ -1254,15 +1258,15 @@
         return;
       }
 
-      let confirmGps = confirm(currentLang === 'kn' ? "ಜಿಪಿಎಸ್ ಆನ್ ಆಗಬೇಕು. ಮುಂದುವರಿಯಲು OK ಒತ್ತಿ." : "GPS needs to be turned on. Click OK to proceed.");
+      let confirmGps = confirm(currentLang === 'kn' ? "ಮೀಟರ್ ಆನ್ ಮಾಡಲು ಜಿಪಿಎಸ್ ಕಡ್ಡಾಯವಾಗಿದೆ. OK ಒತ್ತಿ." : "GPS is required to start meter. Click OK.");
       if (!confirmGps) return;
 
       driverDistanceKm = 0.0;
       lastDrvPos = null;
       document.getElementById('driverDistCount').innerText = driverDistanceKm.toFixed(1);
       document.getElementById('driverLiveAmount').innerText = calculateFare(document.getElementById('driverMeterVehicleType').value, driverDistanceKm);
-      document.getElementById('driverMeterStatusMsg').innerText = currentLang === 'kn' ? "ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಆನ್ ಆಗಿದೆ..." : "GPS Location Enabled...";
-      document.getElementById('driverMeterStatusMsg').style.color = "#3182ce";
+      document.getElementById('driverMeterStatusMsg').innerText = currentLang === 'kn' ? "ಮೀಟರ್ ಆನ್ ಆಗಿದೆ, ವಾಹನ ಚಲಿಸುತ್ತಿದೆ..." : "Meter ON, running...";
+      document.getElementById('driverMeterStatusMsg').style.color = "#0fb05b";
 
       drvMeterWatchId = navigator.geolocation.watchPosition(
         (position) => {
@@ -1278,12 +1282,6 @@
               let vehType = document.getElementById('driverMeterVehicleType').value;
               let total = calculateFare(vehType, driverDistanceKm);
               document.getElementById('driverLiveAmount').innerText = Math.round(total);
-              
-              document.getElementById('driverMeterStatusMsg').innerText = currentLang === 'kn' ? "ವಾಹನ ಚಲಿಸುತ್ತಿದೆ..." : "Vehicle Moving...";
-              document.getElementById('driverMeterStatusMsg').style.color = "#0fb05b";
-            } else {
-              document.getElementById('driverMeterStatusMsg').innerText = currentLang === 'kn' ? "ವಾಹನ ನಿಂತಿದೆ" : "Vehicle Stopped";
-              document.getElementById('driverMeterStatusMsg').style.color = "#d69e2e";
             }
           }
           lastDrvPos = { lat, lng };
