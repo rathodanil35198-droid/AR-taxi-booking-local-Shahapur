@@ -348,25 +348,25 @@
 
         <div class="form-group">
           <label id="lblDrvPhoto">ವಾಹನ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ (ಕ್ಯಾಮೆರಾ ಅಥವಾ ಗ್ಯಾಲರಿ):</label>
-          <input type="file" id="vehPhotoFile" accept="image/*">
+          <input type="file" id="vehPhotoFile" accept="image/*" capture="environment">
           <div id="errVehPhoto" class="error-msg">ವಾಹನ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ ಮಾಡುವಲ್ಲಿ ದೋಷವಿದೆ</div>
         </div>
 
         <div class="form-group">
           <label id="lblRcPhoto">ಆರ್ ಸಿ ಕಾರ್ಡ್ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ (ಕ್ಯಾಮೆರಾ ಅಥವಾ ಗ್ಯಾಲರಿ):</label>
-          <input type="file" id="rcPhotoFile" accept="image/*">
+          <input type="file" id="rcPhotoFile" accept="image/*" capture="environment">
           <div id="errRcPhoto" class="error-msg">ಆರ್ ಸಿ ಕಾರ್ಡ್ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ ಮಾಡುವಲ್ಲಿ ದೋಷವಿದೆ</div>
         </div>
 
         <div class="form-group">
           <label id="lblDlPhoto">ಡಿ ಎಲ್ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ (ಕ್ಯಾಮೆರಾ ಅಥವಾ ಗ್ಯಾಲರಿ):</label>
-          <input type="file" id="dlPhotoFile" accept="image/*">
+          <input type="file" id="dlPhotoFile" accept="image/*" capture="environment">
           <div id="errDlPhoto" class="error-msg">ಡಿ ಎಲ್ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ ಮಾಡುವಲ್ಲಿ ದೋಷವಿದೆ</div>
         </div>
 
         <div class="form-group">
           <label id="lblSelfiePhoto">ಡ್ರೈವರ್ ಸೆಲ್ಫಿ / ಫೋಟೋ (ಕ್ಯಾಮೆರಾ ಅಥವಾ ಗ್ಯಾಲರಿ ಆಯ್ಕೆ):</label>
-          <input type="file" id="selfiePhotoFile" accept="image/*">
+          <input type="file" id="selfiePhotoFile" accept="image/*" capture="user">
           <div id="errSelfiePhoto" class="error-msg">ಸೆಲ್ಫಿ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ ಮಾಡುವಲ್ಲಿ ದೋಷವಿದೆ</div>
         </div>
 
@@ -649,8 +649,8 @@
     function goBackToRoleSelection() {
       if (bookingsUnsubscribe) { bookingsUnsubscribe(); bookingsUnsubscribe = null; }
       stopDriverLocationTracking();
-      stopMeterOnly();
-      stopDriverMeterOnly();
+      if (custMeterWatchId) { navigator.geolocation.clearWatch(custMeterWatchId); custMeterWatchId = null; }
+      if (drvMeterWatchId) { navigator.geolocation.clearWatch(drvMeterWatchId); drvMeterWatchId = null; }
       document.getElementById('mainAppContent').style.display = 'none';
       document.getElementById('roleSelectionScreen').style.display = 'block';
       currentUserRole = '';
@@ -893,9 +893,6 @@
         return;
       }
 
-      let confirmGps = confirm(currentLang === 'kn' ? "ಮೀಟರ್ ಆನ್ ಮಾಡಲು ಜಿಪಿಎಸ್ ಕಡ್ಡಾಯವಾಗಿದೆ. OK ಒತ್ತಿ." : "GPS is required to start meter. Click OK.");
-      if (!confirmGps) return;
-
       distanceKm = 0.0;
       lastCustPos = null;
       document.getElementById('distCount').innerText = distanceKm.toFixed(1);
@@ -921,16 +918,14 @@
           }
           lastCustPos = { lat, lng };
         },
-        (error) => {
-          alert(currentLang === 'kn' ? "ಜಿಪಿಎಸ್ ಸಿಗ್ನಲ್ ಸಿಗುತ್ತಿಲ್ಲ!" : "GPS signal lost!");
-        },
+        (error) => {},
         { enableHighAccuracy: true, maximumAge: 0, timeout: 10000 }
       );
     }
 
     function stopMeterOnly() {
       if (!custMeterWatchId) {
-        alert(currentLang === 'kn' ? "ಮೀಟರ್ ಈಗಾಗಲೇ ಆಫ್ ಆಗಿದೆ ಅಥವಾ ಸ್ಟಾರ್ಟ್ ಮಾಡಿಲ್ಲ!" : "Meter is not running!");
+        resetMeterRate();
         return;
       }
 
@@ -957,7 +952,7 @@
 
     function stopDriverMeterOnly() {
       if (!drvMeterWatchId) {
-        alert(currentLang === 'kn' ? "ಮೀಟರ್ ಈಗಾಗಲೇ ಆಫ್ ಆಗಿದೆ ಅಥವಾ ಸ್ಟಾರ್ಟ್ ಮಾಡಿಲ್ಲ!" : "Meter is not running!");
+        resetDriverMeterRate();
         return;
       }
 
@@ -1003,7 +998,35 @@
         if (!file) { resolve(''); return; }
         const reader = new FileReader();
         reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
+        reader.onload = () => {
+          const img = new Image();
+          img.src = reader.result;
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const MAX_WIDTH = 800;
+            const MAX_HEIGHT = 800;
+            let width = img.width;
+            let height = img.height;
+
+            if (width > height) {
+              if (width > MAX_WIDTH) {
+                height *= MAX_WIDTH / width;
+                width = MAX_WIDTH;
+              }
+            } else {
+              if (height > MAX_HEIGHT) {
+                width *= MAX_HEIGHT / height;
+                height = MAX_HEIGHT;
+              }
+            }
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            resolve(canvas.toDataURL('image/jpeg', 0.7));
+          };
+          img.onerror = () => resolve(reader.result);
+        };
         reader.onerror = error => reject(error);
       });
     }
@@ -1196,7 +1219,6 @@
                   </div>
                 `;
               } else if (b.status === 'Accepted') {
-                // ಸ್ವೀಕರಿಸಿದ / ಲಾಕ್ ಆದ ಬುಕಿಂಗ್‌ಗಳು ಕೆಳಗಡೆ ಸಾಲಾಗಿ ಪ್ರದರ್ಶಿಸುವುದು
                 acceptedHtml += `
                   <div class="card" style="border: 2px solid #38a169; background:#edf2f7; margin-bottom:10px;">
                     <p style="background:#d4edda; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#155724;">🔒 ಈ ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಲಾಕ್ ಆಗಿದೆ!</p>
@@ -1289,9 +1311,6 @@
         return;
       }
 
-      let confirmGps = confirm(currentLang === 'kn' ? "ಮೀಟರ್ ಆನ್ ಮಾಡಲು ಜಿಪಿಎಸ್ ಕಡ್ಡಾಯವಾಗಿದೆ. OK ಒತ್ತಿ." : "GPS is required to start meter. Click OK.");
-      if (!confirmGps) return;
-
       driverDistanceKm = 0.0;
       lastDrvPos = null;
       document.getElementById('driverDistCount').innerText = driverDistanceKm.toFixed(1);
@@ -1317,9 +1336,7 @@
           }
           lastDrvPos = { lat, lng };
         },
-        (error) => {
-          alert(currentLang === 'kn' ? "ಜಿಪಿಎಸ್ ಸಿಗ್ನಲ್ ಸಿಗುತ್ತಿಲ್ಲ!" : "GPS signal lost!");
-        },
+        (error) => {},
         { enableHighAccuracy: true, maximumAge: 0, timeout: 10000 }
       );
     }
