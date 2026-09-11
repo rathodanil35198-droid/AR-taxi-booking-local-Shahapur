@@ -1336,4 +1336,87 @@
               document.getElementById('driverLiveAmount').innerText = Math.round(total);
             }
           }
-          la
+          lastDrvPos = { lat, lng };
+        },
+        (error) => {},
+        { enableHighAccuracy: true, maximumAge: 0, timeout: 10000 }
+      );
+    }
+
+    function loadAdminDrivers() {
+      const listDiv = document.getElementById('adminDriversList');
+      listDiv.innerHTML = "ಡ್ರೈವರ್‌ಗಳ ಮಾಹಿತಿ ಲೋಡ್ ಆಗುತ್ತಿದೆ...";
+
+      window.getDocs(window.collection(window.db, "drivers")).then((snapshot) => {
+        allDriversData = [];
+        snapshot.forEach((docSnap) => {
+          allDriversData.push({ id: docSnap.id, ...docSnap.data() });
+        });
+        displayAdminDrivers(allDriversData);
+      }).catch(err => {
+        listDiv.innerHTML = "ದೋಷ: " + err.message;
+      });
+    }
+
+    function displayAdminDrivers(drivers) {
+      const listDiv = document.getElementById('adminDriversList');
+      if (drivers.length === 0) {
+        listDiv.innerHTML = "<p>ಯಾವುದೇ ಡ್ರೈವರ್‌ಗಳು ನೋಂದಾಯಿಸಿಲ್ಲ.</p>";
+        return;
+      }
+
+      let html = "";
+      drivers.forEach(d => {
+        html += `
+          <div class="card" style="margin-bottom:10px; border:1px solid #cbd5e0;">
+            <p><b>ಹೆಸರು:</b> ${d.drvName} (ID: ${d.driverId})</p>
+            <p><b>ಫೋನ್:</b> <a href="tel:${d.drvPhone}">${d.drvPhone}</a></p>
+            <p><b>ವಾಹನ ನಂಬರ್:</b> ${d.drvVehNo} (${d.drvVehType})</p>
+            <div style="margin-top:6px;">
+              ${d.vehPhoto ? `<img src="${d.vehPhoto}" class="preview-img" onclick="openImageModal('${d.vehPhoto}')" title="Vehicle">` : ''}
+              ${d.rcPhoto ? `<img src="${d.rcPhoto}" class="preview-img" onclick="openImageModal('${d.rcPhoto}')" title="RC">` : ''}
+              ${d.dlPhoto ? `<img src="${d.dlPhoto}" class="preview-img" onclick="openImageModal('${d.dlPhoto}')" title="DL">` : ''}
+              ${d.selfiePhoto ? `<img src="${d.selfiePhoto}" class="preview-img" onclick="openImageModal('${d.selfiePhoto}')" title="Selfie">` : ''}
+            </div>
+            <button class="btn-submit" onclick="deleteDriver('${d.id}')" style="background:#e53e3e; margin-top:8px; padding:6px;">ಡ್ರೈವರ್ ಡಿಲೀಟ್ ಮಾಡಿ</button>
+          </div>
+        `;
+      });
+      listDiv.innerHTML = html;
+    }
+
+    function filterAdminDrivers() {
+      const queryText = document.getElementById('adminSearchInput').value.toLowerCase();
+      const filtered = allDriversData.filter(d => 
+        d.drvPhone.toLowerCase().includes(queryText) || 
+        d.driverId.toLowerCase().includes(queryText) || 
+        d.drvVehNo.toLowerCase().includes(queryText) ||
+        d.drvName.toLowerCase().includes(queryText)
+      );
+      displayAdminDrivers(filtered);
+    }
+
+    async function deleteDriver(docId) {
+      if (confirm("ಖಂಡಿತವಾಗಿ ಈ ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ ಅನ್ನು ಡಿಲೀಟ್ ಮಾಡಲು ಬಯಸುವಿರಾ?")) {
+        try {
+          await window.deleteDoc(window.doc(window.db, "drivers", docId));
+          alert("ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ ಯಶಸ್ವಿಯಾಗಿ ಡಿಲೀಟ್ ಮಾಡಲಾಗಿದೆ.");
+          loadAdminDrivers();
+        } catch (e) {
+          alert("ದೋಷ: " + e.message);
+        }
+      }
+    }
+
+    function openImageModal(imgSrc) {
+      document.getElementById('fullImage').src = imgSrc;
+      document.getElementById('downloadBtn').href = imgSrc;
+      document.getElementById('imageModal').style.display = 'block';
+    }
+
+    function closeImageModal() {
+      document.getElementById('imageModal').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
