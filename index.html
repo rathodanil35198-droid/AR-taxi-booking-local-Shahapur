@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+     <!DOCTYPE html>
 <html lang="kn">
 <head>
   <meta charset="UTF-8">
@@ -1238,16 +1238,18 @@
           📊 ಇವತ್ತಿನ ಒಟ್ಟು ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು: ${pendingCountToday}
         </div>`;
 
-        let combinedHtml = summaryHeader + pendingHtml;
+        let combinedHtml = '';
+        if (pendingHtml !== '') {
+          combinedHtml += summaryHeader + pendingHtml;
+        } else {
+          combinedHtml += summaryHeader + `<p style="color: #718096; font-weight: bold; margin-bottom: 10px;">${currentLang === 'kn' ? 'ನಿಮ್ಮ 2 ಕಿ.ಮೀ ಒಳಗೆ ಯಾವುದೇ ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.' : 'No active bookings within 2 KM.'}</p>`;
+        }
+
         if (acceptedHtml !== '') {
           combinedHtml += `<hr style="margin: 15px 0; border: 0; border-top: 1px solid #cbd5e0;"><h3 style="font-size: 0.85rem; color: #4a5568; margin-bottom: 8px;">ಲಾಕ್ ಆಗಿರುವ ಬುಕಿಂಗ್‌ಗಳು:</h3>` + acceptedHtml;
         }
 
-        if (pendingHtml === '' && acceptedHtml === '') {
-          listDiv.innerHTML = summaryHeader + `<p style="color: #718096; font-weight: bold;">${currentLang === 'kn' ? 'ನಿಮ್ಮ 2 ಕಿ.ಮೀ ಒಳಗೆ ಯಾವುದೇ ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.' : 'No active bookings within 2 KM.'}</p>`;
-        } else {
-          listDiv.innerHTML = combinedHtml;
-        }
+        listDiv.innerHTML = combinedHtml;
 
         const audio = document.getElementById('alertSound');
         if (audio) {
@@ -1290,7 +1292,7 @@
         const audio = document.getElementById('alertSound');
         if(audio) { audio.pause(); audio.currentTime = 0; }
 
-        alert(`ನಿಮ್ಮ ಅರ್ಜಿಯನ್ನು ಸ್ವೀಕರಿಸಲಾಗಿದೆ!\n\nಈ ನಾಲ್ಕು ಡಿಜಿಟಲ್ ಐಡಿಯನ್ನು (${driverIdNum}) ನಿಮ್ಮ ಗಮನದಲ್ಲಿಟ್ಟುಕೊಳ್ಳಿ ನೆನಪಿಗೆ. ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿದಾಗ ಬೇಕಾಗುತ್ತದೆ.`);
+        alert(`ನ್ಯೂ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿದ್ದೀರಿ\nನಿಮ್ಮ ಜಿಪಿಎಸ್ ಮತ್ತೆ ನಿಮ್ಮ ಎಲ್ಲಾ ಐಡಿ ಮೊಬೈಲ್ ನಂಬರನ್ನು ಕಸ್ಟಮರ್ ಗೆ ಕಳಿಸಲಾಗಿದೆ ಪಿಕಪ್ ಮಾಡಿ`);
 
         if (pickupLat && pickupLng) {
           const gmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${pickupLat},${pickupLng}&travelmode=driving`;
@@ -1380,7 +1382,7 @@
             <div style="display:flex; gap:5px; margin-top:5px; flex-wrap:wrap;">
               ${d.vehPhoto ? `<img src="${d.vehPhoto}" class="preview-img" onclick="openImageModal('${d.vehPhoto}')" title="Vehicle Photo">` : ''}
               ${d.rcPhoto ? `<img src="${d.rcPhoto}" class="preview-img" onclick="openImageModal('${d.rcPhoto}')" title="RC Photo">` : ''}
-              ${d.dlPhoto ? `<img src="${d.dlPhoto}" class="preview-img" onclick="openImageModal('${d.dlPhoto}')" title="DL Photo">` : ''}
+              ${d.dlPhoto ? `<img src="${d.dlPhoto}" class="preview-img" onclick="openImageModal('${d.dlPhoto}')" title="Android DL Photo">` : ''}
             </div>
             <button class="btn-submit" onclick="deleteDriver('${d.id}')" style="background:#e53e3e; margin-top:8px; padding:6px; font-size:0.75rem;">${currentLang === 'kn' ? 'ಪ್ರೊಫೈಲ್ ಡಿಲೀಟ್ ಮಾಡಿ' : 'Delete Profile'}</button>
           </div>
