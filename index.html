@@ -152,7 +152,7 @@
     
     .modal-content-box { background: #fff; max-width: 380px; margin: 100px auto; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
 
-    /* Custom Dashboard Box Style */
+    /* Dashboard Box */
     .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
     .dash-box { background: #edf2f7; border: 1px solid #cbd5e0; padding: 10px; border-radius: 8px; text-align: center; }
     .dash-box-title { font-size: 0.75rem; color: #4a5568; font-weight: bold; }
@@ -404,7 +404,7 @@
 
       <!-- 5. DRIVER LIVE METER SECTION -->
       <div id="driverMeterSection" class="section">
-        <h2 id="h2DrvMeterTitle">ಡ್ರೈವರ್ ಲೈವ್ മീಟರ್</h2>
+        <h2 id="h2DrvMeterTitle">ಡ್ರೈವರ್ ಲೈವ್ ಮೀಟರ್</h2>
         <div class="form-group">
           <label id="lblDrvMeterVeh">ವಾಹನ ಆಯ್ಕೆ ಮಾಡಿ:</label>
           <select id="driverMeterVehicleType" onchange="resetDriverMeterRate()">
@@ -462,6 +462,37 @@
     let drvMeterWatchId = null;
     let lastCustPos = null;
     let lastDrvPos = null;
+
+    // Window-level bindings for HTML onclick references
+    window.shareAppOnWhatsApp = shareAppOnWhatsApp;
+    window.toggleLanguage = toggleLanguage;
+    window.selectRole = selectRole;
+    window.goBackToRoleSelection = goBackToRoleSelection;
+    window.switchSection = switchSection;
+    window.handleAdminTabClick = handleAdminTabClick;
+    window.selectVehicle = selectVehicle;
+    window.getLocation = getLocation;
+    window.submitBooking = submitBooking;
+    window.showCustomAlert = showCustomAlert;
+    window.closeCustomAlert = closeCustomAlert;
+    window.closeMeterResultModal = closeMeterResultModal;
+    window.cancelCustomerBooking = cancelCustomerBooking;
+    window.resetCustomerBookingForm = resetCustomerBookingForm;
+    window.startMeter = startMeter;
+    window.stopMeterOnly = stopMeterOnly;
+    window.resetMeterRate = resetMeterRate;
+    window.startDriverMeter = startDriverMeter;
+    window.stopDriverMeterOnly = stopDriverMeterOnly;
+    window.resetDriverMeterRate = resetDriverMeterRate;
+    window.registerDriver = registerDriver;
+    window.checkDriverIdAndListen = checkDriverIdAndListen;
+    window.acceptBooking = acceptBooking;
+    window.verifyOtpAndStartRide = verifyOtpAndStartRide;
+    window.finishRide = finishRide;
+    window.filterAdminDrivers = filterAdminDrivers;
+    window.deleteDriver = deleteDriver;
+    window.openImageModal = openImageModal;
+    window.closeImageModal = closeImageModal;
 
     function shareAppOnWhatsApp() {
       const appUrl = window.location.href;
@@ -704,7 +735,7 @@
         if (enteredCode === "8105010768") {
           isAdminUnlocked = true;
           switchSection('adminSection');
-        } else {
+        } else if (enteredCode !== null) {
           alert(currentLang === 'kn' ? "ತಪ್ಪಾದ ಕೋಡ್!" : "Incorrect code!");
         }
       } else {
@@ -809,7 +840,6 @@
 
       if (hasError) return;
 
-      // Generate 4-digit OTP for ride pickup verification
       const pickupOtp = Math.floor(1000 + Math.random() * 9000).toString();
 
       try {
@@ -845,7 +875,7 @@
         `;
         listenToMyBookingStatus(myActiveBookingId);
       } catch (e) {
-        alert(currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ದೋಷ: ' : 'Booking error: ' + e.message);
+        alert((currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ದೋಷ: ' : 'Booking error: ') + e.message);
       }
     }
 
@@ -1137,7 +1167,7 @@
         checkDriverIdAndListen();
 
       } catch (e) {
-        alert(currentLang === 'kn' ? 'ದೋಷ: ' + e.message : 'Error: ' + e.message);
+        alert((currentLang === 'kn' ? 'ದೋಷ: ' : 'Error: ') + e.message);
         btn.innerText = texts[currentLang].btnRegisterDriver;
       }
     }
@@ -1248,7 +1278,7 @@
           const b = docSnap.data();
           const bDate = b.dateKey || '';
 
-          // 24-Hour Automatic Reset / Delete System (At midnight)
+          // Auto delete older bookings
           if (bDate !== todayStr || (currentHour === 0 && currentMinute < 30)) {
             window.deleteDoc(window.doc(window.db, "bookings", docSnap.id)).catch(err => {});
             return;
