@@ -890,6 +890,11 @@
 
     function closeMeterResultModal() {
       document.getElementById('meterResultModal').style.display = 'none';
+      if (currentUserRole === 'driver') {
+        switchSection('liveSection');
+      } else {
+        switchSection('customerSection');
+      }
     }
 
     function listenToMyBookingStatus(bookingId) {
@@ -994,7 +999,7 @@
       navigator.geolocation.clearWatch(custMeterWatchId);
       custMeterWatchId = null;
 
-      document.getElementById('meterResultText').innerText = `ಹೌದು, ಎಷ್ಟು ಮೀಟರ್ ಓಡಿದೆ: ${finalDist} ಕಿ.ಮೀ\nಮತ್ತು ಎಷ್ಟು ಅಮೌಂಟ್ ಚಾರ್ಜಸ್ ಆಗಿದೆ: ₹${totalAmount}`;
+      document.getElementById('meterResultText').innerText = `ಎಷ್ಟು ಮೀಟರ್ ಓಡಿದೆ: ${finalDist} ಕಿ.ಮೀ\nಮತ್ತು ಎಷ್ಟು ಅಮೌಂಟ್ ಚಾರ್ಜಸ್ ಆಗಿದೆ: ₹${totalAmount}`;
       document.getElementById('meterResultModal').style.display = 'block';
 
       resetMeterRate();
@@ -1021,7 +1026,7 @@
       navigator.geolocation.clearWatch(drvMeterWatchId);
       drvMeterWatchId = null;
 
-      document.getElementById('meterResultText').innerText = `ಹೌದು, ಎಷ್ಟು ಮೀಟರ್ ಓಡಿದೆ: ${finalDist} ಕಿ.ಮೀ\nಮತ್ತು ಎಷ್ಟು ಅಮೌಂಟ್ ಚಾರ್ಜಸ್ ಆಗಿದೆ: ₹${totalAmount}`;
+      document.getElementById('meterResultText').innerText = `ಎಷ್ಟು ಮೀಟರ್ ಓಡಿದೆ: ${finalDist} ಕಿ.ಮೀ\nಮತ್ತು ಎಷ್ಟು ಅಮೌಂಟ್ ಚಾರ್ಜಸ್ ಆಗಿದೆ: ₹${totalAmount}`;
       document.getElementById('meterResultModal').style.display = 'block';
 
       resetDriverMeterRate();
@@ -1305,7 +1310,7 @@
                     <p><b>${currentLang === 'kn' ? 'ಪ್ರಸ್ತುತ ಸ್ಥಳ:' : 'Current Loc:'}</b> ${b.currentLocationText || '-'}</p>
                     <p><b>${currentLang === 'kn' ? 'ಪಿಕೋಪ್ ಸ್ಥಳ:' : 'Pickup:'}</b> <a href="https://www.google.com/maps/search/?api=1&query=${b.pickupLat},${b.pickupLng}" target="_blank" style="color:#3182ce; text-decoration:underline;">${b.pickupLocation} (GPS ಲೊಕೇಶನ್ ನೋಡಿ)</a> (~${dist.toFixed(2)} KM)</p>
                     <p><b>${currentLang === 'kn' ? 'ಡ್ರಾಪ್ ಸ್ಥಳ:' : 'Drop:'}</b> ${b.dropLocation}</p>
-                    <button class="btn-submit" onclick="acceptBooking('${docSnap.id}', '${driverData.drvName}', '${driverData.drvPhone}', '${driverData.drvVehNo}', '${driverData.driverId}', ${b.pickupLat}, ${b.pickupLng})" style="margin-top:8px;">${currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ (Accept)' : 'Accept Booking'}</button>
+                    <button class="btn-submit" onclick="acceptBooking('${docSnap.id}', '${driverData.drvName}', '${driverData.drvPhone}', '${driverData.drvVehNo}', '${driverData.driverId}', ${b.pickupLat}, ${b.pickupLng}, '${b.customerPhone}')" style="margin-top:8px;">${currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ (Accept)' : 'Accept Booking'}</button>
                   </div>
                 `;
               } else if (b.status === 'Accepted' && b.driverIdNum === driverData.driverId) {
@@ -1314,12 +1319,13 @@
                     <p style="background:#d4edda; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#155724;">🔒 ಈ ಬುಕಿಂಗ್ ನಿಮ್ಮ ಐಡಿಗೆ ಲಾಕ್ ಆಗಿದೆ!</p>
                     <p style="font-size: 1rem; margin-bottom: 4px; color: #2d3748;"><b>ವಾಹನ:</b> ${vehLogo} ${vehNameText}</p>
                     <p><b>ಕಸ್ಟಮರ್ ಹೆಸರು:</b> ${b.customerName} (<a href="tel:${b.customerPhone}">${b.customerPhone}</a>)</p>
-                    <p><b>ಸ್ಥಳ:</b> ${b.pickupLocation}</p>
+                    <p style="margin-top:4px;"><a href="tel:${b.customerPhone}" class="btn-submit" style="display:inline-block; width:auto; padding:5px 12px; text-decoration:none; background:#3182ce;">📞 ಕಸ್ಟಮರ್‌ಗೆ ಕಾಲ್ ಮಾಡಿ</a></p>
+                    <p style="margin-top:4px;"><b>ಸ್ಥಳ:</b> ${b.pickupLocation}</p>
                     
                     <div style="margin-top:10px; padding:8px; background:#fff; border-radius:6px; border:1px solid #cbd5e0;">
                        <p style="font-size:0.8rem; font-weight:bold; color:#2d3748; margin-bottom:4px;">ಪಿಕಪ್ ಹತ್ತಿರ ತಲುಪಿದ ಮೇಲೆ OTP ನಮೂದಿಸಿ:</p>
                        <input type="text" id="otpInput_${docSnap.id}" placeholder="Enter 4-Digit OTP" maxlength="4" style="margin-bottom:6px; text-align:center; font-weight:bold; font-size:1rem;">
-                       <button class="btn-submit" onclick="verifyOtpAndStartRide('${docSnap.id}', '${b.otp}')" style="background:#3182ce;">OTP ವೆರಿಫೈ ಮಾಡಿ & ರೈಡ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
+                       <button class="btn-submit" onclick="verifyOtpAndStartRide('${docSnap.id}', '${b.otp}', '${b.vehicleType}')" style="background:#3182ce;">OTP ವೆರಿಫೈ ಮಾಡಿ & ಮೀಟರ್ ಚಾಲು ಮಾಡಿ</button>
                     </div>
                   </div>
                 `;
@@ -1329,7 +1335,7 @@
                     <p style="background:#bee3f8; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#2b6cb0;">🏁 ಪ್ರಯಾಣ ಚಾಲನೆಯಲ್ಲಿದೆ (Ride Running)</p>
                     <p><b>ಕಸ್ಟಮರ್:</b> ${b.customerName}</p>
                     <p><b>ಡ್ರಾಪ್:</b> ${b.dropLocation}</p>
-                    <button class="btn-submit" onclick="finishRide('${docSnap.id}', '${driverData.driverId}')" style="background:#e53e3e; margin-top:8px;">ರೈಡ್ ಮುಕ್ತಾಯಗೊಳಿಸಿ (Finish Ride)</button>
+                    <button class="btn-submit" onclick="finishRide('${docSnap.id}', '${driverData.driverId}')" style="background:#e53e3e; margin-top:8px;">STOP / ರೈಡ್ ಮುಕ್ತಾಯಗೊಳಿಸಿ (Finish Ride)</button>
                   </div>
                 `;
               }
@@ -1382,7 +1388,7 @@
       return deg * (Math.PI/180);
     }
 
-    async function acceptBooking(bookingId, driverName, driverPhone, driverVehNo, driverIdNum, pickupLat, pickupLng) {
+    async function acceptBooking(bookingId, driverName, driverPhone, driverVehNo, driverIdNum, pickupLat, pickupLng, customerPhone) {
       try {
         await window.updateDoc(window.doc(window.db, "bookings", bookingId), {
           status: 'Accepted',
@@ -1395,7 +1401,7 @@
         const audio = document.getElementById('alertSound');
         if(audio) { audio.pause(); audio.currentTime = 0; }
 
-        alert(`ನ್ಯೂ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿದ್ದೀರಿ\nನಿಮ್ಮ ಜಿಪಿಎಸ್ ಮತ್ತೆ ನಿಮ್ಮ ಎಲ್ಲಾ ಐಡಿ ಮೊಬೈಲ್ ನಂಬರನ್ನು ಕಸ್ಟಮರ್ ಗೆ ಕಳಿಸಲಾಗಿದೆ ಪಿಕಪ್ ಮಾಡಿ`);
+        showCustomAlert(`ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಲಾಗಿದೆ!\n\nಗ್ರಾಹಕರ ಫೋನ್ ನಂಬರ್: ${customerPhone}\n\nಗ್ರಾಹಕರು ಇದ್ದರೆ OTP ಹಾಕಿ "OK" ಬಟನ್ ಒತ್ತಿ. ಗ್ರಾಹಕರು ಇರದಿದ್ದರೆ "ಕಾಲ್ ಮಾಡಿ" ಬಟನ್ ಬಳಸಿ.`);
 
         if (pickupLat && pickupLng) {
           const gmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${pickupLat},${pickupLng}&travelmode=driving`;
@@ -1408,44 +1414,53 @@
       }
     }
 
-    async function verifyOtpAndStartRide(bookingId, correctOtp) {
+    async function verifyOtpAndStartRide(bookingId, correctOtp, vehicleType) {
       const inputOtp = document.getElementById(`otpInput_${bookingId}`).value.trim();
       if (inputOtp === correctOtp) {
         try {
           await window.updateDoc(window.doc(window.db, "bookings", bookingId), {
             status: 'Started'
           });
-          alert("OTP ಯಶಸ್ವಿಯಾಗಿ ಸರಿಯಾಗಿದೆ! ರೈಡ್ ಪ್ರಾರಂಭವಾಗಿದೆ.");
+          
+          showCustomAlert("OTP ಯಶಸ್ವಿಯಾಗಿ ಸರಿಯಾಗಿದೆ! ಲೈವ್ ಮೀಟರ್ ಹಾಗೂ ಜಿಪಿಎಸ್ ಲೋಕೇಶನ್ ಆನ್ ಆಗಿದೆ.");
+
+          // Auto select vehicle type in driver meter section and start tracking
+          const selectElem = document.getElementById('driverMeterVehicleType');
+          if (selectElem) {
+            selectElem.value = vehicleType || 'Auto';
+          }
+          switchSection('driverMeterSection');
+          startDriverMeter();
+
         } catch(e) {
           alert("Error: " + e.message);
         }
       } else {
-        alert("ತಪ್ಪಾದ OTP! ದಯವಿಟ್ಟು ಗ್ರಾಹಕರಿಂದ ಸರಿಯಾದ 4-ಅಂಕಿಯ OTP ಪಡೆದು ನಮೂದಿಸಿ.");
+        alert("ತಪ್ಪಾದ OTP! ದಯವಿಟ್ಟು ಗ್ರಾಹಕರಿಂದ ಸರಿಯಾದ 4-ಅಂಕಿಯ OTP ಪಡೆದು ನಮೂದಿಸಿ (ಇಲ್ಲದಿದ್ದರೆ ಗ್ರಾಹಕರಿಗೆ ಕಾಲ್ ಮಾಡಿ).");
       }
     }
 
     async function finishRide(bookingId, driverId) {
-      let fareEntered = prompt("ರೈಡ್ ಮುಕ್ತಾಯಗೊಂಡಿದೆ. ಒಟ್ಟು ಗ್ರಾಹಕರಿಂದ ಪಡೆದ ಹಣ (₹) ನಮೂದಿಸಿ:");
-      let kmEntered = prompt("ಒಟ್ಟು ಕ್ರಮಿಸಿದ ದೂರ (KM) ನಮೂದಿಸಿ:");
+      stopDriverMeterOnly();
+      let vehType = document.getElementById('driverMeterVehicleType').value;
+      let calculatedFareAmt = Math.round(calculateFare(vehType, driverDistanceKm));
+      let finalKm = driverDistanceKm.toFixed(1);
 
-      if (fareEntered !== null && kmEntered !== null) {
-        const todayStr = new Date().toISOString().split('T')[0];
-        try {
-          await window.addDoc(window.collection(window.db, "completed_rides"), {
-            bookingId: bookingId,
-            driverIdNum: driverId,
-            fare: Number(fareEntered),
-            distance: Number(kmEntered),
-            dateKey: todayStr,
-            timestamp: window.serverTimestamp()
-          });
+      const todayStr = new Date().toISOString().split('T')[0];
+      try {
+        await window.addDoc(window.collection(window.db, "completed_rides"), {
+          bookingId: bookingId,
+          driverIdNum: driverId,
+          fare: Number(calculatedFareAmt),
+          distance: Number(finalKm),
+          dateKey: todayStr,
+          timestamp: window.serverTimestamp()
+        });
 
-          await window.deleteDoc(window.doc(window.db, "bookings", bookingId));
-          alert("ರೈಡ್ ಯಶಸ್ವಿಯಾಗಿ ಪೂರ್ಣಗೊಂಡಿದೆ ಮತ್ತು ನಿಮ್ಮ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್‌ಗೆ ಸೇರಿಸಲಾಗಿದೆ!");
-          loadDriverPersonalDashboard(driverId);
-        } catch(e) {
-          alert("Error: " + e.message);
-        }
+        await window.deleteDoc(window.doc(window.doc(window.db, "bookings", bookingId)));
+        loadDriverPersonalDashboard(driverId);
+      } catch(e) {
+        alert("Error: " + e.message);
       }
     }
 
@@ -1490,6 +1505,7 @@
     async function loadAdminDrivers() {
       const listDiv = document.getElementById('adminDriversList');
       listDiv.innerHTML = 'ಲೋಡ್ ಆಗುತ್ತಿದೆ...';
+
       try {
         const q = window.query(window.collection(window.db, "drivers"), window.orderBy("timestamp", "desc"));
         const snap = await window.getDocs(q);
@@ -1499,34 +1515,36 @@
           allDriversData.push({ id: docSnap.id, ...docSnap.data() });
         });
 
-        renderAdminDrivers(allDriversData);
+        renderAdminDriversList(allDriversData);
       } catch (e) {
-        listDiv.innerHTML = `<p style="color:#e53e3e;">Error: ${e.message}</p>`;
+        listDiv.innerHTML = `<p style="color: #e53e3e;">Error: ${e.message}</p>`;
       }
     }
 
-    function renderAdminDrivers(drivers) {
+    function renderAdminDriversList(drivers) {
       const listDiv = document.getElementById('adminDriversList');
       if (drivers.length === 0) {
-        listDiv.innerHTML = '<p style="color:#718096; font-weight:bold;">ಯಾವುದೇ ಡ್ರೈವರ್ ಮಾಹಿತಿ ಲಭ್ಯವಿಲ್ಲ.</p>';
+        listDiv.innerHTML = '<p style="color: #718096; text-align:center;">ಯಾವುದೇ ಡ್ರೈವರ್‌ಗಳು ಕಂಡುಬಂದಿಲ್ಲ.</p>';
         return;
       }
 
       let html = '';
       drivers.forEach(d => {
         html += `
-          <div class="card" style="margin-bottom:12px;">
+          <div class="card" style="margin-bottom: 12px;">
             <p><b>ಹೆಸರು:</b> ${d.drvName}</p>
-            <p><b>ಐಡಿ ನಂಬರ್:</b> <span style="color:#d69e2e; font-weight:bold;">${d.driverId || '-'}</span></p>
-            <p><b>ಫೋನ್:</b> ${d.drvPhone}</p>
-            <p><b>ವಾಹನ ನಂಬರ್:</b> ${d.drvVehNo} (${d.drvVehType})</p>
-            <div style="margin-top:8px;">
-              ${d.vehPhoto ? `<img src="${d.vehPhoto}" class="preview-img" onclick="openImageModal('${d.vehPhoto}')">` : ''}
-              ${d.rcPhoto ? `<img src="${d.rcPhoto}" class="preview-img" onclick="openImageModal('${d.rcPhoto}')">` : ''}
-              ${d.dlPhoto ? `<img src="${d.dlPhoto}" class="preview-img" onclick="openImageModal('${d.dlPhoto}')">` : ''}
-              ${d.selfiePhoto ? `<img src="${d.selfiePhoto}" class="preview-img" onclick="openImageModal('${d.selfiePhoto}')">` : ''}
+            <p><b>ಮೊಬೈಲ್:</b> <a href="tel:${d.drvPhone}">${d.drvPhone}</a></p>
+            <p><b>ವಾಹನ ನಂಬರ್:</b> ${d.drvVehNo} (${d.drvVehType || 'Auto'})</p>
+            <p><b>ಡ್ರೈವರ್ ಐಡಿ:</b> <span style="color:#d69e2e; font-weight:bold;">${d.driverId}</span></p>
+            
+            <div style="margin: 8px 0;">
+              ${d.vehPhoto ? `<img src="${d.vehPhoto}" class="preview-img" onclick="openImageModal('${d.vehPhoto}')" title="Vehicle Photo">` : ''}
+              ${d.rcPhoto ? `<img src="${d.rcPhoto}" class="preview-img" onclick="openImageModal('${d.rcPhoto}')" title="RC Photo">` : ''}
+              ${d.dlPhoto ? `<img src="${d.dlPhoto}" class="preview-img" onclick="openImageModal('${d.dlPhoto}')" title="DL Photo">` : ''}
+              ${d.selfiePhoto ? `<img src="${d.selfiePhoto}" class="preview-img" onclick="openImageModal('${d.selfiePhoto}')" title="Selfie Photo">` : ''}
             </div>
-            <button onclick="deleteDriver('${d.id}')" class="btn-submit" style="background:#e53e3e; margin-top:8px; padding:6px;">ಡಿಲೀಟ್ ಮಾಡಿ (Delete)</button>
+
+            <button class="btn-submit" onclick="deleteDriver('${d.id}')" style="background: #e53e3e; margin-top: 5px; padding: 6px;">🗑️ ಪ್ರೊಫೈಲ್ ಡಿಲೀಟ್ ಮಾಡಿ</button>
           </div>
         `;
       });
@@ -1534,23 +1552,23 @@
     }
 
     function filterAdminDrivers() {
-      const val = document.getElementById('adminSearchInput').value.trim().toLowerCase();
+      const queryStr = document.getElementById('adminSearchInput').value.trim().toLowerCase();
       const filtered = allDriversData.filter(d => 
-        (d.drvPhone && d.drvPhone.toLowerCase().includes(val)) ||
-        (d.driverId && d.driverId.toLowerCase().includes(val)) ||
-        (d.drvName && d.drvName.toLowerCase().includes(val))
+        (d.drvPhone && d.drvPhone.toLowerCase().includes(queryStr)) ||
+        (d.driverId && d.driverId.toLowerCase().includes(queryStr)) ||
+        (d.drvName && d.drvName.toLowerCase().includes(queryStr))
       );
-      renderAdminDrivers(filtered);
+      renderAdminDriversList(filtered);
     }
 
     async function deleteDriver(docId) {
-      if (confirm("ಈ ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ ಡಿಲೀಟ್ ಮಾಡಲು ಖಚಿತವೇ?")) {
+      if (confirm("ಖಚಿತವಾಗಿ ಈ ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ ಡಿಲೀಟ್ ಮಾಡಬೇಕೆ?")) {
         try {
           await window.deleteDoc(window.doc(window.db, "drivers", docId));
-          alert("ಡ್ರೈವರ್ ಡಿಲೀಟ್ ಮಾಡಲಾಗಿದೆ.");
+          alert("ಪ್ರೊಫೈಲ್ ಡಿಲೀಟ್ ಮಾಡಲಾಗಿದೆ.");
           loadAdminDrivers();
         } catch (e) {
-          alert("Error: " + e.message);
+          alert("Error deleting: " + e.message);
         }
       }
     }
