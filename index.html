@@ -463,7 +463,9 @@
     let lastCustPos = null;
     let lastDrvPos = null;
 
-    // Window-level bindings for HTML onclick references
+    // Save temporary OTP inputs across snapshot re-renders
+    let currentOtpInputs = {};
+
     window.shareAppOnWhatsApp = shareAppOnWhatsApp;
     window.toggleLanguage = toggleLanguage;
     window.selectRole = selectRole;
@@ -493,6 +495,7 @@
     window.deleteDriver = deleteDriver;
     window.openImageModal = openImageModal;
     window.closeImageModal = closeImageModal;
+    window.saveOtpInput = saveOtpInput;
 
     function shareAppOnWhatsApp() {
       const appUrl = window.location.href;
@@ -854,7 +857,7 @@
           dropLocation: drop,
           pickupLat: currentCustomerLat,
           pickupLng: currentCustomerLng,
-          otp: pickupOtp,
+          otp: String(pickupOtp),
           status: 'Pending',
           dateKey: todayStr,
           timestamp: window.serverTimestamp()
@@ -1263,6 +1266,10 @@
       }
     }
 
+    function saveOtpInput(bId, val) {
+      currentOtpInputs[bId] = val;
+    }
+
     function listenToBookingsForDriver(driverData) {
       if (bookingsUnsubscribe) bookingsUnsubscribe();
 
@@ -1283,7 +1290,6 @@
           const b = docSnap.data();
           const bDate = b.dateKey || '';
 
-          // Auto delete older bookings
           if (bDate !== todayStr || (currentHour === 0 && currentMinute < 30)) {
             window.deleteDoc(window.doc(window.db, "bookings", docSnap.id)).catch(err => {});
             return;
@@ -1292,7 +1298,6 @@
           if (b.pickupLat && b.pickupLng && currentDriverLat && currentDriverLng) {
             const dist = calculateDistance(currentDriverLat, currentDriverLng, b.pickupLat, b.pickupLng);
             
-            // 2KM Location Filter for Nearby Drivers
             if (dist <= 2.0) {
               let vehLogo = b.vehicleType === 'Car' ? '🚗' : '🛺';
               let vehNameText = b.vehicleType === 'Car' ? (currentLang === 'kn' ? 'ಕಾರ್ (Car)' : 'Car') : (currentLang === 'kn' ? 'ಆಟೋ (Auto)' : 'Auto');
@@ -1314,6 +1319,9 @@
                   </div>
                 `;
               } else if (b.status === 'Accepted' && b.driverIdNum === driverData.driverId) {
+                let savedVal = currentOtpInputs[docSnap.id] || '';
+                let dbOtpStr = String(b.otp || '').trim();
+                
                 acceptedHtml += `
                   <div class="card" style="border: 2px solid #38a169; background:#edf2f7; margin-bottom:10px;">
                     <p style="background:#d4edda; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#155724;">🔒 ಈ ಬುಕಿಂಗ್ ನಿಮ್ಮ ಐಡಿಗೆ ಲಾಕ್ ಆಗಿದೆ!</p>
@@ -1324,8 +1332,8 @@
                     
                     <div style="margin-top:10px; padding:8px; background:#fff; border-radius:6px; border:1px solid #cbd5e0;">
                        <p style="font-size:0.8rem; font-weight:bold; color:#2d3748; margin-bottom:4px;">ಪಿಕಪ್ ಹತ್ತಿರ ತಲುಪಿದ ಮೇಲೆ OTP ನಮೂದಿಸಿ:</p>
-                       <input type="text" id="otpInput_${docSnap.id}" placeholder="Enter 4-Digit OTP" maxlength="4" style="margin-bottom:6px; text-align:center; font-weight:bold; font-size:1rem;">
-                       <button class="btn-submit" onclick="verifyOtpAndStartRide('${docSnap.id}', '${b.otp}', '${b.vehicleType}')" style="background:#3182ce;">OTP ವೆರಿಫೈ ಮಾಡಿ & ಮೀಟರ್ ಚಾಲು ಮಾಡಿ</button>
+                       <input type="text" id="otpInput_${docSnap.id}" value="${savedVal}" oninput="saveOtpInput('${docSnap.id}', this.value)" placeholder="Enter 4-Digit OTP" maxlength="4" style="margin-bottom:6px; text-align:center; font-weight:bold; font-size:1rem;">
+                       <button class="btn-submit" onclick="verifyOtpAndStartRide('${docSnap.id}', '${dbOtpStr}', '${b.vehicleType}')" style="background:#3182ce;">OTP ವೆರಿಫೈ ಮಾಡಿ & ರೈಡ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
                     </div>
                   </div>
                 `;
@@ -1415,8 +1423,16 @@
     }
 
     async function verifyOtpAndStartRide(bookingId, correctOtp, vehicleType) {
-      const inputOtp = document.getElementById(`otpInput_${bookingId}`).value.trim();
-      if (inputOtp === correctOtp) {
+      const inputElem = document.getElementById(`otpInput_${bookingId}`);
+      let inputOtp = inputElem ? inputElem.value.trim() : '';
+
+      if (!inputOtp && currentOtpInputs[bookingId]) {
+        inputOtp = String(currentOtpInputs[bookingId]).trim();
+      }
+
+      const expectedOtpStr = String(correctOtp || '').trim();
+
+      if (inputOtp && inputOtp === expectedOtpStr) {
         try {
           await window.updateDoc(window.doc(window.db, "bookings", bookingId), {
             status: 'Started'
@@ -1424,7 +1440,6 @@
           
           showCustomAlert("OTP ಯಶಸ್ವಿಯಾಗಿ ಸರಿಯಾಗಿದೆ! ಲೈವ್ ಮೀಟರ್ ಹಾಗೂ ಜಿಪಿಎಸ್ ಲೋಕೇಶನ್ ಆನ್ ಆಗಿದೆ.");
 
-          // Auto select vehicle type in driver meter section and start tracking
           const selectElem = document.getElementById('driverMeterVehicleType');
           if (selectElem) {
             selectElem.value = vehicleType || 'Auto';
@@ -1457,7 +1472,7 @@
           timestamp: window.serverTimestamp()
         });
 
-        await window.deleteDoc(window.doc(window.doc(window.db, "bookings", bookingId)));
+        await window.deleteDoc(window.doc(window.db, "bookings", bookingId));
         loadDriverPersonalDashboard(driverId);
       } catch(e) {
         alert("Error: " + e.message);
