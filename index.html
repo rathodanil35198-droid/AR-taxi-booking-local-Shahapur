@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title id="pageTitle">AR Taxi Shahapur | 🛺ಆಟೋ ಬುಕಿಂಗ್ ಆಪ್ | 🚖ಕಾರ್ ಬುಕಿಂಗ್ ಆಪ್</title>
+  <title id="pageTitle">AR Taxi Shahapur | ಆಟೋ ಬುಕಿಂಗ್ ಆಪ್ | ಕಾರ್ ಬುಕಿಂಗ್ ಆಪ್</title>
   
   <meta name="theme-color" content="#0fb05b">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -207,11 +207,11 @@
       <p style="font-size: 0.85rem; color: #7f8c8d; margin-bottom: 25px;">ದಯವಿಟ್ಟು ನಿಮ್ಮ ವಲಯವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ / Select Your Role:</p>
 
       <button class="role-btn role-customer" onclick="selectRole('customer')">
-        🙋 ಕಸ್ಟಮರ್ ಬುಕಿಂಗ್ & ಮಾಡಿರಿ 👉 (Customer Booking & Meter)
+        👤 ಕಸ್ಟಮರ್ ಬುಕಿಂಗ್ & ಮೀಟರ್ (Customer Booking & Meter)
       </button>
 
       <button class="role-btn role-driver" onclick="selectRole('driver')">
-        🛺 ಡ್ರೈವರ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ & ಅಡ್ಮಿನ್🚖 (Driver Dashboard & Admin)
+        🛺 ಡ್ರೈವರ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ & ಅಡ್ಮಿನ್ (Driver Dashboard & Admin)
       </button>
     </div>
 
@@ -278,7 +278,7 @@
           </div>
           <div class="form-group">
             <label id="lblCurrentLoc">ನೀವು ಈಗ ಎಲ್ಲಿದ್ದೀರಿ</label>
-            <input type="text" id="currentLoc" placeholder="ವಾಹನ: ಬಸ್ ಸ್ಟ್ಯಾಂಡ್ ಹತ್ತಿರ">
+            <input type="text" id="currentLoc" placeholder="ಉದಾ: ಬಸ್ ಸ್ಟ್ಯಾಂಡ್ ಹತ್ತಿರ">
           </div>
           <div class="form-group">
             <label id="lblPickup">ಪಿಕೋಪ್ ಲೊಕೇಶನ್ (GPS ಕಡ್ಡಾಯ)</label>
@@ -302,7 +302,7 @@
         <div class="form-group">
           <label id="lblMeterVeh">ವಾಹನ ಆಯ್ಕೆ ಮಾಡಿ:</label>
           <select id="meterVehicleType" onchange="resetMeterRate()">
-            <option value="Auto">🛺 ಆಟೋ / Auto (3 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 50 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 12)</option>
+            <option value="Auto">🛺 ಆಟೋ / Auto (2 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 50 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 12)</option>
             <option value="Car">🚗 ಕಾರ್ / Car (3 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 200 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 15)</option>
           </select>
         </div>
@@ -342,7 +342,7 @@
           <label id="lblDrvVehType">ವಾಹನ ಪ್ರಭೇದ:</label>
           <select id="drvVehType">
             <option value="Auto">🛺 ಆಟೋ (Auto)</option>
-            <option value="Car">🚖 ಕಾರ್ (Car)</option>
+            <option value="Car">🚗 ಕಾರ್ (Car)</option>
           </select>
         </div>
 
@@ -389,7 +389,7 @@
         <div class="form-group">
           <label id="lblDrvMeterVeh">ವಾಹನ ಆಯ್ಕೆ ಮಾಡಿ:</label>
           <select id="driverMeterVehicleType" onchange="resetDriverMeterRate()">
-            <option value="Auto">🛺 ಆಟೋ / Auto (3 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 50 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 12)</option>
+            <option value="Auto">🛺 ಆಟೋ / Auto (2 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 50 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 12)</option>
             <option value="Car">🚗 ಕಾರ್ / Car (3 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 200 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 15)</option>
           </select>
         </div>
@@ -462,11 +462,11 @@
         waBtn: "💬 Join Driver WhatsApp Group",
         emergencyText: "ತುರ್ತು ಸಹಾಯ ಬೇಕಿದ್ದರೆ ಕಾಲ್ ಮಾಡಿ ವೆಹಿಕಲ್ ನಂಬರ್ ತಿಳಿಸಿ:",
         emergencyBtn: "📞 24/7 ತುರ್ತು ಕಾಲ್ (Emergency Call)",
-        tabCust: "🙋 ಬುಕಿಂಗ್",
+        tabCust: "👤 ಬುಕಿಂಗ್",
         tabMeter: "⏱️ ಲೈವ್ ಮೀಟರ್",
-        tabProfile: "🚗 ಡೈವರ್ ಲಾಗಿನ್",
-        tabLive: "📢 ಬುಕಿಂಗ್ (2KM)",
-        tabDrvMeter: "⏱️ ಲೈವ್ ಮೀಟರ್",
+        tabProfile: "🚗 ಪ್ರೊಫೈಲ್",
+        tabLive: "📢 ಲೈವ್ (2KM)",
+        tabDrvMeter: "⏱️ ಮೀಟರ್",
         tabAdmin: "🔐 ಅಡ್ಮಿನ್",
         h2Booking: "ಯಾತ್ರೆ ಬುಕ್ ಮಾಡಿ",
         lblVehSelect: "ವಾಹನ ಆಯ್ಕೆಮಾಡಿ (ಚಿತ್ರದ ಮೇಲೆ ಕ್ಲಿಕ್ ಮಾಡಿ):",
@@ -682,7 +682,7 @@
     function handleAdminTabClick() {
       if (!isAdminUnlocked) {
         let enteredCode = prompt(currentLang === 'kn' ? "ಕೋಡ್ ನಮೂದಿಸಿ ಸರಿಯಾಗಿ ಅಂತು:" : "Enter code:");
-        if (enteredCode === "9353444070") {
+        if (enteredCode === "8105010768") {
           isAdminUnlocked = true;
           switchSection('adminSection');
         } else {
@@ -821,7 +821,7 @@
         `;
         listenToMyBookingStatus(myActiveBookingId);
       } catch (e) {
-        alert(currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ದೋಷ: ' : 'Booking error: ' + e.message);
+        alert(currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ದೋಷ: ' + e.message : 'Booking error: ' + e.message);
       }
     }
 
@@ -1343,67 +1343,82 @@
       );
     }
 
-    function loadAdminDrivers() {
-      const listDiv = document.getElementById('adminDriversList');
-      listDiv.innerHTML = "ಡ್ರೈವರ್‌ಗಳ ಮಾಹಿತಿ ಲೋಡ್ ಆಗುತ್ತಿದೆ...";
+    async function loadAdminDrivers() {
+      const container = document.getElementById('adminDriversList');
+      container.innerHTML = 'ಡ್ರೈವರ್‌ಗಳ ಮಾಹಿತಿ ಲೋಡ್ ಆಗುತ್ತಿದೆ...';
 
-      window.getDocs(window.collection(window.db, "drivers")).then((snapshot) => {
+      try {
+        const q = window.query(window.collection(window.db, "drivers"), window.orderBy("timestamp", "desc"));
+        const snapshot = await window.getDocs(q);
+
         allDriversData = [];
-        snapshot.forEach((docSnap) => {
+        snapshot.forEach(docSnap => {
           allDriversData.push({ id: docSnap.id, ...docSnap.data() });
         });
-        displayAdminDrivers(allDriversData);
-      }).catch(err => {
-        listDiv.innerHTML = "ದೋಷ: " + err.message;
-      });
+
+        renderAdminDrivers(allDriversData);
+      } catch (e) {
+        container.innerHTML = `<p style="color:red;">ಮಾಹಿತಿ ಲೋಡ್ ಮಾಡುವಲ್ಲಿ ದೋಷ: ${e.message}</p>`;
+      }
     }
 
-    function displayAdminDrivers(drivers) {
-      const listDiv = document.getElementById('adminDriversList');
+    function renderAdminDrivers(drivers) {
+      const container = document.getElementById('adminDriversList');
       if (drivers.length === 0) {
-        listDiv.innerHTML = "<p>ಯಾವುದೇ ಡ್ರೈವರ್‌ಗಳು ನೋಂದಾಯಿಸಿಲ್ಲ.</p>";
+        container.innerHTML = '<p style="color:#718096; font-weight:bold;">ಯಾವುದೇ ಡ್ರೈವರ್‌ಗಳು ಕಂಡುಬಂದಿಲ್ಲ.</p>';
         return;
       }
 
-      let html = "";
-      drivers.forEach(d => {
+      let html = '';
+      drivers.forEach(drv => {
+        let vehImg = drv.vehPhoto ? `<img src="${drv.vehPhoto}" class="preview-img" onclick="openImageModal('${drv.vehPhoto}')">` : 'ಇಲ್ಲ';
+        let rcImg = drv.rcPhoto ? `<img src="${drv.rcPhoto}" class="preview-img" onclick="openImageModal('${drv.rcPhoto}')">` : 'ಇಲ್ಲ';
+        let dlImg = drv.dlPhoto ? `<img src="${drv.dlPhoto}" class="preview-img" onclick="openImageModal('${drv.dlPhoto}')">` : 'ಇಲ್ಲ';
+        let selfieImg = drv.selfiePhoto ? `<img src="${drv.selfiePhoto}" class="preview-img" onclick="openImageModal('${drv.selfiePhoto}')">` : 'ಇಲ್ಲ';
+
         html += `
-          <div class="card" style="margin-bottom:10px; border:1px solid #cbd5e0;">
-            <p><b>ಹೆಸರು:</b> ${d.drvName} (ID: ${d.driverId})</p>
-            <p><b>ಫೋನ್:</b> <a href="tel:${d.drvPhone}">${d.drvPhone}</a></p>
-            <p><b>ವಾಹನ ನಂಬರ್:</b> ${d.drvVehNo} (${d.drvVehType})</p>
-            <div style="margin-top:6px;">
-              ${d.vehPhoto ? `<img src="${d.vehPhoto}" class="preview-img" onclick="openImageModal('${d.vehPhoto}')" title="Vehicle">` : ''}
-              ${d.rcPhoto ? `<img src="${d.rcPhoto}" class="preview-img" onclick="openImageModal('${d.rcPhoto}')" title="RC">` : ''}
-              ${d.dlPhoto ? `<img src="${d.dlPhoto}" class="preview-img" onclick="openImageModal('${d.dlPhoto}')" title="DL">` : ''}
-              ${d.selfiePhoto ? `<img src="${d.selfiePhoto}" class="preview-img" onclick="openImageModal('${d.selfiePhoto}')" title="Selfie">` : ''}
+          <div class="card" style="margin-bottom:12px; border:1px solid #cbd5e0;">
+            <p><b>ಐಡಿ ನಂಬರ್:</b> <span style="color:#e53e3e; font-weight:bold;">${drv.driverId || '-'}</span></p>
+            <p><b>ಹೆಸರು:</b> ${drv.drvName || '-'}</p>
+            <p><b>ಫೋನ್:</b> <a href="tel:${drv.drvPhone}">${drv.drvPhone || '-'}</a></p>
+            <p><b>ವಾಹನ ನಂಬರ್:</b> ${drv.drvVehNo || '-'}</p>
+            <p><b>ವಾಹನ ಮಾದರಿ:</b> ${drv.drvVehType || '-'}</p>
+            <div style="margin:8px 0;">
+              <p style="font-size:0.75rem; font-weight:bold; margin-bottom:4px;">ದಾಖಲೆಗಳ ಫೋಟೋಗಳು (ಕ್ಲಿಕ್ ಮಾಡಿ ವೀಕ್ಷಿಸಿ):</p>
+              ${selfieImg} ${vehImg} ${rcImg} ${dlImg}
             </div>
-            <button class="btn-submit" onclick="deleteDriver('${d.id}')" style="background:#e53e3e; margin-top:8px; padding:6px;">ಡ್ರೈವರ್ ಡಿಲೀಟ್ ಮಾಡಿ</button>
+            <button onclick="deleteDriver('${drv.id}')" style="background:#e53e3e; color:white; border:none; padding:6px 12px; border-radius:4px; font-weight:bold; cursor:pointer;">🗑️ ಪ್ರೊಫೈಲ್ ಡಿಲೀಟ್ ಮಾಡಿ</button>
           </div>
         `;
       });
-      listDiv.innerHTML = html;
+
+      container.innerHTML = html;
     }
 
     function filterAdminDrivers() {
-      const queryText = document.getElementById('adminSearchInput').value.toLowerCase();
+      const queryText = document.getElementById('adminSearchInput').value.trim().toLowerCase();
+      if (!queryText) {
+        renderAdminDrivers(allDriversData);
+        return;
+      }
+
       const filtered = allDriversData.filter(d => 
-        d.drvPhone.toLowerCase().includes(queryText) || 
-        d.driverId.toLowerCase().includes(queryText) || 
-        d.drvVehNo.toLowerCase().includes(queryText) ||
-        d.drvName.toLowerCase().includes(queryText)
+        (d.drvPhone && d.drvPhone.toLowerCase().includes(queryText)) ||
+        (d.driverId && d.driverId.toLowerCase().includes(queryText)) ||
+        (d.drvName && d.drvName.toLowerCase().includes(queryText))
       );
-      displayAdminDrivers(filtered);
+
+      renderAdminDrivers(filtered);
     }
 
     async function deleteDriver(docId) {
-      if (confirm("ಖಂಡಿತವಾಗಿ ಈ ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ ಅನ್ನು ಡಿಲೀಟ್ ಮಾಡಲು ಬಯಸುವಿರಾ?")) {
+      if (confirm('ಈ ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ ಅನ್ನು ಖಚಿತವಾಗಿ ಡಿಲೀಟ್ ಮಾಡಲು ಬಯಸುತ್ತೀರಾ?')) {
         try {
           await window.deleteDoc(window.doc(window.db, "drivers", docId));
-          alert("ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ ಯಶಸ್ವಿಯಾಗಿ ಡಿಲೀಟ್ ಮಾಡಲಾಗಿದೆ.");
+          alert('ಪ್ರೊಫೈಲ್ ಡಿಲೀಟ್ ಮಾಡಲಾಗಿದೆ.');
           loadAdminDrivers();
         } catch (e) {
-          alert("ದೋಷ: " + e.message);
+          alert('ದೋಷ: ' + e.message);
         }
       }
     }
