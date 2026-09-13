@@ -2,7 +2,7 @@
 <html lang="kn">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
   
   <title id="pageTitle">AR Taxi Shahapur | ಆಟೋ ಬುಕಿಂಗ್ ಆಪ್ | ಕಾರ್ ಬುಕಿಂಗ್ ಆಪ್</title>
   
@@ -45,8 +45,8 @@
 
   <style>
     :root { --primary: #0fb05b; --secondary: #41c91d; --bg: #f4f7f6; --text: #333; }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background-color: var(--bg); color: var(--text); padding: 8px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; touch-action: manipulation; }
+    html, body { width: 100%; height: 100%; overflow-x: hidden; background-color: var(--bg); color: var(--text); padding: 8px; }
     .container { width: 100%; max-width: 480px; margin: 0 auto; background: #fff; padding: 12px; border-radius: 8px; position: relative; }
 
     @keyframes flashingText {
@@ -126,7 +126,7 @@
     h2 { font-size: 0.95rem; margin-bottom: 8px; color: #2d3748; border-left: 4px solid var(--primary); padding-left: 6px; }
     .form-group { margin-bottom: 8px; }
     label { display: block; font-size: 0.78rem; font-weight: 700; margin-bottom: 2px; color: #4a5568; }
-    input, select { width: 100%; padding: 8px; border: 2px solid #e2e8f0; border-radius: 6px; font-size: 0.85rem; }
+    input, select { width: 100%; padding: 8px; border: 2px solid #e2e8f0; border-radius: 6px; font-size: 16px; }
     
     .error-msg { color: #e53e3e; font-size: 0.75rem; font-weight: bold; margin-top: 2px; display: none; }
 
@@ -463,7 +463,6 @@
     let lastCustPos = null;
     let lastDrvPos = null;
 
-    // Save temporary OTP inputs across snapshot re-renders
     let currentOtpInputs = {};
 
     window.shareAppOnWhatsApp = shareAppOnWhatsApp;
@@ -1275,7 +1274,6 @@
 
       const q = window.query(window.collection(window.db, "bookings"), window.orderBy("timestamp", "desc"));
       bookingsUnsubscribe = window.onSnapshot(q, (snapshot) => {
-        // Track currently focused element before re-rendering HTML
         const activeElementId = document.activeElement ? document.activeElement.id : null;
         const selectionStart = document.activeElement ? document.activeElement.selectionStart : null;
         const selectionEnd = document.activeElement ? document.activeElement.selectionEnd : null;
@@ -1337,7 +1335,7 @@
                     
                     <div style="margin-top:10px; padding:8px; background:#fff; border-radius:6px; border:1px solid #cbd5e0;">
                        <p style="font-size:0.8rem; font-weight:bold; color:#2d3748; margin-bottom:4px;">ಪಿಕಪ್ ಹತ್ತಿರ ತಲುಪಿದ ಮೇಲೆ OTP ನಮೂದಿಸಿ:</p>
-                       <input type="text" id="otpInput_${docSnap.id}" value="${savedVal}" inputmode="numeric" pattern="[0-9]*" oninput="saveOtpInput('${docSnap.id}', this.value)" placeholder="Enter 4-Digit OTP" maxlength="4" style="margin-bottom:6px; text-align:center; font-weight:bold; font-size:1rem;">
+                       <input type="text" id="otpInput_${docSnap.id}" value="${savedVal}" inputmode="numeric" pattern="[0-9]*" oninput="saveOtpInput('${docSnap.id}', this.value)" placeholder="Enter 4-Digit OTP" maxlength="4" style="margin-bottom:6px; text-align:center; font-weight:bold; font-size:16px;">
                        <button class="btn-submit" onclick="verifyOtpAndStartRide('${docSnap.id}', '${dbOtpStr}', '${b.vehicleType}')" style="background:#3182ce;">OTP ವೆರಿಫೈ ಮಾಡಿ & ರೈಡ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
                     </div>
                   </div>
@@ -1348,7 +1346,7 @@
                     <p style="background:#bee3f8; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#2b6cb0;">🏁 ಪ್ರಯಾಣ ಚಾಲನೆಯಲ್ಲಿದೆ (Ride Running)</p>
                     <p><b>ಕಸ್ಟಮರ್:</b> ${b.customerName}</p>
                     <p><b>ಡ್ರಾಪ್:</b> ${b.dropLocation}</p>
-                    <button class="btn-submit" onclick="finishRide('${docSnap.id}', '${driverId}')" style="background:#e53e3e; margin-top:8px;">STOP / ರೈಡ್ ಮುಕ್ತಾಯಗೊಳಿಸಿ (Finish Ride)</button>
+                    <button class="btn-submit" onclick="finishRide('${docSnap.id}', '${driverData.driverId}')" style="background:#e53e3e; margin-top:8px;">STOP / ರೈಡ್ ಮುಕ್ತಾಯಗೊಳಿಸಿ (Finish Ride)</button>
                   </div>
                 `;
               }
@@ -1373,7 +1371,6 @@
 
         listDiv.innerHTML = combinedHtml;
 
-        // Restore active focus and keypress cursor if user was typing OTP or Driver ID
         if (activeElementId) {
           const elemToFocus = document.getElementById(activeElementId);
           if (elemToFocus) {
