@@ -2,7 +2,7 @@
 <html lang="kn">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   
   <title id="pageTitle">AR Taxi Shahapur | ಆಟೋ ಬುಕಿಂಗ್ ಆಪ್ | ಕಾರ್ ಬುಕಿಂಗ್ ಆಪ್</title>
   
@@ -275,7 +275,7 @@
           </div>
           <div class="form-group">
             <label id="lblCustPhone">ಮೊಬೈಲ್ ಸಂಖ್ಯೆ</label>
-            <input type="tel" id="custPhone" placeholder="ಫೋನ್ ನಂಬರ್">
+            <input type="tel" id="custPhone" placeholder="ಫೋನ್ ನಂಬರ್" inputmode="numeric" pattern="[0-9]*">
             <div id="errCustPhone" class="error-msg">ದಯವಿಟ್ಟು ಸರಿಯಾದ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ ನಮೂದಿಸಿ</div>
           </div>
           <div class="form-group">
@@ -334,7 +334,7 @@
 
         <div class="form-group">
           <label id="lblDrvPhone">ಮೊಬೈಲ್ ನಂಬರ್:</label>
-          <input type="tel" id="drvPhone" placeholder="ಮೊಬೈಲ್ ನಂಬರ್">
+          <input type="tel" id="drvPhone" placeholder="ಮೊಬೈಲ್ ನಂಬರ್" inputmode="numeric" pattern="[0-9]*">
           <div id="errDrvPhone" class="error-msg">ಈ ಮೊಬೈಲ್ ನಂಬರ್ ತಪ್ಪಾಗಿದೆ ಅಥವಾ ಈಗಾಗಲೇ ರಿಜಿಸ್ಟರ್ ಆಗಿದೆ</div>
         </div>
 
@@ -384,7 +384,7 @@
         <h2 id="h2LiveOrders">ಡ್ರೈವರ್‌ಗಳಿಗೆ ಲೈವ್ ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು (2 KM ಒಳಗೆ ಇರುವವರು)</h2>
         <div class="form-group">
           <label id="lblEnterDriverId">ಬುಕಿಂಗ್ ವೀಕ್ಷಿಸಲು ನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ:</label>
-          <input type="password" id="driverInputId" placeholder="4 digit ID" maxlength="4" oninput="checkDriverIdAndListen()">
+          <input type="password" id="driverInputId" placeholder="4 digit ID" maxlength="4" inputmode="numeric" pattern="[0-9]*" oninput="checkDriverIdAndListen()">
         </div>
 
         <!-- Driver Personal Dashboard Summary Box -->
@@ -1275,6 +1275,11 @@
 
       const q = window.query(window.collection(window.db, "bookings"), window.orderBy("timestamp", "desc"));
       bookingsUnsubscribe = window.onSnapshot(q, (snapshot) => {
+        // Track currently focused element before re-rendering HTML
+        const activeElementId = document.activeElement ? document.activeElement.id : null;
+        const selectionStart = document.activeElement ? document.activeElement.selectionStart : null;
+        const selectionEnd = document.activeElement ? document.activeElement.selectionEnd : null;
+
         const listDiv = document.getElementById('driverBookingsList');
         let pendingHtml = '';
         let acceptedHtml = '';
@@ -1332,7 +1337,7 @@
                     
                     <div style="margin-top:10px; padding:8px; background:#fff; border-radius:6px; border:1px solid #cbd5e0;">
                        <p style="font-size:0.8rem; font-weight:bold; color:#2d3748; margin-bottom:4px;">ಪಿಕಪ್ ಹತ್ತಿರ ತಲುಪಿದ ಮೇಲೆ OTP ನಮೂದಿಸಿ:</p>
-                       <input type="text" id="otpInput_${docSnap.id}" value="${savedVal}" oninput="saveOtpInput('${docSnap.id}', this.value)" placeholder="Enter 4-Digit OTP" maxlength="4" style="margin-bottom:6px; text-align:center; font-weight:bold; font-size:1rem;">
+                       <input type="text" id="otpInput_${docSnap.id}" value="${savedVal}" inputmode="numeric" pattern="[0-9]*" oninput="saveOtpInput('${docSnap.id}', this.value)" placeholder="Enter 4-Digit OTP" maxlength="4" style="margin-bottom:6px; text-align:center; font-weight:bold; font-size:1rem;">
                        <button class="btn-submit" onclick="verifyOtpAndStartRide('${docSnap.id}', '${dbOtpStr}', '${b.vehicleType}')" style="background:#3182ce;">OTP ವೆರಿಫೈ ಮಾಡಿ & ರೈಡ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
                     </div>
                   </div>
@@ -1343,7 +1348,7 @@
                     <p style="background:#bee3f8; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#2b6cb0;">🏁 ಪ್ರಯಾಣ ಚಾಲನೆಯಲ್ಲಿದೆ (Ride Running)</p>
                     <p><b>ಕಸ್ಟಮರ್:</b> ${b.customerName}</p>
                     <p><b>ಡ್ರಾಪ್:</b> ${b.dropLocation}</p>
-                    <button class="btn-submit" onclick="finishRide('${docSnap.id}', '${driverData.driverId}')" style="background:#e53e3e; margin-top:8px;">STOP / ರೈಡ್ ಮುಕ್ತಾಯಗೊಳಿಸಿ (Finish Ride)</button>
+                    <button class="btn-submit" onclick="finishRide('${docSnap.id}', '${driverId}')" style="background:#e53e3e; margin-top:8px;">STOP / ರೈಡ್ ಮುಕ್ತಾಯಗೊಳಿಸಿ (Finish Ride)</button>
                   </div>
                 `;
               }
@@ -1367,6 +1372,17 @@
         }
 
         listDiv.innerHTML = combinedHtml;
+
+        // Restore active focus and keypress cursor if user was typing OTP or Driver ID
+        if (activeElementId) {
+          const elemToFocus = document.getElementById(activeElementId);
+          if (elemToFocus) {
+            elemToFocus.focus({ preventScroll: true });
+            if (selectionStart !== null && selectionEnd !== null) {
+              try { elemToFocus.setSelectionRange(selectionStart, selectionEnd); } catch(e){}
+            }
+          }
+        }
 
         const audio = document.getElementById('alertSound');
         if (audio) {
