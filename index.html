@@ -1264,6 +1264,13 @@
       const q = window.query(window.collection(window.db, "bookings"), window.orderBy("timestamp", "desc"));
       bookingsUnsubscribe = window.onSnapshot(q, (snapshot) => {
         const listDiv = document.getElementById('driverBookingsList');
+        
+        // Check if user is currently typing OTP so we don't disrupt the keyboard
+        const activeOtpInput = document.activeElement;
+        if (activeOtpInput && activeOtpInput.id && activeOtpInput.id.startsWith('otpInput_')) {
+          return;
+        }
+
         let pendingHtml = '';
         let acceptedHtml = '';
         let pendingCountToday = 0;
