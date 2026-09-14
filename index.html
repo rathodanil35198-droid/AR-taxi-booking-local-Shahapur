@@ -2,7 +2,7 @@
 <html lang="kn">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   
   <title id="pageTitle">AR Taxi Shahapur | ಆಟೋ ಬುಕಿಂಗ್ ಆಪ್ | ಕಾರ್ ಬುಕಿಂಗ್ ಆಪ್</title>
   
@@ -384,7 +384,7 @@
         <h2 id="h2LiveOrders">ಡ್ರೈವರ್‌ಗಳಿಗೆ ಲೈವ್ ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು (2 KM ಒಳಗೆ ಇರುವವರು)</h2>
         <div class="form-group">
           <label id="lblEnterDriverId">ಬುಕಿಂಗ್ ವೀಕ್ಷಿಸಲು ನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ:</label>
-          <input type="password" id="driverInputId" placeholder="4 digit ID" maxlength="4" oninput="checkDriverIdAndListen()">
+          <input type="password" id="driverInputId" placeholder="4 digit ID" maxlength="4" inputmode="numeric" oninput="checkDriverIdAndListen()">
         </div>
 
         <!-- Driver Personal Dashboard Summary Box -->
@@ -1318,7 +1318,7 @@
                     
                     <div style="margin-top:10px; padding:8px; background:#fff; border-radius:6px; border:1px solid #cbd5e0;">
                        <p style="font-size:0.8rem; font-weight:bold; color:#2d3748; margin-bottom:4px;">ಪಿಕಪ್ ಹತ್ತಿರ ತಲುಪಿದ ಮೇಲೆ OTP ನಮೂದಿಸಿ:</p>
-                       <input type="text" id="otpInput_${docSnap.id}" placeholder="Enter 4-Digit OTP" maxlength="4" style="margin-bottom:6px; text-align:center; font-weight:bold; font-size:1rem;">
+                       <input type="tel" id="otpInput_${docSnap.id}" placeholder="Enter 4-Digit OTP" maxlength="4" inputmode="numeric" style="margin-bottom:6px; text-align:center; font-weight:bold; font-size:1rem;">
                        <button class="btn-submit" onclick="verifyOtpAndStartRide('${docSnap.id}', '${b.otp}')" style="background:#3182ce;">OTP ವೆರಿಫೈ ಮಾಡಿ & ರೈಡ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
                     </div>
                   </div>
