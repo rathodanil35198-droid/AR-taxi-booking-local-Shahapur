@@ -465,7 +465,6 @@
 
     const SECRET_CODE = "9353444070";
 
-    // Window-level bindings for HTML onclick references
     window.shareAppOnWhatsApp = shareAppOnWhatsApp;
     window.toggleLanguage = toggleLanguage;
     window.selectRole = selectRole;
@@ -1285,14 +1284,9 @@
           const b = docSnap.data();
           const bDate = b.dateKey || '';
 
-          // Auto delete older than 15 days check
           if (b.expiresAt && new Date() > new Date(b.expiresAt)) {
             window.deleteDoc(window.doc(window.db, "bookings", docSnap.id)).catch(err => {});
             return;
-          }
-
-          if (bDate !== todayStr || (currentHour === 0 && currentMinute < 30)) {
-            // retain if within 15 days or clear expired
           }
 
           let expiresSoonWarning = '';
@@ -1519,7 +1513,6 @@
         let serialNum = 1;
         snap.forEach(docSnap => {
           let d = docSnap.data();
-          // Check 15 days auto delete expiration
           if (d.expiresAt && new Date() > new Date(d.expiresAt)) {
             window.deleteDoc(window.doc(window.db, "drivers", docSnap.id)).catch(err=>{});
             return;
