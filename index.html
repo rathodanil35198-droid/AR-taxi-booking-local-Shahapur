@@ -318,7 +318,7 @@
         <div class="form-group">
           <label id="lblMeterVeh">ವಾಹನ ಆಯ್ಕೆ ಮಾಡಿ:</label>
           <select id="meterVehicleType" onchange="resetMeterRate()">
-            <option value="Auto">🛺 ಆಟೋ / Auto (2 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 50 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 12)</option>
+            <option value="Auto">🛺 ಆಟೋ / Auto (ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 12)</option>
             <option value="Car">🚗 ಕಾರ್ / Car (3 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 200 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 15)</option>
           </select>
         </div>
@@ -326,7 +326,7 @@
         <div class="card" style="text-align:center; background:#f7fafc;">
           <p style="font-size:0.8rem; color:#718096;"><span id="txtDistCovered">ಪ್ರಯಾಣಿಸಿದ ದೂರ:</span> <span id="distCount">0.0</span> ಕಿ.ಮೀ</p>
           <p style="font-size:0.9rem; font-weight:bold; color:#d69e2e; margin: 4px 0;" id="meterStatusMsg">ವಾಹನ ನಿಂತಿದೆ</p>
-          <p style="font-size:1.2rem; font-weight:bold; color:#0fb05b;"><span id="txtEstFare">ಅಂದಾಜು ಶುಲ್ಕ:</span> ₹<span id="liveAmount">50</span></p>
+          <p style="font-size:1.2rem; font-weight:bold; color:#0fb05b;"><span id="txtEstFare">ಅಂದಾಜು ಶುಲ್ಕ:</span> ₹<span id="liveAmount">0</span></p>
           <p style="font-size:0.75rem; color:#4a5568; margin-top:5px;" id="liveGpsCoord">GPS: ಕಾಯಲಾಗುತ್ತಿದೆ...</p>
         </div>
         <button class="btn-submit" onclick="stopMeterOnly()" style="background:#e53e3e;" id="btnStopMeter">ಮೀಟರ್ ಆಫ್ ಮಾಡಿ</button>
@@ -418,7 +418,7 @@
         <div class="form-group">
           <label id="lblDrvMeterVeh">ವಾಹನ ಆಯ್ಕೆ ಮಾಡಿ:</label>
           <select id="driverMeterVehicleType" onchange="resetDriverMeterRate()">
-            <option value="Auto">🛺 ಆಟೋ / Auto (2 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 50 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 12)</option>
+            <option value="Auto">🛺 ಆಟೋ / Auto (ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 12)</option>
             <option value="Car">🚗 ಕಾರ್ / Car (3 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 200 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 15)</option>
           </select>
         </div>
@@ -426,7 +426,7 @@
         <div class="card" style="text-align:center; background:#f7fafc;">
           <p style="font-size:0.8rem; color:#718096;"><span id="txtDrvDist">ಪ್ರಯಾಣಿಸಿದ ದೂರ:</span> <span id="driverDistCount">0.0</span> ಕಿ.ಮೀ</p>
           <p style="font-size:0.9rem; font-weight:bold; color:#d69e2e; margin: 4px 0;" id="driverMeterStatusMsg">ವಾಹನ ನಿಂತಿದೆ</p>
-          <p style="font-size:1.2rem; font-weight:bold; color:#0fb05b;"><span id="txtDrvFare">ಅಂದಾಜು ಶುಲ್ಕ:</span> ₹<span id="driverLiveAmount">50</span></p>
+          <p style="font-size:1.2rem; font-weight:bold; color:#0fb05b;"><span id="txtDrvFare">ಅಂದಾಜು ಶುಲ್ಕ:</span> ₹<span id="driverLiveAmount">0</span></p>
           <p style="font-size:0.75rem; color:#4a5568; margin-top:5px;" id="driverLiveGpsCoord">GPS: ಕಾಯಲಾಗುತ್ತಿದೆ...</p>
         </div>
         <button class="btn-submit" onclick="stopDriverMeterOnly()" style="background:#e53e3e;" id="btnDrvStopMeter">ಮೀಟರ್ ಆಫ್ ಮಾಡಿ</button>
@@ -505,6 +505,7 @@
     window.openImageModal = openImageModal;
     window.closeImageModal = closeImageModal;
     window.downloadDriverData = downloadDriverData;
+    window.toggleDriverBookingsView = toggleDriverBookingsView;
 
     function shareAppOnWhatsApp() {
       const appUrl = window.location.href;
@@ -743,7 +744,7 @@
 
     function handleAdminTabClick() {
       if (!isAdminUnlocked) {
-        let enteredCode = prompt(currentLang === 'kn' ? "ಕೋಡ್ ಸಂಖ್ಯೆ ನಮೂದಿಸಿ:" : "Enter code:");
+        let enteredCode = prompt(currentLang === 'kn' ? "ಕೋಡ್ ನಂಬರ್" : "Enter code:");
         if (enteredCode === "9353444070") {
           isAdminUnlocked = true;
           switchSection('adminSection');
@@ -902,11 +903,6 @@
 
     function closeMeterResultModal() {
       document.getElementById('meterResultModal').style.display = 'none';
-      if (currentUserRole === 'customer') {
-        switchSection('customerSection');
-      } else if (currentUserRole === 'driver') {
-        switchSection('driverMeterSection');
-      }
     }
 
     function closeRideFinishModal() {
@@ -1059,11 +1055,7 @@
 
     function calculateFare(type, dist) {
       if (type === 'Auto') {
-        if (dist <= 2.0) {
-          return 50;
-        } else {
-          return 50 + ((dist - 2.0) * 12);
-        }
+        return dist * 12;
       } else {
         if (dist <= 3.0) {
           return 200;
@@ -1421,7 +1413,7 @@
         const audio = document.getElementById('alertSound');
         if(audio) { audio.pause(); audio.currentTime = 0; }
 
-        alert(`ನ್ಯೂ ಬುಕಿంగ్ ಸ್ವೀಕರಿಸಿದ್ದೀರಿ\nನಿಮ್ಮ ಜಿಪಿಎಸ್ ಮತ್ತೆ ನಿಮ್ಮ ಎಲ್ಲಾ ಐಡಿ ಮೊಬೈಲ್ ನಂಬರನ್ನು ಕಸ್ಟಮರ್ ಗೆ ಕಳಿಸಲಾಗಿದೆ ಪಿಕಪ್ ಮಾಡಿ`);
+        alert(`ನ್ಯೂ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿದ್ದೀರಿ\nನಿಮ್ಮ ಜಿಪಿಎಸ್ ಮತ್ತೆ ನಿಮ್ಮ ಎಲ್ಲಾ ಐಡಿ ಮೊಬೈಲ್ ನಂಬರನ್ನು ಕಸ್ಟಮರ್ ಗೆ ಕಳಿಸಲಾಗಿದೆ ಪಿಕಪ್ ಮಾಡಿ`);
 
         if (pickupLat && pickupLng) {
           const gmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${pickupLat},${pickupLng}&travelmode=driving`;
@@ -1435,8 +1427,7 @@
     }
 
     async function verifyOtpAndStartRide(bookingId, correctOtp, vehType, custName, custPhone, pickupLoc, dropLoc) {
-      const inputEl = document.getElementById(`otpInput_${bookingId}`);
-      const inputOtp = inputEl ? inputEl.value.trim() : '';
+      const inputOtp = document.getElementById(`otpInput_${bookingId}`).value.trim();
       if (inputOtp === correctOtp) {
         try {
           await window.updateDoc(window.doc(window.db, "bookings", bookingId), {
@@ -1566,9 +1557,6 @@
         const ridesSnap = await window.getDocs(window.collection(window.db, "completed_rides"));
 
         const ridesByDriver = {};
-        const now = Date.now();
-        const ONE_DAY_MS = 24 * 60 * 60 * 1000;
-
         ridesSnap.forEach(rDoc => {
           const r = rDoc.data();
           const dId = r.driverIdNum;
@@ -1591,6 +1579,17 @@
         renderAdminDrivers(allDriversData);
       } catch (e) {
         listDiv.innerHTML = `<p style="color:#e53e3e;">Error: ${e.message}</p>`;
+      }
+    }
+
+    function toggleDriverBookingsView(driverId) {
+      const el = document.getElementById(`driverBookingsContainer_${driverId}`);
+      if (el) {
+        if (el.style.display === 'none' || el.style.display === '') {
+          el.style.display = 'block';
+        } else {
+          el.style.display = 'none';
+        }
       }
     }
 
@@ -1622,7 +1621,7 @@
           totalEarnings += Number(r.fare || 0);
           const rTime = r.createdAtMillis || now;
           const ageDays = (now - rTime) / ONE_DAY_MS;
-          if (ageDays >= 13.5 && ageDays < 15) {
+          if (ageDays >= 14 && ageDays < 15) {
             warning14Day = true;
           }
 
@@ -1637,7 +1636,7 @@
 
         let warningBanner = '';
         if (warning14Day) {
-          warningBanner = `<div style="background:#fff3cd; color:#856404; padding:6px; border-radius:4px; font-weight:bold; margin-bottom:6px; font-size:0.75rem;">⚠️ ಎಚ್ಚರಿಕೆ: ನಾಳೆ ನಿಮ್ಮ ಡಾಟಾ ಡಿಲೀಟ್ ಆಗುತ್ತದೆ!</div>`;
+          warningBanner = `<div style="background:#fff3cd; color:red; padding:6px; border-radius:4px; font-weight:bold; margin-bottom:6px; font-size:0.8rem;">⚠️ ನಿಮ್ಮ ಡಾಟಾ 15 ದಿನದ ಒಳಗೆ ಡಿಲೀಟ್ ಆಗುತ್ತದೆ!</div>`;
         }
 
         html += `
@@ -1650,11 +1649,18 @@
             <p><b>ಡ್ರೈವರ್ ಹೆಸರು:</b> ${d.drvName}</p>
             <p><b>ಫೋನ್:</b> ${d.drvPhone}</p>
             <p><b>ವಾಹನ ನಂಬರ್:</b> ${d.drvVehNo} (${d.drvVehType})</p>
-            <div style="background:#edf2f7; padding:8px; border-radius:6px; margin:6px 0;">
-              <p><b>ಒಟ್ಟು ಬುಕಿಂಗ್‌ಗಳು:</b> ${totalBookings}</p>
-              <p><b>ಒಟ್ಟು ಗಳಿಕೆ (Earnings):</b> <span style="color:#0fb05b; font-weight:bold;">₹${totalEarnings}</span></p>
+            
+            <div style="background:#edf2f7; padding:8px; border-radius:6px; margin:6px 0; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <p><b>ಒಟ್ಟು ಬುಕಿಂಗ್‌ಗಳು:</b> ${totalBookings}</p>
+                <p><b>ಒಟ್ಟು ಗಳಿಕೆ:</b> <span style="color:#0fb05b; font-weight:bold;">₹${totalEarnings}</span></p>
+              </div>
+              <button onclick="toggleDriverBookingsView('${d.driverId}')" class="btn-submit" style="background:#3182ce; padding:6px 10px; font-size:0.75rem; width:auto;">📋 ಬುಕಿಂಗ್ ವಿವರ ನೋಡಿ</button>
             </div>
-            ${totalBookings > 0 ? `<details style="margin-top:6px;"><summary style="font-size:0.78rem; font-weight:bold; cursor:pointer; color:#2b6cb0;">ಬುಕಿಂಗ್ ವಿವರಗಳು ನೋಡಿ (${totalBookings})</summary>${ridesListHtml}</details>` : ''}
+
+            <div id="driverBookingsContainer_${d.driverId}" style="display:none; margin-top:8px; border-top:1px dashed #cbd5e0; padding-top:6px;">
+              ${totalBookings > 0 ? ridesListHtml : '<p style="font-size:0.75rem; color:#718096;">ಯಾವುದೇ ಬುಕಿಂಗ್ ದಾಖಲೆಗಳಿಲ್ಲ.</p>'}
+            </div>
             
             <div style="margin-top:8px;">
               ${d.vehPhoto ? `<img src="${d.vehPhoto}" class="preview-img" onclick="openImageModal('${d.vehPhoto}')">` : ''}
@@ -1687,7 +1693,8 @@
       const driver = allDriversData.find(d => d.driverId === driverId);
       if (!driver) return;
 
-      let textContent = `=== AR TAXI SHAHAPUR - POLICE / DRIVER REPORT ===\n`;
+      let textContent = "\uFEFF"; // UTF-8 BOM for proper Kannada rendering in text editors
+      textContent += `=== AR TAXI SHAHAPUR - DRIVER REPORT ===\n`;
       textContent += `ಡ್ರೈವರ್ ಹೆಸರು: ${driver.drvName}\n`;
       textContent += `ಐಡಿ ನಂಬರ್: ${driver.driverId}\n`;
       textContent += `ಫೋನ್ ನಂಬರ್: ${driver.drvPhone}\n`;
@@ -1699,8 +1706,10 @@
         textContent += `ಬುಕಿಂಗ್ ವಿವರಗಳು:\n`;
         driver.rides.forEach((r, idx) => {
           textContent += `${idx + 1}. ಕಸ್ಟಮರ್: ${r.customerName} (${r.customerPhone})\n`;
-          textContent += `   ಪಿಕಪ್: ${r.pickupLocation} -> ಡ್ರಾಪ್: ${r.dropLocation}\n`;
-          textContent += `   ದೂರ: ${r.distance} ಕಿ.ಮೀ | ಹಣ ಚಾರ್ಜ್: ₹${r.fare}\n\n`;
+          textContent += `   ಪಿಕಪ್ ಸ್ಥಳ: ${r.pickupLocation}\n`;
+          textContent += `   ಡ್ರಾಪ್ ಸ್ಥಳ: ${r.dropLocation}\n`;
+          textContent += `   ಓಡಿದ ದೂರ: ${r.distance} ಕಿ.ಮೀ\n`;
+          textContent += `   ಚಾರ್ಜ್ ಆದ ಹಣ: ₹${r.fare}\n\n`;
         });
       } else {
         textContent += `ಯಾವುದೇ ಬುಕಿಂಗ್ ದಾಖಲೆಗಳಿಲ್ಲ.\n`;
