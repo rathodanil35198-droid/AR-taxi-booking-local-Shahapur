@@ -1343,8 +1343,8 @@
                     
                     <div style="margin-top:10px; padding:8px; background:#fff; border-radius:6px; border:1px solid #cbd5e0;">
                        <p style="font-size:0.8rem; font-weight:bold; color:#2d3748; margin-bottom:4px;">ಪಿಕಪ್ ಹತ್ತಿರ ತಲುಪಿದ ಮೇಲೆ OTP ನಮೂದಿಸಿ (ದೂರದಲ್ಲಿದ್ದರೆ ನೇರವಾಗಿ ಕಾಲ್ ಮಾಡಿ):</p>
-                       <a href="tel:${b.customerPhone}" style="display:block; background:#e53e3e; color:white; text-align:center; padding:6px; border-radius:4px; text-decoration:none; font-weight:bold; margin-bottom:8px;">📞 ಗ್ರಾಹಕರಿಗೆ ಕಾಲ್ ಮಾಡಿ (${b.customerPhone})</a>
-                       <input type="tel" id="otpInput_${docSnap.id}" placeholder="Enter 4-Digit OTP" maxlength="4" inputmode="numeric" style="margin-bottom:6px; text-align:center; font-weight:bold; font-size:1rem;">
+                       <a href="tel:${b.customerPhone}" onclick="autoLockOtpBox('${docSnap.id}')" style="display:block; background:#e53e3e; color:white; text-align:center; padding:6px; border-radius:4px; text-decoration:none; font-weight:bold; margin-bottom:8px;">📞 ಗ್ರಾಹಕರಿಗೆ ಕಾಲ್ ಮಾಡಿ (${b.customerPhone})</a>
+                       <input type="tel" id="otpInput_${docSnap.id}" placeholder="Enter 4-Digit OTP" maxlength="4" inputmode="numeric" style="margin-bottom:6px; text-align:center; font-weight:bold; font-size:1rem;" oninput="checkOtpAutoLock('${docSnap.id}', '${b.otp}', '${b.vehicleType}', '${b.customerName}', '${b.customerPhone}', '${b.pickupLocation}', '${b.dropLocation}')">
                        <button class="btn-submit" onclick="verifyOtpAndStartRide('${docSnap.id}', '${b.otp}', '${b.vehicleType}', '${b.customerName}', '${b.customerPhone}', '${b.pickupLocation}', '${b.dropLocation}')" style="background:#3182ce;">OTP ವೆರಿಫೈ ಮಾಡಿ & ರೈಡ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
                     </div>
                   </div>
@@ -1364,7 +1364,7 @@
         });
 
         let summaryHeader = `<div style="background: #e2e8f0; padding: 8px; border-radius: 6px; margin-bottom: 10px; font-weight: bold; text-align: center; color: #2d3748;">
-          📊 ಇವತ್ತಿನ ಒಟ್ಟು ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು: ${pendingCountToday}
+          📊 ಇವತ್ತಿನ ಒಟ್ಟು ಹೊಸ ಬುಕಿంగ్‌ಗಳು: ${pendingCountToday}
         </div>`;
 
         let combinedHtml = '';
@@ -1421,7 +1421,7 @@
         const audio = document.getElementById('alertSound');
         if(audio) { audio.pause(); audio.currentTime = 0; }
 
-        alert(`ನ್ಯೂ ಬುಕಿంగ్ ಸ್ವೀಕರಿಸಿದ್ದೀರಿ\nನಿಮ್ಮ ಜಿಪಿಎಸ್ ಮತ್ತೆ ನಿಮ್ಮ ಎಲ್ಲಾ ಐಡಿ ಮೊಬೈಲ್ ನಂಬರನ್ನು ಕಸ್ಟಮರ್ ಗೆ ಕಳಿಸಲಾಗಿದೆ ಪಿಕಪ್ ಮಾಡಿ`);
+        alert(`ನ್ಯೂ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿದ್ದೀರಿ\nನಿಮ್ಮ ಜಿಪಿಎಸ್ ಮತ್ತೆ ನಿಮ್ಮ ಎಲ್ಲಾ ಐಡಿ ಮೊಬೈಲ್ ನಂಬರನ್ನು ಕಸ್ಟಮರ್ ಗೆ ಕಳಿಸಲಾಗಿದೆ ಪಿಕಪ್ ಮಾಡಿ`);
 
         if (pickupLat && pickupLng) {
           const gmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${pickupLat},${pickupLng}&travelmode=driving`;
@@ -1431,6 +1431,21 @@
         switchSection('liveSection');
       } catch (e) {
         alert('Error: ' + e.message);
+      }
+    }
+
+    function autoLockOtpBox(bookingId) {
+      // ಕಸ್ಟಮರ್ ಕಾಲ್ ಮಾಡಿದ ತಕ್ಷಣ ಅಥವಾ ಕಾಲ್ ಬಟನ್ ಒತ್ತಿದಾಗ ಆಟೋಮ್ಯಾಟಿಕ್ ಲಾಕ್ ಫೀಚರ್ ಸಕ್ರಿಯಗೊಳ್ಳುತ್ತದೆ
+      const inputEl = document.getElementById(`otpInput_${bookingId}`);
+      if(inputEl) {
+        inputEl.focus();
+      }
+    }
+
+    function checkOtpAutoLock(bookingId, correctOtp, vehType, custName, custPhone, pickupLoc, dropLoc) {
+      const inputEl = document.getElementById(`otpInput_${bookingId}`);
+      if (inputEl && inputEl.value.trim() === correctOtp) {
+        verifyOtpAndStartRide(bookingId, correctOtp, vehType, custName, custPhone, pickupLoc, dropLoc);
       }
     }
 
@@ -1627,10 +1642,14 @@
           }
 
           ridesListHtml += `
-            <div style="background:#f8fafc; border-left:3px solid #3182ce; padding:6px; margin:4px 0; font-size:0.75rem;">
-              <b>ಕಸ್ಟಮರ್:</b> ${r.customerName || 'N/A'} (${r.customerPhone || ''})<br>
-              <b>ಪಿಕಪ್:</b> ${r.pickupLocation || ''} | <b>ಡ್ರಾಪ್:</b> ${r.dropLocation || ''}<br>
-              <b>ದೂರ:</b> ${r.distance || 0} ಕಿ.ಮೀ | <b>ಹಣ:</b> ₹${r.fare || 0}
+            <div style="background:#f8fafc; border-left:3px solid #3182ce; padding:8px; margin:6px 0; font-size:0.8rem; border-radius:4px;">
+              <b>👤 ಕಸ್ಟಮರ್ ಹೆಸರು:</b> ${r.customerName || 'N/A'}<br>
+              <b>📞 ಮೊಬೈಲ್ ನಂಬರ್:</b> <a href="tel:${r.customerPhone}">${r.customerPhone || 'N/A'}</a><br>
+              <b>📍 ಪಿಕಪ್ ಸ್ಥಳ:</b> ${r.pickupLocation || 'N/A'}<br>
+              <b>🎯 ಡ್ರಾಪ್ ಸ್ಥಳ:</b> ${r.dropLocation || 'N/A'}<br>
+              <b>📌 ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್:</b> <a href="https://www.google.com/maps/search/?api=1&query=${r.pickupLocation}" target="_blank">ಲೊಕೇಶನ್ ಲಿಂಕ್</a><br>
+              <b>🛣️ ಕ್ರಮಿಸಿದ ದೂರ:</b> ${r.distance || 0} ಕಿ.ಮೀ<br>
+              <b>💰 ಒಟ್ಟು ಹಣ (ಚಾರ್ಜ್):</b> ₹${r.fare || 0}
             </div>
           `;
         });
@@ -1648,95 +1667,77 @@
             </div>
             ${warningBanner}
             <p><b>ಡ್ರೈವರ್ ಹೆಸರು:</b> ${d.drvName}</p>
-            <p><b>ಫೋನ್:</b> ${d.drvPhone}</p>
+            <p><b>ಮೊಬೈಲ್ ನಂಬರ್:</b> <a href="tel:${d.drvPhone}">${d.drvPhone}</a></p>
             <p><b>ವಾಹನ ನಂಬರ್:</b> ${d.drvVehNo} (${d.drvVehType})</p>
-            <div style="background:#edf2f7; padding:8px; border-radius:6px; margin:6px 0;">
-              <p><b>ಒಟ್ಟು ಬುಕಿಂಗ್‌ಗಳು:</b> ${totalBookings}</p>
-              <p><b>ಒಟ್ಟು ಗಳಿಕೆ (Earnings):</b> <span style="color:#0fb05b; font-weight:bold;">₹${totalEarnings}</span></p>
-            </div>
-            ${totalBookings > 0 ? `<details style="margin-top:6px;"><summary style="font-size:0.78rem; font-weight:bold; cursor:pointer; color:#2b6cb0;">ಬುಕಿಂಗ್ ವಿವರಗಳು ನೋಡಿ (${totalBookings})</summary>${ridesListHtml}</details>` : ''}
             
-            <div style="margin-top:8px;">
-              ${d.vehPhoto ? `<img src="${d.vehPhoto}" class="preview-img" onclick="openImageModal('${d.vehPhoto}')">` : ''}
-              ${d.rcPhoto ? `<img src="${d.rcPhoto}" class="preview-img" onclick="openImageModal('${d.rcPhoto}')">` : ''}
-              ${d.dlPhoto ? `<img src="${d.dlPhoto}" class="preview-img" onclick="openImageModal('${d.dlPhoto}')">` : ''}
-              ${d.selfiePhoto ? `<img src="${d.selfiePhoto}" class="preview-img" onclick="openImageModal('${d.selfiePhoto}')">` : ''}
+            <div style="margin-top:8px; display:flex; gap:5px; flex-wrap:wrap;">
+              ${d.vehPhoto ? `<img src="${d.vehPhoto}" class="preview-img" onclick="openImageModal('${d.vehPhoto}')" title="Vehicle">` : ''}
+              ${d.rcPhoto ? `<img src="${d.rcPhoto}" class="preview-img" onclick="openImageModal('${d.rcPhoto}')" title="RC">` : ''}
+              ${d.dlPhoto ? `<img src="${d.dlPhoto}" class="preview-img" onclick="openImageModal('${d.dlPhoto}')" title="DL">` : ''}
+              ${d.selfiePhoto ? `<img src="${d.selfiePhoto}" class="preview-img" onclick="openImageModal('${d.selfiePhoto}')" title="Selfie">` : ''}
             </div>
 
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px; margin-top:8px;">
-              <button onclick="downloadDriverData('${d.driverId}')" class="btn-submit" style="background:#3182ce; padding:6px; font-size:0.75rem;">📥 ಡಾಟಾ ಡೌನ್‌ಲೋಡ್</button>
-              <button onclick="deleteDriver('${d.id}')" class="btn-submit" style="background:#e53e3e; padding:6px; font-size:0.75rem;">🗑️ ಡಿಲೀಟ್ ಮಾಡಿ</button>
+            <div style="margin-top:10px; background:#edf2f7; padding:8px; border-radius:6px;">
+              <p style="font-size:0.8rem; font-weight:bold; color:#2b6cb0; margin-bottom:4px;">📊 ಪೂರ್ಣಗೊಂಡ ರೈಡ್ಸ್ ವಿವರಗಳು (${totalBookings} ಓಟಗಳು | ಒಟ್ಟು ಗಳಿಕೆ: ₹${totalEarnings}):</p>
+              ${ridesListHtml || '<p style="font-size:0.75rem; color:#718096;">ಯಾವುದೇ ಮುಕ್ತಾಯಗೊಂಡ ರೈಡ್ಸ್ ಇಲ್ಲ.</p>'}
             </div>
+
+            <button class="btn-submit" onclick="downloadDriverData('${d.drvName}', '${d.drvPhone}', '${d.drvVehNo}', '${d.driverId}', ${totalBookings}, ${totalEarnings})" style="background:#3182ce; margin-top:8px; font-size:0.75rem; padding:6px;">📥 ಡ್ರೈವರ್ ಡಾಟಾ ಡೌನ್‌ಲೋಡ್ / ಶೇರ್ ಮಾಡಿ</button>
+            <button class="btn-submit" onclick="deleteDriver('${d.id}')" style="background:#e53e3e; margin-top:6px; font-size:0.75rem; padding:6px;">🗑️ ಪ್ರೊಫೈಲ್ ಡಿಲೀಟ್ ಮಾಡಿ</button>
           </div>
         `;
       });
+
       listDiv.innerHTML = html;
     }
 
     function filterAdminDrivers() {
-      const val = document.getElementById('adminSearchInput').value.trim().toLowerCase();
+      const queryVal = document.getElementById('adminSearchInput').value.trim().toLowerCase();
+      if (!queryVal) {
+        renderAdminDrivers(allDriversData);
+        return;
+      }
       const filtered = allDriversData.filter(d => 
-        (d.drvPhone && d.drvPhone.toLowerCase().includes(val)) ||
-        (d.driverId && d.driverId.toLowerCase().includes(val)) ||
-        (d.drvName && d.drvName.toLowerCase().includes(val))
+        (d.drvPhone && d.drvPhone.includes(queryVal)) || 
+        (d.driverId && d.driverId.includes(queryVal)) ||
+        (d.drvName && d.drvName.toLowerCase().includes(queryVal)) ||
+        (d.drvVehNo && d.drvVehNo.toLowerCase().includes(queryVal))
       );
       renderAdminDrivers(filtered);
     }
 
-    function downloadDriverData(driverId) {
-      const driver = allDriversData.find(d => d.driverId === driverId);
-      if (!driver) return;
-
-      let textContent = `=== AR TAXI SHAHAPUR - POLICE / DRIVER REPORT ===\n`;
-      textContent += `ಡ್ರೈವರ್ ಹೆಸರು: ${driver.drvName}\n`;
-      textContent += `ಐಡಿ ನಂಬರ್: ${driver.driverId}\n`;
-      textContent += `ಫೋನ್ ನಂಬರ್: ${driver.drvPhone}\n`;
-      textContent += `ವಾಹನ ನಂಬರ್: ${driver.drvVehNo} (${driver.drvVehType})\n`;
-      textContent += `--------------------------------------------------\n`;
-      textContent += `ಒಟ್ಟು ಬುಕಿಂಗ್ ಸಂಖ್ಯೆ: ${driver.rides ? driver.rides.length : 0}\n\n`;
-
-      if (driver.rides && driver.rides.length > 0) {
-        textContent += `ಬುಕಿಂಗ್ ವಿವರಗಳು:\n`;
-        driver.rides.forEach((r, idx) => {
-          textContent += `${idx + 1}. ಕಸ್ಟಮರ್: ${r.customerName} (${r.customerPhone})\n`;
-          textContent += `   ಪಿಕಪ್: ${r.pickupLocation} -> ಡ್ರಾಪ್: ${r.dropLocation}\n`;
-          textContent += `   ದೂರ: ${r.distance} ಕಿ.ಮೀ | ಹಣ ಚಾರ್ಜ್: ₹${r.fare}\n\n`;
-        });
-      } else {
-        textContent += `ಯಾವುದೇ ಬುಕಿಂಗ್ ದಾಖಲೆಗಳಿಲ್ಲ.\n`;
-      }
-
-      const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `Driver_Report_${driver.driverId}_${driver.drvName}.txt`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
-
     async function deleteDriver(docId) {
-      if (confirm("ಈ ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ ಡಿಲೀಟ್ ಮಾಡಲು ಖಚಿತವೇ?")) {
+      if (confirm(currentLang === 'kn' ? "ಈ ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ ಅನ್ನು ಖಚಿತವಾಗಿ ಡಿಲೀಟ್ ಮಾಡಲು ಬಯಸುತ್ತೀರಾ?" : "Are you sure you want to delete this driver profile?")) {
         try {
           await window.deleteDoc(window.doc(window.db, "drivers", docId));
-          alert("ಡ್ರೈವರ್ ಡಿಲೀಟ್ ಮಾಡಲಾಗಿದೆ.");
+          alert(currentLang === 'kn' ? "ಯಶಸ್ವಾಗಿ ಡಿಲೀಟ್ ಮಾಡಲಾಗಿದೆ!" : "Deleted successfully!");
           loadAdminDrivers();
-        } catch (e) {
+        } catch(e) {
           alert("Error: " + e.message);
         }
       }
     }
 
-    function openImageModal(src) {
-      document.getElementById('fullImage').src = src;
-      document.getElementById('downloadBtn').href = src;
+    function openImageModal(imgSrc) {
+      document.getElementById('fullImage').src = imgSrc;
+      document.getElementById('downloadBtn.href') = imgSrc;
       document.getElementById('imageModal').style.display = 'block';
     }
 
     function closeImageModal() {
       document.getElementById('imageModal').style.display = 'none';
+    }
+
+    function downloadDriverData(name, phone, vehNo, driverId, totalRides, totalEarnings) {
+      const dataText = `🛺 AR Taxi Shahapur - Driver Report\n\nName: ${name}\nPhone: ${phone}\nVehicle No: ${vehNo}\nDriver ID: ${driverId}\nTotal Rides: ${totalRides}\nTotal Earnings: Rs.${totalEarnings}\n\nGenerated via AR Taxi Shahapur Admin Panel`;
+      const blob = new Blob([dataText], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Driver_${driverId}_Report.txt`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
     }
   </script>
 </body>
