@@ -492,6 +492,7 @@
     window.deleteDriver = deleteDriver;
     window.openImageModal = openImageModal;
     window.closeImageModal = closeImageModal;
+    window.downloadDriverData = downloadDriverData;
 
     function shareAppOnWhatsApp() {
       const appUrl = window.location.href;
@@ -730,8 +731,8 @@
 
     function handleAdminTabClick() {
       if (!isAdminUnlocked) {
-        let enteredCode = prompt(currentLang === 'kn' ? "ಕೋಡ್ ನಮೂದಿಸಿ ಸರಿಯಾಗಿ ಅಂತು:" : "Enter code:");
-        if (enteredCode === "8105010768") {
+        let enteredCode = prompt(currentLang === 'kn' ? "ಕೋಡ್ ಸಂಖ್ಯೆ ನಮೂದಿಸಿ:" : "Enter code:");
+        if (enteredCode === "9353444070") {
           isAdminUnlocked = true;
           switchSection('adminSection');
         } else if (enteredCode !== null) {
@@ -1327,7 +1328,7 @@
                     <p style="background:#bee3f8; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#2b6cb0;">🏁 ಪ್ರಯಾಣ ಚಾಲನೆಯಲ್ಲಿದೆ (Ride Running)</p>
                     <p><b>ಕಸ್ಟಮರ್:</b> ${b.customerName}</p>
                     <p><b>ಡ್ರಾಪ್:</b> ${b.dropLocation}</p>
-                    <button class="btn-submit" onclick="finishRide('${docSnap.id}', '${driverData.driverId}')" style="background:#e53e3e; margin-top:8px;">ರೈಡ್ ಮುಕ್ತಾಯಗೊಳಿಸಿ (Finish Ride)</button>
+                    <button class="btn-submit" onclick="finishRide('${docSnap.id}', '${driverData.driverId}', '${b.customerName}', '${b.customerPhone}', '${b.pickupLocation}', '${b.dropLocation}')" style="background:#e53e3e; margin-top:8px;">ರೈಡ್ ಮುಕ್ತಾಯಗೊಳಿಸಿ (Finish Ride)</button>
                   </div>
                 `;
               }
@@ -1422,7 +1423,7 @@
       }
     }
 
-    async function finishRide(bookingId, driverId) {
+    async function finishRide(bookingId, driverId, custName, custPhone, pickupLoc, dropLoc) {
       let fareEntered = prompt("ರೈಡ್ ಮುಕ್ತಾಯಗೊಂಡಿದೆ. ಒಟ್ಟು ಗ್ರಾಹಕರಿಂದ ಪಡೆದ ಹಣ (₹) ನಮೂದಿಸಿ:");
       let kmEntered = prompt("ಒಟ್ಟು ಕ್ರಮಿಸಿದ ದೂರ (KM) ನಮೂದಿಸಿ:");
 
@@ -1432,9 +1433,14 @@
           await window.addDoc(window.collection(window.db, "completed_rides"), {
             bookingId: bookingId,
             driverIdNum: driverId,
+            customerName: custName || '',
+            customerPhone: custPhone || '',
+            pickupLocation: pickupLoc || '',
+            dropLocation: dropLoc || '',
             fare: Number(fareEntered),
             distance: Number(kmEntered),
             dateKey: todayStr,
+            createdAtMillis: Date.now(),
             timestamp: window.serverTimestamp()
           });
 
@@ -1485,16 +1491,57 @@
       );
     }
 
+    async function cleanupOldCompletedRidesAndDrivers() {
+      const now = Date.now();
+      const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+      try {
+        const ridesSnap = await window.getDocs(window.collection(window.db, "completed_rides"));
+        for (const rideDoc of ridesSnap.docs) {
+          const rData = rideDoc.data();
+          const created = rData.createdAtMillis || (rData.timestamp ? rData.timestamp.toMillis() : now);
+          const ageDays = (now - created) / ONE_DAY_MS;
+          if (ageDays >= 15) {
+            await window.deleteDoc(window.doc(window.db, "completed_rides", rideDoc.id));
+          }
+        }
+      } catch (e) {}
+    }
+
     async function loadAdminDrivers() {
+      await cleanupOldCompletedRidesAndDrivers();
       const listDiv = document.getElementById('adminDriversList');
       listDiv.innerHTML = 'ಲೋಡ್ ಆಗುತ್ತಿದೆ...';
       try {
-        const q = window.query(window.collection(window.db, "drivers"), window.orderBy("timestamp", "desc"));
-        const snap = await window.getDocs(q);
-        allDriversData = [];
+        const driversSnap = await window.getDocs(window.query(window.collection(window.db, "drivers"), window.orderBy("timestamp", "desc")));
+        const ridesSnap = await window.getDocs(window.collection(window.db, "completed_rides"));
 
-        snap.forEach(docSnap => {
-          allDriversData.push({ id: docSnap.id, ...docSnap.data() });
+        const ridesByDriver = {};
+        const now = Date.now();
+        const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+
+        ridesSnap.forEach(rDoc => {
+          const r = rDoc.data();
+          const dId = r.driverIdNum;
+          if (!ridesByDriver[dId]) ridesByDriver[dId] = [];
+          ridesByDriver[dId].push(r);
+        });
+
+        allDriversData = [];
+        driversSnap.forEach((docSnap, index) => {
+          allDriversData.push({ id: docSnap.id, serialNumber: index + 1, ...docSnap.data() }, ridesByDriver);
+        });
+        
+        // Properly map driver objects with rides
+        allDriversData = [];
+        let sNum = 1;
+        driversSnap.forEach(docSnap => {
+          const d = docSnap.data();
+          allDriversData.push({
+            id: docSnap.id,
+            serialNum: sNum++,
+            ...d,
+            rides: ridesByDriver[d.driverId] || []
+          });
         });
 
         renderAdminDrivers(allDriversData);
@@ -1510,21 +1557,72 @@
         return;
       }
 
-      let html = '';
+      const now = Date.now();
+      const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+
+      let topSummaryBanner = `
+        <div style="background:#e8f8f0; border:2px solid #0fb05b; padding:10px; border-radius:8px; margin-bottom:12px; text-align:center;">
+          <h3 style="color:#065f46; font-size:1rem;">🛺 ಒಟ್ಟು ನೋಂದಾಯಿತ ಡ್ರೈವರ್‌ಗಳು: ${drivers.length}</h3>
+        </div>
+      `;
+
+      let html = topSummaryBanner;
+
       drivers.forEach(d => {
+        let totalBookings = d.rides ? d.rides.length : 0;
+        let totalEarnings = 0;
+        let warning14Day = false;
+        let ridesListHtml = '';
+
+        d.rides.forEach(r => {
+          totalEarnings += Number(r.fare || 0);
+          const rTime = r.createdAtMillis || now;
+          const ageDays = (now - rTime) / ONE_DAY_MS;
+          if (ageDays >= 13.5 && ageDays < 15) {
+            warning14Day = true;
+          }
+
+          ridesListHtml += `
+            <div style="background:#f8fafc; border-left:3px solid #3182ce; padding:6px; margin:4px 0; font-size:0.75rem;">
+              <b>ಕಸ್ಟಮರ್:</b> ${r.customerName || 'N/A'} (${r.customerPhone || ''})<br>
+              <b>ಪಿಕಪ್:</b> ${r.pickupLocation || ''} | <b>ಡ್ರಾಪ್:</b> ${r.dropLocation || ''}<br>
+              <b>ದೂರ:</b> ${r.distance || 0} ಕಿ.ಮೀ | <b>ಹಣ:</b> ₹${r.fare || 0}
+            </div>
+          `;
+        });
+
+        let warningBanner = '';
+        if (warning14Day) {
+          warningBanner = `<div style="background:#fff3cd; color:#856404; padding:6px; border-radius:4px; font-weight:bold; margin-bottom:6px; font-size:0.75rem;">⚠️ ಎಚ್ಚರಿಕೆ: ನಾಳೆ ನಿಮ್ಮ ಡಾಟಾ ಡಿಲೀಟ್ ಆಗುತ್ತದೆ!</div>`;
+        }
+
         html += `
-          <div class="card" style="margin-bottom:12px;">
-            <p><b>ಹೆಸರು:</b> ${d.drvName}</p>
-            <p><b>ಐಡಿ ನಂಬರ್:</b> <span style="color:#d69e2e; font-weight:bold;">${d.driverId || '-'}</span></p>
+          <div class="card" style="margin-bottom:12px; border-left: 5px solid #0fb05b;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <span style="background:#2b6cb0; color:white; padding:2px 8px; border-radius:12px; font-size:0.75rem; font-weight:bold;">ಸೀರಿಯಲ್ ನಂ: #${d.serialNum}</span>
+              <span style="color:#718096; font-size:0.75rem;">ಐಡಿ: <b>${d.driverId || '-'}</b></span>
+            </div>
+            ${warningBanner}
+            <p><b>ಡ್ರೈವರ್ ಹೆಸರು:</b> ${d.drvName}</p>
             <p><b>ಫೋನ್:</b> ${d.drvPhone}</p>
             <p><b>ವಾಹನ ನಂಬರ್:</b> ${d.drvVehNo} (${d.drvVehType})</p>
+            <div style="background:#edf2f7; padding:8px; border-radius:6px; margin:6px 0;">
+              <p><b>ಒಟ್ಟು ಬುಕಿಂಗ್‌ಗಳು:</b> ${totalBookings}</p>
+              <p><b>ಒಟ್ಟು ಗಳಿಕೆ (Earnings):</b> <span style="color:#0fb05b; font-weight:bold;">₹${totalEarnings}</span></p>
+            </div>
+            ${totalBookings > 0 ? `<details style="margin-top:6px;"><summary style="font-size:0.78rem; font-weight:bold; cursor:pointer; color:#2b6cb0;">ಬುಕಿಂಗ್ ವಿವರಗಳು ನೋಡಿ (${totalBookings})</summary>${ridesListHtml}</details>` : ''}
+            
             <div style="margin-top:8px;">
               ${d.vehPhoto ? `<img src="${d.vehPhoto}" class="preview-img" onclick="openImageModal('${d.vehPhoto}')">` : ''}
               ${d.rcPhoto ? `<img src="${d.rcPhoto}" class="preview-img" onclick="openImageModal('${d.rcPhoto}')">` : ''}
               ${d.dlPhoto ? `<img src="${d.dlPhoto}" class="preview-img" onclick="openImageModal('${d.dlPhoto}')">` : ''}
               ${d.selfiePhoto ? `<img src="${d.selfiePhoto}" class="preview-img" onclick="openImageModal('${d.selfiePhoto}')">` : ''}
             </div>
-            <button onclick="deleteDriver('${d.id}')" class="btn-submit" style="background:#e53e3e; margin-top:8px; padding:6px;">ಡಿಲೀಟ್ ಮಾಡಿ (Delete)</button>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px; margin-top:8px;">
+              <button onclick="downloadDriverData('${d.driverId}')" class="btn-submit" style="background:#3182ce; padding:6px; font-size:0.75rem;">📥 ಡಾಟಾ ಡೌನ್‌ಲೋಡ್</button>
+              <button onclick="deleteDriver('${d.id}')" class="btn-submit" style="background:#e53e3e; padding:6px; font-size:0.75rem;">🗑️ ಡಿಲೀಟ್ ಮಾಡಿ</button>
+            </div>
           </div>
         `;
       });
@@ -1541,10 +1639,44 @@
       renderAdminDrivers(filtered);
     }
 
+    function downloadDriverData(driverId) {
+      const driver = allDriversData.find(d => d.driverId === driverId);
+      if (!driver) return;
+
+      let textContent = `=== AR TAXI SHAHAPUR - POLICE / DRIVER REPORT ===\n`;
+      textContent += `ಡ್ರೈವರ್ ಹೆಸರು: ${driver.drvName}\n`;
+      textContent += `ಐಡಿ ನಂಬರ್: ${driver.driverId}\n`;
+      textContent += `ಫೋನ್ ನಂಬರ್: ${driver.drvPhone}\n`;
+      textContent += `ವಾಹನ ನಂಬರ್: ${driver.drvVehNo} (${driver.drvVehType})\n`;
+      textContent += `--------------------------------------------------\n`;
+      textContent += `ಒಟ್ಟು ಬುಕಿಂಗ್ ಸಂಖ್ಯೆ: ${driver.rides ? driver.rides.length : 0}\n\n`;
+
+      if (driver.rides && driver.rides.length > 0) {
+        textContent += `ಬುಕಿಂಗ್ ವಿವರಗಳು:\n`;
+        driver.rides.forEach((r, idx) => {
+          textContent += `${idx + 1}. ಕಸ್ಟಮರ್: ${r.customerName} (${r.customerPhone})\n`;
+          textContent += `   ಪಿಕಪ್: ${r.pickupLocation} -> ಡ್ರಾಪ್: ${r.dropLocation}\n`;
+          textContent += `   ದೂರ: ${r.distance} ಕಿ.ಮೀ | ಹಣ ಚಾರ್ಜ್: ₹${r.fare}\n\n`;
+        });
+      } else {
+        textContent += `ಯಾವುದೇ ಬುಕಿಂಗ್ ದಾಖಲೆಗಳಿಲ್ಲ.\n`;
+      }
+
+      const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Driver_Report_${driver.driverId}_${driver.drvName}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
     async function deleteDriver(docId) {
       if (confirm("ಈ ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ ಡಿಲೀಟ್ ಮಾಡಲು ಖಚಿತವೇ?")) {
         try {
-          await window.deleteDoc(window.doc(window.doc(window.db, "drivers", docId)));
+          await window.deleteDoc(window.doc(window.db, "drivers", docId));
           alert("ಡ್ರೈವರ್ ಡಿಲೀಟ್ ಮಾಡಲಾಗಿದೆ.");
           loadAdminDrivers();
         } catch (e) {
