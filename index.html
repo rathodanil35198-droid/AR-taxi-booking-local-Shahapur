@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   
-  <title id="pageTitle">AR TaxiBooking Shahapur | ಆಟೋ ಬುಕಿಂಗ್ ಆಪ್ | ಕಾರ್ ಬುಕಿಂಗ್ ಆಪ್</title>
+  <title id="pageTitle">AR Taxi Shahapur | ಆಟೋ ಬುಕಿಂಗ್ ಆಪ್ | ಕಾರ್ ಬುಕಿಂಗ್ ಆಪ್</title>
   
   <meta name="theme-color" content="#0fb05b">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="AR TaxiBooking Shahapur">
+  <meta name="apple-mobile-web-app-title" content="AR Taxi Shahapur">
 
   <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22AR%20Taxi%20Shahapur%22%2C%22short_name%22%3A%22AR%20Taxi%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23ffffff%22%2C%22theme_color%22%3A%22%230fb05b%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fimg.icons8.com%2Fcolor%2F512%2Ftaxi.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D">
 
@@ -209,15 +209,15 @@
 
     <div id="roleSelectionScreen">
       <div style="font-size: 4rem; margin-bottom: 15px;">🛺</div>
-      <h1 class="mainTitle" style="font-size: 1.3rem; color: #2c3e50;">AR TaxiBooking Shahapur</h1>
+      <h1 class="mainTitle" style="font-size: 1.3rem; color: #2c3e50;">AR Taxi Shahapur</h1>
       <p style="font-size: 0.85rem; color: #7f8c8d; margin-bottom: 25px;">ದಯವಿಟ್ಟು ನಿಮ್ಮ ವಲಯವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ / Select Your Role:</p>
 
       <button class="role-btn role-customer" onclick="selectRole('customer')">
-        🙋 ಕಸ್ಟಮರ್ ಬುಕಿಂಗ್ & ಮಾಡಿರಿ 👉 (Customer Booking & Meter)
+        👤 ಕಸ್ಟಮರ್ ಬುಕಿಂಗ್ & ಮೀಟರ್ (Customer Booking & Meter)
       </button>
 
       <button class="role-btn role-driver" onclick="selectRole('driver')">
-        🛺 ಡ್ರೈವರ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ & ಅಡ್ಮಿನ್🚖 (Driver Dashboard & Admin)
+        🛺 ಡ್ರೈವರ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ & ಅಡ್ಮಿನ್ (Driver Dashboard & Admin)
       </button>
     </div>
 
@@ -229,7 +229,7 @@
         <div class="logo-title">
           <span style="font-size: 1.6rem;">🛺</span>
           <div>
-            <div class="mainTitle" id="mainTitleText">AR TaxiBooking Shahapur</div>
+            <div class="mainTitle" id="mainTitleText">AR Taxi Shahapur</div>
             <div class="subTitle" id="subTitleText">ಸ್ಥಳೀಯ ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್</div>
           </div>
         </div>
@@ -463,7 +463,6 @@
     let lastCustPos = null;
     let lastDrvPos = null;
 
-    // Window-level bindings for HTML onclick references
     window.shareAppOnWhatsApp = shareAppOnWhatsApp;
     window.toggleLanguage = toggleLanguage;
     window.selectRole = selectRole;
@@ -732,7 +731,7 @@
     function handleAdminTabClick() {
       if (!isAdminUnlocked) {
         let enteredCode = prompt(currentLang === 'kn' ? "ಕೋಡ್ ನಮೂದಿಸಿ ಸರಿಯಾಗಿ ಅಂತು:" : "Enter code:");
-        if (enteredCode === "9353444070") {
+        if (enteredCode === "8105010768") {
           isAdminUnlocked = true;
           switchSection('adminSection');
         } else if (enteredCode !== null) {
@@ -1263,6 +1262,12 @@
 
       const q = window.query(window.collection(window.db, "bookings"), window.orderBy("timestamp", "desc"));
       bookingsUnsubscribe = window.onSnapshot(q, (snapshot) => {
+        // Prevent re-rendering if the active input field (OTP) is currently focused to keep keypad open
+        const activeEl = document.activeElement;
+        if (activeEl && activeEl.tagName === 'INPUT' && activeEl.id && activeEl.id.startsWith('otpInput_')) {
+          return; 
+        }
+
         const listDiv = document.getElementById('driverBookingsList');
         let pendingHtml = '';
         let acceptedHtml = '';
@@ -1278,7 +1283,6 @@
           const b = docSnap.data();
           const bDate = b.dateKey || '';
 
-          // Auto delete older bookings
           if (bDate !== todayStr || (currentHour === 0 && currentMinute < 30)) {
             window.deleteDoc(window.doc(window.db, "bookings", docSnap.id)).catch(err => {});
             return;
@@ -1287,7 +1291,6 @@
           if (b.pickupLat && b.pickupLng && currentDriverLat && currentDriverLng) {
             const dist = calculateDistance(currentDriverLat, currentDriverLng, b.pickupLat, b.pickupLng);
             
-            // 2KM Location Filter for Nearby Drivers
             if (dist <= 2.0) {
               let vehLogo = b.vehicleType === 'Car' ? '🚗' : '🛺';
               let vehNameText = b.vehicleType === 'Car' ? (currentLang === 'kn' ? 'ಕಾರ್ (Car)' : 'Car') : (currentLang === 'kn' ? 'ಆಟೋ (Auto)' : 'Auto');
