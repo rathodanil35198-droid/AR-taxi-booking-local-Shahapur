@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+      <!DOCTYPE html>
 <html lang="kn">
 <head>
   <meta charset="UTF-8">
@@ -1643,7 +1643,7 @@
 
       let html = topSummaryBanner;
 
-      drivers.forEach(d => {
+      drivers.forEach((d, index) => {
         let totalBookings = d.rides ? d.rides.length : 0;
         let totalEarnings = 0;
         let warning14Day = false;
@@ -1672,17 +1672,19 @@
           <div class="card" style="border: 2px solid #cbd5e0; margin-bottom: 12px; background:#fff;">
             ${warningBanner}
             <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #eee; padding-bottom:6px; margin-bottom:6px;">
-              <span style="font-weight:bold; color:#2b6cb0; font-size:0.9rem; cursor:pointer; text-decoration:underline;" onclick="openAdminDetailModal('${d.id}')">🆔 ${d.drvName} (${d.driverId})</span>
-              <button onclick="deleteDriver('${d.id}')" style="background:#e53e3e; color:white; border:none; padding:3px 8px; border-radius:4px; font-size:0.7rem; cursor:pointer;">ಡಿಲೀಟ್</button>
+              <span style="font-weight:bold; color:#2b6cb0; font-size:0.9rem;">
+                <span style="background:#edf2f7; padding:2px 6px; border-radius:4px; margin-right:5px; border:1px solid #cbd5e0;">#${d.serialNum || (index + 1)}</span>
+                <span onclick="openAdminDetailModal('${d.id}')" style="cursor:pointer; text-decoration:underline;">🆔 ${d.drvName} (${d.driverId})</span>
+              </span>
+              <button onclick="deleteDriverWithCode('${d.id}')" style="background:#e53e3e; color:white; border:none; padding:3px 8px; border-radius:4px; font-size:0.7rem; cursor:pointer;">ಡಿಲೀಟ್</button>
             </div>
             <p><b>ಮೊಬೈಲ್:</b> <a href="tel:${d.drvPhone}">${d.drvPhone}</a></p>
             <p><b>ವಾಹನ ನಂಬರ್:</b> ${d.drvVehNo} (${d.drvVehType})</p>
             <p style="margin:4px 0;"><b>ಫೋಟೋಗಳು:</b><br>${vehPhotosHtml || 'ಯಾವುದಿಲ್ಲ'}</p>
-            <div style="background:#f7fafc; padding:6px; border-radius:4px; margin-top:6px; display:flex; justify-content:space-between; font-size:0.8rem;">
-              <span><b>ಬುಕಿಂಗ್ಸ್:</b> ${totalBookings}</span>
-              <span><b>ಗಳಿಕೆ:</b> ₹${Math.round(totalEarnings)}</span>
+            
+            <div style="margin-top:8px; text-align:right;">
+              <button class="btn-submit" onclick="openAdminDetailModal('${d.id}')" style="display:inline-block; width:auto; background:#3182ce; font-size:0.8rem; padding:6px 12px;">📋 ಡ್ರೈವರ್ ಬುಕಿಂಗ್ ಡಾಟಾ ವಿವರಗಳು (Open Data)</button>
             </div>
-            <button class="btn-submit" onclick="openAdminDetailModal('${d.id}')" style="margin-top:8px; background:#3182ce; font-size:0.8rem; padding:6px;">🔍 ಡ್ರೈವರ್ ವಿವರಗಳು ಹಾಗೂ ಡೌನ್‌ಲೋಡ್ (Download Details)</button>
           </div>
         `;
       });
@@ -1705,20 +1707,24 @@
       renderAdminDrivers(filtered);
     }
 
-    async function deleteDriver(docId) {
-      if (confirm(currentLang === 'kn' ? "ಖಂಡಿತವಾಗಿ ಈ ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ ಡಿಲೀಟ್ ಮಾಡಲು ಬಯಸುವಿರಾ?" : "Are you sure to delete this driver profile?")) {
+    async function deleteDriverWithCode(docId) {
+      let codeInput = prompt("ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ ಪೂರ್ಣವಾಗಿ ಡಿಲೀಟ್ ಮಾಡಲು ಕೋಡ್ ಸಂಖ್ಯೆ ನಮೂದಿಸಿ (9353444070):");
+      if (codeInput === "9353444070") {
         try {
           await window.deleteDoc(window.doc(window.db, "drivers", docId));
           loadAdminDrivers();
+          alert("ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ ಯಶಸ್ವಿಯಾಗಿ ಡಿಲೀಟ್ ಮಾಡಲಾಗಿದೆ.");
         } catch(e) {
           alert("Error: " + e.message);
         }
+      } else if (codeInput !== null) {
+        alert("ತಪ್ಪಾದ ಕೋಡ್! ಡಿಲೀಟ್ ಮಾಡಲು ಸಾಧ್ಯವಿಲ್ಲ.");
       }
     }
 
     function openImageModal(url) {
       document.getElementById('fullImage').src = url;
-      document.getElementById('downloadBtn.href') = url;
+      document.getElementById('downloadBtn').href = url;
       document.getElementById('imageModal').style.display = 'block';
     }
 
@@ -1736,42 +1742,32 @@
           ridesHtml += `
             <div style="background:#f7fafc; border:1px solid #cbd5e0; padding:8px; border-radius:6px; margin-bottom:8px;">
               <p><b>ರೈಡ್ #${idx+1}</b></p>
-              <p><b>ಕಸ್ಟಮರ್ ಹೆಸರು:</b> ${r.customerName || 'ಪ್ರವಾಸಿ'}</p>
-              <p><b>ಕಸ್ಟಮರ್ ಮೊಬೈಲ್:</b> <a href="tel:${r.customerPhone}">${r.customerPhone || '-'}</a></p>
-              <p><b>ಪಿಕಪ್ ಲೊಕೇಶನ್:</b> ${r.pickupLocation || '-'}</p>
-              <p><b>ಡ್ರಾಪ್ ಲೊಕೇಶನ್:</b> ${r.dropLocation || '-'}</p>
-              <p><b>ಓಡಿದ ದೂರ:</b> ${r.distance || 0} ಕಿ.ಮೀ</p>
-              <p><b>ಚಾರ್ಜ್ ಆಗಿದೆ:</b> ₹${r.fare || 0}</p>
+              <p><b>ಕಸ್ಟಮರ್ ಫುಲ್ ಹೆಸರು:</b> ${r.customerName || 'ಪ್ರವಾಸಿ'}</p>
+              <p><b>ಕಸ್ಟಮರ್ ಮೊಬೈಲ್ ನಂಬರು:</b> <a href="tel:${r.customerPhone}">${r.customerPhone || '-'}</a></p>
+              <p><b>ಪಿಕಪ್ ಹೆಸರು:</b> ${r.pickupLocation || '-'}</p>
+              <p><b>ಡ್ರಾಪ್ ಹಾಕಿರುವ ಹೆಸರು:</b> ${r.dropLocation || '-'}</p>
+              <p><b>ರನ್ನಿಂಗ್ ಮೀಟರ್ ಲೈವ್ ಕಿಲೋಮೀಟರ್:</b> ${r.distance || 0} ಕಿ.ಮೀ</p>
+              <p><b>ಚಾರ್ಜಸ್ ಆಗಿದೆ:</b> ₹${r.fare || 0}</p>
               <p><b>ದಿನಾಂಕ:</b> ${r.dateKey || '-'}</p>
             </div>
           `;
         });
       } else {
-        ridesHtml = '<p style="color:#718096;">ಯಾವುದೇ ಪೂರ್ಣಗೊಂಡ ರೈಡ್ ವಿವರಗಳಿಲ್ಲ.</p>';
+        ridesHtml = '<p style="color:#718096;">ಯಾವುದೇ ಪೂರ್ಣಗೊಂಡ ಬುಕಿಂಗ್ ಡಾಟಾ ಇಲ್ಲ.</p>';
       }
-
-      let vehPhotosHtml = '';
-      if (d.vehPhoto) vehPhotosHtml += `<div style="margin:5px 0;"><p><b>ವಾಹನ ಫೋಟೋ:</b></p><img src="${d.vehPhoto}" style="max-width:100%; border-radius:6px; border:1px solid #ccc;"></div>`;
-      if (d.rcPhoto) vehPhotosHtml += `<div style="margin:5px 0;"><p><b>ಆರ್.ಸಿ. ಫೋಟೋ:</b></p><img src="${d.rcPhoto}" style="max-width:100%; border-radius:6px; border:1px solid #ccc;"></div>`;
-      if (d.dlPhoto) vehPhotosHtml += `<div style="margin:5px 0;"><p><b>ಡಿ.ಎಲ್. ಫೋಟೋ:</b></p><img src="${d.dlPhoto}" style="max-width:100%; border-radius:6px; border:1px solid #ccc;"></div>`;
-      if (d.selfiePhoto) vehPhotosHtml += `<div style="margin:5px 0;"><p><b>ಸೆಲ್ಫಿ ಫೋಟೋ:</b></p><img src="${d.selfiePhoto}" style="max-width:100%; border-radius:6px; border:1px solid #ccc;"></div>`;
 
       let modalBodyHtml = `
         <div id="printableDownloadCard" style="background:#fff; padding:10px; color:#333;">
-          <h3 style="color:#2b6cb0; border-bottom:2px solid #0fb05b; padding-bottom:4px; margin-bottom:8px;">ಡ್ರೈವರ್ ಹಾಗೂ ರೈಡ್ ಸಂಪೂರ್ಣ ವರದಿ</h3>
+          <h3 style="color:#2b6cb0; border-bottom:2px solid #0fb05b; padding-bottom:4px; margin-bottom:8px;">ಡ್ರೈವರ್ ಬುಕಿಂಗ್ ಹಾಗೂ ಡಾಟಾ ವರದಿ</h3>
           <p><b>ಡ್ರೈವರ್ ಹೆಸರು:</b> ${d.drvName}</p>
-          <p><b>ಡ್ರೈವರ್ ಮೊಬೈಲ್ ನಂಬರ್:</b> ${d.drvPhone}</p>
+          <p><b>ಡ್ರೈವರ್ ಮೊಬೈಲ್:</b> ${d.drvPhone}</p>
           <p><b>ವಾಹನ ನಂಬರ್:</b> ${d.drvVehNo}</p>
-          <p><b>ವಾಹನ ವಿಧ:</b> ${d.drvVehType}</p>
           <p><b>ಡ್ರೈವರ್ ಐಡಿ:</b> ${d.driverId}</p>
           
-          <h4 style="margin-top:10px; color:#2d3748; border-bottom:1px solid #ccc;">ರೈಡ್ ವಿವರಗಳು (Customer & GPS Details):</h4>
+          <h4 style="margin-top:10px; color:#2d3748; border-bottom:1px solid #ccc;">ತಗೊಂಡಿರುವ ಎಲ್ಲಾ ಬುಕಿಂಗ್‌ಗಳು (Customer, Pickup, Drop, Live Meter & Charges):</h4>
           ${ridesHtml}
-
-          <h4 style="margin-top:10px; color:#2d3748; border-bottom:1px solid #ccc;">ದಾಖಲೆಗಳ ಫೋಟೋಗಳು:</h4>
-          ${vehPhotosHtml}
         </div>
-        <button class="btn-submit" onclick="downloadDriverData('${d.driverId}')" style="background:#0fb05b; margin-top:15px;">📥 ಫುಲ್ ಎಚ್‌ಡಿಯಲ್ಲಿ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ (Download HD)</button>
+        <button class="btn-submit" onclick="downloadDriverData('${d.driverId}')" style="background:#0fb05b; margin-top:15px;">📥 ಡಾಟಾ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ (Download)</button>
       `;
 
       document.getElementById('adminModalBody').innerHTML = modalBodyHtml;
@@ -1788,9 +1784,8 @@
 
       html2canvas(targetElement, { scale: 3, useCORS: true }).then(canvas => {
         const link = document.createElement('a');
-        link.download = `Driver_${driverId}_Full_Details.png`;
+        link.download = `Driver_${driverId}_Bookings_Data.png`;
         link.href = canvas.toDataURL('image/png', 1.0);
-        link.link = 'Download';
         link.click();
       }).catch(err => {
         alert("ಡೌನ್‌ಲೋಡ್ ಮಾಡುವಲ್ಲಿ ದೋಷ ಉಂಟಾಗಿದೆ: " + err.message);
@@ -1799,3 +1794,4 @@
   </script>
 </body>
 </html>
+                            
