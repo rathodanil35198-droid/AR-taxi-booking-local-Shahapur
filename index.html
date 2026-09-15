@@ -1262,7 +1262,6 @@
 
       const q = window.query(window.collection(window.db, "bookings"), window.orderBy("timestamp", "desc"));
       bookingsUnsubscribe = window.onSnapshot(q, (snapshot) => {
-        // Prevent re-rendering if the active input field (OTP) is currently focused to keep keypad open
         const activeEl = document.activeElement;
         if (activeEl && activeEl.tagName === 'INPUT' && activeEl.id && activeEl.id.startsWith('otpInput_')) {
           return; 
