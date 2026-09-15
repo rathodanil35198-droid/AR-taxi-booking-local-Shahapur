@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   
-  <title id="pageTitle">AR Taxi Shahapur | ಆಟೋ ಬುಕಿಂಗ್ ಆಪ್ | ಕಾರ್ ಬುಕಿంగ్ ಆಪ್</title>
+  <title id="pageTitle">AR Taxi Shahapur | ಆಟೋ ಬುಕಿಂಗ್ ಆಪ್ | ಕಾರ್ ಬುಕಿಂಗ್ ಆಪ್</title>
   
   <meta name="theme-color" content="#0fb05b">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -140,7 +140,7 @@
     .btn-gps { background: #ebf8ff; color: #3182ce; border: 1px solid #bee3f8; }
     .btn-submit { background: linear-gradient(45deg, #0fb05b, #41c91d); color: white; }
     .card { background: #fff; border: 1px solid #cbd5e0; padding: 10px; border-radius: 8px; margin-bottom: 8px; }
-    .preview-img { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; border: 1px solid #cbd5e0; margin-right: 5px; cursor: pointer; display: inline-block; }
+    .preview-img { width: 50px; height: 50px; object-init: cover; border-radius: 4px; border: 1px solid #cbd5e0; margin-right: 5px; cursor: pointer; display: inline-block; }
     .footer { text-align: center; font-size: 0.7rem; color: #7f8c8d; margin-top: 10px; border-top: 1px solid #eee; padding-top: 5px; }
     .back-home-btn { background: #718096; color: white; border: none; padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; margin-bottom: 8px; }
 
@@ -1378,7 +1378,7 @@
         });
 
         let summaryHeader = `<div style="background: #e2e8f0; padding: 8px; border-radius: 6px; margin-bottom: 10px; font-weight: bold; text-align: center; color: #2d3748;">
-          📊 ಇವತ್ತಿನ ಒಟ್ಟು ಹೊಸ ಬುಕಿంగ్‌ಗಳು: ${pendingCountToday}
+          📊 ಇವತ್ತಿನ ಒಟ್ಟು ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು: ${pendingCountToday}
         </div>`;
 
         let combinedHtml = '';
@@ -1659,12 +1659,30 @@
           warningBanner = `<div style="background:#fff3cd; color:#856404; padding:6px; border-radius:4px; font-weight:bold; margin-bottom:6px; font-size:0.75rem;">⚠️ ಎಚ್ಚರಿಕೆ: ನಾಳೆ ನಿಮ್ಮ ಡಾಟಾ ಡಿಲೀಟ್ ಆಗುತ್ತದೆ!</div>`;
         }
 
-        // ಇಲ್ಲಿ ಉದ್ದನೆಯ ಪಟ್ಟಿಯಲ್ಲಿ ಕಸ್ಟಮರ್ ಹೆಸರು, ಮೊಬೈಲ್ ನಂಬರ್ ಮರೆಮಾಚಲಾಗಿದೆ. ಐಡಿ ಮೇಲೆ ಕ್ಲಿಕ್ ಮಾಡಿದರೆ ಮಾತ್ರ ಕಾಣಿಸುತ್ತದೆ.
+        // ಇಲ್ಲಿ ನೇರವಾಗಿ ಪ್ರತಿಯೊಬ್ಬ ಕಸ್ಟಮರ್ ಹೆಸರು, ಮೊಬೈಲ್ ನಂಬರ್, ಪಿಕಪ್ ಹಾಗೂ ಡ್ರಾಪ್ ಲೊಕೇಶನ್ ಕಾರ್ಡ್ ಕೆಳಗಡೆ ಕಾಣುವಂತೆ ಸೇರಿಸಲಾಗಿದೆ.
+        let directRidesHtml = '';
+        if (d.rides && d.rides.length > 0) {
+          d.rides.forEach((r, rIdx) => {
+            directRidesHtml += `
+              <div style="background:#f1f5f9; border-left:3px solid #0fb05b; padding:6px 8px; margin:4px 0; font-size:0.78rem; border-radius:4px;">
+                <b>ಬುಕಿಂಗ್ #${rIdx + 1}:</b><br>
+                👤 ಕಸ್ಟಮರ್ ಹೆಸರು: <b>${r.customerName || 'N/A'}</b><br>
+                📞 ಮೊಬೈಲ್ ನಂಬರ್: <a href="tel:${r.customerPhone}">${r.customerPhone || 'N/A'}</a><br>
+                📍 ಪಿಕಪ್ ಸ್ಥಳ: ${r.pickupLocation || 'N/A'}<br>
+                🎯 ಡ್ರಾಪ್ ಸ್ಥಳ: ${r.dropLocation || 'N/A'}<br>
+                💰 ಹಣ: ₹${r.fare || 0} (${r.distance || 0} ಕಿ.ಮೀ)
+              </div>
+            `;
+          });
+        } else {
+          directRidesHtml = '<p style="color:#718096; font-size:0.75rem; margin-top:4px;">ಯಾವುದೇ ರೈಡ್ಸ್ ವಿವರಗಳಿಲ್ಲ.</p>';
+        }
+
         html += `
           <div class="card" style="margin-bottom:12px; border-left: 5px solid #0fb05b;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
               <span style="background:#2b6cb0; color:white; padding:2px 8px; border-radius:12px; font-size:0.75rem; font-weight:bold;">ಸೀರಿಯಲ್ ನಂ: #${d.serialNum}</span>
-              <span onclick="openAdminDetailModal('${d.driverId}')" style="background:#38a169; color:white; padding:3px 10px; border-radius:4px; font-size:0.8rem; font-weight:bold; cursor:pointer;" title="Click to view full details">ಐಡಿ: ${d.driverId || '-'} (ಕ್ಲಿಕ್ ಮಾಡಿ ನೋಡಿ)</span>
+              <span onclick="openAdminDetailModal('${d.driverId}')" style="background:#38a169; color:white; padding:3px 10px; border-radius:4px; font-size:0.8rem; font-weight:bold; cursor:pointer;" title="Click to view full details">ಐಡಿ: ${d.driverId || '-'} (ಪಾಪ್ಅಪ್ ನೋಡಿ)</span>
             </div>
             ${warningBanner}
             <p><b>ಡ್ರೈವರ್ ಹೆಸರು:</b> ${d.drvName}</p>
@@ -1678,9 +1696,9 @@
               ${d.selfiePhoto ? `<img src="${d.selfiePhoto}" class="preview-img" onclick="openImageModal('${d.selfiePhoto}')" title="Selfie">` : ''}
             </div>
 
-            <div style="margin-top:10px; background:#edf2f7; padding:8px; border-radius:6px; text-align:center;">
-              <p style="font-size:0.8rem; font-weight:bold; color:#2b6cb0;">📊 ಒಟ್ಟು ರೈಡ್ಸ್: ${totalBookings} | ಒಟ್ಟು ಗಳಿಕೆ: ₹${totalEarnings}</p>
-              <p style="font-size:0.75rem; color:#718096; margin-top:2px;">(ಕಸ್ಟಮರ್ ಹೆಸರು, ನಂಬರ್ ಹಾಗೂ ಲೊಕೇಶನ್ ನೋಡಲು ಮೇಲಿನ 'ಐಡಿ' ಮೇಲೆ ಕ್ಲಿಕ್ ಮಾಡಿ)</p>
+            <div style="margin-top:10px; background:#edf2f7; padding:8px; border-radius:6px;">
+              <p style="font-size:0.8rem; font-weight:bold; color:#2b6cb0; text-align:center; margin-bottom:4px;">📊 ಒಟ್ಟು ರೈಡ್ಸ್: ${totalBookings} | ಒಟ್ಟು ಗಳಿಕೆ: ₹${totalEarnings}</p>
+              ${directRidesHtml}
             </div>
 
             <button class="btn-submit" onclick="downloadDriverData('${d.drvName}', '${d.drvPhone}', '${d.drvVehNo}', '${d.driverId}', ${totalBookings}, ${totalEarnings}, ${JSON.stringify(d.rides).replace(/"/g, '&quot;')})" style="background:#3182ce; margin-top:8px; font-size:0.75rem; padding:6px;">📥 ಸಂಪೂರ್ಣ ಡಾಟಾ ಫೈಲ್ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ</button>
@@ -1707,7 +1725,6 @@
               <b>📞 ಮೊಬೈಲ್ ನಂಬರ್:</b> <a href="tel:${r.customerPhone}">${r.customerPhone || 'N/A'}</a><br>
               <b>📍 ಪಿಕಪ್ ಸ್ಥಳ:</b> ${r.pickupLocation || 'N/A'}<br>
               <b>🎯 ಡ್ರಾಪ್ ಸ್ಥಳ:</b> ${r.dropLocation || 'N/A'}<br>
-              <b>📌 ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್:</b> <a href="https://www.google.com/maps/search/?api=1&query=${r.pickupLocation}" target="_blank" style="color:#3182ce;">ಲೊಕೇಶನ್ ಲಿಂಕ್ ಓಪನ್ ಮಾಡಿ</a><br>
               <b>🛣️ ಕ್ರಮಿಸಿದ ದೂರ:</b> ${r.distance || 0} ಕಿ.ಮೀ<br>
               <b>💰 ಒಟ್ಟು ಹಣ (ಚಾರ್ಜ್):</b> ₹${r.fare || 0}
             </div>
@@ -1776,13 +1793,13 @@
       let ridesText = "";
       if (ridesArray && ridesArray.length > 0) {
         ridesArray.forEach((r, idx) => {
-          ridesText += `\n--- Ride ${idx + 1} ---\nCustomer Name: ${r.customerName}\nCustomer Phone: ${r.customerPhone}\nPickup: ${r.pickupLocation}\nDrop: ${r.dropLocation}\nDistance: ${r.distance} KM\nFare: Rs.${r.fare}\n`;
+          ridesText += `\n--- Ride ${idx + 1} ---\nCustomer Name: ${r.customerName}\nCustomer Phone: ${r.customerPhone}\nPickup Location: ${r.pickupLocation}\nDrop Location: ${r.dropLocation}\nDistance: ${r.distance} KM\nFare: Rs.${r.fare}\n`;
         });
       } else {
         ridesText = "\nNo completed rides available.\n";
       }
 
-      const dataText = `🛺 AR Taxi Shahapur - Complete Driver & Customer Report\n\nDriver Name: ${name}\nPhone: ${phone}\nVehicle No: ${vehNo}\nDriver ID: ${driverId}\nTotal Rides: ${totalRides}\nTotal Earnings: Rs.${totalEarnings}\n\n=== Customer Booking History ===${ridesText}\n\nGenerated via AR Taxi Shahapur Admin Panel`;
+      const dataText = `🛺 AR Taxi Shahapur - Complete Driver & Customer Report\n\nDriver Name: ${name}\nPhone: ${phone}\nVehicle No: ${vehNo}\nDriver ID: ${driverId}\nTotal Rides: ${totalRides}\nTotal Earnings: Rs.${totalEarnings}\n\n=== Customer Booking Details (Police Verification Record) ===${ridesText}\n\nGenerated via AR Taxi Shahapur Admin Panel`;
       
       const blob = new Blob([dataText], { type: 'text/plain;charset=utf-8' });
       const url = URL.createObjectURL(blob);
