@@ -145,7 +145,7 @@
     .back-home-btn { background: #718096; color: white; border: none; padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; margin-bottom: 8px; }
 
     /* Modals */
-    #imageModal, #customAlertModal, #meterResultModal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); text-align: center; padding: 20px; }
+    #imageModal, #customAlertModal, #meterResultModal, #rideFinishModal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); text-align: center; padding: 20px; }
     #fullImage { max-width: 100%; max-height: 80vh; margin-top: 40px; border-radius: 8px; }
     #modalClose { position: absolute; top: 20px; right: 25px; color: #fff; font-size: 35px; font-weight: bold; cursor: pointer; }
     #downloadBtn { display: inline-block; margin-top: 20px; background: #0fb05b; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; }
@@ -190,6 +190,16 @@
       <h3 style="color: #2d3748; margin-bottom: 10px; font-size: 1.1rem;">ಮೀಟರ್ ಮುಕ್ತಾಯ ವಿವರ</h3>
       <p id="meterResultText" style="font-size: 0.95rem; color: #2d3748; line-height: 1.6; margin-bottom: 20px; font-weight: bold;"></p>
       <button class="btn-submit" onclick="closeMeterResultModal()">ಸರಿ (OK)</button>
+    </div>
+  </div>
+
+  <!-- Ride Finish Summary Modal -->
+  <div id="rideFinishModal">
+    <div class="modal-content-box">
+      <div style="font-size: 2.5rem; margin-bottom: 10px;">✅</div>
+      <h3 style="color: #2d3748; margin-bottom: 10px; font-size: 1.1rem;">ಪ್ರಯಾಣ ಪೂರ್ಣಗೊಂಡಿದೆ</h3>
+      <p id="rideFinishText" style="font-size: 0.95rem; color: #2d3748; line-height: 1.6; margin-bottom: 20px; font-weight: bold;"></p>
+      <button class="btn-submit" onclick="closeRideFinishModal()">ಸರಿ (OK)</button>
     </div>
   </div>
 
@@ -462,6 +472,7 @@
     let drvMeterWatchId = null;
     let lastCustPos = null;
     let lastDrvPos = null;
+    let activeRunningRideData = null;
 
     window.shareAppOnWhatsApp = shareAppOnWhatsApp;
     window.toggleLanguage = toggleLanguage;
@@ -475,6 +486,7 @@
     window.showCustomAlert = showCustomAlert;
     window.closeCustomAlert = closeCustomAlert;
     window.closeMeterResultModal = closeMeterResultModal;
+    window.closeRideFinishModal = closeRideFinishModal;
     window.cancelCustomerBooking = cancelCustomerBooking;
     window.resetCustomerBookingForm = resetCustomerBookingForm;
     window.startMeter = startMeter;
@@ -890,6 +902,11 @@
 
     function closeMeterResultModal() {
       document.getElementById('meterResultModal').style.display = 'none';
+    }
+
+    function closeRideFinishModal() {
+      document.getElementById('rideFinishModal').style.display = 'none';
+      switchSection('liveSection');
     }
 
     function listenToMyBookingStatus(bookingId) {
@@ -1316,9 +1333,10 @@
                     <p><b>ಸ್ಥಳ:</b> ${b.pickupLocation}</p>
                     
                     <div style="margin-top:10px; padding:8px; background:#fff; border-radius:6px; border:1px solid #cbd5e0;">
-                       <p style="font-size:0.8rem; font-weight:bold; color:#2d3748; margin-bottom:4px;">ಪಿಕಪ್ ಹತ್ತಿರ ತಲುಪಿದ ಮೇಲೆ OTP ನಮೂದಿಸಿ:</p>
+                       <p style="font-size:0.8rem; font-weight:bold; color:#2d3748; margin-bottom:4px;">ಪಿಕಪ್ ಹತ್ತಿರ ತಲುಪಿದ ಮೇಲೆ OTP ನಮೂದಿಸಿ (ದೂರದಲ್ಲಿದ್ದರೆ ನೇರವಾಗಿ ಕಾಲ್ ಮಾಡಿ):</p>
+                       <a href="tel:${b.customerPhone}" style="display:block; background:#e53e3e; color:white; text-align:center; padding:6px; border-radius:4px; text-decoration:none; font-weight:bold; margin-bottom:8px;">📞 ಗ್ರಾಹಕರಿಗೆ ಕಾಲ್ ಮಾಡಿ (${b.customerPhone})</a>
                        <input type="tel" id="otpInput_${docSnap.id}" placeholder="Enter 4-Digit OTP" maxlength="4" inputmode="numeric" style="margin-bottom:6px; text-align:center; font-weight:bold; font-size:1rem;">
-                       <button class="btn-submit" onclick="verifyOtpAndStartRide('${docSnap.id}', '${b.otp}')" style="background:#3182ce;">OTP ವೆರಿಫೈ ಮಾಡಿ & ರೈಡ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
+                       <button class="btn-submit" onclick="verifyOtpAndStartRide('${docSnap.id}', '${b.otp}', '${b.vehicleType}', '${b.customerName}', '${b.customerPhone}', '${b.pickupLocation}', '${b.dropLocation}')" style="background:#3182ce;">OTP ವೆರಿಫೈ ಮಾಡಿ & ರೈಡ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
                     </div>
                   </div>
                 `;
@@ -1407,14 +1425,28 @@
       }
     }
 
-    async function verifyOtpAndStartRide(bookingId, correctOtp) {
+    async function verifyOtpAndStartRide(bookingId, correctOtp, vehType, custName, custPhone, pickupLoc, dropLoc) {
       const inputOtp = document.getElementById(`otpInput_${bookingId}`).value.trim();
       if (inputOtp === correctOtp) {
         try {
           await window.updateDoc(window.doc(window.db, "bookings", bookingId), {
             status: 'Started'
           });
-          alert("OTP ಯಶಸ್ವಿಯಾಗಿ ಸರಿಯಾಗಿದೆ! ರೈಡ್ ಪ್ರಾರಂಭವಾಗಿದೆ.");
+          
+          activeRunningRideData = {
+            bookingId,
+            vehType,
+            custName,
+            custPhone,
+            pickupLoc,
+            dropLoc
+          };
+
+          document.getElementById('driverMeterVehicleType').value = vehType;
+          switchSection('driverMeterSection');
+          startDriverMeter();
+          
+          alert("OTP ಯಶಸ್ವಿಯಾಗಿ ಸರಿಯಾಗಿದೆ! ಲೈವ್ ಮೀಟರ್ ಆನ್ ಆಗಿದೆ.");
         } catch(e) {
           alert("Error: " + e.message);
         }
@@ -1445,7 +1477,15 @@
           });
 
           await window.deleteDoc(window.doc(window.db, "bookings", bookingId));
-          alert("ರೈಡ್ ಯಶಸ್ವಿಯಾಗಿ ಪೂರ್ಣಗೊಂಡಿದೆ ಮತ್ತು ನಿಮ್ಮ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್‌ಗೆ ಸೇರಿಸಲಾಗಿದೆ!");
+          
+          if (drvMeterWatchId) {
+            navigator.geolocation.clearWatch(drvMeterWatchId);
+            drvMeterWatchId = null;
+          }
+
+          document.getElementById('rideFinishText').innerText = `ಕ್ರಮಿಸಿದ ದೂರ: ${kmEntered} ಕಿ.ಮೀ\nಒಟ್ಟು ಚಾರ್ಜ್: ₹${fareEntered}`;
+          document.getElementById('rideFinishModal').style.display = 'block';
+
           loadDriverPersonalDashboard(driverId);
         } catch(e) {
           alert("Error: " + e.message);
@@ -1526,12 +1566,6 @@
           ridesByDriver[dId].push(r);
         });
 
-        allDriversData = [];
-        driversSnap.forEach((docSnap, index) => {
-          allDriversData.push({ id: docSnap.id, serialNumber: index + 1, ...docSnap.data() }, ridesByDriver);
-        });
-        
-        // Properly map driver objects with rides
         allDriversData = [];
         let sNum = 1;
         driversSnap.forEach(docSnap => {
