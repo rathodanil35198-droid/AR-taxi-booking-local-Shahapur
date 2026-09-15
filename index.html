@@ -318,7 +318,7 @@
         <div class="form-group">
           <label id="lblMeterVeh">ವಾಹನ ಆಯ್ಕೆ ಮಾಡಿ:</label>
           <select id="meterVehicleType" onchange="resetMeterRate()">
-            <option value="Auto">🛺 ಆಟೋ / Auto (ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 12)</option>
+            <option value="Auto">🛺 ಆಟೋ / Auto (2 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 50 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 12)</option>
             <option value="Car">🚗 ಕಾರ್ / Car (3 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 200 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 15)</option>
           </select>
         </div>
@@ -326,7 +326,7 @@
         <div class="card" style="text-align:center; background:#f7fafc;">
           <p style="font-size:0.8rem; color:#718096;"><span id="txtDistCovered">ಪ್ರಯಾಣಿಸಿದ ದೂರ:</span> <span id="distCount">0.0</span> ಕಿ.ಮೀ</p>
           <p style="font-size:0.9rem; font-weight:bold; color:#d69e2e; margin: 4px 0;" id="meterStatusMsg">ವಾಹನ ನಿಂತಿದೆ</p>
-          <p style="font-size:1.2rem; font-weight:bold; color:#0fb05b;"><span id="txtEstFare">ಅಂದಾಜು ಶುಲ್ಕ:</span> ₹<span id="liveAmount">0</span></p>
+          <p style="font-size:1.2rem; font-weight:bold; color:#0fb05b;"><span id="txtEstFare">ಅಂದಾಜು ಶುಲ್ಕ:</span> ₹<span id="liveAmount">50</span></p>
           <p style="font-size:0.75rem; color:#4a5568; margin-top:5px;" id="liveGpsCoord">GPS: ಕಾಯಲಾಗುತ್ತಿದೆ...</p>
         </div>
         <button class="btn-submit" onclick="stopMeterOnly()" style="background:#e53e3e;" id="btnStopMeter">ಮೀಟರ್ ಆಫ್ ಮಾಡಿ</button>
@@ -418,7 +418,7 @@
         <div class="form-group">
           <label id="lblDrvMeterVeh">ವಾಹನ ಆಯ್ಕೆ ಮಾಡಿ:</label>
           <select id="driverMeterVehicleType" onchange="resetDriverMeterRate()">
-            <option value="Auto">🛺 ಆಟೋ / Auto (ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 12)</option>
+            <option value="Auto">🛺 ಆಟೋ / Auto (2 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 50 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 12)</option>
             <option value="Car">🚗 ಕಾರ್ / Car (3 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 200 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 15)</option>
           </select>
         </div>
@@ -426,7 +426,7 @@
         <div class="card" style="text-align:center; background:#f7fafc;">
           <p style="font-size:0.8rem; color:#718096;"><span id="txtDrvDist">ಪ್ರಯಾಣಿಸಿದ ದೂರ:</span> <span id="driverDistCount">0.0</span> ಕಿ.ಮೀ</p>
           <p style="font-size:0.9rem; font-weight:bold; color:#d69e2e; margin: 4px 0;" id="driverMeterStatusMsg">ವಾಹನ ನಿಂತಿದೆ</p>
-          <p style="font-size:1.2rem; font-weight:bold; color:#0fb05b;"><span id="txtDrvFare">ಅಂದಾಜು ಶುಲ್ಕ:</span> ₹<span id="driverLiveAmount">0</span></p>
+          <p style="font-size:1.2rem; font-weight:bold; color:#0fb05b;"><span id="txtDrvFare">ಅಂದಾಜು ಶುಲ್ಕ:</span> ₹<span id="driverLiveAmount">50</span></p>
           <p style="font-size:0.75rem; color:#4a5568; margin-top:5px;" id="driverLiveGpsCoord">GPS: ಕಾಯಲಾಗುತ್ತಿದೆ...</p>
         </div>
         <button class="btn-submit" onclick="stopDriverMeterOnly()" style="background:#e53e3e;" id="btnDrvStopMeter">ಮೀಟರ್ ಆಫ್ ಮಾಡಿ</button>
@@ -902,6 +902,11 @@
 
     function closeMeterResultModal() {
       document.getElementById('meterResultModal').style.display = 'none';
+      if (currentUserRole === 'customer') {
+        switchSection('customerSection');
+      } else if (currentUserRole === 'driver') {
+        switchSection('driverMeterSection');
+      }
     }
 
     function closeRideFinishModal() {
@@ -1054,7 +1059,11 @@
 
     function calculateFare(type, dist) {
       if (type === 'Auto') {
-        return dist * 12;
+        if (dist <= 2.0) {
+          return 50;
+        } else {
+          return 50 + ((dist - 2.0) * 12);
+        }
       } else {
         if (dist <= 3.0) {
           return 200;
@@ -1412,7 +1421,7 @@
         const audio = document.getElementById('alertSound');
         if(audio) { audio.pause(); audio.currentTime = 0; }
 
-        alert(`ನ್ಯೂ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿದ್ದೀರಿ\nನಿಮ್ಮ ಜಿಪಿಎಸ್ ಮತ್ತೆ ನಿಮ್ಮ ಎಲ್ಲಾ ಐಡಿ ಮೊಬೈಲ್ ನಂಬರನ್ನು ಕಸ್ಟಮರ್ ಗೆ ಕಳಿಸಲಾಗಿದೆ ಪಿಕಪ್ ಮಾಡಿ`);
+        alert(`ನ್ಯೂ ಬುಕಿంగ్ ಸ್ವೀಕರಿಸಿದ್ದೀರಿ\nನಿಮ್ಮ ಜಿಪಿಎಸ್ ಮತ್ತೆ ನಿಮ್ಮ ಎಲ್ಲಾ ಐಡಿ ಮೊಬೈಲ್ ನಂಬರನ್ನು ಕಸ್ಟಮರ್ ಗೆ ಕಳಿಸಲಾಗಿದೆ ಪಿಕಪ್ ಮಾಡಿ`);
 
         if (pickupLat && pickupLng) {
           const gmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${pickupLat},${pickupLng}&travelmode=driving`;
@@ -1426,7 +1435,8 @@
     }
 
     async function verifyOtpAndStartRide(bookingId, correctOtp, vehType, custName, custPhone, pickupLoc, dropLoc) {
-      const inputOtp = document.getElementById(`otpInput_${bookingId}`).value.trim();
+      const inputEl = document.getElementById(`otpInput_${bookingId}`);
+      const inputOtp = inputEl ? inputEl.value.trim() : '';
       if (inputOtp === correctOtp) {
         try {
           await window.updateDoc(window.doc(window.db, "bookings", bookingId), {
