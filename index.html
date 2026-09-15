@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   
-  <title id="pageTitle">AR Taxi Shahapur | ಆಟೋ ಬುಕಿಂಗ್ ಆಪ್ | ಕಾರ್ ಬುಕಿಂಗ್ ಆಪ್</title>
+  <title id="pageTitle">AR Taxi Shahapur | ಆಟೋ ಬುಕಿಂಗ್ ಆಪ್ | ಕಾರ್ ಬುಕಿంగ్ ಆಪ್</title>
   
   <meta name="theme-color" content="#0fb05b">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -46,7 +46,7 @@
   <style>
     :root { --primary: #0fb05b; --secondary: #41c91d; --bg: #f4f7f6; --text: #333; }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background-color: var(--bg); color: var(--text); padding: 8px; }
+    body { background-color: var(--bg); color: var(--text); padding: 8px; touch-action: manipulation; }
     .container { width: 100%; max-width: 480px; margin: 0 auto; background: #fff; padding: 12px; border-radius: 8px; position: relative; }
 
     @keyframes flashingText {
@@ -126,7 +126,7 @@
     h2 { font-size: 0.95rem; margin-bottom: 8px; color: #2d3748; border-left: 4px solid var(--primary); padding-left: 6px; }
     .form-group { margin-bottom: 8px; }
     label { display: block; font-size: 0.78rem; font-weight: 700; margin-bottom: 2px; color: #4a5568; }
-    input, select { width: 100%; padding: 8px; border: 2px solid #e2e8f0; border-radius: 6px; font-size: 0.85rem; }
+    input, select { width: 100%; padding: 8px; border: 2px solid #e2e8f0; border-radius: 6px; font-size: 16px !important; background-color: #fff; }
     
     .error-msg { color: #e53e3e; font-size: 0.75rem; font-weight: bold; margin-top: 2px; display: none; }
 
@@ -145,12 +145,12 @@
     .back-home-btn { background: #718096; color: white; border: none; padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; margin-bottom: 8px; }
 
     /* Modals */
-    #imageModal, #customAlertModal, #meterResultModal, #rideFinishModal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); text-align: center; padding: 20px; }
+    #imageModal, #customAlertModal, #meterResultModal, #rideFinishModal, #adminDetailModal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); text-align: center; padding: 20px; overflow-y: auto; }
     #fullImage { max-width: 100%; max-height: 80vh; margin-top: 40px; border-radius: 8px; }
     #modalClose { position: absolute; top: 20px; right: 25px; color: #fff; font-size: 35px; font-weight: bold; cursor: pointer; }
     #downloadBtn { display: inline-block; margin-top: 20px; background: #0fb05b; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; }
     
-    .modal-content-box { background: #fff; max-width: 380px; margin: 100px auto; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+    .modal-content-box { background: #fff; max-width: 380px; margin: 60px auto; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
 
     /* Dashboard Box */
     .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
@@ -171,6 +171,18 @@
     <img id="fullImage" src="" alt="Full View">
     <br>
     <a id="downloadBtn" href="" download="driver_photo.jpg">ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ (Download)</a>
+  </div>
+
+  <!-- Admin Detailed Popup Modal (Only opens on ID click) -->
+  <div id="adminDetailModal">
+    <div class="modal-content-box" style="text-align: left; max-width: 420px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <h3 style="color: #2d3748; font-size: 1rem;">🔍 ಡ್ರೈವರ್ ಸಂಪೂರ್ಣ ವಿವರಗಳು</h3>
+        <span onclick="closeAdminDetailModal()" style="font-size: 24px; cursor: pointer; font-weight: bold; color: #e53e3e;">&times;</span>
+      </div>
+      <div id="adminModalBody" style="max-height: 60vh; overflow-y: auto; font-size: 0.85rem; line-height: 1.5;"></div>
+      <button class="btn-submit" onclick="closeAdminDetailModal()" style="margin-top: 15px;">ಮುಚ್ಚಿ (Close)</button>
+    </div>
   </div>
 
   <!-- Custom Alert Popup Modal -->
@@ -505,6 +517,8 @@
     window.openImageModal = openImageModal;
     window.closeImageModal = closeImageModal;
     window.downloadDriverData = downloadDriverData;
+    window.openAdminDetailModal = openAdminDetailModal;
+    window.closeAdminDetailModal = closeAdminDetailModal;
 
     function shareAppOnWhatsApp() {
       const appUrl = window.location.href;
@@ -1435,7 +1449,6 @@
     }
 
     function autoLockOtpBox(bookingId) {
-      // ಕಸ್ಟಮರ್ ಕಾಲ್ ಮಾಡಿದ ತಕ್ಷಣ ಅಥವಾ ಕಾಲ್ ಬಟನ್ ಒತ್ತಿದಾಗ ಆಟೋಮ್ಯಾಟಿಕ್ ಲಾಕ್ ಫೀಚರ್ ಸಕ್ರಿಯಗೊಳ್ಳುತ್ತದೆ
       const inputEl = document.getElementById(`otpInput_${bookingId}`);
       if(inputEl) {
         inputEl.focus();
@@ -1631,7 +1644,6 @@
         let totalBookings = d.rides ? d.rides.length : 0;
         let totalEarnings = 0;
         let warning14Day = false;
-        let ridesListHtml = '';
 
         d.rides.forEach(r => {
           totalEarnings += Number(r.fare || 0);
@@ -1640,18 +1652,6 @@
           if (ageDays >= 13.5 && ageDays < 15) {
             warning14Day = true;
           }
-
-          ridesListHtml += `
-            <div style="background:#f8fafc; border-left:3px solid #3182ce; padding:8px; margin:6px 0; font-size:0.8rem; border-radius:4px;">
-              <b>👤 ಕಸ್ಟಮರ್ ಹೆಸರು:</b> ${r.customerName || 'N/A'}<br>
-              <b>📞 ಮೊಬೈಲ್ ನಂಬರ್:</b> <a href="tel:${r.customerPhone}">${r.customerPhone || 'N/A'}</a><br>
-              <b>📍 ಪಿಕಪ್ ಸ್ಥಳ:</b> ${r.pickupLocation || 'N/A'}<br>
-              <b>🎯 ಡ್ರಾಪ್ ಸ್ಥಳ:</b> ${r.dropLocation || 'N/A'}<br>
-              <b>📌 ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್:</b> <a href="https://www.google.com/maps/search/?api=1&query=${r.pickupLocation}" target="_blank">ಲೊಕೇಶನ್ ಲಿಂಕ್</a><br>
-              <b>🛣️ ಕ್ರಮಿಸಿದ ದೂರ:</b> ${r.distance || 0} ಕಿ.ಮೀ<br>
-              <b>💰 ಒಟ್ಟು ಹಣ (ಚಾರ್ಜ್):</b> ₹${r.fare || 0}
-            </div>
-          `;
         });
 
         let warningBanner = '';
@@ -1659,11 +1659,12 @@
           warningBanner = `<div style="background:#fff3cd; color:#856404; padding:6px; border-radius:4px; font-weight:bold; margin-bottom:6px; font-size:0.75rem;">⚠️ ಎಚ್ಚರಿಕೆ: ನಾಳೆ ನಿಮ್ಮ ಡಾಟಾ ಡಿಲೀಟ್ ಆಗುತ್ತದೆ!</div>`;
         }
 
+        // ಇಲ್ಲಿ ಉದ್ದನೆಯ ಪಟ್ಟಿಯಲ್ಲಿ ಕಸ್ಟಮರ್ ಹೆಸರು, ಮೊಬೈಲ್ ನಂಬರ್ ಮರೆಮಾಚಲಾಗಿದೆ. ಐಡಿ ಮೇಲೆ ಕ್ಲಿಕ್ ಮಾಡಿದರೆ ಮಾತ್ರ ಕಾಣಿಸುತ್ತದೆ.
         html += `
           <div class="card" style="margin-bottom:12px; border-left: 5px solid #0fb05b;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
               <span style="background:#2b6cb0; color:white; padding:2px 8px; border-radius:12px; font-size:0.75rem; font-weight:bold;">ಸೀರಿಯಲ್ ನಂ: #${d.serialNum}</span>
-              <span style="color:#718096; font-size:0.75rem;">ಐಡಿ: <b>${d.driverId || '-'}</b></span>
+              <span onclick="openAdminDetailModal('${d.driverId}')" style="background:#38a169; color:white; padding:3px 10px; border-radius:4px; font-size:0.8rem; font-weight:bold; cursor:pointer;" title="Click to view full details">ಐಡಿ: ${d.driverId || '-'} (ಕ್ಲಿಕ್ ಮಾಡಿ ನೋಡಿ)</span>
             </div>
             ${warningBanner}
             <p><b>ಡ್ರೈವರ್ ಹೆಸರು:</b> ${d.drvName}</p>
@@ -1677,18 +1678,61 @@
               ${d.selfiePhoto ? `<img src="${d.selfiePhoto}" class="preview-img" onclick="openImageModal('${d.selfiePhoto}')" title="Selfie">` : ''}
             </div>
 
-            <div style="margin-top:10px; background:#edf2f7; padding:8px; border-radius:6px;">
-              <p style="font-size:0.8rem; font-weight:bold; color:#2b6cb0; margin-bottom:4px;">📊 ಪೂರ್ಣಗೊಂಡ ರೈಡ್ಸ್ ವಿವರಗಳು (${totalBookings} ಓಟಗಳು | ಒಟ್ಟು ಗಳಿಕೆ: ₹${totalEarnings}):</p>
-              ${ridesListHtml || '<p style="font-size:0.75rem; color:#718096;">ಯಾವುದೇ ಮುಕ್ತಾಯಗೊಂಡ ರೈಡ್ಸ್ ಇಲ್ಲ.</p>'}
+            <div style="margin-top:10px; background:#edf2f7; padding:8px; border-radius:6px; text-align:center;">
+              <p style="font-size:0.8rem; font-weight:bold; color:#2b6cb0;">📊 ಒಟ್ಟು ರೈಡ್ಸ್: ${totalBookings} | ಒಟ್ಟು ಗಳಿಕೆ: ₹${totalEarnings}</p>
+              <p style="font-size:0.75rem; color:#718096; margin-top:2px;">(ಕಸ್ಟಮರ್ ಹೆಸರು, ನಂಬರ್ ಹಾಗೂ ಲೊಕೇಶನ್ ನೋಡಲು ಮೇಲಿನ 'ಐಡಿ' ಮೇಲೆ ಕ್ಲಿಕ್ ಮಾಡಿ)</p>
             </div>
 
-            <button class="btn-submit" onclick="downloadDriverData('${d.drvName}', '${d.drvPhone}', '${d.drvVehNo}', '${d.driverId}', ${totalBookings}, ${totalEarnings})" style="background:#3182ce; margin-top:8px; font-size:0.75rem; padding:6px;">📥 ಡ್ರೈವರ್ ಡಾಟಾ ಡೌನ್‌ಲೋಡ್ / ಶೇರ್ ಮಾಡಿ</button>
+            <button class="btn-submit" onclick="downloadDriverData('${d.drvName}', '${d.drvPhone}', '${d.drvVehNo}', '${d.driverId}', ${totalBookings}, ${totalEarnings}, ${JSON.stringify(d.rides).replace(/"/g, '&quot;')})" style="background:#3182ce; margin-top:8px; font-size:0.75rem; padding:6px;">📥 ಸಂಪೂರ್ಣ ಡಾಟಾ ಫೈಲ್ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ</button>
             <button class="btn-submit" onclick="deleteDriver('${d.id}')" style="background:#e53e3e; margin-top:6px; font-size:0.75rem; padding:6px;">🗑️ ಪ್ರೊಫೈಲ್ ಡಿಲೀಟ್ ಮಾಡಿ</button>
           </div>
         `;
       });
 
       listDiv.innerHTML = html;
+    }
+
+    function openAdminDetailModal(driverId) {
+      const d = allDriversData.find(item => item.driverId === driverId);
+      if (!d) return;
+
+      let totalEarnings = 0;
+      let ridesListHtml = '';
+      if (d.rides && d.rides.length > 0) {
+        d.rides.forEach(r => {
+          totalEarnings += Number(r.fare || 0);
+          ridesListHtml += `
+            <div style="background:#f8fafc; border-left:3px solid #3182ce; padding:8px; margin:6px 0; font-size:0.85rem; border-radius:4px;">
+              <b>👤 ಕಸ್ಟಮರ್ ಹೆಸರು:</b> ${r.customerName || 'N/A'}<br>
+              <b>📞 ಮೊಬೈಲ್ ನಂಬರ್:</b> <a href="tel:${r.customerPhone}">${r.customerPhone || 'N/A'}</a><br>
+              <b>📍 ಪಿಕಪ್ ಸ್ಥಳ:</b> ${r.pickupLocation || 'N/A'}<br>
+              <b>🎯 ಡ್ರಾಪ್ ಸ್ಥಳ:</b> ${r.dropLocation || 'N/A'}<br>
+              <b>📌 ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್:</b> <a href="https://www.google.com/maps/search/?api=1&query=${r.pickupLocation}" target="_blank" style="color:#3182ce;">ಲೊಕೇಶನ್ ಲಿಂಕ್ ಓಪನ್ ಮಾಡಿ</a><br>
+              <b>🛣️ ಕ್ರಮಿಸಿದ ದೂರ:</b> ${r.distance || 0} ಕಿ.ಮೀ<br>
+              <b>💰 ಒಟ್ಟು ಹಣ (ಚಾರ್ಜ್):</b> ₹${r.fare || 0}
+            </div>
+          `;
+        });
+      } else {
+        ridesListHtml = '<p style="color:#718096; font-size:0.8rem;">ಯಾವುದೇ ಪೂರ್ಣಗೊಂಡ ರೈಡ್ಸ್ ಇಲ್ಲ.</p>';
+      }
+
+      let modalHtml = `
+        <p><b>ಡ್ರೈವರ್ ಹೆಸರು:</b> ${d.drvName}</p>
+        <p><b>ಮೊಬೈಲ್ ನಂಬರ್:</b> <a href="tel:${d.drvPhone}">${d.drvPhone}</a></p>
+        <p><b>ವಾಹನ ನಂಬರ್:</b> ${d.drvVehNo} (${d.drvVehType})</p>
+        <p><b>ಡ್ರೈವರ್ ಐಡಿ:</b> ${d.driverId}</p>
+        <hr style="margin: 10px 0;">
+        <p style="font-weight:bold; color:#2b6cb0; margin-bottom:6px;">ಕಸ್ಟಮರ್ ಬುಕಿಂಗ್ ವಿವರಗಳು (${d.rides ? d.rides.length : 0} ಓಟಗಳು):</p>
+        ${ridesListHtml}
+      `;
+
+      document.getElementById('adminModalBody').innerHTML = modalHtml;
+      document.getElementById('adminDetailModal').style.display = 'block';
+    }
+
+    function closeAdminDetailModal() {
+      document.getElementById('adminDetailModal').style.display = 'none';
     }
 
     function filterAdminDrivers() {
@@ -1720,7 +1764,7 @@
 
     function openImageModal(imgSrc) {
       document.getElementById('fullImage').src = imgSrc;
-      document.getElementById('downloadBtn.href') = imgSrc;
+      document.getElementById('downloadBtn').href = imgSrc;
       document.getElementById('imageModal').style.display = 'block';
     }
 
@@ -1728,13 +1772,23 @@
       document.getElementById('imageModal').style.display = 'none';
     }
 
-    function downloadDriverData(name, phone, vehNo, driverId, totalRides, totalEarnings) {
-      const dataText = `🛺 AR Taxi Shahapur - Driver Report\n\nName: ${name}\nPhone: ${phone}\nVehicle No: ${vehNo}\nDriver ID: ${driverId}\nTotal Rides: ${totalRides}\nTotal Earnings: Rs.${totalEarnings}\n\nGenerated via AR Taxi Shahapur Admin Panel`;
+    function downloadDriverData(name, phone, vehNo, driverId, totalRides, totalEarnings, ridesArray) {
+      let ridesText = "";
+      if (ridesArray && ridesArray.length > 0) {
+        ridesArray.forEach((r, idx) => {
+          ridesText += `\n--- Ride ${idx + 1} ---\nCustomer Name: ${r.customerName}\nCustomer Phone: ${r.customerPhone}\nPickup: ${r.pickupLocation}\nDrop: ${r.dropLocation}\nDistance: ${r.distance} KM\nFare: Rs.${r.fare}\n`;
+        });
+      } else {
+        ridesText = "\nNo completed rides available.\n";
+      }
+
+      const dataText = `🛺 AR Taxi Shahapur - Complete Driver & Customer Report\n\nDriver Name: ${name}\nPhone: ${phone}\nVehicle No: ${vehNo}\nDriver ID: ${driverId}\nTotal Rides: ${totalRides}\nTotal Earnings: Rs.${totalEarnings}\n\n=== Customer Booking History ===${ridesText}\n\nGenerated via AR Taxi Shahapur Admin Panel`;
+      
       const blob = new Blob([dataText], { type: 'text/plain;charset=utf-8' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `Driver_${driverId}_Report.txt`;
+      a.download = `Driver_${driverId}_Complete_Report.txt`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
