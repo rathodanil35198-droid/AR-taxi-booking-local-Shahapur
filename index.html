@@ -463,6 +463,7 @@
     let lastCustPos = null;
     let lastDrvPos = null;
 
+    // Window-level bindings for HTML onclick references
     window.shareAppOnWhatsApp = shareAppOnWhatsApp;
     window.toggleLanguage = toggleLanguage;
     window.selectRole = selectRole;
@@ -1262,11 +1263,6 @@
 
       const q = window.query(window.collection(window.db, "bookings"), window.orderBy("timestamp", "desc"));
       bookingsUnsubscribe = window.onSnapshot(q, (snapshot) => {
-        const activeEl = document.activeElement;
-        if (activeEl && activeEl.tagName === 'INPUT' && activeEl.id && activeEl.id.startsWith('otpInput_')) {
-          return; 
-        }
-
         const listDiv = document.getElementById('driverBookingsList');
         let pendingHtml = '';
         let acceptedHtml = '';
@@ -1282,6 +1278,7 @@
           const b = docSnap.data();
           const bDate = b.dateKey || '';
 
+          // Auto delete older bookings
           if (bDate !== todayStr || (currentHour === 0 && currentMinute < 30)) {
             window.deleteDoc(window.doc(window.db, "bookings", docSnap.id)).catch(err => {});
             return;
@@ -1290,6 +1287,7 @@
           if (b.pickupLat && b.pickupLng && currentDriverLat && currentDriverLng) {
             const dist = calculateDistance(currentDriverLat, currentDriverLng, b.pickupLat, b.pickupLng);
             
+            // 2KM Location Filter for Nearby Drivers
             if (dist <= 2.0) {
               let vehLogo = b.vehicleType === 'Car' ? '🚗' : '🛺';
               let vehNameText = b.vehicleType === 'Car' ? (currentLang === 'kn' ? 'ಕಾರ್ (Car)' : 'Car') : (currentLang === 'kn' ? 'ಆಟೋ (Auto)' : 'Auto');
