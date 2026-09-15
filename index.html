@@ -308,7 +308,7 @@
         <div class="form-group">
           <label id="lblMeterVeh">ವಾಹನ ಆಯ್ಕೆ ಮಾಡಿ:</label>
           <select id="meterVehicleType" onchange="resetMeterRate()">
-            <option value="Auto">🛺 ಆಟೋ / Auto (2 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 50 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 12)</option>
+            <option value="Auto">🛺 ಆಟೋ / Auto (ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 12)</option>
             <option value="Car">🚗 ಕಾರ್ / Car (3 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 200 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 15)</option>
           </select>
         </div>
@@ -408,7 +408,7 @@
         <div class="form-group">
           <label id="lblDrvMeterVeh">ವಾಹನ ಆಯ್ಕೆ ಮಾಡಿ:</label>
           <select id="driverMeterVehicleType" onchange="resetDriverMeterRate()">
-            <option value="Auto">🛺 ಆಟೋ / Auto (2 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 50 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 12)</option>
+            <option value="Auto">🛺 ಆಟೋ / Auto (ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 12)</option>
             <option value="Car">🚗 ಕಾರ್ / Car (3 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 200 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 15)</option>
           </select>
         </div>
@@ -1036,11 +1036,7 @@
 
     function calculateFare(type, dist) {
       if (type === 'Auto') {
-        if (dist <= 2.0) {
-          return 50;
-        } else {
-          return 50 + ((dist - 2.0) * 12);
-        }
+        return dist * 12;
       } else {
         if (dist <= 3.0) {
           return 200;
@@ -1548,7 +1544,7 @@
     async function deleteDriver(docId) {
       if (confirm("ಈ ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ ಡಿಲೀಟ್ ಮಾಡಲು ಖಚಿತವೇ?")) {
         try {
-          await window.deleteDoc(window.doc(window.db, "drivers", docId));
+          await window.deleteDoc(window.doc(window.doc(window.db, "drivers", docId)));
           alert("ಡ್ರೈವರ್ ಡಿಲೀಟ್ ಮಾಡಲಾಗಿದೆ.");
           loadAdminDrivers();
         } catch (e) {
