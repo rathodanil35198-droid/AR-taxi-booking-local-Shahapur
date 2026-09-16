@@ -1621,7 +1621,7 @@
         let warning14Day = false;
         let ridesListHtml = '';
 
-        d.rides.forEach(r => {
+        d.rides.forEach((r, index) => {
           totalEarnings += Number(r.fare || 0);
           const rTime = r.createdAtMillis || now;
           const ageDays = (now - rTime) / ONE_DAY_MS;
@@ -1630,18 +1630,21 @@
           }
 
           ridesListHtml += `
-            <div style="background:#f8fafc; border-left:3px solid #3182ce; padding:6px; margin:4px 0; font-size:0.75rem;">
-              <b>ಕಸ್ಟಮರ್:</b> ${r.customerName || 'N/A'} (${r.customerPhone || ''})<br>
-              <b>ಪಿಕಪ್:</b> <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.pickupLocation)}" target="_blank" style="color:#3182ce; text-decoration:underline;">${r.pickupLocation || ''}</a> | 
-              <b>ಡ್ರಾಪ್:</b> <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.dropLocation)}" target="_blank" style="color:#3182ce; text-decoration:underline;">${r.dropLocation || ''}</a><br>
-              <b>ದೂರ:</b> ${r.distance || 0} ಕಿ.ಮೀ | <b>ಹಣ:</b> ₹${r.fare || 0}
+            <div style="background:#f8fafc; border:1px solid #cbd5e0; border-left:4px solid #0fb05b; padding:8px; margin:6px 0; border-radius:6px; font-size:0.8rem;">
+              <p style="font-weight:bold; color:#2b6cb0; margin-bottom:2px;">ಬುಕಿಂಗ್ #${index + 1}</p>
+              <p><b>ಕಸ್ಟಮರ್ ಹೆಸರು:</b> ${r.customerName || 'N/A'}</p>
+              <p><b>ಮೊಬೈಲ್ ನಂಬರ್:</b> <a href="tel:${r.customerPhone}">${r.customerPhone || ''}</a></p>
+              <p><b>ಪಿಕಪ್ ಸ್ಥಳ:</b> <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.pickupLocation)}" target="_blank" style="color:#3182ce; text-decoration:underline;">${r.pickupLocation || ''}</a></p>
+              <p><b>ಡ್ರಾಪ್ ಸ್ಥಳ:</b> <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.dropLocation)}" target="_blank" style="color:#3182ce; text-decoration:underline;">${r.dropLocation || ''}</a></p>
+              <p><b>ಓಡಿದ ದೂರ:</b> ${r.distance || 0} ಕಿ.ಮೀ</p>
+              <p><b>ಚಾರ್ಜ್ ಆದ ಹಣ:</b> <span style="color:#0fb05b; font-weight:bold;">₹${r.fare || 0}</span></p>
             </div>
           `;
         });
 
         let warningBanner = '';
         if (warning14Day) {
-          warningBanner = `<div style="background:#fff3cd; color:red; padding:6px; border-radius:4px; font-weight:bold; margin-bottom:6px; font-size:0.8rem;">⚠️ ನಿಮ್ಮ ಡಾಟಾ 15 ದಿನದ ಒಳಗೆ ಡಿಲೀಟ್ ಆಗುತ್ತದೆ!</div>`;
+          warningBanner = `<div style="background:#fff3cd; color:#856404; border:1px solid #ffeeba; padding:6px; border-radius:4px; font-weight:bold; margin-bottom:6px; font-size:0.8rem;">⚠️ ಎಚ್ಚರಿಕೆ: ನಿಮ್ಮ ಡೇಟಾ ನಾಳೆ ಡಿಲೀಟ್ ಆಗಲಿದೆ (14 ದಿನಗಳು ಪೂರ್ಣಗೊಂಡಿವೆ)!</div>`;
         }
 
         html += `
@@ -1698,7 +1701,7 @@
       const driver = allDriversData.find(d => d.driverId === driverId);
       if (!driver) return;
 
-      let textContent = "\uFEFF"; // UTF-8 BOM for proper Kannada rendering in text editors
+      let textContent = "\uFEFF"; 
       textContent += `=== AR TAXI SHAHAPUR - DRIVER REPORT ===\n`;
       textContent += `ಡ್ರೈವರ್ ಹೆಸರು: ${driver.drvName}\n`;
       textContent += `ಐಡಿ ನಂಬರ್: ${driver.driverId}\n`;
