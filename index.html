@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   
-  <title id="pageTitle">AR Taxi booking yadagiri Shahapur | ಆಟೋ ಬುಕಿಂಗ್ ಆಪ್ | ಕಾರ್ ಬುಕಿಂಗ್ ಆಪ್</title>
+  <title id="pageTitle">AR Taxi Shahapur | ಆಟೋ ಬುಕಿಂಗ್ ಆಪ್ | ಕಾರ್ ಬುಕಿಂಗ್ ಆಪ್</title>
   
   <meta name="theme-color" content="#0fb05b">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="AR Taxi booking yadgiri Shahapur">
+  <meta name="apple-mobile-web-app-title" content="AR Taxi Shahapur">
 
   <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22AR%20Taxi%20Shahapur%22%2C%22short_name%22%3A%22AR%20Taxi%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23ffffff%22%2C%22theme_color%22%3A%22%230fb05b%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fimg.icons8.com%2Fcolor%2F512%2Ftaxi.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D">
 
@@ -165,15 +165,13 @@
     💬
   </a>
 
-  <!-- Fullscreen Image Modal -->
   <div id="imageModal">
-    <span id="modalClose" onclick="closeImageModal()">&times;</span>
+    <span id="modalClose" onclick="closeImageModal()">×</span>
     <img id="fullImage" src="" alt="Full View">
     <br>
     <a id="downloadBtn" href="" download="driver_photo.jpg">ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ (Download)</a>
   </div>
 
-  <!-- Custom Alert Popup Modal -->
   <div id="customAlertModal">
     <div class="modal-content-box">
       <div style="font-size: 2.5rem; margin-bottom: 10px;">🛺</div>
@@ -183,7 +181,6 @@
     </div>
   </div>
 
-  <!-- Meter Result Modal -->
   <div id="meterResultModal">
     <div class="modal-content-box">
       <div style="font-size: 2.5rem; margin-bottom: 10px;">🏁</div>
@@ -193,7 +190,6 @@
     </div>
   </div>
 
-  <!-- Ride Finish Summary Modal -->
   <div id="rideFinishModal">
     <div class="modal-content-box">
       <div style="font-size: 2.5rem; margin-bottom: 10px;">✅</div>
@@ -223,11 +219,11 @@
       <p style="font-size: 0.85rem; color: #7f8c8d; margin-bottom: 25px;">ದಯವಿಟ್ಟು ನಿಮ್ಮ ವಲಯವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ / Select Your Role:</p>
 
       <button class="role-btn role-customer" onclick="selectRole('customer')">
-        🙋 ಕಸ್ಟಮರ್ ಬುಕಿಂಗ್ & ಮಾಡಿರಿ 👉 (Customer Booking & Meter)
+        👤 ಕಸ್ಟಮರ್ ಬುಕಿಂಗ್ & ಮೀಟರ್ (Customer Booking & Meter)
       </button>
 
       <button class="role-btn role-driver" onclick="selectRole('driver')">
-        🛺 ಡ್ರೈವರ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ & ಅಡ್ಮಿನ್🚖 (Driver Dashboard & Admin)
+        🛺 ಡ್ರೈವರ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ & ಅಡ್ಮಿನ್ (Driver Dashboard & Admin)
       </button>
     </div>
 
@@ -258,7 +254,6 @@
 
       <div class="nav-tabs" id="navTabsContainer"></div>
 
-      <!-- 1. CUSTOMER BOOKING SECTION -->
       <div id="customerSection" class="section">
         <h2 id="h2Booking">ಯಾತ್ರೆ ಬುಕ್ ಮಾಡಿ</h2>
         <div id="bookingFormContainer">
@@ -312,7 +307,6 @@
         <div id="customerStatusContainer" style="margin-top: 10px;"></div>
       </div>
 
-      <!-- 2. CUSTOMER LIVE METER SECTION -->
       <div id="meterSection" class="section">
         <h2 id="h2LiveMeter">ಲೈವ್ ರನ್ನಿಂಗ್ ಮೀಟರ್</h2>
         <div class="form-group">
@@ -332,7 +326,6 @@
         <button class="btn-submit" onclick="stopMeterOnly()" style="background:#e53e3e;" id="btnStopMeter">ಮೀಟರ್ ಆಫ್ ಮಾಡಿ</button>
       </div>
 
-      <!-- 3. DRIVER PROFILE SECTION -->
       <div id="profileSection" class="section">
         <h2 id="h2DriverProfile">ಡ್ರೈವರ್ ರಜಿಸ್ಟ್ರೇಷನ್ / ಪ್ರೊಫೈಲ್</h2>
         
@@ -389,7 +382,6 @@
         <button class="btn-submit" onclick="registerDriver()" id="btnRegisterDriver">ಲಾಗಿನ್ / ರಜಿಸ್ಟರ್ ಮಾಡಿ</button>
       </div>
 
-      <!-- 4. DRIVER LIVE BOOKINGS SECTION -->
       <div id="liveSection" class="section">
         <h2 id="h2LiveOrders">ಡ್ರೈವರ್‌ಗಳಿಗೆ ಲೈವ್ ಬುಕಿಂಗ್ ಆರ್ಡರ್‌ಗಳು (2 KM ಒಳಗೆ ಇರುವವರು)</h2>
         <div class="form-group">
@@ -397,7 +389,6 @@
           <input type="password" id="driverInputId" placeholder="4 digit ID" maxlength="4" inputmode="numeric" oninput="checkDriverIdAndListen()">
         </div>
 
-        <!-- Driver Personal Dashboard Summary Box -->
         <div id="driverPersonalDash" style="display: none;" class="dashboard-grid">
           <div class="dash-box">
             <div class="dash-box-title">ಇಂದಿನ ಒಟ್ಟು ಗಳಿಕೆ</div>
@@ -412,7 +403,6 @@
         <div id="driverBookingsList"><p style="color: #e53e3e; font-weight: bold;" id="txtEnterIdPrompt">ಬುಕಿಂಗ್ ನೋಡಲು ದಯವಿಟ್ಟು ನಿಮ್ಮ ಸರಿಯಾದ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ.</p></div>
       </div>
 
-      <!-- 5. DRIVER LIVE METER SECTION -->
       <div id="driverMeterSection" class="section">
         <h2 id="h2DrvMeterTitle">ಡ್ರೈವರ್ ಲೈವ್ ಮೀಟರ್</h2>
         <div class="form-group">
@@ -432,7 +422,6 @@
         <button class="btn-submit" onclick="stopDriverMeterOnly()" style="background:#e53e3e;" id="btnDrvStopMeter">ಮೀಟರ್ ಆಫ್ ಮಾಡಿ</button>
       </div>
 
-      <!-- 6. ADMIN SECTION -->
       <div id="adminSection" class="section">
         <h2 id="h2AdminTitle">ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್</h2>
         <p style="font-size: 0.75rem; color: #7f8c8d; margin-bottom: 8px;" id="txtAdminSub">ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ಗಳ ವೀಕ್ಷಣೆ ಅಥವಾ ಡಿಲೀಟ್ ಮಾಡಲು ಇಲ್ಲಿಗೆ ಬನ್ನಿರಿ...</p>
@@ -1394,8 +1383,7 @@
       const dLon = deg2rad(lon2 - lon1);
       const a = 
         Math.sin(dLat/2) * Math.sin(dLat/2) +
-        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
-        Math.sin(dLon/2) * Math.sin(dLon/2); 
+        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon/2) * Math.sin(dLon/2); 
       const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
       return R * c;
     }
