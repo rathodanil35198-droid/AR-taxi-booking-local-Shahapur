@@ -160,40 +160,40 @@
     .dash-box-title { font-size: 0.75rem; color: #4a5568; font-weight: bold; }
     .dash-box-val { font-size: 1.1rem; color: #2b6cb0; font-weight: bold; margin-top: 4px; }
 
-    /* Ad Popup Modal Styles */
+    /* Fullscreen Ad Overlay Modal Styles */
     #adOverlayModal {
       display: none;
       position: fixed;
-      z-index: 20000;
+      z-index: 30000;
       left: 0; top: 0;
-      width: 100%; height: 100%;
-      background-color: rgba(0,0,0,0.92);
+      width: 100vw; height: 100vh;
+      background-color: #000;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
     }
     .ad-container-box {
       position: relative;
-      width: 90%;
-      max-width: 400px;
+      width: 100%;
+      height: 100%;
       background: #000;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 0 25px rgba(255,255,255,0.2);
-      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .ad-skip-btn {
       position: absolute;
-      top: 10px;
-      right: 10px;
-      background: rgba(0,0,0,0.7);
+      top: 20px;
+      right: 20px;
+      background: rgba(0,0,0,0.75);
       color: #fff;
-      border: 1px solid #fff;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 0.85rem;
+      border: 2px solid #fff;
+      padding: 8px 18px;
+      border-radius: 25px;
+      font-size: 0.95rem;
       font-weight: bold;
       cursor: pointer;
-      z-index: 20001;
+      z-index: 30001;
     }
     .ad-skip-btn:disabled {
       opacity: 0.6;
@@ -201,20 +201,19 @@
     }
     .ad-media-content {
       width: 100%;
-      max-height: 75vh;
+      height: 100%;
       object-fit: contain;
       display: block;
-      margin: 0 auto;
     }
   </style>
 </head>
 <body>
 
-  <!-- Ad Overlay Modal -->
+  <!-- Fullscreen Ad Overlay Modal -->
   <div id="adOverlayModal">
     <div class="ad-container-box">
       <button id="adSkipBtn" class="ad-skip-btn" onclick="closeAdModal()">Skip Ad (3)</button>
-      <div id="adMediaContainer" style="padding: 10px;"></div>
+      <div id="adMediaContainer" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center;"></div>
     </div>
   </div>
 
@@ -486,7 +485,7 @@
         <!-- Admin Ad Management Section -->
         <div class="card" style="background:#edf2f7; border:2px solid #3182ce; margin-bottom:12px;">
           <h3 style="font-size:0.9rem; color:#2b6cb0; margin-bottom:6px;">📢 ಜಾಹೀರಾತು ನಿರ್ವಹಣೆ (Manage Ads)</h3>
-          <p style="font-size:0.75rem; color:#4a5568; margin-bottom:8px;">ಗ್ಯಾಲರಿಯಿಂದ ಫೋಟೋ ಅಥವಾ ವೀಡಿಯೋ ಜಾಹೀರಾತು ಅಪ್‌ಲೋಡ್ ಮಾಡಿ:</p>
+          <p style="font-size:0.75rem; color:#4a5568; margin-bottom:8px;">ಗ್ಯಾಲರಿಯಿಂದ ಫೋಟೋ (ಯಾವುದೇ ಸೈಜ್) ಅಥವಾ 10 ಸೆಕೆಂಡ್ ವೀಡಿಯೋ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ:</p>
           
           <div class="form-group">
             <input type="file" id="adMediaFile" accept="image/*,video/*">
@@ -599,7 +598,7 @@
       const skipBtn = document.getElementById('adSkipBtn');
 
       container.innerHTML = '';
-      let secondsLeft = type === 'video' ? 5 : 3;
+      let secondsLeft = type === 'video' ? 10 : 3;
 
       skipBtn.disabled = true;
       skipBtn.innerText = `Skip Ad (${secondsLeft})`;
@@ -611,12 +610,25 @@
         video.muted = false;
         video.playsInline = true;
         video.className = 'ad-media-content';
+
+        // Auto close when video ends
+        video.onended = () => {
+          closeAdModal();
+        };
+
         container.appendChild(video);
       } else {
         const img = document.createElement('img');
         img.src = url;
         img.className = 'ad-media-content';
         container.appendChild(img);
+
+        // Auto redirect/close image after 3 seconds if not skipped
+        setTimeout(() => {
+          if (modal.style.display === 'flex') {
+            closeAdModal();
+          }
+        }, 3000);
       }
 
       modal.style.display = 'flex';
@@ -651,23 +663,45 @@
 
       statusMsg.innerText = "ಅಪ್‌ಲೋಡ್ ಆಗುತ್ತಿದೆ, ದಯವಿಟ್ಟು ಕಾಯಿರಿ...";
 
-      const fileType = file.type.startsWith('video') ? 'video' : 'image';
+      const isVideo = file.type.startsWith('video');
+      const fileType = isVideo ? 'video' : 'image';
 
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = async () => {
-        try {
-          await window.setDoc(window.doc(window.db, "ad_settings", "current_ad"), {
-            url: reader.result,
-            type: fileType,
-            updatedAt: window.serverTimestamp()
-          });
-          statusMsg.innerText = "✅ ಜಾಹೀರಾತು ಯಶಸ್ವಿಯಾಗಿ ಅಪ್‌ಲೋಡ್ ಆಗಿದೆ!";
-          fileInput.value = '';
-        } catch (e) {
-          statusMsg.innerText = "❌ ಅಪ್‌ಲೋಡ್ ದೋಷ: " + e.message;
-        }
+      const processUpload = (fileData) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(fileData);
+        reader.onload = async () => {
+          try {
+            await window.setDoc(window.doc(window.db, "ad_settings", "current_ad"), {
+              url: reader.result,
+              type: fileType,
+              updatedAt: window.serverTimestamp()
+            });
+            statusMsg.innerText = "✅ ಜಾಹೀರಾತು ಯಶಸ್ವಿಯಾಗಿ ಅಪ್‌ಲೋಡ್ ಆಗಿದೆ!";
+            fileInput.value = '';
+          } catch (e) {
+            statusMsg.innerText = "❌ ಅಪ್‌ಲೋಡ್ ದೋಷ: " + e.message;
+          }
+        };
       };
+
+      if (!isVideo) {
+        // Image Processing: Retain quality for any size without compression errors
+        processUpload(file);
+      } else {
+        // Video Processing
+        const videoElement = document.createElement('video');
+        videoElement.preload = 'metadata';
+        videoElement.src = URL.createObjectURL(file);
+        videoElement.onloadedmetadata = function() {
+          URL.revokeObjectURL(videoElement.src);
+          if (videoElement.duration > 11) {
+            statusMsg.innerText = "❌ ವೀಡಿಯೋ 10 ಸೆಕೆಂಡ್‌ಗಳಿಗಿಂತ ಹೆಚ್ಚಿರಬಾರದು!";
+            alert("ದಯವಿಟ್ಟು 10 ಸೆಕೆಂಡ್‌ಗಿಂತ ಕಡಿಮೆ ಇರುವ ವೀಡಿಯೋ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ.");
+            return;
+          }
+          processUpload(file);
+        };
+      }
     }
 
     async function removeAdMedia() {
@@ -1876,54 +1910,50 @@
       let textContent = "\uFEFF"; 
       textContent += `=== AR TAXI SHAHAPUR - DRIVER REPORT ===\n`;
       textContent += `ಡ್ರೈವರ್ ಹೆಸರು: ${driver.drvName}\n`;
-      textContent += `ಐಡಿ ನಂಬರ್: ${driver.driverId}\n`;
-      textContent += `ಫೋನ್ ನಂಬರ್: ${driver.drvPhone}\n`;
-      textContent += `ವಾಹನ ನಂಬರ್: ${driver.drvVehNo} (${driver.drvVehType})\n`;
-      textContent += `--------------------------------------------------\n`;
-      textContent += `ಒಟ್ಟು ಬುಕಿಂಗ್ ಸಂಖ್ಯೆ: ${driver.rides ? driver.rides.length : 0}\n\n`;
+      textContent += `ಮೊಬೈಲ್ ಸಂಖ್ಯೆ: ${driver.drvPhone}\n`;
+      textContent += `ವಾಹನ ಸಂಖ್ಯೆ: ${driver.drvVehNo} (${driver.drvVehType})\n`;
+      textContent += `ಐಡಿ ಸಂಖ್ಯೆ: ${driver.driverId}\n\n`;
+      textContent += `--- ಬುಕಿಂಗ್ ಇತಿಹಾಸ (Rides History) ---\n`;
 
       if (driver.rides && driver.rides.length > 0) {
-        textContent += `ಬುಕಿಂಗ್ ವಿವರಗಳು:\n`;
         driver.rides.forEach((r, idx) => {
-          textContent += `${idx + 1}. ಕಸ್ಟಮರ್: ${r.customerName} (${r.customerPhone})\n`;
-          textContent += `   ಪಿಕಪ್ ಸ್ಥಳ: ${r.pickupLocation}\n`;
-          textContent += `   ಡ್ರಾಪ್ ಸ್ಥಳ: ${r.dropLocation}\n`;
-          textContent += `   ಓಡಿದ ದೂರ: ${r.distance} ಕಿ.ಮೀ\n`;
-          textContent += `   ಚಾರ್ಜ್ ಆದ ಹಣ: ₹${r.fare}\n\n`;
+          textContent += `\n[ಬುಕಿಂಗ್ #${idx + 1}]\n`;
+          textContent += `ಗ್ರಾಹಕ: ${r.customerName || 'N/A'}\n`;
+          textContent += `ಮೊಬೈಲ್: ${r.customerPhone || 'N/A'}\n`;
+          textContent += `ಪಿಕಪ್: ${r.pickupLocation || ''}\n`;
+          textContent += `ಡ್ರಾಪ್: ${r.dropLocation || ''}\n`;
+          textContent += `ದೂರ: ${r.distance || 0} KM\n`;
+          textContent += `ಶುಲ್ಕ: ₹${r.fare || 0}\n`;
         });
       } else {
-        textContent += `ಯಾವುದೇ ಬುಕಿಂಗ್ ದಾಖಲೆಗಳಿಲ್ಲ.\n`;
+        textContent += `ಯಾವುದೇ ಪೂರ್ಣಗೊಂಡ ಬುಕಿಂಗ್‌ಗಳಿಲ್ಲ.\n`;
       }
 
       const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `Driver_Report_${driver.driverId}_${driver.drvName}.txt`;
+      a.download = `Driver_${driver.driverId}_Report.txt`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-      URL.revokeObjectURL(url);
     }
 
     async function deleteDriver(docId) {
-      let enteredCode = prompt("ಕೋಡ್ ನಂಬರ್ ನಮೂದಿಸಿ (Enter code):");
-      if (enteredCode === "9353444070") {
+      if (confirm("ಖಂಡಿತವಾಗಿ ಈ ಡ್ರೈವರ್ ಖಾತೆಯನ್ನು ಡಿಲೀಟ್ ಮಾಡಲು ಬಯಸುತ್ತೀರಾ?")) {
         try {
           await window.deleteDoc(window.doc(window.db, "drivers", docId));
-          alert("ಡ್ರೈವರ್ ಡಿಲೀಟ್ ಮಾಡಲಾಗಿದೆ.");
+          alert("ಡ್ರೈವರ್ ಮಾಹಿತಿ ಯಶಸ್ವಿಯಾಗಿ ಡಿಲೀಟ್ ಆಗಿದೆ.");
           loadAdminDrivers();
         } catch (e) {
-          alert("Error: " + e.message);
+          alert("Error deleting driver: " + e.message);
         }
-      } else if (enteredCode !== null) {
-        alert("ತಪ್ಪಾದ ಕೋಡ್ ಸಂಖ್ಯೆ!");
       }
     }
 
-    function openImageModal(src) {
-      document.getElementById('fullImage').src = src;
-      document.getElementById('downloadBtn').href = src;
+    function openImageModal(imgSrc) {
+      document.getElementById('fullImage').src = imgSrc;
+      document.getElementById('downloadBtn').href = imgSrc;
       document.getElementById('imageModal').style.display = 'block';
     }
 
