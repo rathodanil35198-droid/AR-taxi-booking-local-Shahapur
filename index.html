@@ -611,7 +611,6 @@
         video.playsInline = true;
         video.className = 'ad-media-content';
 
-        // Auto close when video ends
         video.onended = () => {
           closeAdModal();
         };
@@ -623,7 +622,6 @@
         img.className = 'ad-media-content';
         container.appendChild(img);
 
-        // Auto redirect/close image after 3 seconds if not skipped
         setTimeout(() => {
           if (modal.style.display === 'flex') {
             closeAdModal();
@@ -685,10 +683,8 @@
       };
 
       if (!isVideo) {
-        // Image Processing: Retain quality for any size without compression errors
         processUpload(file);
       } else {
-        // Video Processing
         const videoElement = document.createElement('video');
         videoElement.preload = 'metadata';
         videoElement.src = URL.createObjectURL(file);
@@ -1903,30 +1899,57 @@
       renderAdminDrivers(filtered);
     }
 
+    async function deleteDriver(docId) {
+      if (confirm(currentLang === 'kn' ? "ಈ ಡ್ರೈವರ್ ಖಾತೆಯನ್ನು ಡಿಲೀಟ್ ಮಾಡಲು ಬಯಸುತ್ತೀರಾ?" : "Do you want to delete this driver profile?")) {
+        try {
+          await window.deleteDoc(window.doc(window.db, "drivers", docId));
+          alert(currentLang === 'kn' ? "ಯಶಸ್ವಿಯಾಗಿ ಡಿಲೀಟ್ ಮಾಡಲಾಗಿದೆ." : "Deleted successfully.");
+          loadAdminDrivers();
+        } catch (e) {
+          alert("Error: " + e.message);
+        }
+      }
+    }
+
+    function openImageModal(imgSrc) {
+      const modal = document.getElementById('imageModal');
+      const img = document.getElementById('fullImage');
+      const dlBtn = document.getElementById('downloadBtn');
+      img.src = imgSrc;
+      dlBtn.href = imgSrc;
+      modal.style.display = 'block';
+    }
+
+    function closeImageModal() {
+      document.getElementById('imageModal').style.display = 'none';
+    }
+
     function downloadDriverData(driverId) {
       const driver = allDriversData.find(d => d.driverId === driverId);
       if (!driver) return;
 
       let textContent = "\uFEFF"; 
-      textContent += `=== AR TAXI SHAHAPUR - DRIVER REPORT ===\n`;
-      textContent += `ಡ್ರೈವರ್ ಹೆಸರು: ${driver.drvName}\n`;
-      textContent += `ಮೊಬೈಲ್ ಸಂಖ್ಯೆ: ${driver.drvPhone}\n`;
-      textContent += `ವಾಹನ ಸಂಖ್ಯೆ: ${driver.drvVehNo} (${driver.drvVehType})\n`;
-      textContent += `ಐಡಿ ಸಂಖ್ಯೆ: ${driver.driverId}\n\n`;
-      textContent += `--- ಬುಕಿಂಗ್ ಇತಿಹಾಸ (Rides History) ---\n`;
+      textContent += `=== AR TAXI SHAHAPUR - DRIVER REPORT ===\n\n`;
+      textContent += `Driver Name: ${driver.drvName}\n`;
+      textContent += `Phone Number: ${driver.drvPhone}\n`;
+      textContent += `Vehicle No: ${driver.drvVehNo} (${driver.drvVehType})\n`;
+      textContent += `Driver ID: ${driver.driverId}\n\n`;
+      textContent += `--- RIDE HISTORY ---\n`;
 
       if (driver.rides && driver.rides.length > 0) {
+        let totalEar = 0;
         driver.rides.forEach((r, idx) => {
-          textContent += `\n[ಬುಕಿಂಗ್ #${idx + 1}]\n`;
-          textContent += `ಗ್ರಾಹಕ: ${r.customerName || 'N/A'}\n`;
-          textContent += `ಮೊಬೈಲ್: ${r.customerPhone || 'N/A'}\n`;
-          textContent += `ಪಿಕಪ್: ${r.pickupLocation || ''}\n`;
-          textContent += `ಡ್ರಾಪ್: ${r.dropLocation || ''}\n`;
-          textContent += `ದೂರ: ${r.distance || 0} KM\n`;
-          textContent += `ಶುಲ್ಕ: ₹${r.fare || 0}\n`;
+          totalEar += Number(r.fare || 0);
+          textContent += `\n[Ride #${idx + 1}]\n`;
+          textContent += `Customer: ${r.customerName || 'N/A'} (${r.customerPhone || 'N/A'})\n`;
+          textContent += `Pickup: ${r.pickupLocation || 'N/A'}\n`;
+          textContent += `Drop: ${r.dropLocation || 'N/A'}\n`;
+          textContent += `Distance: ${r.distance || 0} KM\n`;
+          textContent += `Fare: ₹${r.fare || 0}\n`;
         });
+        textContent += `\nTotal Earnings: ₹${totalEar}\n`;
       } else {
-        textContent += `ಯಾವುದೇ ಪೂರ್ಣಗೊಂಡ ಬುಕಿಂಗ್‌ಗಳಿಲ್ಲ.\n`;
+        textContent += `No ride records available.\n`;
       }
 
       const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
@@ -1937,28 +1960,7 @@
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-    }
-
-    async function deleteDriver(docId) {
-      if (confirm("ಖಂಡಿತವಾಗಿ ಈ ಡ್ರೈವರ್ ಖಾತೆಯನ್ನು ಡಿಲೀಟ್ ಮಾಡಲು ಬಯಸುತ್ತೀರಾ?")) {
-        try {
-          await window.deleteDoc(window.doc(window.db, "drivers", docId));
-          alert("ಡ್ರೈವರ್ ಮಾಹಿತಿ ಯಶಸ್ವಿಯಾಗಿ ಡಿಲೀಟ್ ಆಗಿದೆ.");
-          loadAdminDrivers();
-        } catch (e) {
-          alert("Error deleting driver: " + e.message);
-        }
-      }
-    }
-
-    function openImageModal(imgSrc) {
-      document.getElementById('fullImage').src = imgSrc;
-      document.getElementById('downloadBtn').href = imgSrc;
-      document.getElementById('imageModal').style.display = 'block';
-    }
-
-    function closeImageModal() {
-      document.getElementById('imageModal').style.display = 'none';
+      URL.revokeObjectURL(url);
     }
   </script>
 </body>
