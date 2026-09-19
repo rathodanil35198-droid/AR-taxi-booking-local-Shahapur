@@ -617,6 +617,14 @@
         if (docSnap.exists()) {
           const data = docSnap.data();
           if (data.status === 'Accepted' || data.status === 'Started') {
+            // ಡ್ರೈವರ್ ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಲಿಂಕ್ ಸಿದ್ಧಪಡಿಸುವುದು
+            let gpsMapBtn = '';
+            if (data.driverLat && data.driverLng) {
+              gpsMapBtn = `<a href="https://www.google.com/maps?q=${data.driverLat},${data.driverLng}" target="_blank" class="btn-submit" style="display:block; text-decoration:none; background:#2b6cb0; margin-top:8px; text-align:center;">📍 ಡ್ರೈವರ್ ಲೈವ್ ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ನೋಡಿ</a>`;
+            } else {
+              gpsMapBtn = `<p style="font-size:0.8rem; color:#d69e2e; margin-top:6px;">ಡ್ರೈವರ್ ಜಿಪಿಎಸ್ ಸಿಗ್ನಲ್ ಪಡೆಯಲಾಗುತ್ತಿದೆ...</p>`;
+            }
+
             document.getElementById('customerStatusContainer').innerHTML = `
               <div class="card" style="text-align:center; background:#f0fff4; border:2px solid #38a169;">
                 <p style="font-size:1rem; font-weight:bold; color:#22543d; margin-bottom:5px;">✅ ಡ್ರೈವರ್ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿದ್ದಾರೆ!</p>
@@ -629,6 +637,7 @@
                 <p style="font-size:0.85rem;"><b>ಮೊಬೈಲ್ ನಂಬರ್:</b> <a href="tel:${data.driverPhone}">${data.driverPhone || ''}</a></p>
                 <p style="font-size:0.85rem;"><b>ವಾಹನ ನಂಬರ್:</b> ${data.driverVehNo || ''}</p>
                 <a href="tel:${data.driverPhone}" class="btn-submit" style="display:block; text-decoration:none; background:#3182ce; margin-top:8px; text-align:center;">📞 ಕಾಲ್ ಮಾಡಿ</a>
+                ${gpsMapBtn}
               </div>
             `;
           }
@@ -708,9 +717,22 @@
 
     function startDriverLocationTracking(driverData) {
       if (navigator.geolocation) {
-        driverLocationWatchId = navigator.geolocation.watchPosition((position) => {
+        driverLocationWatchId = navigator.geolocation.watchPosition(async (position) => {
           currentDriverLat = position.coords.latitude;
           currentDriverLng = position.coords.longitude;
+          
+          // ಡ್ರೈವರ್ ಸ್ವೀಕರಿಸಿದ active booking ಇದ್ದರೆ ಅದರಲ್ಲಿ ಲೈವ್ ಜಿಪಿಎಸ್ ಅಪ್‌ಡೇಟ್ ಮಾಡುವುದು
+          try {
+            const qActive = window.query(window.collection(window.db, "bookings"), window.where("driverIdNum", "==", driverData.driverId), window.where("status", "in", ["Accepted", "Started"]));
+            const activeSnap = await window.getDocs(qActive);
+            activeSnap.forEach(async (actDoc) => {
+              await window.updateDoc(window.doc(window.db, "bookings", actDoc.id), {
+                driverLat: currentDriverLat,
+                driverLng: currentDriverLng
+              });
+            });
+          } catch(e) {}
+
           listenToBookingsForDriver(driverData);
         }, (error) => {
           document.getElementById('driverBookingsList').innerHTML = `<p style="color: #e53e3e;">ಲೈವ್ ಜಿಪಿಎಸ್ ಕಡ್ಡಾಯವಾಗಿದೆ.</p>`;
@@ -822,7 +844,9 @@
       stopSirenLoop(); // ಸ್ವೀಕರಿಸಿದ ಕೂಡಲೇ ಸೈರನ್ ಆಫ್ ಆಗುತ್ತದೆ
       try {
         await window.updateDoc(window.doc(window.db, "bookings", bookingId), {
-          status: 'Accepted', driverName, driverPhone, driverVehNo, driverIdNum
+          status: 'Accepted', driverName, driverPhone, driverVehNo, driverIdNum,
+          driverLat: currentDriverLat || null,
+          driverLng: currentDriverLng || null
         });
         alert(`ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿದ್ದೀರಿ! OTP ಪಡೆದು ನಮೂದಿಸಿ.`);
         if (pickupLat && pickupLng) {
