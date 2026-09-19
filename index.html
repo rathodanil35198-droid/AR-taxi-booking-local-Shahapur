@@ -563,7 +563,7 @@
         const todayStr = new Date().toISOString().split('T')[0];
         const docRef = await window.addDoc(window.collection(window.db, "bookings"), {
           vehicleType, customerName: name, customerPhone: phone, passengers,
-          currentLocationText: currentLoc, pickupLocation: pickup, dropLocation: drop,
+          currentLocationText: currentLoc, pickupLocation: (currentLoc ? currentLoc + ' - ' : '') + pickup, dropLocation: drop,
           pickupLat: currentCustomerLat, pickupLng: currentCustomerLng,
           otp: pickupOtp, status: 'Pending', dateKey: todayStr, timestamp: window.serverTimestamp()
         });
@@ -762,8 +762,7 @@
                     <p style="font-size:0.95rem;"><b>ಕಸ್ಟಮರ್ ಹೆಸರು:</b> ${b.customerName}</p>
                     <p style="font-size:0.95rem;"><b>ಫೋನ್ ನಂಬರ್:</b> <a href="tel:${b.customerPhone}">${b.customerPhone}</a></p>
                     <p style="font-size:0.95rem;"><b>ಪ್ರಯಾಣಿಕರು:</b> ${b.passengers} ಜನ</p>
-                    <p style="font-size:0.95rem;"><b>ಪ್ರಸ್ತುತ ಸ್ಥಳ:</b> ${b.currentLocationText || '-'}</p>
-                    <p style="font-size:0.95rem;"><b>ಪಿಕೋಪ್ ಸ್ಥಳ:</b> <a href="https://www.google.com/maps/search/?api=1&query=${b.pickupLat},${b.pickupLng}" target="_blank" style="color:#3182ce;">${b.pickupLocation}</a> (~${dist.toFixed(2)} KM)</p>
+                    <p style="font-size:0.95rem;"><b>ಪಿಕಪ್ ಸ್ಥಳ:</b> <a href="https://www.google.com/maps/search/?api=1&query=${b.pickupLat},${b.pickupLng}" target="_blank" style="color:#3182ce;">${b.pickupLocation}</a> (~${dist.toFixed(2)} KM)</p>
                     <p style="font-size:0.95rem;"><b>ಡ್ರಾಪ್ ಸ್ಥಳ:</b> <strong style="color:#d69e2e;">${b.dropLocation}</strong></p>
                     
                     <button class="btn-submit" onclick="acceptBooking('${docSnap.id}', '${driverData.drvName}', '${driverData.drvPhone}', '${driverData.drvVehNo}', '${driverData.driverId}', ${b.pickupLat}, ${b.pickupLng})" style="margin-top:10px; font-size:1rem; padding:12px;">📢 ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ (Accept)</button>
@@ -929,11 +928,13 @@
       }
 
       const container = document.createElement('div');
+      container.style.padding = "20px";
+      container.style.background = "#ffffff";
       container.innerHTML = profileHtml + cardEl.outerHTML;
 
       const opt = {
         margin: 10, filename: `Police_Verification_Driver_${driverName}_${rideId}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 },
+        image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, useCORS: true },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
       };
       html2pdf().set(opt).from(container).save();
@@ -989,15 +990,37 @@
     async function registerDriver() {
       const name = document.getElementById('drvName').value.trim();
       const phone = document.getElementById('drvPhone').value.trim();
-      const vehNo = document.getElementById('drvVehNo').value.trim().toUpperCase();
+      const vehNo = document.getElementById('drvVehNo').value.trim().toUpperCase().replace(/\s+/g, '');
       const vehType = document.getElementById('drvVehType').value;
 
       if (!name || !phone || !vehNo) { alert("ದಯವಿಟ್ಟು ಹೆಸರು, ಫೋನ್ ಹಾಗೂ ವಾಹನ ನಂಬರ್ ನಮೂದಿಸಿ!"); return; }
+      if (phone.length < 10) { alert("ದಯವಿಟ್ಟು ಸರಿಯಾದ ಮೊಬೈಲ್ ನಂಬರ್ ನಮೂದಿಸಿ!"); return; }
 
       const btn = document.getElementById('btnRegisterDriver');
-      btn.innerText = 'ಚಿತ್ರಗಳನ್ನು ಪ್ರೊಸೆಸ್ ಮಾಡಲಾಗುತ್ತಿದೆ...';
+      btn.innerText = 'ಪರಿಶೀಲಿಸಲಾಗುತ್ತಿದೆ...';
 
       try {
+        // ಮೊಬೈಲ್ ನಂಬರ್ ಅಥವಾ ವಾಹನ ನಂಬರ್ ಈಗಾಗಲೇ ನೋಂದಣಿಯಾಗಿದೆಯೇ ಎಂದು ಪರಿಶೀಲಿಸುವುದು
+        const phoneQuery = window.query(window.collection(window.db, "drivers"), window.where("drvPhone", "==", phone));
+        const phoneSnap = await window.getDocs(phoneQuery);
+
+        if (!phoneSnap.empty) {
+          alert("❌ ಈ ಮೊಬೈಲ್ ನಂಬರ್‌ನಿಂದ ಈಗಾಗಲೇ ಡ್ರೈವರ್ ರಿಜಿಸ್ಟರ್ ಆಗಿದ್ದಾರೆ! ಡಬಲ್ ಸರತಿ ರಿಜಿಸ್ಟ್ರೇಷನ್ ಮಾಡಲು ಬರುವುದಿಲ್ಲ.");
+          btn.innerText = 'ಲಾಗಿನ್ / ರಜಿಸ್ಟರ್ ಮಾಡಿ';
+          return;
+        }
+
+        const vehQuery = window.query(window.collection(window.db, "drivers"), window.where("drvVehNo", "==", vehNo));
+        const vehSnap = await window.getDocs(vehQuery);
+
+        if (!vehSnap.empty) {
+          alert("❌ ಈ ವಾಹನ ನಂಬರ್ (Vehicle Number) ಈಗಾಗಲೇ ನೋಂದಾಯಿಸಲ್ಪಟ್ಟಿದೆ!");
+          btn.innerText = 'ಲಾಗಿನ್ / ರಜಿಸ್ಟರ್ ಮಾಡಿ';
+          return;
+        }
+
+        btn.innerText = 'ಚಿತ್ರಗಳನ್ನು ಪ್ರೊಸೆಸ್ ಮಾಡಲಾಗುತ್ತಿದೆ...';
+
         const vehPhotoFile = document.getElementById('vehPhotoFile').files[0];
         const rcPhotoFile = document.getElementById('rcPhotoFile').files[0];
         const dlPhotoFile = document.getElementById('dlPhotoFile').files[0];
@@ -1060,7 +1083,7 @@
         if (d.aadharImg) photosHtml += `<img src="${d.aadharImg}" class="driver-thumb" onclick="viewFullImage('${d.aadharImg}', 'ಆಧಾರ್ ಕಾರ್ಡ್ ಫೋಟೋ')" title="ಆಧಾರ್ ಕಾರ್ಡ್">`;
 
         html += `
-          <div class="card" id="adminDriverCard_${d.driverId}" style="margin-bottom:12px;">
+          <div class="card" id="adminDriverCard_${d.driverId}" style="margin-bottom:12px; background:#fff;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
               <span style="font-weight:bold; color:#2c3e50;">#${index + 1} - ${d.drvName || 'Driver'}</span>
               <span style="background:#0fb05b; color:white; padding:2px 8px; border-radius:12px; font-size:0.75rem; font-weight:bold;">ID: ${d.driverId || '-'}</span>
@@ -1122,12 +1145,18 @@
     async function downloadDriverPDF(driverId, name) {
       const element = document.getElementById(`adminDriverCard_${driverId}`);
       await toggleAdminViewBookings(driverId);
+      
+      const container = document.createElement('div');
+      container.style.padding = "20px";
+      container.style.background = "#ffffff";
+      container.innerHTML = element.outerHTML;
+
       const opt = {
         margin: 10, filename: `Police_Verification_Driver_${name}_${driverId}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 },
+        image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, useCORS: true },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
       };
-      html2pdf().set(opt).from(element).save();
+      html2pdf().set(opt).from(container).save();
     }
 
     async function deleteDriver(docId) {
