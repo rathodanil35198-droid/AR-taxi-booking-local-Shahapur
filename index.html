@@ -146,8 +146,10 @@
 
   <!-- ಆಪ್ ಓಪನ್ ಆದ ತಕ್ಷಣ ಬರುವ ಜಾಹೀರಾತು ಸ್ಕ್ರೀನ್ (Splash Ad Modal) -->
   <div id="splashAdModal" style="display:none; position:fixed; z-index:99999; left:0; top:0; width:100%; height:100%; background:#000; color:#fff; text-align:center; padding:10px; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-    <div style="position:absolute; top:15px; right:20px; font-size:1rem; background:rgba(0,0,0,0.6); padding:6px 12px; border-radius:20px; border:1px solid #fff;">
-      ಉಳಿದ ಸಮಯ: <span id="adTimerCount">3</span> ಸೆಕೆಂಡ್ | <button onclick="closeSplashAd()" id="skipAdBtn" style="background:#e53e3e; color:#fff; border:none; padding:4px 10px; border-radius:10px; cursor:pointer; font-weight:bold; margin-left:5px;">ಸ್ಕಿಪ್ (Skip)</button>
+    <div style="position:absolute; top:15px; right:20px; font-size:0.9rem; background:rgba(0,0,0,0.7); padding:6px 14px; border-radius:20px; border:1px solid #fff; display:flex; align-items:center; gap:8px;">
+      <span>ಉಳಿದ ಸಮಯ: <span id="adTimerCount">10</span> ಸೆಕೆಂಡ್</span>
+      <button onclick="closeSplashAd()" id="skipAdBtn" style="background:#e53e3e; color:#fff; border:none; padding:4px 10px; border-radius:10px; cursor:pointer; font-weight:bold;">ಸ್ಕಿಪ್ (Skip)</button>
+      <span onclick="closeSplashAd()" style="font-size:1.4rem; cursor:pointer; margin-left:4px; font-weight:bold;">&times;</span>
     </div>
     <div id="splashMediaContainer" style="width:100%; height:80vh; display:flex; justify-content:center; align-items:center;">
       <!-- ಜಾಹೀರಾತು ಫೋಟೋ ಅಥವಾ ವಿಡಿಯೋ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ -->
@@ -208,11 +210,11 @@
 
       <div class="home-buttons-grid">
         <button class="action-btn-card btn-cust-book" onclick="openPage('customerSection')">
-          <span style="font-size: 1.8rem;">🙋</span><span> ಗ್ರಾಹಕರು ಬುಕಿಂಗ್ ಮಾಡಿ</span>
+          <span style="font-size: 1.8rem;">🙋</span><span> ಗ್ರಾಹಕರು ಬುಕಿಂಗ್ ಮಾಡಿ👈</span>
         </button>
 
         <button class="action-btn-card btn-driver-reg" onclick="openPage('profileSection')">
-          <span style="font-size: 1.8rem;">🚗</span><span> 🛺ಡ್ರೈವರ್ ರಿಜಿಸ್ಟರ್ ಲಾಗಿನ್ ಪೇಜ್</span>
+          <span style="font-size: 1.8rem;">🚗</span><span>🛺 ಡ್ರೈವರ್ ರಿಜಿಸ್ಟರ್ ಲಾಗಿನ್ ಪೇಜ್</span>
         </button>
 
         <button class="action-btn-card btn-driver-panel" onclick="openPage('liveSection')">
@@ -220,11 +222,11 @@
         </button>
 
         <button class="action-btn-card btn-meter-direct" onclick="openPage('meterSection')">
-          <span style="font-size: 1.8rem;">⏱️</span><span> ಮೀಟರ್ ಜಿಪಿಎಸ್ ಲೈವ್ ಮೀಟರ್</span>
+          <span style="font-size: 1.8rem;">⏱️</span><span>💵 ಮೀಟರ್ ಜಿಪಿಎಸ್ ಲೈವ್ ಮೀಟರ್</span>
         </button>
 
         <button class="action-btn-card btn-admin-panel" onclick="openPage('adminSection')">
-          <span style="font-size: 1.8rem;">🔐</span><span> ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್</span>
+          <span style="font-size: 1.8rem;">🔐</span><span>🌍 ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್</span>
         </button>
       </div>
     </div>
@@ -396,11 +398,12 @@
         
         <!-- ಜಾಹೀರಾತು ಅಪ್ಲೋಡ್ ಮಾಡುವ ಸೆಕ್ಷನ್ -->
         <div class="card" style="background:#e8f8f0; border:2px solid #0fb05b; margin-bottom:12px;">
-          <h3 style="font-size:0.9rem; color:#065f46; margin-bottom:8px;">📢 ಜಾಹೀರಾತು ನಿರ್ವಹಣೆ (ಫೋಟೋ / ವಿಡಿಯೋ)</h3>
+          <h3 style="font-size:0.9rem; color:#065f46; margin-bottom:8px;">📢 ಜಾಹೀರಾತು ನಿರ್ವಹಣೆ (ಫೋಟೋ / 5-10 ಸೆಕೆಂಡ್ ವಿಡಿಯೋ)</h3>
           <div class="form-group">
-            <label>ಜಾಹೀರಾತು ಫೋಟೋ ಅಥವಾ ವಿಡಿಯೋ ಆಯ್ಕೆಮಾಡಿ:</label>
-            <input type="file" id="adMediaFile" accept="image/*,video/*">
+            <label>ಜಾಹೀರಾತು ಫೋಟೋ ಅಥವಾ ವಿಡಿಯೋ ಆಯ್ಕೆಮಾಡಿ (ಚಿತ್ರ/ವಿಡಿಯೋ ಅಪ್‌ಲೋಡ್ ಆದ ಕೂಡಲೇ ತಿಳಿಯುತ್ತದೆ):</label>
+            <input type="file" id="adMediaFile" accept="image/*,video/*" onchange="previewAdFile(this)">
           </div>
+          <div id="adPreviewStatus" style="font-size:0.8rem; font-weight:bold; color:#2b6cb0; margin:4px 0;"></div>
           <button class="btn-submit" onclick="uploadAdvertisement()" style="background:#0fb05b; margin-top:5px;">ಜಾಹೀರಾತು ಅಪ್ಲೋಡ್ ಮಾಡಿ</button>
           <button class="btn-submit" onclick="deleteAdvertisement()" style="background:#e53e3e; margin-top:6px;">ಜಾಹೀರಾತು ಡಿಲೀಟ್ ಮಾಡಿ</button>
         </div>
@@ -441,7 +444,7 @@
     let audioCtx = null;
     let adTimer = null;
 
-    // ಆಪ್ ಓಪನ್ ಆದ ತಕ್ಷಣ ಜಾಹೀರಾತು ತೋರಿಸುವುದು
+    // ಆಪ್ ಓಪನ್ ಆದ ತಕ್ಷಣ ಜಾಹೀರಾತು ಪರಿಶೀಲಿಸಿ ತೋರಿಸುವುದು
     window.addEventListener('DOMContentLoaded', async () => {
       await checkAndShowSplashAd();
     });
@@ -462,7 +465,7 @@
             }
 
             modal.style.display = 'flex';
-            let timeLeft = 3;
+            let timeLeft = 10;
             document.getElementById('adTimerCount').innerText = timeLeft;
 
             adTimer = setInterval(() => {
@@ -483,6 +486,14 @@
       document.getElementById('splashAdModal').style.display = 'none';
     }
 
+    function previewAdFile(input) {
+      if (input.files && input.files[0]) {
+        const file = input.files[0];
+        const statusEl = document.getElementById('adPreviewStatus');
+        statusEl.innerText = `ಆಯ್ಕೆಮಾಡಲಾಗಿದೆ: ${file.name} (${(file.size/1024).toFixed(1)} KB) - ಸಕ್ಸಸ್ ಆಗಿದೆ! ಅಪ್ಲೋಡ್ ಬಟನ್ ಒತ್ತಿ.`;
+      }
+    }
+
     async function uploadAdvertisement() {
       const fileInput = document.getElementById('adMediaFile');
       if (fileInput.files.length === 0) { alert("ದಯವಿಟ್ಟು ಫೋಟೋ ಅಥವಾ ವಿಡಿಯೋ ಆಯ್ಕೆಮಾಡಿ!"); return; }
@@ -491,7 +502,14 @@
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = async function(e) {
-        const base64Data = e.target.result;
+        let base64Data = e.target.result;
+        
+        // ಫೈರ್ಸ್‌ಟೋರ್ ಸೈಜ್ ಲಿಮಿಟ್ (1MB) ಮೀರುವುದನ್ನು ತಡೆಯಲು ಎಚ್ಚರಿಕೆ ಹಾಗೂ ಕಂಪ್ರೆಷನ್
+        if (base64Data.length > 1048487) {
+          alert("ಎಚ್ಚರಿಕೆ: ಫೈಲ್ ತುಂಬಾ ದೊಡ್ಡದಾಗಿದೆ! ದಯವಿಟ್ಟು ಚಿಕ್ಕ ಸೈಜ್‌ನ ಫೋಟೋ ಅಥವಾ 5-10 ಸೆಕೆಂಡ್ ವಿಡಿಯೋ ಹಾಕಿ.");
+          return;
+        }
+
         try {
           await window.setDoc(window.doc(window.db, "settings", "advertisement"), {
             mediaUrl: base64Data,
@@ -500,8 +518,9 @@
           });
           alert("ಜಾಹೀರಾತು ಯಶಸ್ವಿಯಾಗಿ ಅಪ್ಲೋಡ್ ಆಗಿದೆ!");
           fileInput.value = '';
+          document.getElementById('adPreviewStatus').innerText = '';
         } catch(err) {
-          alert("ದೋಷ: " + err.message);
+          alert("ದೋಷ: ಫೈಲ್ ಗಾತ್ರ ತುಂಬಾ ದೊಡ್ಡದಿದೆ ಅಥವಾ ನೆಟ್‌ವರ್ಕ್ ಸಮಸ್ಯೆ. " + err.message);
         }
       };
     }
@@ -1273,3 +1292,4 @@
   </script>
 </body>
 </html>
+     
