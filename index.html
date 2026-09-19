@@ -732,7 +732,7 @@
       if (bookingsUnsubscribe) bookingsUnsubscribe();
 
       const q = window.query(window.collection(window.db, "bookings"), window.orderBy("timestamp", "desc"));
-      bookingsUnsubscribe = window.onSnapshot(q, (snapshot) => {
+      bookingsUnsubscribe = window.onSnapshot(q, async (snapshot) => {
         const activeEl = document.activeElement;
         if (activeEl && activeEl.tagName === 'INPUT' && activeEl.id && activeEl.id.startsWith('otpInput_')) return;
 
@@ -812,7 +812,6 @@
           combinedHtml += `<hr style="margin: 15px 0;"><h3 style="font-size: 0.9rem; margin-bottom: 8px;">ನಿಮ್ಮ ಸ್ವೀಕೃತ ಬುಕಿಂಗ್‌ಗಳು (ಲಾಕ್ ಆಗಿವೆ):</h3>` + acceptedHtml;
         }
 
-        // ಡ್ರೈವರ್ ಐಡಿಯಲ್ಲಿ ಸೇವ್ ಆಗಿರುವ ಹಳೆಯ ಕಂಪ್ಲೀಟ್ ಆದ ರೈಡ್‌ಗಳ ಪಟ್ಟಿ ಹಾಗೂ 15 ದಿನಗಳ ಕೌಂಟ್‌ಡೌನ್ / 14ನೇ ದಿನದ ನೋಟಿಫಿಕೇಶನ್
         const ridesQuery = window.query(window.collection(window.db, "completed_rides"), window.where("driverIdNum", "==", driverData.driverId));
         const ridesSnap = await window.getDocs(ridesQuery);
 
@@ -911,7 +910,6 @@
     async function downloadDriverHistoryPDF(driverId, driverName, rideId) {
       const cardEl = document.getElementById(`driverHistoryCard_${rideId}`);
       
-      // ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ ಮಾಹಿತಿ ಪಡೆಯುವುದು
       const q = window.query(window.collection(window.db, "drivers"), window.where("driverId", "==", driverId));
       const snap = await window.getDocs(q);
       let profileHtml = '';
