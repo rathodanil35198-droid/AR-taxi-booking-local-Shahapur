@@ -104,7 +104,7 @@
     }
     .floating-share-btn:active { transform: scale(0.9); }
 
-    /* ವಿನ್ಯಾಸಗೊಳಿಸಿದ ಹೋಮ್ ಪೇಜ್‌ ಬಟನ್‌ಗಳ ಶೈಲಿ (Main Grid) */
+    /* ಹೋಮ್ ಪೇಜ್‌ ಬಟನ್‌ಗಳ ಶೈಲಿ */
     #roleSelectionScreen { text-align: center; padding: 10px 5px; }
     
     .home-buttons-grid {
@@ -134,7 +134,6 @@
     .action-btn-card:active { transform: scale(0.95); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
     .action-btn-card .btn-icon { font-size: 2.2rem; margin-bottom: 8px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
 
-    /* ಬಟನ್ ಬಣ್ಣಗಳು ಮತ್ತು ಗ್ರೇಡಿಯಂಟ್ */
     .btn-cust-book { background: linear-gradient(135deg, #1e3c72, #2a5298); border: 2px solid #64b5f6; }
     .btn-drv-login { background: linear-gradient(135deg, #11998e, #38ef7d); border: 2px solid #a3e635; }
     .btn-view-bookings { background: linear-gradient(135deg, #ff8c00, #e52d27); border: 2px solid #fbd38d; }
@@ -194,7 +193,7 @@
     .dash-box-title { font-size: 0.75rem; color: #4a5568; font-weight: bold; }
     .dash-box-val { font-size: 1.1rem; color: #2b6cb0; font-weight: bold; margin-top: 4px; }
 
-    /* Fullscreen Ad Overlay Modal Styles */
+    /* Fullscreen Ad Overlay Modal */
     #adOverlayModal {
       display: none;
       position: fixed;
@@ -291,7 +290,7 @@
 
   <div class="container">
     
-    <!-- Top Display Header Board -->
+    <!-- Header Board -->
     <div class="flashing-header-box">
       <div class="logo-container">
         <span>🚗</span>
@@ -303,7 +302,7 @@
       </div>
     </div>
 
-    <!-- ಮೂಲ (ಮುಖಪುಟ) ಪೇಜ್ - ಸೌಂದರ್ಯಯುತ 5 ಸ್ಪಷ್ಟ ಬಟನ್‌ಗಳು -->
+    <!-- Home Page Selection -->
     <div id="roleSelectionScreen">
       <h1 class="mainTitle" style="font-size: 1.25rem; color: #2c3e50; margin-bottom: 5px;">A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್</h1>
       <p style="font-size: 0.85rem; color: #7f8c8d; margin-bottom: 12px;">ದಯವಿಟ್ಟು ನಿಮಗೆ ಬೇಕಾದ ಸೇವೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ:</p>
@@ -326,7 +325,7 @@
 
         <button class="action-btn-card btn-live-gps" onclick="selectRole('meter_direct')">
           <span class="btn-icon">⏱️</span>
-          <span>ಲೈವ್ ಜಿಪಿಎಸ್ ಮೀಟರ್ ਆನ್ ಮಾಡಿ</span>
+          <span>ಲೈವ್ ಜಿಪಿಎಸ್ ಮೀಟರ್ ಆನ್ ಮಾಡಿ</span>
         </button>
 
         <button class="action-btn-card btn-id-panel" onclick="openDriverDirect('liveSection')" style="grid-column: span 2;">
@@ -538,7 +537,7 @@
         <!-- Admin Ad Management Section -->
         <div class="card" style="background:#edf2f7; border:2px solid #3182ce; margin-bottom:12px;">
           <h3 style="font-size:0.9rem; color:#2b6cb0; margin-bottom:6px;">📢 ಜಾಹೀರಾತು ನಿರ್ವಹಣೆ (Manage Ads)</h3>
-          <p style="font-size:0.75rem; color:#4a5568; margin-bottom:8px;">ಗ್ಯಾಲರಿಯಿಂದ ಫೋಟೋ (ಯಾವುದೇ ಸೈಜ್) ಅಥವಾ 10 ಸೆಕೆಂಡ್ ವೀಡಿಯೋ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ:</p>
+          <p style="font-size:0.75rem; color:#4a5568; margin-bottom:8px;">ಗ್ಯಾಲರಿಯಿಂದ ಫೋಟೋ ಅಥವಾ 10 ಸೆಕೆಂಡ್ ವೀಡಿಯೋ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ:</p>
           
           <div class="form-group">
             <input type="file" id="adMediaFile" accept="image/*,video/*">
@@ -627,7 +626,6 @@
     window.removeAdMedia = removeAdMedia;
     window.closeAdModal = closeAdModal;
 
-    // Check & Display Ad on App Launch
     window.addEventListener('DOMContentLoaded', () => {
       checkAndShowAd();
     });
@@ -1704,7 +1702,7 @@
       const inputOtp = document.getElementById(`otpInput_${bookingId}`).value.trim();
       if (inputOtp === correctOtp) {
         try {
-          await window.updateDoc(window.doc(window.doc(window.db, "bookings", bookingId)), {
+          await window.updateDoc(window.doc(window.db, "bookings", bookingId), {
             status: 'Started'
           });
           
@@ -1933,23 +1931,25 @@
                 <p><b>ಒಟ್ಟು ಬುಕಿಂಗ್‌ಗಳು:</b> ${totalBookings}</p>
                 <p><b>ಒಟ್ಟು ಗಳಿಕೆ:</b> <span style="color:#0fb05b; font-weight:bold;">₹${totalEarnings}</span></p>
               </div>
-              <button onclick="toggleDriverBookingsView('${d.driverId}')" class="btn-submit" style="background:#3182ce; padding:6px 10px; font-size:0.75rem; width:auto;">📋 ಬುಕಿಂಗ್ ವಿವರ ನೋಡಿ</button>
+              <button onclick="toggleDriverBookingsView('${d.id}')" style="background:#3182ce; color:white; border:none; padding:6px 10px; border-radius:4px; font-size:0.75rem; font-weight:bold; cursor:pointer;">📋 ಬುಕಿಂಗ್ ವಿವರಗಳು</button>
             </div>
 
-            <div id="driverBookingsContainer_${d.driverId}" style="display:none; margin-top:8px; border-top:1px dashed #cbd5e0; padding-top:6px;">
-              ${totalBookings > 0 ? ridesListHtml : '<p style="font-size:0.75rem; color:#718096;">ಯಾವುದೇ ಬುಕಿಂಗ್ ದಾಖಲೆಗಳಿಲ್ಲ.</p>'}
+            <div id="driverBookingsContainer_${d.id}" style="display:none; margin-top:8px;">
+              <h4 style="font-size:0.8rem; color:#4a5568; margin-bottom:4px;">ಪೂರ್ಣಗೊಂಡ ರೈಡ್‌ಗಳು:</h4>
+              ${ridesListHtml || '<p style="font-size:0.75rem; color:#718096;">ಯಾವುದೇ ರೈಡ್ ಪೂರ್ಣಗೊಂಡಿಲ್ಲ.</p>'}
             </div>
-            
+
             <div style="margin-top:8px;">
-              ${d.vehPhoto ? `<img src="${d.vehPhoto}" class="preview-img" onclick="openImageModal('${d.vehPhoto}')">` : ''}
-              ${d.rcPhoto ? `<img src="${d.rcPhoto}" class="preview-img" onclick="openImageModal('${d.rcPhoto}')">` : ''}
-              ${d.dlPhoto ? `<img src="${d.dlPhoto}" class="preview-img" onclick="openImageModal('${d.dlPhoto}')">` : ''}
-              ${d.selfiePhoto ? `<img src="${d.selfiePhoto}" class="preview-img" onclick="openImageModal('${d.selfiePhoto}')">` : ''}
+              <p style="font-size:0.75rem; font-weight:bold; color:#4a5568; margin-bottom:4px;">ದಾಖಲೆಗಳ ಫೋಟೋಗಳು (ಕ್ಲಿಕ್ ಮಾಡಿ ವೀಕ್ಷಿಸಿ):</p>
+              ${d.vehPhoto ? `<img src="${d.vehPhoto}" class="preview-img" onclick="openImageModal('${d.vehPhoto}')" title="ವಾಹನ ಫೋಟೋ">` : ''}
+              ${d.rcPhoto ? `<img src="${d.rcPhoto}" class="preview-img" onclick="openImageModal('${d.rcPhoto}')" title="ಆರ್ ಸಿ ಫೋಟೋ">` : ''}
+              ${d.dlPhoto ? `<img src="${d.dlPhoto}" class="preview-img" onclick="openImageModal('${d.dlPhoto}')" title="ಡಿ ಎಲ್ ಫೋಟೋ">` : ''}
+              ${d.selfiePhoto ? `<img src="${d.selfiePhoto}" class="preview-img" onclick="openImageModal('${d.selfiePhoto}')" title="ಸೆಲ್ಫಿ ಫೋಟೋ">` : ''}
             </div>
 
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px; margin-top:8px;">
-              <button onclick="downloadDriverData('${d.driverId}')" class="btn-submit" style="background:#3182ce; padding:6px; font-size:0.75rem;">📥 ಡೌನ್‌ಲೋಡ್</button>
-              <button onclick="deleteDriver('${d.id}')" class="btn-submit" style="background:#e53e3e; padding:6px; font-size:0.75rem;">🗑️ ಡಿಲೀಟ್</button>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px; margin-top:10px;">
+              <button onclick="downloadDriverData('${d.id}')" style="background:#0fb05b; color:white; border:none; padding:6px; border-radius:4px; font-size:0.75rem; font-weight:bold; cursor:pointer;">📥 ಡೌನ್‌ಲೋಡ್ (Data)</button>
+              <button onclick="deleteDriver('${d.id}')" style="background:#e53e3e; color:white; border:none; padding:6px; border-radius:4px; font-size:0.75rem; font-weight:bold; cursor:pointer;">🗑️ ಡಿಲೀಟ್ (Delete)</button>
             </div>
           </div>
         `;
@@ -1959,25 +1959,23 @@
     }
 
     function filterAdminDrivers() {
-      const q = document.getElementById('adminSearchInput').value.trim().toLowerCase();
-      if (!q) {
+      const queryText = document.getElementById('adminSearchInput').value.trim().toLowerCase();
+      if (!queryText) {
         renderAdminDrivers(allDriversData);
         return;
       }
       const filtered = allDriversData.filter(d => 
-        (d.drvPhone && d.drvPhone.toLowerCase().includes(q)) ||
-        (d.driverId && d.driverId.toLowerCase().includes(q)) ||
-        (d.drvName && d.drvName.toLowerCase().includes(q)) ||
-        (d.drvVehNo && d.drvVehNo.toLowerCase().includes(q))
+        (d.drvPhone && d.drvPhone.toLowerCase().includes(queryText)) ||
+        (d.driverId && d.driverId.toLowerCase().includes(queryText))
       );
       renderAdminDrivers(filtered);
     }
 
     async function deleteDriver(docId) {
-      if (confirm("ಖಂಡಿತವಾಗಿ ಈ ಡ್ರೈವರ್ ಖಾತೆಯನ್ನು ಡಿಲೀಟ್ ಮಾಡಲು ಬಯಸುತ್ತೀರಾ?")) {
+      if (confirm("ಖಂಡಿತವಾಗಿಯೂ ಈ ಡ್ರೈವರ್ ಮಾಹಿತಿಯನ್ನು ಡಿಲೀಟ್ ಮಾಡಲು ಬಯಸುತ್ತೀರಾ?")) {
         try {
           await window.deleteDoc(window.doc(window.db, "drivers", docId));
-          alert("ಡ್ರೈವರ್ ಖಾತೆ ಯಶಸ್ವಿಯಾಗಿ ಡಿಲೀಟ್ ಆಗಿದೆ.");
+          alert("ಡ್ರೈವರ್ ಮಾಹಿತಿ ಯಶಸ್ವಿಯಾಗಿ ಡಿಲೀಟ್ ಆಗಿದೆ.");
           loadAdminDrivers();
         } catch (e) {
           alert("Error: " + e.message);
@@ -1995,35 +1993,43 @@
       document.getElementById('imageModal').style.display = 'none';
     }
 
-    function downloadDriverData(driverId) {
-      const driver = allDriversData.find(d => d.driverId === driverId);
+    function downloadDriverData(driverDocId) {
+      const driver = allDriversData.find(d => d.id === driverDocId);
       if (!driver) return;
 
-      let textContent = `--- A R TAXI GO FAST DRIVER DETAILS ---\n`;
-      textContent += `Driver ID: ${driver.driverId}\n`;
-      textContent += `Name: ${driver.drvName}\n`;
-      textContent += `Phone: ${driver.drvPhone}\n`;
-      textContent += `Vehicle No: ${driver.drvVehNo} (${driver.drvVehType})\n\n`;
-      textContent += `--- COMPLETED RIDES ---\n`;
+      let dataStr = `=====================================\n`;
+      dataStr += `A R TAXI GO FAST - DRIVER DETAILS\n`;
+      dataStr += `=====================================\n`;
+      dataStr += `Serial No: #${driver.serialNum}\n`;
+      dataStr += `Driver ID: ${driver.driverId || 'N/A'}\n`;
+      dataStr += `Name: ${driver.drvName}\n`;
+      dataStr += `Phone: ${driver.drvPhone}\n`;
+      dataStr += `Vehicle No: ${driver.drvVehNo}\n`;
+      dataStr += `Vehicle Type: ${driver.drvVehType}\n\n`;
+      dataStr += `--- COMPLETED RIDES ---\n`;
 
       if (driver.rides && driver.rides.length > 0) {
-        driver.rides.forEach((r, idx) => {
-          textContent += `Ride #${idx + 1}:\n`;
-          textContent += `  Customer: ${r.customerName} (${r.customerPhone})\n`;
-          textContent += `  Pickup: ${r.pickupLocation}\n`;
-          textContent += `  Drop: ${r.dropLocation}\n`;
-          textContent += `  Distance: ${r.distance} KM\n`;
-          textContent += `  Fare: Rs. ${r.fare}\n\n`;
+        driver.rides.forEach((r, i) => {
+          dataStr += `\nRide #${i + 1}:\n`;
+          dataStr += `Customer: ${r.customerName || 'N/A'} (${r.customerPhone || ''})\n`;
+          dataStr += `Pickup: ${r.pickupLocation || ''}\n`;
+          dataStr += `Drop: ${r.dropLocation || ''}\n`;
+          dataStr += `Distance: ${r.distance || 0} KM\n`;
+          dataStr += `Fare: ₹${r.fare || 0}\n`;
         });
       } else {
-        textContent += `No rides recorded.\n`;
+        dataStr += `No rides completed yet.\n`;
       }
 
-      const blob = new Blob([textContent], { type: 'text/plain' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = `Driver_${driver.driverId}_Details.txt`;
-      link.click();
+      const blob = new Blob([dataStr], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Driver_${driver.drvName}_${driver.driverId || 'Data'}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
     }
   </script>
 </body>
