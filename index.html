@@ -11,7 +11,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="A R Taxi Go Fast">
 
-  <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22A%20R%20Taxi%20Go%20Fast%22%2C%22short_name%22%3A%22AR%20Taxi%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23ffffff%22%2C%22theme_color%22%3A%22%230fb05b%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fimg.icons8.com%2Fcolor%2F512%2Ftaxi.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D">
+  <!-- PDF ಡೌನ್‌ಲೋಡ್ ಮಾಡಲು html2pdf ಲೈಬ್ರರಿ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -104,7 +105,6 @@
     }
     .floating-share-btn:active { transform: scale(0.9); }
 
-    /* ಹೋಮ್ ಪೇಜ್ ಶೈಲಿ */
     #roleSelectionScreen { text-align: center; padding: 10px 5px; }
     
     .home-buttons-grid {
@@ -173,29 +173,35 @@
     .back-home-btn { background: #718096; color: white; border: none; padding: 8px 14px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; margin-bottom: 12px; font-weight: bold; }
 
     /* Modals */
-    #customAlertModal, #meterResultModal, #rideFinishModal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); text-align: center; padding: 20px; }
-    .modal-content-box { background: #fff; max-width: 380px; margin: 100px auto; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+    #customAlertModal, #meterResultModal, #rideFinishModal, #imageViewerModal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); text-align: center; padding: 20px; overflow-y: auto; }
+    .modal-content-box { background: #fff; max-width: 380px; margin: 50px auto; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
 
     .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
     .dash-box { background: #edf2f7; border: 1px solid #cbd5e0; padding: 10px; border-radius: 8px; text-align: center; }
     .dash-box-title { font-size: 0.75rem; color: #4a5568; font-weight: bold; }
     .dash-box-val { font-size: 1.1rem; color: #2b6cb0; font-weight: bold; margin-top: 4px; }
 
-    /* ಹಳೆಯ ಅಡ್ಮಿನ್ ಶೈಲಿ ಬಟನ್‌ಗಳು */
+    /* ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್ ಡಿಸೈನ್ */
     .admin-card { border: 1px solid #cbd5e0; border-radius: 8px; padding: 10px; margin-bottom: 12px; background: #fff; }
     .admin-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
     .driver-badge { background: #0fb05b; color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; }
     .admin-action-btns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 8px; }
-    .btn-admin-act { border: none; padding: 6px 4px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; color: white; cursor: pointer; text-align: center; }
+    .btn-admin-act { border: none; padding: 6px 4px; border-radius: 6px; font-size: 0.72rem; font-weight: bold; color: white; cursor: pointer; text-align: center; }
     .btn-view-booking { background: #3182ce; }
     .btn-download-profile { background: #d69e2e; }
     .btn-delete-driver { background: #e53e3e; }
+
+    /* ಫೋಟೋ ಗ್ಯಾಲರಿ ಥಂಬ್‌ನೇಲ್‌ಗಳು */
+    .driver-photo-grid { display: flex; gap: 6px; margin: 8px 0; overflow-x: auto; }
+    .driver-thumb { width: 55px; height: 55px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e0; cursor: pointer; }
+    .driver-thumb:hover { border-color: #0fb05b; }
   </style>
 </head>
 <body>
 
   <a href="javascript:void(0);" onclick="shareAppOnWhatsApp()" class="floating-share-btn" title="WhatsApp Share">💬</a>
 
+  <!-- alert alert modals -->
   <div id="customAlertModal">
     <div class="modal-content-box">
       <div style="font-size: 2.5rem; margin-bottom: 10px;">🛺</div>
@@ -220,6 +226,16 @@
       <h3 style="color: #2d3748; margin-bottom: 10px; font-size: 1.1rem;">ಪ್ರಯಾಣ ಪೂರ್ಣಗೊಂಡಿದೆ</h3>
       <p id="rideFinishText" style="font-size: 0.95rem; color: #2d3748; line-height: 1.6; margin-bottom: 20px; font-weight: bold;"></p>
       <button class="btn-submit" onclick="closeRideFinishModal()">ಸರಿ (OK)</button>
+    </div>
+  </div>
+
+  <!-- ಫುಲ್ ಸ್ಕ್ರೀನ್ ಫೋಟೋ ವಿ ವೀವರ್ ಮೋಡಲ್ -->
+  <div id="imageViewerModal">
+    <div class="modal-content-box" style="max-width:90%; background:#000; color:#fff;">
+      <span style="float:right; font-size:1.5rem; cursor:pointer;" onclick="closeImageViewer()">&times;</span>
+      <h4 id="imageViewerTitle" style="margin-bottom:10px;">ಫೋಟೋ ವೀಕ್ಷಣೆ</h4>
+      <img id="fullSizeImage" src="" style="width:100%; max-height:60vh; object-fit:contain; border-radius:8px; margin-bottom:12px;">
+      <a id="downloadImageBtn" href="" download="driver_document.jpg" class="btn-submit" style="display:block; text-decoration:none; background:#d69e2e; margin-top:8px;">📥 ಫೋಟೋ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ (Download)</a>
     </div>
   </div>
 
@@ -412,7 +428,6 @@
         <h2>📢 ಡ್ರೈವರ್ ಐಡಿ ಪ್ಯಾನಲ್ ಹಾಗೂ ಲೈವ್ ಬುಕಿಂಗ್‌ಗಳು</h2>
         <div class="form-group">
           <label>ಬುಕಿಂಗ್ ವೀಕ್ಷಿಸಲು ನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ:</label>
-          <!-- autocomplete off ಹಾಗೂ text ಶೈಲಿ ಪಾಸ್‌ವರ್ಡ್ ಮ್ಯಾನೇಜರ್ ತಡೆಯುತ್ತದೆ -->
           <input type="text" id="driverInputId" placeholder="4 digit ID" maxlength="4" inputmode="numeric" autocomplete="off" oninput="checkDriverIdAndListen()">
         </div>
 
@@ -432,7 +447,7 @@
         </div>
       </div>
 
-      <!-- 5. ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್ (ಹಳೆಯ ಫೋಟೋ ಡಿಸೈನ್ ಪುನಃಸ್ಥಾಪಿಸಲಾಗಿದೆ) -->
+      <!-- 5. ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್ -->
       <div id="adminSection" class="section">
         <h2>🔐 ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್</h2>
         <p style="font-size: 0.75rem; color: #7f8c8d; margin-bottom: 8px;">ಡ್ರೈವರ್ ಪ್ರೊಫೈಲ್ಗಳ ವೀಕ್ಷಣೆ ಅಥವಾ ಡಿಲೀಟ್ ಮಾಡಲು ಇಲ್ಲಿದೆ...</p>
@@ -468,6 +483,36 @@
     let allDriversData = []; 
     let custMeterWatchId = null;
     let lastCustPos = null;
+    let lastPendingCount = 0;
+
+    // ಸೈರನ್ ಆಡಿಯೋ ಪ್ಲೇ ಮಾಡುವ ಫಂಕ್ಷನ್
+    function playSirenSound() {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(400, audioCtx.currentTime + 0.5);
+        gain.gain.setValueAtTime(1, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.5);
+      } catch(e) {}
+    }
+
+    // ಇಮೇಜ್ ಫೈಲ್ ಅನ್ನು Base64 ಸ್ಟ್ರಿಂಗ್ ಆಗಿ ಪರಿವರ್ತಿಸುವ ಫಂಕ್ಷನ್
+    function convertFileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        if (!file) resolve('');
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+      });
+    }
 
     function openPage(sectionId) {
       if (sectionId === 'adminSection' && !isAdminUnlocked) {
@@ -609,6 +654,14 @@
     function closeCustomAlert() { document.getElementById('customAlertModal').style.display = 'none'; }
     function closeMeterResultModal() { document.getElementById('meterResultModal').style.display = 'none'; }
     function closeRideFinishModal() { document.getElementById('rideFinishModal').style.display = 'none'; }
+
+    function viewFullImage(src, title) {
+      document.getElementById('fullSizeImage').src = src;
+      document.getElementById('downloadImageBtn').href = src;
+      document.getElementById('imageViewerTitle').innerText = title || 'ಫೋಟೋ ವೀಕ್ಷಣೆ';
+      document.getElementById('imageViewerModal').style.display = 'block';
+    }
+    function closeImageViewer() { document.getElementById('imageViewerModal').style.display = 'none'; }
 
     function listenToMyBookingStatus(bookingId) {
       window.onSnapshot(window.doc(window.db, "bookings", bookingId), (docSnap) => {
@@ -805,6 +858,12 @@
           }
         });
 
+        // ಹೊಸ ಬುಕಿಂಗ್ ಬಂದಾಗ ಸೈರನ್ ಶಬ್ದ ಬರುತ್ತದೆ
+        if (pendingCountToday > lastPendingCount) {
+          playSirenSound();
+        }
+        lastPendingCount = pendingCountToday;
+
         let summaryHeader = `<div style="background: #e2e8f0; padding: 8px; border-radius: 6px; margin-bottom: 10px; font-weight: bold; text-align: center; color: #2d3748;">
           📊 ಇವತ್ತಿನ ಒಟ್ಟು ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು: ${pendingCountToday}
         </div>`;
@@ -853,7 +912,6 @@
       }
     }
 
-    /* 4. OTP ಸರಿಯಾದ ತಕ್ಷಣ ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಲೈವ್ ಜಿಪಿಎಸ್ ಮೀಟರ್ ಓಪನ್ ಆಗಿ ಆನ್ ಆಗುವ ಫಂಕ್ಷನ್ */
     async function verifyOtpAndStartRide(bookingId, correctOtp, vehType, custName, custPhone, pickupLoc, dropLoc) {
       const inputOtp = document.getElementById(`otpInput_${bookingId}`).value.trim();
       if (inputOtp === correctOtp) {
@@ -863,7 +921,6 @@
           });
           alert("OTP ಸರಿಯಾಗಿದೆ! ಲೈವ್ ಜಿಪಿಎಸ್ ಮೀಟರ್ ಪೇಜ್‌ಗೆ ತೆರಳಲಾಗುತ್ತಿದೆ...");
 
-          // ಮೀಟರ್ ಟ್ಯಾಬ್ ಆಯ್ಕೆ ಮಾಡಿ ಲೈವ್ ಮೀಟರ್ ಆನ್ ಮಾಡುವುದು
           if (vehType) {
             document.getElementById('meterVehicleType').value = vehType;
           }
@@ -973,6 +1030,7 @@
       }
     }
 
+    // ಡ್ರೈವರ್ ರಜಿಸ್ಟ್ರೇಷನ್ - ಫೋಟೋಗಳನ್ನು ಸೇವ್ ಮಾಡುವುದು
     async function registerDriver() {
       const name = document.getElementById('drvName').value.trim();
       const phone = document.getElementById('drvPhone').value.trim();
@@ -982,9 +1040,19 @@
       if (!name || !phone || !vehNo) { alert("ದಯವಿಟ್ಟು ಎಲ್ಲಾ ಖಾಲಿ ಜಾಗಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ!"); return; }
 
       const btn = document.getElementById('btnRegisterDriver');
-      btn.innerText = 'ಪರಿಶೀಲಿಸಲಾಗುತ್ತಿದೆ...';
+      btn.innerText = 'ಚಿತ್ರಗಳನ್ನು ಪರಿಶೀಲಿಸಲಾಗುತ್ತಿದೆ...';
 
       try {
+        const vehPhotoFile = document.getElementById('vehPhotoFile').files[0];
+        const rcPhotoFile = document.getElementById('rcPhotoFile').files[0];
+        const dlPhotoFile = document.getElementById('dlPhotoFile').files[0];
+        const selfiePhotoFile = document.getElementById('selfiePhotoFile').files[0];
+
+        const vehImgData = await convertFileToBase64(vehPhotoFile);
+        const rcImgData = await convertFileToBase64(rcPhotoFile);
+        const dlImgData = await convertFileToBase64(dlPhotoFile);
+        const selfieImgData = await convertFileToBase64(selfiePhotoFile);
+
         const driverId = Math.floor(1000 + Math.random() * 9000).toString();
 
         await window.addDoc(window.collection(window.db, "drivers"), {
@@ -993,6 +1061,10 @@
           drvVehNo: vehNo,
           drvVehType: vehType,
           driverId: driverId,
+          vehImg: vehImgData,
+          rcImg: rcImgData,
+          dlImg: dlImgData,
+          selfieImg: selfieImgData,
           timestamp: window.serverTimestamp()
         });
 
@@ -1013,7 +1085,7 @@
       }
     }
 
-    /* 1. ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್‌ - ಮೊದಲಿನ ಫೋಟೋ ಡಿಸೈನ್ ಪುನಃಸ್ಥಾಪಿಸಲಾಗಿದೆ */
+    /* ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್ - ಫೋಟೋಗಳ ಪ್ರದರ್ಶನ ಹಾಗೂ PDF ಡೌನ್‌ಲೋಡ್ */
     async function loadAdminDrivers() {
       const listDiv = document.getElementById('adminDriversList');
       listDiv.innerHTML = 'ಲೋಡ್ ಆಗುತ್ತಿದೆ...';
@@ -1040,18 +1112,29 @@
 
       let html = '';
       driversList.forEach((d, index) => {
+        let photosHtml = '';
+        if (d.vehImg) photosHtml += `<img src="${d.vehImg}" class="driver-thumb" onclick="viewFullImage('${d.vehImg}', 'ವಾಹನ ಫೋಟೋ')" title="ವಾಹನ ಫೋಟೋ">`;
+        if (d.rcImg) photosHtml += `<img src="${d.rcImg}" class="driver-thumb" onclick="viewFullImage('${d.rcImg}', 'RC ಫೋಟೋ')" title="RC ಕಾರ್ಡ್">`;
+        if (d.dlImg) photosHtml += `<img src="${d.dlImg}" class="driver-thumb" onclick="viewFullImage('${d.dlImg}', 'DL ಫೋಟೋ')" title="DL">`;
+        if (d.selfieImg) photosHtml += `<img src="${d.selfieImg}" class="driver-thumb" onclick="viewFullImage('${d.selfieImg}', 'ಸೆಲ್ಫಿ ಫೋಟೋ')" title="ಸೆಲ್ಫಿ">`;
+
         html += `
-          <div class="admin-card">
+          <div class="admin-card" id="adminDriverCard_${d.driverId}">
             <div class="admin-card-header">
               <span style="font-weight:bold; color:#2c3e50;">#${index + 1} - ${d.drvName || 'Driver'}</span>
               <span class="driver-badge">ID: ${d.driverId || '-'}</span>
             </div>
             <p style="font-size:0.82rem; color:#4a5568;"><b>ಮೊಬೈಲ್:</b> <a href="tel:${d.drvPhone}" style="color:#3182ce;">${d.drvPhone || '-'}</a> | <b>ವಾಹನ:</b> ${d.drvVehNo || '-'} (${d.drvVehType || 'Auto'})</p>
-            <p style="font-size:0.82rem; color:#718096; margin-top:2px;">ಒಟ್ಟು ಬುಕಿಂಗ್‌ಗಳು: 0 | ಒಟ್ಟು ಗಳಿಕೆ: ₹0</p>
+            
+            <div class="driver-photo-grid">
+               ${photosHtml !== '' ? photosHtml : '<span style="font-size:0.75rem; color:#a0aec0;">ಯಾವುದೇ ಫೋಟೋ ಅಪ್ಲೋಡ್ ಆಗಿಲ್ಲ</span>'}
+            </div>
+
+            <div id="bookingListForDriver_${d.driverId}" style="display:none; margin: 8px 0; background:#f7fafc; padding:8px; border-radius:6px; border:1px solid #e2e8f0;"></div>
             
             <div class="admin-action-btns">
-              <button class="btn-admin-act btn-view-booking" onclick="viewDriverBookings('${d.driverId}')">📋 ಬುಕಿಂಗ್ ವಿವರ ನೋಡಿ</button>
-              <button class="btn-admin-act btn-download-profile" onclick="downloadDriverProfile('${d.driverId}', '${d.drvName}')">📥 ಡೌನ್‌ಲೋಡ್</button>
+              <button class="btn-admin-act btn-view-booking" onclick="toggleAdminViewBookings('${d.driverId}')">📋 ಬುಕಿಂಗ್ ವಿವರ ನೋಡಿ</button>
+              <button class="btn-admin-act btn-download-profile" onclick="downloadDriverPDF('${d.driverId}', '${d.drvName}')">📥 PDF ಡೌನ್‌ಲೋಡ್</button>
               <button class="btn-admin-act btn-delete-driver" onclick="deleteDriver('${d.id}')">🗑️ ಡಿಲೀಟ್</button>
             </div>
           </div>
@@ -1070,14 +1153,57 @@
       renderAdminDrivers(filtered);
     }
 
-    function viewDriverBookings(driverId) {
-      openPage('liveSection');
-      document.getElementById('driverInputId').value = driverId;
-      checkDriverIdAndListen();
+    // ಬುಕಿಂಗ್ ವಿವರ ತೋರಿಸುವುದು
+    async function toggleAdminViewBookings(driverId) {
+      const container = document.getElementById(`bookingListForDriver_${driverId}`);
+      if (container.style.display === 'block') {
+        container.style.display = 'none';
+        return;
+      }
+      container.style.display = 'block';
+      container.innerHTML = 'ಬುಕಿಂಗ್‌ಗಳು ಲೋಡ್ ಆಗುತ್ತಿವೆ...';
+
+      try {
+        const q = window.query(window.collection(window.db, "completed_rides"), window.where("driverIdNum", "==", driverId));
+        const snap = await window.getDocs(q);
+
+        if (snap.empty) {
+          container.innerHTML = '<p style="font-size:0.78rem; color:#718096;">ಯಾವುದೇ ಪೂರ್ಣಗೊಂಡ ಬುಕಿಂಗ್ ಪತ್ತೆಯಾಗಿಲ್ಲ.</p>';
+          return;
+        }
+
+        let bHtml = '<h5 style="font-size:0.8rem; color:#2d3748; margin-bottom:4px;">ಸ್ವೀಕರಿಸಿದ ಬುಕಿಂಗ್‌ಗಳು:</h5>';
+        snap.forEach(docSnap => {
+          const r = docSnap.data();
+          bHtml += `
+            <div style="font-size:0.75rem; border-bottom:1px dashed #cbd5e0; padding:4px 0;">
+              <b>ಗ್ರಾಹಕ:</b> ${r.customerName || '-'} (${r.customerPhone || '-'})<br>
+              <b>ಪಿಕಪ್:</b> ${r.pickupLocation || '-'}<br>
+              <b>ಡ್ರಾಪ್:</b> ${r.dropLocation || '-'}<br>
+              <b>ದೂರ:</b> ${r.distance || 0} KM | <b>ಹಣ:</b> ₹${r.fare || 0}
+            </div>
+          `;
+        });
+        container.innerHTML = bHtml;
+      } catch (e) {
+        container.innerHTML = `<p style="color:#e53e3e; font-size:0.75rem;">Error: ${e.message}</p>`;
+      }
     }
 
-    function downloadDriverProfile(driverId, name) {
-      alert(`${name} (ID: ${driverId}) ಅವರ ಪ್ರೊಫೈಲ್ ಡೌನ್‌ಲೋಡ್ ಮಾಡಲು ವಿನಂತಿ ಕಳುಹಿಸಲಾಗಿದೆ.`);
+    // ಡ್ರೈವರ್ ಐಡಿ, ಫೋಟೋ ಮತ್ತು ಬುಕಿಂಗ್ ಲಿಸ್ಟ್ ಅನ್ನು PDF ಆಗಿ ಡೌನ್‌ಲೋಡ್ ಮಾಡುವ ಫಂಕ್ಷನ್
+    async function downloadDriverPDF(driverId, name) {
+      const element = document.getElementById(`adminDriverCard_${driverId}`);
+      await toggleAdminViewBookings(driverId);
+      
+      const opt = {
+        margin:       10,
+        filename:     `Driver_${name}_${driverId}.pdf`,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+
+      html2pdf().set(opt).from(element).save();
     }
 
     async function deleteDriver(docId) {
