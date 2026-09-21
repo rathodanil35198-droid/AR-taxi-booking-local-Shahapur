@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  
   <title id="pageTitle">A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್ | ಬೈಕ್, ಆಟೋ & ಕಾರ್ ಬುಕಿಂಗ್</title>
   
   <meta name="theme-color" content="#0fb05b">
@@ -966,13 +965,14 @@
         const ridesSnap = await window.getDocs(ridesQuery);
 
         if (!ridesSnap.empty) {
-          combinedHtml += `<hr style="margin: 15px 0;"><h3 style="font-size: 0.9rem; margin-bottom: 8px;">ಹಿಂದಿನ ಪ್ರಯಾಣದ ಇತಿಹಾಸ (Police Verification Download):</h3>`;
+          combinedHtml += `<hr style="margin: 15px 0;"><h3 style="font-size: 0.9rem; margin-bottom: 8px;">ಹಿಂದಿನ ಪ್ರಯಾಣದ ಇತಿಹಾಸ (Police Verification & PDF Download):</h3>`;
           ridesSnap.forEach(rDoc => {
             const r = rDoc.data();
             combinedHtml += `
               <div class="card" id="driverHistoryCard_${rDoc.id}" style="border: 1px solid #cbd5e0; background:#fff; margin-bottom:8px;">
                 <p style="font-size:0.85rem;"><b>ಗ್ರಾಹಕರು:</b> ${r.customerName} (${r.customerPhone})</p>
-                <p style="font-size:0.85rem;"><b>ಸ್ಥಳ:</b> ${r.pickupLocation} ➡️ ${r.dropLocation}</p>
+                <p style="font-size:0.85rem;"><b>ಪಿಕಪ್ ಸ್ಥಳ:</b> ${r.pickupLocation}</p>
+                <p style="font-size:0.85rem;"><b>ಡ್ರಾಪ್ ಸ್ಥಳ:</b> ${r.dropLocation}</p>
                 <p style="font-size:0.85rem;"><b>ದೂರ:</b> ${r.distance} ಕಿ.ಮೀ | <b>ಹಣ:</b> ₹${r.fare}</p>
                 <button class="btn-pdf-download" onclick="downloadDriverHistoryPDF('${driverData.driverId}', '${driverData.drvName}', '${rDoc.id}')">📥 ಪೊಲೀಸ್ ಪರಿಶೀಲನೆ PDF ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ</button>
               </div>
@@ -1057,7 +1057,12 @@
       const cardEl = document.getElementById(`driverHistoryCard_${rideId}`);
       const container = document.createElement('div');
       container.style.padding = "20px"; container.style.background = "#ffffff";
-      container.innerHTML = cardEl.outerHTML;
+      container.innerHTML = `
+        <h3 style="color:#0fb05b; margin-bottom:10px;">A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ - ಪೊಲೀಸ್ ಪರಿಶೀಲನೆ ವರದಿ</h3>
+        <p><b>ಡ್ರೈವರ್ ಐಡಿ:</b> ${driverId} | <b>ಹೆಸರು:</b> ${driverName}</p>
+        <hr style="margin:10px 0;">
+        ${cardEl.outerHTML}
+      `;
 
       const opt = {
         margin: 10, filename: `Police_Verification_${driverName}.pdf`,
@@ -1226,7 +1231,7 @@
         let bHtml = `<h5 style="font-size:0.8rem; margin-bottom:4px;">ಪೂರ್ಣಗೊಂಡ ಬುಕಿಂಗ್‌ಗಳು:</h5>`;
         snap.forEach(docSnap => {
           const r = docSnap.data();
-          bHtml += `<div style="font-size:0.75rem; border-bottom:1px dashed #cbd5e0; padding:4px 0;">ಗ್ರಾಹಕರು: ${r.customerName} | ಹಣ: ₹${r.fare} | ${r.distance} ಕಿ.ಮೀ</div>`;
+          bHtml += `<div style="font-size:0.75rem; border-bottom:1px dashed #cbd5e0; padding:4px 0;">ಗ್ರಾಹಕರು: ${r.customerName} (${r.customerPhone}) | ➡️ ${r.dropLocation} | ಹಣ: ₹${r.fare} | ${r.distance} ಕಿ.ಮೀ</div>`;
         });
         container.innerHTML = bHtml;
       } catch (e) { container.innerHTML = `<p style="color:#e53e3e;">Error</p>`; }
@@ -1246,7 +1251,7 @@
       html2pdf().set(opt).from(container).save();
     }
 
-    async function deleteDriver(docId) {
+    async  function deleteDriver(docId) {
       if (confirm("ಈ ಡ್ರೈವರ್ ಖಾತೆಯನ್ನು ಅಳಿಸಲು ಬಯಸುತ್ತೀರಾ?")) {
         try {
           await window.deleteDoc(window.doc(window.db, "drivers", docId));
