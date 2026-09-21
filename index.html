@@ -477,6 +477,7 @@
     let sirenInterval = null;
     let audioCtx = null;
     let adTimer = null;
+    let activeDriverDataGlobal = null; // ಕೀಪ್ಯಾಡ್ ಬ್ಲಿಂಕ್ ಆಗದಂತೆ ತಡೆಯಲು
 
     window.addEventListener('DOMContentLoaded', async () => {
       await checkAndShowSplashAd();
@@ -727,7 +728,19 @@
       document.getElementById('customAlertModal').style.display = 'block';
     }
     function closeCustomAlert() { document.getElementById('customAlertModal').style.display = 'none'; }
-    function closeMeterResultModal() { document.getElementById('meterResultModal').style.display = 'none'; }
+    
+    function closeMeterResultModal() { 
+      document.getElementById('meterResultModal').style.display = 'none'; 
+      // ಬಿಲ್ ಮುಗಿದ ಮೇಲೆ ಸರಿ (OK) ಒತ್ತಿದ ಕೂಡಲೇ ನೇರವಾಗಿ ಹೊಸ ಬುಕಿಂಗ್ ಪುಟಕ್ಕೆ (Live Section) ಬರುವುದು
+      if (activeDriverDataGlobal) {
+        openPage('liveSection');
+        document.getElementById('driverInputId').value = activeDriverDataGlobal.driverId;
+        checkDriverIdAndListen();
+      } else {
+        openPage('liveSection');
+      }
+    }
+
     function closeRideFinishModal() { document.getElementById('rideFinishModal').style.display = 'none'; }
 
     function viewFullImage(src, title) {
@@ -800,6 +813,7 @@
         listDiv.innerHTML = `<p style="color: #e53e3e; font-weight: bold;">${currentLang === 'en' ? 'Enter 4-digit ID.' : 'ಬುಕಿಂಗ್ ನೋಡಲು 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ.'}</p>`;
         dashDiv.style.display = 'none';
         if (bookingsUnsubscribe) { bookingsUnsubscribe(); bookingsUnsubscribe = null; }
+        activeDriverDataGlobal = null;
         return;
       }
 
@@ -812,10 +826,12 @@
           listDiv.innerHTML = `<p style="color: #e53e3e; font-weight: bold;">${currentLang === 'en' ? 'Wrong Driver ID!' : 'ತಪ್ಪಾದ ಡ್ರೈವರ್ ಐಡಿ!'}</p>`;
           dashDiv.style.display = 'none';
           if (bookingsUnsubscribe) { bookingsUnsubscribe(); bookingsUnsubscribe = null; }
+          activeDriverDataGlobal = null;
           return;
         }
 
         const driverData = snap.docs[0].data();
+        activeDriverDataGlobal = driverData;
         dashDiv.style.display = 'grid';
         loadDriverPersonalDashboard(inputId);
         listDiv.innerHTML = `<p style="color: #3182ce; font-weight: bold;">${currentLang === 'en' ? 'Welcome' : 'ಸ್ವಾಗತ'} ${driverData.drvName}!</p>`;
@@ -857,7 +873,6 @@
             });
           } catch(e) {}
           
-          // ಕೀಪ್ಯಾಡ್ ಬ್ಲಿಂಕ್ ಆಗದಂತೆ ತಡೆಯಲು ಒಮ್ಮೆ ಮಾತ್ರ ಲಿನ್ಸನ್ ಕಾಲ್ ಮಾಡುವುದು
           if (!bookingsUnsubscribe) {
             listenToBookingsForDriver(driverData);
           }
@@ -948,7 +963,12 @@
             `;
           });
         }
-        listDiv.innerHTML = combinedHtml;
+        
+        // ಕೀಪ್ಯಾಡ್ ಓಪನ್ ಇದ್ದು ಯೂಸರ್ ಟೈಪ್ ಮಾಡುತ್ತಿರುವಾಗ ಡೈವಿನ್ ಬ್ಲಿಂಕ್/ರಿ-ರೆಂಡರ್ ಆಗುವುದನ್ನು ತಡೆಯಲು ಫೋಕಸ್ ಚೆಕ್ ಮಾಡುವುದು
+        const activeInput = document.activeElement;
+        if (!activeInput || activeInput.tagName !== 'INPUT' || !activeInput.id.startsWith('otpInput')) {
+          listDiv.innerHTML = combinedHtml;
+        }
       });
     }
 
@@ -975,7 +995,8 @@
     }
 
     async function verifyOtpAndStartRide(bookingId, correctOtp, vehType) {
-      const inputOtp = document.getElementById(`otpInput_${bookingId}`).value.trim();
+      const inputEl = document.getElementById(`otpInput_${bookingId}`);
+      const inputOtp = inputEl ? inputEl.value.trim() : '';
       if (inputOtp === correctOtp) {
         try {
           await window.updateDoc(window.doc(window.db, "bookings", bookingId), { status: 'Started' });
