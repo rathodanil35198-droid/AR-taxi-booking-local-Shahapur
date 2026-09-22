@@ -934,12 +934,16 @@
               </div>
             `;
           } else if (b.status === 'Accepted' && b.driverIdNum === driverData.driverId) {
+            // ಸಂಪೂರ್ಣ ಲಾಕ್ ಆಗಿರುವ ಕಾರ್ಡ್ (ಯಾವುದೇ ಡಿಲೀಟ್ ಅಥವಾ ಡೌನ್‌ಲೋಡ್ ಆಪ್ಷನ್ ಇಲ್ಲ)
             acceptedHtml += `
               <div class="card" style="border: 2px solid #38a169; background:#edf2f7; margin-bottom:8px;">
-                <p style="background:#d4edda; padding:5px; border-radius:4px; margin-bottom:5px; font-weight:bold; color:#155724;">🔒 ನಿಮ್ಮ ಐಡಿಗೆ ಲಾಕ್ ಆಗಿದೆ!</p>
-                <p style="font-size:0.85rem;"><b>ಗ್ರಾಹಕರು:</b> ${b.customerName} (<a href="tel:${b.customerPhone}">${b.customerPhone}</a>)</p>
-                <p style="font-size:0.85rem;"><b>ಪಿಕಪ್:</b> ${b.pickupLocation}</p>
-                <p style="font-size:0.85rem;"><b>ಡ್ರಾಪ್:</b> ${b.dropLocation}</p>
+                <p style="background:#d4edda; padding:5px; border-radius:4px; margin-bottom:5px; font-weight:bold; color:#155724;">🔒 ಬುಕಿಂಗ್ ಸಂಪೂರ್ಣ ಲಾಕ್ ಆಗಿದೆ!</p>
+                <p style="font-size:0.85rem;"><b>ಕಸ್ಟಮರ್ ಹೆಸರು:</b> ${b.customerName}</p>
+                <p style="font-size:0.85rem;"><b>ಕಸ್ಟಮರ್ ಮೊಬೈಲ್ ನಂಬರ್:</b> <a href="tel:${b.customerPhone}">${b.customerPhone}</a></p>
+                <p style="font-size:0.85rem;"><b>ಪಿಕಪ್ ಸ್ಥಳ:</b> ${b.pickupLocation}</p>
+                <p style="font-size:0.85rem;"><b>ಡ್ರಾಪ್ ಸ್ಥಳ:</b> ${b.dropLocation}</p>
+                <p style="font-size:0.85rem;"><b>ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಡಾಟಾ:</b> Lat: ${b.pickupLat ? b.pickupLat.toFixed(4) : ''}, Lng: ${b.pickupLng ? b.pickupLng.toFixed(4) : ''}</p>
+                <a href="tel:${b.customerPhone}" class="btn-submit" style="display:block; text-decoration:none; background:#2b6cb0; margin-top:6px; text-align:center; font-size:0.8rem;">📞 ಕಸ್ಟಮರ್ ಗೆ ಕಾಲ್ ಮಾಡಿ</a>
                 <div style="margin-top:8px; padding:6px; background:#fff; border-radius:6px; border:1px solid #cbd5e0;">
                    <p style="font-size:0.75rem; font-weight:bold; margin-bottom:3px;">ಒಟಿಪಿ ನಮೂದಿಸಿ:</p>
                    <input type="text" id="otpInput_${docSnap.id}" placeholder="OTP" maxlength="4" inputmode="numeric" style="margin-bottom:5px; text-align:center; font-weight:bold; font-size:1rem;">
@@ -948,12 +952,16 @@
               </div>
             `;
           } else if (b.status === 'Started' && b.driverIdNum === driverData.driverId) {
+            // ಸಂಪೂರ್ಣ ಲಾಕ್ ಆಗಿರುವ ಕಾರ್ಡ್ (ಯಾವುದೇ ಡಿಲೀಟ್ ಅಥವಾ ಡೌನ್‌ಲೋಡ್ ಆಪ್ಷನ್ ಇಲ್ಲ)
             acceptedHtml += `
               <div class="card" style="border: 2px solid #3182ce; background:#ebf8ff; margin-bottom:8px;">
-                <p style="background:#bee3f8; padding:5px; border-radius:4px; margin-bottom:5px; font-weight:bold; color:#2b6cb0;">🏁 ಪ್ರಯಾಣ ನಡೆಯುತ್ತಿದೆ</p>
-                <p style="font-size:0.85rem;"><b>ಗ್ರಾಹಕರು:</b> ${b.customerName} (<a href="tel:${b.customerPhone}">${b.customerPhone}</a>)</p>
-                <p style="font-size:0.85rem;"><b>ಪಿಕಪ್:</b> ${b.pickupLocation}</p>
-                <p style="font-size:0.85rem;"><b>ಡ್ರಾಪ್:</b> ${b.dropLocation}</p>
+                <p style="background:#bee3f8; padding:5px; border-radius:4px; margin-bottom:5px; font-weight:bold; color:#2b6cb0;">🏁 ಪ್ರಯಾಣ ನಡೆಯುತ್ತಿದೆ (ಲಾಕ್ ಆಗಿದೆ)</p>
+                <p style="font-size:0.85rem;"><b>ಕಸ್ಟಮರ್ ಹೆಸರು:</b> ${b.customerName}</p>
+                <p style="font-size:0.85rem;"><b>ಕಸ್ಟಮರ್ ಮೊಬೈಲ್ ನಂಬರ್:</b> <a href="tel:${b.customerPhone}">${b.customerPhone}</a></p>
+                <p style="font-size:0.85rem;"><b>ಪಿಕಪ್ ಸ್ಥಳ:</b> ${b.pickupLocation}</p>
+                <p style="font-size:0.85rem;"><b>ಡ್ರಾಪ್ ಸ್ಥಳ:</b> ${b.dropLocation}</p>
+                <p style="font-size:0.85rem;"><b>ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಡಾಟಾ:</b> Lat: ${b.pickupLat ? b.pickupLat.toFixed(4) : ''}, Lng: ${b.pickupLng ? b.pickupLng.toFixed(4) : ''}</p>
+                <a href="tel:${b.customerPhone}" class="btn-submit" style="display:block; text-decoration:none; background:#2b6cb0; margin-top:6px; text-align:center; font-size:0.8rem;">📞 ಕಸ್ಟಮರ್ ಗೆ ಕಾಲ್ ಮಾಡಿ</a>
                 <button class="btn-submit" onclick="finishRide('${docSnap.id}', '${driverData.driverId}', '${b.customerName}', '${b.customerPhone}', '${b.pickupLocation}', '${b.dropLocation}')" style="background:#e53e3e; margin-top:8px; padding:8px; font-size:0.85rem;">ಪ್ರಯಾಣ ಮುಕ್ತಾಯಗೊಳಿಸಿ ಹಣ ನಮೂದಿಸಿ</button>
               </div>
             `;
@@ -984,8 +992,8 @@
                 window.deleteDoc(window.doc(window.db, "completed_rides", rDoc.id)).catch(e => {});
                 return;
               } else if (diffDays === 14) {
-                // 14 ನೇ ದಿನಕ್ಕೆ ಕೆಂಪು ಅಕ್ಷರದಲ್ಲಿ ಎಚ್ಚರಿಕೆ
-                warningHtml = `<p style="color:red; font-weight:bold; font-size:0.75rem; margin-bottom:4px;">⚠️ ಎಚ್ಚರಿಕೆ: ನಾಳೆ ನಿಮ್ಮ ಈ ಡೇಟಾ ಸಂಪೂರ್ಣ ಡಿಲೀಟ್ ಆಗುತ್ತದೆ!</p>`;
+                // 14 ನೇ ದಿನಕ್ಕೆ ನೋಟಿಫಿಕೇಶನ್ ಎಚ್ಚರಿಕೆ
+                warningHtml = `<p style="color:red; font-weight:bold; font-size:0.75rem; margin-bottom:4px;">⚠️ ಐಡಿಯಾ: ನಾಳೆ ಈ ಡಾಟಾವನ್ನು ಡಿಲೀಟ್ ಆಗುತ್ತದೆ!</p>`;
               }
             }
 
@@ -997,7 +1005,7 @@
                 <p style="font-size:0.8rem;"><b>ಪಿಕಪ್ ಸ್ಥಳ:</b> ${r.pickupLocation}</p>
                 <p style="font-size:0.8rem;"><b>ಡ್ರಾಪ್ ಸ್ಥಳ:</b> ${r.dropLocation}</p>
                 <p style="font-size:0.8rem;"><b>ದೂರ:</b> ${r.distance} ಕಿ.ಮೀ | <b>ಹಣ:</b> ₹${r.fare}</p>
-                <button class="btn-pdf-download" onclick="requestSecurityCode('downloadPDF', '${rDoc.id}')">📥 ಪೊಲೀಸ್ ಪರಿಶೀಲನೆ PDF ಡೌನ್‌ಲೋಡ್</button>
+                <button class="btn-pdf-download" onclick="requestSecurityCode('downloadPDF', '${rDoc.id}')">📥 PDF ಡೌನ್‌ಲೋಡ್ (ನ್ಯೂ ಬುಕಿಂಗ್)</button>
                 <button class="btn-delete-record" onclick="requestSecurityCode('deleteRecord', '${rDoc.id}')">🗑️ ಈ ದಾಖಲೆ ಡಿಲೀಟ್ ಮಾಡಿ</button>
               </div>
             `;
@@ -1070,23 +1078,23 @@
         element.style.background = '#fff';
         element.style.color = '#000';
         element.innerHTML = `
-          <h2 style="text-align:center; color:#0fb05b;">A R Taxi Go Fast - Police Verification Report</h2>
+          <h2 style="text-align:center; color:#0fb05b;">A R Taxi Go Fast - New Booking PDF Report</h2>
           <hr style="margin:10px 0;">
           <p><b>ದಿನಾಂಕ:</b> ${new Date().toLocaleDateString()}</p>
           <p><b>ಡ್ರೈವರ್ ಐಡಿ ನಂಬರ್:</b> ${data.driverIdNum}</p>
-          <p><b>ಗ್ರಾಹಕರ ಹೆಸರು:</b> ${data.customerName}</p>
-          <p><b>ಗ್ರಾಹಕರ ಮೊಬೈಲ್:</b> ${data.customerPhone}</p>
+          <p><b>ಕಸ್ಟಮರ್ ಹೆಸರು:</b> ${data.customerName}</p>
+          <p><b>ಕಸ್ಟಮರ್ ಮೊಬೈಲ್ ನಂಬರ್:</b> ${data.customerPhone}</p>
           <p><b>ಪಿಕಪ್ ಸ್ಥಳ:</b> ${data.pickupLocation}</p>
           <p><b>ಡ್ರಾಪ್ ಸ್ಥಳ:</b> ${data.dropLocation}</p>
           <p><b>ಪ್ರಯಾಣಿಸಿದ ದೂರ:</b> ${data.distance} ಕಿ.ಮೀ</p>
-          <p><b>ಪಡೆದ ಚಾರ್ಜಸ್:</b> ₹${data.fare}</p>
+          <p><b>ಚಾರ್ಜಸ್:</b> ₹${data.fare}</p>
           <hr style="margin:10px 0;">
-          <p style="text-align:center; font-size:0.8rem;">Police Verification Safe Data Record - Shahapur</p>
+          <p style="text-align:center; font-size:0.8rem;">Safe Data Record - Shahapur</p>
         `;
 
         const opt = {
           margin: 10,
-          filename: `Police_Verification_${recordId}.pdf`,
+          filename: `New_Booking_${recordId}.pdf`,
           image: { type: 'jpeg', quality: 0.98 },
           html2canvas: { scale: 2 },
           jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
