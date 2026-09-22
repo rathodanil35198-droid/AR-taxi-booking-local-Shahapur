@@ -5,9 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title id="pageTitle">A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್ | ಬೈಕ್, ಆಟೋ & ಕಾರ್ ಬುಕಿಂಗ್</title>
   
+  <!-- PWA & Mobile App Settings -->
   <meta name="theme-color" content="#0fb05b">
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="A R Taxi Go Fast">
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3097/3097180.png">
+
+  <!-- Dynamic PWA Manifest Injection -->
+  <script>
+    const manifestData = {
+      "name": "A R Taxi Booking Go Fast",
+      "short_name": "AR Taxi",
+      "start_url": "./",
+      "display": "standalone",
+      "background_color": "#f4f7f6",
+      "theme_color": "#0fb05b",
+      "icons": [
+        {
+          "src": "https://cdn-icons-png.flaticon.com/512/3097/3097180.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        },
+        {
+          "src": "https://cdn-icons-png.flaticon.com/512/3097/3097180.png",
+          "sizes": "512x512",
+          "type": "image/png"
+        }
+      ]
+    };
+    const stringManifest = JSON.stringify(manifestData);
+    const blob = new Blob([stringManifest], {type: 'application/json'});
+    const manifestURL = URL.createObjectURL(blob);
+    const linkTag = document.createElement('link');
+    linkTag.rel = 'manifest';
+    linkTag.href = manifestURL;
+    document.head.appendChild(linkTag);
+  </script>
 
   <!-- PDF ಡೌನ್‌ಲೋಡ್ ಮಾಡಲು html2pdf ಲೈಬ್ರರಿ -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -82,6 +116,19 @@
       border-radius: 15px; font-size: 0.75rem; font-weight: bold; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
 
+    .install-app-banner {
+      background: linear-gradient(135deg, #ff9966, #ff5e62);
+      color: white;
+      padding: 10px 14px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      border: 2px solid #fff;
+    }
+
     .floating-share-btn {
       position: fixed; bottom: 25px; right: 20px; background-color: #25d366; color: white;
       width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center;
@@ -151,6 +198,18 @@
 <body>
 
   <a href="javascript:void(0);" onclick="shareAppOnWhatsApp()" class="floating-share-btn">💬</a>
+
+  <!-- Install App Prompt Banner -->
+  <div id="installAppBanner" class="install-app-banner" style="display: none;">
+    <div style="display:flex; align-items:center; gap:8px;">
+      <span style="font-size: 2rem;">📲</span>
+      <div>
+        <div style="font-weight:bold; font-size:0.9rem;">A R Taxi ಆ್ಯಪ್ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ</div>
+        <div style="font-size:0.72rem; opacity:0.9;">ನಿಮ್ಮ ಮೊಬೈಲ್ ಹೋಮ್ ಸ್ಕ್ರೀನ್‌ನಲ್ಲಿ ರಿಯಲ್ ಆ್ಯಪ್ ತರ ಪಡೆಯಿರಿ!</div>
+      </div>
+    </div>
+    <button id="installAppBtn" style="background:#fff; color:#ff5e62; border:none; padding:6px 12px; border-radius:15px; font-weight:bold; font-size:0.8rem; cursor:pointer;">📥 Install</button>
+  </div>
 
   <div id="customAlertModal">
     <div class="modal-content-box">
@@ -482,6 +541,27 @@
     let audioCtx = null;
     let adTimer = null;
     let activeDriverDataGlobal = null;
+    let deferredPrompt = null;
+
+    // PWA Install Prompt Listener
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      document.getElementById('installAppBanner').style.display = 'flex';
+    });
+
+    document.getElementById('installAppBtn').addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+          document.getElementById('installAppBanner').style.display = 'none';
+        }
+        deferredPrompt = null;
+      } else {
+        alert("ನಿಮ್ಮ ಕ್ರೋಮ್ ಬ್ರೌಸರ್ ಮೆನು (⋮) ಕ್ಲಿಕ್ ಮಾಡಿ 'Install App' ಅಥವಾ 'Add to Home screen' ಆಯ್ಕೆಮಾಡಿ.");
+      }
+    });
 
     window.addEventListener('DOMContentLoaded', async () => {
       await checkAndShowSplashAd();
@@ -1200,8 +1280,8 @@
             <div id="bookingListForDriver_${d.driverId}" style="display:none; margin: 8px 0; background:#f7fafc; padding:8px; border-radius:6px; border:1px solid #e2e8f0;"></div>
             <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; margin-top:8px;">
               <button class="btn-submit" onclick="toggleAdminViewBookings('${d.driverId}')" style="background:#3182ce; font-size:0.72rem; padding:6px 2px;">📋 ಬುಕಿಂಗ್‌ಗಳು</button>
-              <button class="btn-submit" onclick="downloadDriverPDF('${d.driverId}', '${d.drvName}')" style="background:#d69e2e; font-size:0.72rem; padding:6px 2px;">📥 PDF</button>
-              <button class="btn-submit" onclick="deleteDriver('${d.id}')" style="background:#e53e3e; font-size:0.72rem; padding:6px 2px;">🗑️ ಅಳಿಸಿ</button>
+              <button class="btn-submit" onclick="downloadDriverPDF('${d.driverId}', '${d.drvName}')" style="background:#d69e2e; font-size:0.72rem; padding:6px 2px;">📥 PDF ಡೌನ್‌ಲೋಡ್</button>
+              <button class="btn-submit" onclick="deleteDriver('${d.id}')" style="background:#e53e3e; font-size:0.72rem; padding:6px 2px;">❌ ಡಿಲೀಟ್</button>
             </div>
           </div>
         `;
@@ -1210,60 +1290,62 @@
     }
 
     function filterAdminDrivers() {
-      const input = document.getElementById('adminSearchInput').value.trim().toLowerCase();
-      renderAdminDrivers(allDriversData.filter(d => 
-        (d.drvPhone && d.drvPhone.toLowerCase().includes(input)) ||
-        (d.driverId && d.driverId.toLowerCase().includes(input)) ||
-        (d.drvName && d.drvName.toLowerCase().includes(input))
-      ));
+      const queryText = document.getElementById('adminSearchInput').value.trim().toLowerCase();
+      if (!queryText) { renderAdminDrivers(allDriversData); return; }
+      const filtered = allDriversData.filter(d => (d.drvPhone && d.drvPhone.includes(queryText)) || (d.driverId && d.driverId.includes(queryText)) || (d.drvName && d.drvName.toLowerCase().includes(queryText)));
+      renderAdminDrivers(filtered);
     }
 
     async function toggleAdminViewBookings(driverId) {
       const container = document.getElementById(`bookingListForDriver_${driverId}`);
       if (container.style.display === 'block') { container.style.display = 'none'; return; }
-      container.style.display = 'block'; container.innerHTML = 'ಲೋಡ್ ಆಗುತ್ತಿದೆ...';
+      container.style.display = 'block';
+      container.innerHTML = 'ಲೋಡ್ ಆಗುತ್ತಿದೆ...';
 
       try {
         const q = window.query(window.collection(window.db, "completed_rides"), window.where("driverIdNum", "==", driverId));
         const snap = await window.getDocs(q);
-        if (snap.empty) { container.innerHTML = `<p style="font-size:0.78rem; color:#718096;">ಯಾವುದೇ ಬುಕಿಂಗ್‌ಗಳು ಸಿಗಲಿಲ್ಲ.</p>`; return; }
+        if (snap.empty) { container.innerHTML = '<p style="font-size:0.8rem;">ಯಾವುದೇ ಹಿಂದಿನ ಪ್ರಯಾಣಗಳಿಲ್ಲ.</p>'; return; }
 
-        let bHtml = `<h5 style="font-size:0.8rem; margin-bottom:4px;">ಪೂರ್ಣಗೊಂಡ ಬುಕಿಂಗ್‌ಗಳು:</h5>`;
+        let html = '<p style="font-size:0.8rem; font-weight:bold; margin-bottom:4px;">ಪ್ರಯಾಣದ ಪಟ್ಟಿ:</p>';
         snap.forEach(docSnap => {
           const r = docSnap.data();
-          bHtml += `<div style="font-size:0.75rem; border-bottom:1px dashed #cbd5e0; padding:4px 0;">ಗ್ರಾಹಕರು: ${r.customerName} (${r.customerPhone}) | ➡️ ${r.dropLocation} | ಹಣ: ₹${r.fare} | ${r.distance} ಕಿ.ಮೀ</div>`;
+          html += `<div style="font-size:0.78rem; border-bottom:1px solid #ddd; padding:4px 0;">ಗ್ರಾಹಕ: ${r.customerName}, ಹಣ: ₹${r.fare}, ದೂರ: ${r.distance} ಕಿ.ಮೀ</div>`;
         });
-        container.innerHTML = bHtml;
-      } catch (e) { container.innerHTML = `<p style="color:#e53e3e;">Error</p>`; }
+        container.innerHTML = html;
+      } catch(e) { container.innerHTML = 'Error loading'; }
     }
 
-    async function downloadDriverPDF(driverId, name) {
-      const element = document.getElementById(`adminDriverCard_${driverId}`);
+    async function downloadDriverPDF(driverId, driverName) {
+      const cardEl = document.getElementById(`adminDriverCard_${driverId}`);
       const container = document.createElement('div');
       container.style.padding = "20px"; container.style.background = "#ffffff";
-      container.innerHTML = element.outerHTML;
-
+      container.innerHTML = `
+        <h3 style="color:#0fb05b; margin-bottom:10px;">A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ - ಡ್ರೈವರ್ ವಿವರ ಹಾಗೂ ವರದಿ</h3>
+        <hr style="margin:10px 0;">
+        ${cardEl.outerHTML}
+      `;
       const opt = {
-        margin: 10, filename: `Driver_${name}.pdf`,
+        margin: 10, filename: `Driver_${driverName}_${driverId}.pdf`,
         image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, useCORS: true },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
       };
       html2pdf().set(opt).from(container).save();
     }
 
-    async  function deleteDriver(docId) {
-      if (confirm("ಈ ಡ್ರೈವರ್ ಖಾತೆಯನ್ನು ಅಳಿಸಲು ಬಯಸುತ್ತೀರಾ?")) {
+    async function deleteDriver(docId) {
+      if (confirm("ಈ ಡ್ರೈವರ್ ಅನ್ನು ಡಿಲೀಟ್ ಮಾಡಲು ಬಯಸುತ್ತೀರಾ?")) {
         try {
           await window.deleteDoc(window.doc(window.db, "drivers", docId));
-          alert("ಅಳಿಸಲಾಗಿದೆ.");
+          alert("ಡ್ರೈವರ್ ಡಿಲೀಟ್ ಮಾಡಲಾಗಿದೆ.");
           loadAdminDrivers();
-        } catch (e) { alert("Error: " + e.message); }
+        } catch(e) { alert("Error: " + e.message); }
       }
     }
 
     function shareAppOnWhatsApp() {
-      const appUrl = window.location.href;
-      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent('🛺 A R Taxi Booking App:\n' + appUrl)}`, '_blank');
+      const text = encodeURIComponent("🛺 ಕರ್ನಾಟಕ A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್! ಸ್ಥಳೀಯ ಬೈಕ್, ಆಟೋ ಹಾಗೂ ಕಾರ್ ಬುಕಿಂಗ್ ಮಾಡಲು ಮತ್ತು ಡ್ರೈವರ್‌ಗಳು ನೋಂದಾಯಿಸಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ: " + window.location.href);
+      window.open("https://api.whatsapp.com/send?text=" + text, "_blank");
     }
   </script>
 </body>
