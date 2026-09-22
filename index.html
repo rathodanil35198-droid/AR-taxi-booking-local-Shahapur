@@ -102,41 +102,46 @@
       position: relative;
     }
 
-    /* ರಿಯಲ್ ಅಪ್ಲಿಕೇಶನ್ ತರಹದ ಕಲರ್‌ಫುಲ್ ಆಪ್ ಲೋಗೋ ಬಾಕ್ಸ್ */
     .app-logo-box-wrapper {
       display: flex;
       flex-direction: column;
       align-items: center;
       margin-bottom: 10px;
     }
+    .triple-logo-container {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
+    }
     .real-app-icon-card {
-      width: 75px;
-      height: 75px;
+      width: 62px;
+      height: 62px;
       background: linear-gradient(145deg, #ffffff, #e2e8f0);
-      border-radius: 18px;
+      border-radius: 14px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.8);
-      border: 2.5px solid #ffd700;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.8);
+      border: 2px solid #ffd700;
       position: relative;
       animation: pulseGlow 2s infinite;
     }
     @keyframes pulseGlow {
-      0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.6), 0 8px 20px rgba(0,0,0,0.3); }
-      70% { box-shadow: 0 0 0 10px rgba(255, 215, 0, 0), 0 8px 20px rgba(0,0,0,0.3); }
-      100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0), 0 8px 20px rgba(0,0,0,0.3); }
+      0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.6), 0 6px 15px rgba(0,0,0,0.3); }
+      70% { box-shadow: 0 0 0 8px rgba(255, 215, 0, 0), 0 6px 15px rgba(0,0,0,0.3); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0), 0 6px 15px rgba(0,0,0,0.3); }
     }
     .real-app-icon-title {
-      font-size: 0.65rem;
+      font-size: 0.55rem;
       font-weight: 900;
       color: #0f172a;
       letter-spacing: 0.5px;
       margin-top: 2px;
       background: #ffd700;
-      padding: 1px 6px;
-      border-radius: 6px;
+      padding: 1px 4px;
+      border-radius: 4px;
     }
 
     .flashing-title {
@@ -144,7 +149,7 @@
       font-weight: bold;
       animation: flashingText 1.5s infinite;
       line-height: 1.4;
-      margin-top: 5px;
+      margin-top: 8px;
       color: #ffffff;
     }
 
@@ -222,7 +227,7 @@
     .footer { text-align: center; font-size: 0.7rem; color: #7f8c8d; margin-top: 15px; border-top: 1px solid #eee; padding-top: 8px; }
     .back-home-btn { background: #718096; color: white; border: none; padding: 8px 14px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; margin-bottom: 12px; font-weight: bold; }
 
-    #customAlertModal, #meterResultModal, #rideFinishModal, #imageViewerModal, #splashAdModal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); text-align: center; padding: 20px; overflow-y: auto; }
+    #customAlertModal, #adminLoginModal, #meterResultModal, #rideFinishModal, #imageViewerModal, #splashAdModal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); text-align: center; padding: 20px; overflow-y: auto; }
     .modal-content-box { background: #fff; max-width: 380px; margin: 50px auto; padding: 20px; border-radius: 14px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
 
     .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
@@ -254,10 +259,27 @@
 
   <div id="customAlertModal">
     <div class="modal-content-box">
-      <div style="font-size: 2.5rem; margin-bottom: 10px;">🛺🚗🏍️</div>
+      <div style="font-size: 2.5rem; margin-bottom: 10px;">🛺</div>
       <h3 id="modalAlertTitle" style="color: #2d3748; margin-bottom: 10px;">A R Taxi Go Fast</h3>
       <p id="customAlertText" style="font-size: 0.9rem; color: #4a5568; line-height: 1.6; margin-bottom: 20px;"></p>
       <button class="btn-submit" onclick="closeCustomAlert()">ಸರಿ (OK)</button>
+    </div>
+  </div>
+
+  <!-- ಅಡ್ಮಿನ್ ಲಾಗಿನ್ ಗಾಗಿ ಕಸ್ಟಮ್ ಪಾಪ್-ಅಪ್ (ಜಿಮೇಲ್ ಬದಲು ಆ್ಯಪ್ ಹೆಸರು ಮಾತ್ರ ಬರಲು) -->
+  <div id="adminLoginModal">
+    <div class="modal-content-box">
+      <div style="font-size: 2.2rem; margin-bottom: 8px;">🔐</div>
+      <h3 style="color: #2d3748; margin-bottom: 5px;">A R Taxi Go Fast</h3>
+      <p style="font-size: 0.8rem; color: #0fb05b; font-weight: bold; margin-bottom: 12px;">ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್ (Admin Panel)</p>
+      <div class="form-group" style="text-align: left;">
+        <label>ಅಡ್ಮಿನ್ ಕೋಡ್ ನಮೂದಿಸಿ:</label>
+        <input type="password" id="adminCodeInput" placeholder="Password" style="text-align:center; font-size:1.1rem; font-weight:bold;">
+      </div>
+      <div style="display:flex; gap:8px; margin-top:15px;">
+        <button class="btn-submit" onclick="submitAdminCode()" style="background:#0fb05b;">ಸರಿ (OK)</button>
+        <button class="btn-submit" onclick="closeAdminLoginModal()" style="background:#e53e3e;">ರದ್ದುಮಾಡಿ</button>
+      </div>
     </div>
   </div>
 
@@ -301,16 +323,25 @@
 
   <div class="container">
     
-    <!-- ಕಲರ್‌ಫುಲ್ ಹೆಡರ್ ಹಾಗೂ ಆಪ್ ಲೋಗೋ ಬಾಕ್ಸ್ (App Logo Box with Name) -->
     <div class="flashing-header-box">
       <div class="lang-toggle-container">
         <button id="langToggleBtn" class="lang-btn" onclick="toggleLanguage()">ENGLISH</button>
       </div>
       
       <div class="app-logo-box-wrapper">
-        <div class="real-app-icon-card">
-          <span style="font-size: 2.1rem; line-height: 1;">🛺</span>
-          <div class="real-app-icon-title">AR TAXI</div>
+        <div class="triple-logo-container">
+          <div class="real-app-icon-card">
+            <span style="font-size: 1.6rem; line-height: 1;">🏍️</span>
+            <div class="real-app-icon-title">BIKE</div>
+          </div>
+          <div class="real-app-icon-card">
+            <span style="font-size: 1.6rem; line-height: 1;">🛺</span>
+            <div class="real-app-icon-title">AUTO</div>
+          </div>
+          <div class="real-app-icon-card">
+            <span style="font-size: 1.6rem; line-height: 1;">🚗</span>
+            <div class="real-app-icon-title">CAR</div>
+          </div>
         </div>
       </div>
 
@@ -746,13 +777,9 @@
 
     function openPage(sectionId) {
       if (sectionId === 'adminSection' && !isAdminUnlocked) {
-        let enteredCode = prompt(currentLang === 'en' ? "Enter Admin Code:" : "ಅಡ್ಮಿನ್ ಕೋಡ್ ನಮೂದಿಸಿ:");
-        if (enteredCode === "9353444070") {
-          isAdminUnlocked = true;
-        } else {
-          if (enteredCode !== null) alert(currentLang === 'en' ? "Wrong Code!" : "ತಪ್ಪಾದ ಕೋಡ್!");
-          return;
-        }
+        document.getElementById('adminCodeInput').value = '';
+        document.getElementById('adminLoginModal').style.display = 'block';
+        return;
       }
 
       document.getElementById('roleSelectionScreen').style.display = 'none';
@@ -761,6 +788,21 @@
       document.getElementById(sectionId).classList.add('active');
 
       if (sectionId === 'adminSection') loadAdminDrivers();
+    }
+
+    function submitAdminCode() {
+      const enteredCode = document.getElementById('adminCodeInput').value.trim();
+      if (enteredCode === "9353444070") {
+        isAdminUnlocked = true;
+        closeAdminLoginModal();
+        openPage('adminSection');
+      } else {
+        alert(currentLang === 'en' ? "Wrong Code!" : "ತಪ್ಪಾದ ಕೋಡ್!");
+      }
+    }
+
+    function closeAdminLoginModal() {
+      document.getElementById('adminLoginModal').style.display = 'none';
     }
 
     function goBackToHome() {
