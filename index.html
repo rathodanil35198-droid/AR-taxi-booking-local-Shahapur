@@ -173,6 +173,7 @@
     .dash-box-title { font-size: 0.7rem; color: #4a5568; font-weight: bold; }
     .dash-box-val { font-size: 1rem; color: #2b6cb0; font-weight: bold; margin-top: 2px; }
 
+    .thumb-img { width: 45px; height: 45px; object-fit: cover; border-radius: 6px; cursor: pointer; border: 1px solid #ccc; display: inline-block; margin: 2px; }
     .btn-pdf-download { background: #d69e2e; color: white; padding: 8px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 6px; font-size: 0.8rem; }
     .btn-delete-record { background: #e53e3e; color: white; padding: 8px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 4px; font-size: 0.8rem; }
   </style>
@@ -201,7 +202,7 @@
     </div>
   </div>
 
-  <!-- ಅಡ್ಮಿನ್ / ಸೆಕ್ಯುರಿಟಿ ಕೋಡ್ ಪಾಪ್-ಅಪ್ (ಒಂದೇ ಲಾಗಿನ್ ಬಟನ್ & ಓಕೆ ಬಟನ್ ವ್ಯವಸ್ಥೆ) -->
+  <!-- ಅಡ್ಮಿನ್ ಲಾಗಿನ್ ಪಾಪ್-ಅಪ್ -->
   <div id="adminLoginModal">
     <div class="modal-content-box">
       <div style="font-size: 2rem; margin-bottom: 6px;">🔐</div>
@@ -215,15 +216,15 @@
     </div>
   </div>
 
-  <!-- ಡೌನ್‌ಲೋಡ್ / ಡಿಲೀಟ್ ಮಾಡಲು ಸೆಕ್ಯುರಿಟಿ ಕೋಡ್ ಕೇಳುವ ಪಾಪ್-ಅಪ್ -->
+  <!-- ಸೆಕ್ಯುರಿಟಿ ಕೋಡ್ (9353444070) ಕೇಳುವ ಪಾಪ್-ಅಪ್ -->
   <div id="securityCodeModal">
     <div class="modal-content-box">
       <div style="font-size: 2rem; margin-bottom: 6px;">🔒</div>
       <h3 style="color: #2d3748; margin-bottom: 4px;">ಭದ್ರತಾ ಪರಿಶೀಲನೆ</h3>
-      <p style="font-size: 0.75rem; color: #e53e3e; font-weight: bold; margin-bottom: 10px;">ಡೌನ್‌ಲೋಡ್ ಅಥವಾ ಡಿಲೀಟ್ ಮಾಡಲು ಕೋಡ್ ನಮೂದಿಸಿ</p>
+      <p style="font-size: 0.75rem; color: #e53e3e; font-weight: bold; margin-bottom: 10px;">ಡೌನ್‌ಲೋಡ್ ಅಥವಾ ಡಿಲೀಟ್ ಮಾಡಲು ಕೋಡ್ ನಮೂದಿಸಿ (ಕೋಡ್: 9353444070)</p>
       <div class="form-group" style="text-align: left;">
-        <label>ರಹಸ್ಯ ಕೋಡ್ / ಡ್ರೈವರ್ ಐಡಿ ಪಾಸ್‌ವರ್ಡ್:</label>
-        <input type="password" id="securityCodeInput" placeholder="Code ನಮೂದಿಸಿ" style="text-align:center; font-size:1.1rem; font-weight:bold;">
+        <label>ರಹಸ್ಯ ಕೋಡ್ ನಮೂದಿಸಿ:</label>
+        <input type="password" id="securityCodeInput" placeholder="9353444070" style="text-align:center; font-size:1.1rem; font-weight:bold;">
       </div>
       <button class="btn-submit" onclick="confirmSecurityAction()" style="background:#0fb05b; margin-top:10px;">ಸರಿ (OK)</button>
     </div>
@@ -238,6 +239,7 @@
     </div>
   </div>
 
+  <!-- ಫೋಟೋ ಫುಲ್ ಸ್ಕ್ರೀನ್ ವೀಕ್ಷಣೆ ಹಾಗೂ ಡೌನ್‌ಲೋಡ್ ಪಾಪ್-ಅಪ್ -->
   <div id="imageViewerModal">
     <div class="modal-content-box" style="max-width:90%; background:#000; color:#fff;">
       <span style="float:right; font-size:1.4rem; cursor:pointer;" onclick="closeImageViewer()">&times;</span>
@@ -496,7 +498,6 @@
     let isAdminUnlocked = false;
     let allDriversData = []; 
     let custMeterWatchId = null;
-    let lastCustPos = null;
     let sirenInterval = null;
     let audioCtx = null;
     let adTimer = null;
@@ -653,8 +654,7 @@
 
     function confirmSecurityAction() {
       const code = document.getElementById('securityCodeInput').value.trim();
-      // ಡ್ರೈವರ್ ಐಡಿ ಪಾಸ್‌ವರ್ಡ್ ಅಥವಾ ನಿರ್ದಿಷ್ಟ ಕೋಡ್ ಪರಿಶೀಲನೆ (ಉದಾಹರಣೆಗೆ 9353 ಅಥವಾ ಡ್ರೈವರ್ ಐಡಿ)
-      if (code.length === 4) {
+      if (code === "9353444070") {
         document.getElementById('securityCodeModal').style.display = 'none';
         if (pendingSecurityAction === 'downloadPDF') {
           executeDownloadPDF(pendingSecurityParam);
@@ -664,8 +664,19 @@
         pendingSecurityAction = null;
         pendingSecurityParam = null;
       } else {
-        alert("ದಯವಿಟ್ಟು ಸರಿಯಾದ 4 ಅಂಕಿಯ ಕೋಡ್ ನಮೂದಿಸಿ!");
+        alert("ತಪ್ಪಾದ ಕೋಡ್! ಸರಿಯಾದ ಕೋಡ್ (9353444070) ನಮೂದಿಸಿ.");
       }
+    }
+
+    function openImageViewer(imgSrc, titleText) {
+      document.getElementById('fullSizeImage').src = imgSrc;
+      document.getElementById('imageViewerTitle').innerText = titleText;
+      document.getElementById('downloadImageBtn').href = imgSrc;
+      document.getElementById('imageViewerModal').style.display = 'block';
+    }
+
+    function closeImageViewer() {
+      document.getElementById('imageViewerModal').style.display = 'none';
     }
 
     function goBackToHome() {
@@ -959,10 +970,29 @@
 
         if (!ridesSnap.empty) {
           combinedHtml += `<hr style="margin: 10px 0;"><h3 style="font-size: 0.85rem; margin-bottom: 6px;">ಬುಕಿಂಗ್ ವಿವರಗಳು ಹಾಗೂ ಪೊಲೀಸ್ ಪರಿಶೀಲನೆ (PDF Download & Delete):</h3>`;
+          let idx = 1;
           ridesSnap.forEach(rDoc => {
             const r = rDoc.data();
+            
+            // 15 ದಿನಗಳ ನೋಟಿಫಿಕೇಶನ್ ಮತ್ತು ಆಟೋ ಡಿಲೀಟ್ ಲಾಜಿಕ್
+            let warningHtml = '';
+            if (r.timestamp) {
+              const rideDate = r.timestamp.toDate ? r.timestamp.toDate() : new Date(r.timestamp);
+              const diffDays = Math.floor((new Date() - rideDate) / (1000 * 60 * 60 * 24));
+              if (diffDays >= 15) {
+                // 15 ದಿನ ದಾಟಿದರೆ ಆಟೋಮ್ಯಾಟಿಕ್ ಡಿಲೀಟ್
+                window.deleteDoc(window.doc(window.db, "completed_rides", rDoc.id)).catch(e => {});
+                return;
+              } else if (diffDays === 14) {
+                // 14 ನೇ ದಿನಕ್ಕೆ ಕೆಂಪು ಅಕ್ಷರದಲ್ಲಿ ಎಚ್ಚರಿಕೆ
+                warningHtml = `<p style="color:red; font-weight:bold; font-size:0.75rem; margin-bottom:4px;">⚠️ ಎಚ್ಚರಿಕೆ: ನಾಳೆ ನಿಮ್ಮ ಈ ಡೇಟಾ ಸಂಪೂರ್ಣ ಡಿಲೀಟ್ ಆಗುತ್ತದೆ!</p>`;
+              }
+            }
+
             combinedHtml += `
               <div class="card" id="driverHistoryCard_${rDoc.id}" style="border: 1px solid #cbd5e0; background:#fff; margin-bottom:6px;">
+                ${warningHtml}
+                <p style="font-size:0.8rem;"><b>ಕ್ರಮ ಸಂಖ್ಯೆ:</b> #${idx++}</p>
                 <p style="font-size:0.8rem;"><b>ಗ್ರಾಹಕರು:</b> ${r.customerName} (${r.customerPhone})</p>
                 <p style="font-size:0.8rem;"><b>ಪಿಕಪ್ ಸ್ಥಳ:</b> ${r.pickupLocation}</p>
                 <p style="font-size:0.8rem;"><b>ಡ್ರಾಪ್ ಸ್ಥಳ:</b> ${r.dropLocation}</p>
@@ -1143,11 +1173,23 @@
       const listDiv = document.getElementById('adminDriversList');
       if (dataArr.length === 0) { listDiv.innerHTML = "ಯಾವ ಡ್ರೈವರ್‌ಗಳು ನೋಂದಾಯಿಸಿಲ್ಲ."; return; }
       let html = '';
+      let indexNum = 1;
       dataArr.forEach(d => {
+        let photosHtml = '';
+        if (d.vehPhoto) photosHtml += `<img src="${d.vehPhoto}" class="thumb-img" onclick="openImageViewer('${d.vehPhoto}', 'ವಾಹನ ಫೋಟೋ')" title="ವಾಹನ ಫೋಟೋ">`;
+        if (d.rcPhoto) photosHtml += `<img src="${d.rcPhoto}" class="thumb-img" onclick="openImageViewer('${d.rcPhoto}', 'ಆರ್ ಸಿ ಕಾರ್ಡ್')" title="ಆರ್ ಸಿ">`;
+        if (d.dlPhoto) photosHtml += `<img src="${d.dlPhoto}" class="thumb-img" onclick="openImageViewer('${d.dlPhoto}', 'ಡಿ ಎಲ್ ಫೋಟೋ')" title="ಡಿ ಎಲ್">`;
+        if (d.selfiePhoto) photosHtml += `<img src="${d.selfiePhoto}" class="thumb-img" onclick="openImageViewer('${d.selfiePhoto}', 'ಡ್ರೈವರ್ ಸೆಲ್ಫಿ')" title="ಸೆಲ್ಫಿ">`;
+        if (d.aadharPhoto) photosHtml += `<img src="${d.aadharPhoto}" class="thumb-img" onclick="openImageViewer('${d.aadharPhoto}', 'ಆಧಾರ್ ಕಾರ್ಡ್')" title="ಆಧಾರ್">`;
+
         html += `
           <div class="card" style="border:1px solid #cbd5e0; margin-bottom:8px;">
+            <p style="font-size:0.8rem; font-weight:bold; color:#0fb05b;">ಕ್ರಮ ಸಂಖ್ಯೆ: #${indexNum++}</p>
             <p><b>ಹೆಸರು:</b> ${d.drvName} | <b>ಐಡಿ:</b> <span style="color:red; font-weight:bold;">${d.driverId}</span></p>
             <p><b>ಫೋನ್:</b> <a href="tel:${d.drvPhone}">${d.drvPhone}</a> | <b>ವಾಹನ:</b> ${d.drvVehType} (${d.drvVehNo})</p>
+            <div style="margin-top:6px; display:flex; flex-wrap:wrap; gap:4px;">
+              ${photosHtml}
+            </div>
           </div>
         `;
       });
