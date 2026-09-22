@@ -5,12 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title id="pageTitle">A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್ | ಬೈಕ್, ಆಟೋ & ಕಾರ್ ಬುಕಿಂಗ್</title>
   
+  <!-- PWA & Mobile App Settings -->
   <meta name="theme-color" content="#0fb05b">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="A R Taxi Go Fast">
   <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3097/3097180.png">
 
+  <!-- Dynamic PWA Manifest Injection with App Name inside Box/Icon concept -->
   <script>
     const manifestData = {
       "name": "A R Taxi Booking Go Fast",
@@ -20,8 +22,16 @@
       "background_color": "#0f172a",
       "theme_color": "#0fb05b",
       "icons": [
-        { "src": "https://cdn-icons-png.flaticon.com/512/3097/3097180.png", "sizes": "192x192", "type": "image/png" },
-        { "src": "https://cdn-icons-png.flaticon.com/512/3097/3097180.png", "sizes": "512x512", "type": "image/png" }
+        {
+          "src": "https://cdn-icons-png.flaticon.com/512/3097/3097180.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        },
+        {
+          "src": "https://cdn-icons-png.flaticon.com/512/3097/3097180.png",
+          "sizes": "512x512",
+          "type": "image/png"
+        }
       ]
     };
     const stringManifest = JSON.stringify(manifestData);
@@ -71,8 +81,8 @@
   <style>
     :root { --primary: #0fb05b; --secondary: #41c91d; --bg: #f4f7f6; --text: #333; }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; touch-action: manipulation; }
-    html, body { width: 100%; min-height: 100vh; overflow-x: hidden; background-color: var(--bg); color: var(--text); padding: 4px; }
-    .container { width: 100%; max-width: 480px; margin: 0 auto; background: #fff; padding: 10px; border-radius: 12px; position: relative; box-shadow: 0 4px 20px rgba(0,0,0,0.08); padding-bottom: 50px; }
+    html, body { width: 100%; height: 100%; overflow-x: hidden; background-color: var(--bg); color: var(--text); padding: 8px; }
+    .container { width: 100%; max-width: 480px; margin: 0 auto; background: #fff; padding: 12px; border-radius: 12px; position: relative; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
 
     @keyframes flashingText {
       0% { opacity: 1; text-shadow: 0 0 8px #ffeb3b, 0 0 15px #ff9800; }
@@ -83,49 +93,102 @@
     .flashing-header-box {
       text-align: center;
       background: linear-gradient(135deg, #0f172a, #1e293b, #0fb05b);
-      padding: 12px;
-      border-radius: 14px;
-      margin-bottom: 10px;
+      padding: 16px;
+      border-radius: 16px;
+      margin-bottom: 15px;
       color: white;
       box-shadow: 0 8px 25px rgba(15, 176, 91, 0.25);
       border: 2px solid #ffd700;
       position: relative;
     }
 
-    .app-logo-box-wrapper { display: flex; flex-direction: column; align-items: center; margin-bottom: 6px; }
-    .triple-logo-container { display: flex; gap: 8px; justify-content: center; align-items: center; }
-    .real-app-icon-card {
-      width: 52px; height: 52px;
-      background: linear-gradient(145deg, #ffffff, #e2e8f0);
-      border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3); border: 2px solid #ffd700;
+    /* ಮೂರು ಲೋಗೋಗಳನ್ನು ಒಂದೇ ಸಾಲಿನಲ್ಲಿ ತೋರಿಸಲು ಹೊಸ ವಿನ್ಯಾಸ */
+    .app-logo-box-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 10px;
     }
-    .real-app-icon-title { font-size: 0.5rem; font-weight: 900; color: #0f172a; margin-top: 2px; background: #ffd700; padding: 1px 4px; border-radius: 4px; }
+    .triple-logo-container {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
+    }
+    .real-app-icon-card {
+      width: 62px;
+      height: 62px;
+      background: linear-gradient(145deg, #ffffff, #e2e8f0);
+      border-radius: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.8);
+      border: 2px solid #ffd700;
+      position: relative;
+      animation: pulseGlow 2s infinite;
+    }
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.6), 0 6px 15px rgba(0,0,0,0.3); }
+      70% { box-shadow: 0 0 0 8px rgba(255, 215, 0, 0), 0 6px 15px rgba(0,0,0,0.3); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0), 0 6px 15px rgba(0,0,0,0.3); }
+    }
+    .real-app-icon-title {
+      font-size: 0.55rem;
+      font-weight: 900;
+      color: #0f172a;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+      background: #ffd700;
+      padding: 1px 4px;
+      border-radius: 4px;
+    }
 
-    .flashing-title { font-size: 1.05rem; font-weight: bold; animation: flashingText 1.5s infinite; line-height: 1.3; margin-top: 6px; color: #ffffff; }
+    .flashing-title {
+      font-size: 1.15rem;
+      font-weight: bold;
+      animation: flashingText 1.5s infinite;
+      line-height: 1.4;
+      margin-top: 8px;
+      color: #ffffff;
+    }
 
-    .lang-toggle-container { position: absolute; top: 8px; right: 8px; z-index: 10; }
-    .lang-btn { background: #ffffff; color: #0fb05b; border: 2px solid #ffd700; padding: 3px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: bold; cursor: pointer; }
+    .lang-toggle-container { position: absolute; top: 10px; right: 10px; z-index: 10; }
+    .lang-btn {
+      background: #ffffff; color: #0fb05b; border: 2px solid #ffd700; padding: 4px 10px;
+      border-radius: 15px; font-size: 0.75rem; font-weight: bold; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
 
     .install-app-banner {
-      background: linear-gradient(135deg, #ff9966, #ff5e62); color: white; padding: 8px 12px; border-radius: 10px; margin-bottom: 10px;
-      display: flex; align-items: center; justify-content: space-between; border: 2px solid #fff;
+      background: linear-gradient(135deg, #ff9966, #ff5e62);
+      color: white;
+      padding: 10px 14px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 12px rgba(255, 94, 98, 0.3);
+      border: 2px solid #fff;
     }
 
     .floating-share-btn {
-      position: fixed; bottom: 20px; right: 20px; background-color: #25d366; color: white;
-      width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center;
-      justify-content: center; font-size: 26px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); z-index: 9999; cursor: pointer; text-decoration: none;
+      position: fixed; bottom: 25px; right: 20px; background-color: #25d366; color: white;
+      width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center;
+      justify-content: center; font-size: 30px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+      z-index: 9999; cursor: pointer; text-decoration: none;
     }
 
-    #roleSelectionScreen { text-align: center; padding: 5px; }
-    .home-buttons-grid { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+    #roleSelectionScreen { text-align: center; padding: 10px 5px; }
+    .home-buttons-grid { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
 
     .action-btn-card {
       display: flex; align-items: center; justify-content: center; gap: 10px;
-      padding: 14px 10px; border-radius: 14px; border: none; color: white;
-      font-weight: bold; font-size: 1rem; cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15); text-align: center; width: 100%;
+      padding: 16px 10px; border-radius: 16px; border: none; color: white;
+      font-weight: bold; font-size: 1.05rem; cursor: pointer;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15); text-align: center; width: 100%;
+      transition: transform 0.1s ease;
     }
     .action-btn-card:active { transform: scale(0.98); }
 
@@ -135,133 +198,116 @@
     .btn-meter-direct { background: linear-gradient(135deg, #d35400, #e67e22); border: 2px solid #f39c12; }
     .btn-admin-panel { background: linear-gradient(135deg, #2c3e50, #4a6572); border: 2px solid #90a4ae; }
 
-    .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
-    .mainTitle { font-size: 1.05rem; font-weight: bold; color: #2c3e50; }
+    .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+    .mainTitle { font-size: 1.1rem; font-weight: bold; color: #2c3e50; }
 
-    .whatsapp-box { background: #e8f8f0; border: 2px dashed #0fb05b; padding: 8px; border-radius: 8px; text-align: center; margin-bottom: 8px; }
-    .whatsapp-btn { display: inline-block; background: #0fb05b; color: white; padding: 5px 10px; border-radius: 15px; text-decoration: none; font-size: 0.75rem; font-weight: bold; margin-top: 4px; }
+    .whatsapp-box { background: #e8f8f0; border: 2px dashed #0fb05b; padding: 10px; border-radius: 10px; text-align: center; margin-bottom: 10px; }
+    .whatsapp-btn { display: inline-block; background: #0fb05b; color: white; padding: 6px 12px; border-radius: 20px; text-decoration: none; font-size: 0.8rem; font-weight: bold; margin-top: 5px; }
     
-    .support-box { background: #fff5f5; border: 2px solid #feb2b2; padding: 8px; border-radius: 8px; text-align: center; margin-bottom: 8px; }
-    .support-btn { display: inline-block; background: #e53e3e; color: white; padding: 5px 10px; border-radius: 15px; text-decoration: none; font-size: 0.75rem; font-weight: bold; margin-top: 4px; }
+    .support-box { background: #fff5f5; border: 2px solid #feb2b2; padding: 10px; border-radius: 10px; text-align: center; margin-bottom: 10px; }
+    .support-btn { display: inline-block; background: #e53e3e; color: white; padding: 6px 12px; border-radius: 20px; text-decoration: none; font-size: 0.8rem; font-weight: bold; margin-top: 5px; }
 
     .section { display: none; }
     .section.active { display: block; }
-    h2 { font-size: 0.9rem; margin-bottom: 6px; color: #2d3748; border-left: 4px solid var(--primary); padding-left: 6px; }
-    .form-group { margin-bottom: 8px; }
-    label { display: block; font-size: 0.75rem; font-weight: 700; margin-bottom: 2px; color: #4a5568; }
-    input, select { width: 100%; padding: 8px; border: 2px solid #cbd5e0; border-radius: 8px; font-size: 0.85rem; background: #fff; }
+    h2 { font-size: 0.95rem; margin-bottom: 8px; color: #2d3748; border-left: 4px solid var(--primary); padding-left: 6px; }
+    .form-group { margin-bottom: 10px; }
+    label { display: block; font-size: 0.78rem; font-weight: 700; margin-bottom: 3px; color: #4a5568; }
+    input, select { width: 100%; padding: 9px; border: 2px solid #cbd5e0; border-radius: 8px; font-size: 0.85rem; background: #fff; }
     input:focus, select:focus { border-color: var(--primary); outline: none; }
     
-    .error-msg { color: #e53e3e; font-size: 0.7rem; font-weight: bold; margin-top: 2px; display: none; }
+    .error-msg { color: #e53e3e; font-size: 0.75rem; font-weight: bold; margin-top: 2px; display: none; }
 
-    .vehicle-logo-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 6px; }
-    .vehicle-card { border: 2px solid #cbd5e0; border-radius: 8px; padding: 8px 4px; text-align: center; cursor: pointer; background: #fff; }
+    .vehicle-logo-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+    .vehicle-card { border: 2px solid #cbd5e0; border-radius: 10px; padding: 10px 6px; text-align: center; cursor: pointer; background: #fff; transition: all 0.2s; }
     .vehicle-card.selected { border-color: var(--primary); background: #e8f8f0; box-shadow: 0 4px 10px rgba(15,176,91,0.2); }
 
-    .btn-gps, .btn-submit { width: 100%; padding: 10px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 0.9rem; }
+    .btn-gps, .btn-submit { width: 100%; padding: 11px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
     .btn-gps { background: #ebf8ff; color: #3182ce; border: 1px solid #bee3f8; }
     .btn-submit { background: linear-gradient(45deg, #0fb05b, #41c91d); color: white; box-shadow: 0 4px 10px rgba(15,176,91,0.25); }
-    .card { background: #fff; border: 1px solid #cbd5e0; padding: 10px; border-radius: 8px; margin-bottom: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
-    .footer { text-align: center; font-size: 0.65rem; color: #7f8c8d; margin-top: 10px; border-top: 1px solid #eee; padding-top: 6px; }
-    .back-home-btn { background: #718096; color: white; border: none; padding: 6px 12px; border-radius: 15px; font-size: 0.75rem; cursor: pointer; margin-bottom: 10px; font-weight: bold; }
+    .card { background: #fff; border: 1px solid #cbd5e0; padding: 12px; border-radius: 10px; margin-bottom: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
+    .footer { text-align: center; font-size: 0.7rem; color: #7f8c8d; margin-top: 15px; border-top: 1px solid #eee; padding-top: 8px; }
+    .back-home-btn { background: #718096; color: white; border: none; padding: 8px 14px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; margin-bottom: 12px; font-weight: bold; }
 
-    #customAlertModal, #adminLoginModal, #meterResultModal, #rideFinishModal, #imageViewerModal, #splashAdModal, #securityCodeModal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); text-align: center; padding: 15px; overflow-y: auto; }
-    .modal-content-box { background: #fff; max-width: 360px; margin: 40px auto; padding: 16px; border-radius: 12px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+    #customAlertModal, #meterResultModal, #rideFinishModal, #imageViewerModal, #splashAdModal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); text-align: center; padding: 20px; overflow-y: auto; }
+    .modal-content-box { background: #fff; max-width: 380px; margin: 50px auto; padding: 20px; border-radius: 14px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
 
-    .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 10px; }
-    .dash-box { background: #edf2f7; border: 1px solid #cbd5e0; padding: 8px; border-radius: 8px; text-align: center; }
-    .dash-box-title { font-size: 0.7rem; color: #4a5568; font-weight: bold; }
-    .dash-box-val { font-size: 1rem; color: #2b6cb0; font-weight: bold; margin-top: 2px; }
+    .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+    .dash-box { background: #edf2f7; border: 1px solid #cbd5e0; padding: 10px; border-radius: 8px; text-align: center; }
+    .dash-box-title { font-size: 0.75rem; color: #4a5568; font-weight: bold; }
+    .dash-box-val { font-size: 1.1rem; color: #2b6cb0; font-weight: bold; margin-top: 4px; }
 
-    .thumb-img { width: 45px; height: 45px; object-fit: cover; border-radius: 6px; cursor: pointer; border: 1px solid #ccc; display: inline-block; margin: 2px; }
-    .btn-pdf-download { background: #d69e2e; color: white; padding: 8px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 6px; font-size: 0.8rem; }
-    .btn-delete-record { background: #e53e3e; color: white; padding: 8px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 4px; font-size: 0.8rem; }
+    .driver-photo-grid { display: flex; gap: 6px; margin: 8px 0; overflow-x: auto; }
+    .driver-thumb { width: 60px; height: 60px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e0; cursor: pointer; }
+
+    .btn-pdf-download { background: #d69e2e; color: white; padding: 10px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 8px; font-size: 0.9rem; }
   </style>
 </head>
 <body>
 
   <a href="javascript:void(0);" onclick="shareAppOnWhatsApp()" class="floating-share-btn">💬</a>
 
+  <!-- Install App Prompt Banner -->
   <div id="installAppBanner" class="install-app-banner" style="display: none;">
     <div style="display:flex; align-items:center; gap:8px;">
-      <span style="font-size: 1.8rem;">📲</span>
+      <span style="font-size: 2rem;">📲</span>
       <div>
-        <div style="font-weight:bold; font-size:0.85rem;">A R Taxi ಆ್ಯಪ್ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ</div>
-        <div style="font-size:0.7rem; opacity:0.95;">ಮೊಬೈಲ್ ಹೋಮ್ ಸ್ಕ್ರೀನ್‌ನಲ್ಲಿ ಬಳಸಿ!</div>
+        <div style="font-weight:bold; font-size:0.9rem;">A R Taxi ಆ್ಯಪ್ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ</div>
+        <div style="font-size:0.72rem; opacity:0.95;">ಮೊಬೈಲ್ ಹೋಮ್ ಸ್ಕ್ರೀನ್‌ನಲ್ಲಿ ರಿಯಲ್ ಆ್ಯಪ್ ತರ ಪಡೆಯಿರಿ!</div>
       </div>
     </div>
-    <button id="installAppBtn" style="background:#fff; color:#ff5e62; border:none; padding:5px 10px; border-radius:12px; font-weight:bold; font-size:0.75rem; cursor:pointer;">📥 Install</button>
+    <button id="installAppBtn" style="background:#fff; color:#ff5e62; border:none; padding:6px 12px; border-radius:15px; font-weight:bold; font-size:0.8rem; cursor:pointer;">📥 Install</button>
   </div>
 
   <div id="customAlertModal">
     <div class="modal-content-box">
-      <div style="font-size: 2.2rem; margin-bottom: 8px;">🛺</div>
-      <h3 style="color: #2d3748; margin-bottom: 8px;">A R Taxi Go Fast</h3>
-      <p id="customAlertText" style="font-size: 0.85rem; color: #4a5568; line-height: 1.5; margin-bottom: 15px;"></p>
+      <div style="font-size: 2.5rem; margin-bottom: 10px;">🛺</div>
+      <h3 id="modalAlertTitle" style="color: #2d3748; margin-bottom: 10px;">A R Taxi Go Fast</h3>
+      <p id="customAlertText" style="font-size: 0.9rem; color: #4a5568; line-height: 1.6; margin-bottom: 20px;"></p>
       <button class="btn-submit" onclick="closeCustomAlert()">ಸರಿ (OK)</button>
-    </div>
-  </div>
-
-  <!-- ಅಡ್ಮಿನ್ ಲಾಗಿನ್ ಪಾಪ್-ಅಪ್ -->
-  <div id="adminLoginModal">
-    <div class="modal-content-box">
-      <div style="font-size: 2rem; margin-bottom: 6px;">🔐</div>
-      <h3 style="color: #2d3748; margin-bottom: 4px;">A R Taxi Go Fast</h3>
-      <p style="font-size: 0.75rem; color: #0fb05b; font-weight: bold; margin-bottom: 10px;">ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್ ಲಾಗಿನ್</p>
-      <div class="form-group" style="text-align: left;">
-        <label>ಅಡ್ಮಿನ್ ಕೋಡ್ ನಮೂದಿಸಿ:</label>
-        <input type="password" id="adminCodeInput" placeholder="Password" style="text-align:center; font-size:1.1rem; font-weight:bold;">
-      </div>
-      <button class="btn-submit" onclick="submitAdminCode()" style="background:#0fb05b; margin-top:10px;">ಸರಿ (OK)</button>
-    </div>
-  </div>
-
-  <!-- ಸೆಕ್ಯುರಿಟಿ ಕೋಡ್ (9353444070) ಕೇಳುವ ಪಾಪ್-ಅಪ್ -->
-  <div id="securityCodeModal">
-    <div class="modal-content-box">
-      <div style="font-size: 2rem; margin-bottom: 6px;">🔒</div>
-      <h3 style="color: #2d3748; margin-bottom: 4px;">ಭದ್ರತಾ ಪರಿಶೀಲನೆ</h3>
-      <p style="font-size: 0.75rem; color: #e53e3e; font-weight: bold; margin-bottom: 10px;">ಡೌನ್‌ಲೋಡ್ ಅಥವಾ ಡಿಲೀಟ್ ಮಾಡಲು ಕೋಡ್ ನಮೂದಿಸಿ (ಕೋಡ್: 9353444070)</p>
-      <div class="form-group" style="text-align: left;">
-        <label>ರಹಸ್ಯ ಕೋಡ್ ನಮೂದಿಸಿ:</label>
-        <input type="password" id="securityCodeInput" placeholder="9353444070" style="text-align:center; font-size:1.1rem; font-weight:bold;">
-      </div>
-      <button class="btn-submit" onclick="confirmSecurityAction()" style="background:#0fb05b; margin-top:10px;">ಸರಿ (OK)</button>
     </div>
   </div>
 
   <div id="meterResultModal">
     <div class="modal-content-box">
-      <div style="font-size: 2.2rem; margin-bottom: 8px;">🏁</div>
-      <h3 style="color: #2d3748; margin-bottom: 8px;">A R Taxi Go Fast</h3>
-      <p id="meterResultText" style="font-size: 0.9rem; color: #2d3748; font-weight: bold; margin-bottom: 15px;"></p>
+      <div style="font-size: 2.5rem; margin-bottom: 10px;">🏁</div>
+      <h3 style="color: #2d3748; margin-bottom: 10px;">A R Taxi Go Fast</h3>
+      <p id="meterResultText" style="font-size: 0.95rem; color: #2d3748; font-weight: bold; margin-bottom: 20px;"></p>
       <button class="btn-submit" onclick="closeMeterResultModal()">ಸರಿ (OK)</button>
     </div>
   </div>
 
-  <!-- ಫೋಟೋ ಫುಲ್ ಸ್ಕ್ರೀನ್ ವೀಕ್ಷಣೆ ಹಾಗೂ ಡೌನ್‌ಲೋಡ್ ಪಾಪ್-ಅಪ್ -->
+  <div id="rideFinishModal">
+    <div class="modal-content-box">
+      <div style="font-size: 2.5rem; margin-bottom: 10px;">✅</div>
+      <h3 style="color: #2d3748; margin-bottom: 10px;">A R Taxi Go Fast</h3>
+      <p id="rideFinishText" style="font-size: 0.95rem; color: #2d3748; font-weight: bold; margin-bottom: 20px;"></p>
+      <button class="btn-submit" onclick="closeRideFinishModal()">ಸರಿ (OK)</button>
+    </div>
+  </div>
+
   <div id="imageViewerModal">
     <div class="modal-content-box" style="max-width:90%; background:#000; color:#fff;">
-      <span style="float:right; font-size:1.4rem; cursor:pointer;" onclick="closeImageViewer()">&times;</span>
-      <h4 id="imageViewerTitle" style="margin-bottom:8px; font-size:0.9rem;">ಫೋಟೋ ವೀಕ್ಷಣೆ</h4>
-      <img id="fullSizeImage" src="" style="width:100%; max-height:55vh; object-fit:contain; border-radius:6px; margin-bottom:10px;">
-      <a id="downloadImageBtn" href="" download="driver_document.jpg" class="btn-submit" style="display:block; text-decoration:none; background:#d69e2e; font-size:0.85rem;">📥 ಫೋಟೋ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ</a>
+      <span style="float:right; font-size:1.5rem; cursor:pointer;" onclick="closeImageViewer()">&times;</span>
+      <h4 id="imageViewerTitle" style="margin-bottom:10px;">ಫೋಟೋ ವೀಕ್ಷಣೆ</h4>
+      <img id="fullSizeImage" src="" style="width:100%; max-height:60vh; object-fit:contain; border-radius:8px; margin-bottom:12px;">
+      <a id="downloadImageBtn" href="" download="driver_document.jpg" class="btn-submit" style="display:block; text-decoration:none; background:#d69e2e;">📥 ಫೋಟೋ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ</a>
     </div>
   </div>
 
   <div id="splashAdModal">
-    <div class="modal-content-box" style="max-width:95%; height:75vh; display:flex; flex-direction:column; justify-content:space-between;">
+    <div class="modal-content-box" style="max-width:95%; height:80vh; display:flex; flex-direction:column; justify-content:space-between;">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h3 style="color:#2d3748; font-size:0.9rem;">A R Taxi Go Fast (<span id="adTimerCount">10</span>s)</h3>
-        <button onclick="closeSplashAd()" style="background:#e53e3e; color:white; border:none; padding:4px 8px; border-radius:4px; font-weight:bold; cursor:pointer; font-size:0.75rem;">X ಮುಚ್ಚಿ</button>
+        <h3 style="color:#2d3748; font-size:1rem;">A R Taxi Go Fast (<span id="adTimerCount">10</span>s)</h3>
+        <button onclick="closeSplashAd()" style="background:#e53e3e; color:white; border:none; padding:5px 10px; border-radius:5px; font-weight:bold; cursor:pointer;">X ಮುಚ್ಚಿ</button>
       </div>
-      <div id="splashMediaContainer" style="flex-grow:1; display:flex; align-items:center; justify-content:center; overflow:hidden; margin:8px 0;"></div>
+      <div id="splashMediaContainer" style="flex-grow:1; display:flex; align-items:center; justify-content:center; overflow:hidden; margin:10px 0;"></div>
       <button class="btn-submit" onclick="closeSplashAd()">ಮುಂದುವರಿಯಿರಿ (Skip)</button>
     </div>
   </div>
 
   <div class="container">
     
+    <!-- ಕಲರ್‌ಫುಲ್ ಹೆಡರ್ ಹಾಗೂ ಮೂರು ಲೋಗೋಗಳ ಬಾಕ್ಸ್ (Bike, Auto, Car Logos) -->
     <div class="flashing-header-box">
       <div class="lang-toggle-container">
         <button id="langToggleBtn" class="lang-btn" onclick="toggleLanguage()">ENGLISH</button>
@@ -269,41 +315,53 @@
       
       <div class="app-logo-box-wrapper">
         <div class="triple-logo-container">
-          <div class="real-app-icon-card"><span style="font-size: 1.4rem; line-height: 1;">🏍️</span><div class="real-app-icon-title">BIKE</div></div>
-          <div class="real-app-icon-card"><span style="font-size: 1.4rem; line-height: 1;">🛺</span><div class="real-app-icon-title">AUTO</div></div>
-          <div class="real-app-icon-card"><span style="font-size: 1.4rem; line-height: 1;">🚗</span><div class="real-app-icon-title">CAR</div></div>
+          <!-- ಬೈಕ್ ಲೋಗೋ -->
+          <div class="real-app-icon-card">
+            <span style="font-size: 1.6rem; line-height: 1;">🏍️</span>
+            <div class="real-app-icon-title">BIKE</div>
+          </div>
+          <!-- ಆಟೋ ಲೋಗೋ -->
+          <div class="real-app-icon-card">
+            <span style="font-size: 1.6rem; line-height: 1;">🛺</span>
+            <div class="real-app-icon-title">AUTO</div>
+          </div>
+          <!-- ಕಾರ್ ಲೋಗೋ -->
+          <div class="real-app-icon-card">
+            <span style="font-size: 1.6rem; line-height: 1;">🚗</span>
+            <div class="real-app-icon-title">CAR</div>
+          </div>
         </div>
       </div>
 
       <div class="flashing-title">
         <span data-en="Karnataka A R Taxi Booking Go Fast" data-kn="ಕರ್ನಾಟಕ A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್">ಕರ್ನಾಟಕ A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್</span><br>
-        <span style="font-size:0.75rem; font-weight:normal; opacity:0.95;" data-en="Local Bike, Auto & Car Booking Service" data-kn="ಲೋಕಲ್ ಬೈಕ್, ಆಟೋ ಹಾಗೂ ಕಾರ್ ಬುಕಿಂಗ್ ಸೇವಾವಲಯ">ಲೋಕಲ್ ಬೈಕ್, ಆಟೋ ಹಾಗೂ ಕಾರ್ ಬುಕಿಂಗ್ ಸೇವಾವಲಯ</span>
+        <span style="font-size:0.82rem; font-weight:normal; opacity:0.95;" data-en="Local Bike, Auto & Car Booking Service" data-kn="ಲೋಕಲ್ ಬೈಕ್, ಆಟೋ ಹಾಗೂ ಕಾರ್ ಬುಕಿಂಗ್ ಸೇವಾವಲಯ">ಲೋಕಲ್ ಬೈಕ್, ಆಟೋ ಹಾಗೂ ಕಾರ್ ಬುಕಿಂಗ್ ಸೇವಾವಲಯ</span>
       </div>
     </div>
 
     <div id="roleSelectionScreen">
-      <h1 class="mainTitle" style="font-size: 1.15rem; color: #2c3e50; margin-bottom: 4px;" data-en="A R Taxi Booking Go Fast" data-kn="A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್">A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್</h1>
-      <p style="font-size: 0.8rem; color: #7f8c8d; margin-bottom: 10px;" data-en="Please select one of the options below:" data-kn="ದಯವಿಟ್ಟು ಕೆಳಗಿನ ಆಯ್ಕೆಗಳಲ್ಲಿ ಒಂದನ್ನು ಆಯ್ಕೆಮಾಡಿ:">ದಯವಿಟ್ಟು ಕೆಳಗಿನ ಆಯ್ಕೆಗಳಲ್ಲಿ ಒಂದನ್ನು ಆಯ್ಕೆಮಾಡಿ:</p>
+      <h1 class="mainTitle" style="font-size: 1.25rem; color: #2c3e50; margin-bottom: 5px;" data-en="A R Taxi Booking Go Fast" data-kn="A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್">A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್</h1>
+      <p style="font-size: 0.85rem; color: #7f8c8d; margin-bottom: 12px;" data-en="Please select one of the options below:" data-kn="ದಯವಿಟ್ಟು ಕೆಳಗಿನ ಆಯ್ಕೆಗಳಲ್ಲಿ ಒಂದನ್ನು ಆಯ್ಕೆಮಾಡಿ:">ದಯವಿಟ್ಟು ಕೆಳಗಿನ ಆಯ್ಕೆಗಳಲ್ಲಿ ಒಂದನ್ನು ಆಯ್ಕೆಮಾಡಿ:</p>
 
       <div class="home-buttons-grid">
         <button class="action-btn-card btn-cust-book" onclick="openPage('customerSection')">
-          <span style="font-size: 1.5rem;">🙋</span><span data-en="Customer Booking 👈" data-kn="ಗ್ರಾಹಕರು ಬುಕಿಂಗ್ ಮಾಡಿ👈">ಗ್ರಾಹಕರು ಬುಕಿಂಗ್ ಮಾಡಿ👈</span>
+          <span style="font-size: 1.8rem;">🙋</span><span data-en="Customer Booking 👈" data-kn="ಗ್ರಾಹಕರು ಬುಕಿಂಗ್ ಮಾಡಿ👈">ಗ್ರಾಹಕರು ಬುಕಿಂಗ್ ಮಾಡಿ👈</span>
         </button>
 
         <button class="action-btn-card btn-driver-reg" onclick="openPage('profileSection')">
-          <span style="font-size: 1.5rem;">🚗 🛺 🏍️</span><span data-en="Driver Register & Login Page" data-kn="ಡ್ರೈವರ್ ರಿಜಿಸ್ಟರ್ ಲಾಗಿನ್ ಪೇಜ್">ಡ್ರೈವರ್ ರಿಜಿಸ್ಟರ್ ಲಾಗಿನ್ ಪೇಜ್</span>
+          <span style="font-size: 1.8rem;">🚗 🛺 🏍️</span><span data-en="Driver Register & Login Page" data-kn="ಡ್ರೈವರ್ ರಿಜಿಸ್ಟರ್ ಲಾಗಿನ್ ಪೇಜ್">ಡ್ರೈವರ್ ರಿಜಿಸ್ಟರ್ ಲಾಗಿನ್ ಪೇಜ್</span>
         </button>
 
         <button class="action-btn-card btn-driver-panel" onclick="openPage('liveSection')">
-          <span style="font-size: 1.5rem;">📢</span><span data-en="Driver Bookings View (ID Panel)" data-kn="ಡ್ರೈವರ್ ಬುಕಿಂಗ್ ನೋಡಿ (ಐಡಿ ಪ್ಯಾನಲ್)">ಡ್ರೈವರ್ ಬುಕಿಂಗ್ ನೋಡಿ (ಐಡಿ ಪ್ಯಾನಲ್)</span>
+          <span style="font-size: 1.8rem;">📢</span><span data-en="Driver Bookings View (ID Panel)" data-kn="ಡ್ರೈವರ್ ಬುಕಿಂಗ್ ನೋಡಿ (ಐಡಿ ಪ್ಯಾನಲ್)">ಡ್ರೈವರ್ ಬುಕಿಂಗ್ ನೋಡಿ (ಐಡಿ ಪ್ಯಾನಲ್)</span>
         </button>
 
         <button class="action-btn-card btn-meter-direct" onclick="openPage('meterSection')">
-          <span style="font-size: 1.5rem;">⏱️</span><span data-en="GPS Live Running Meter" data-kn="ಮೀಟರ್ ಜಿಪಿಎಸ್ ಲೈವ್ ಮೀಟರ್">ಮೀಟರ್ ಜಿಪಿಎಸ್ ಲೈವ್ ಮೀಟರ್</span>
+          <span style="font-size: 1.8rem;">⏱️</span><span data-en="GPS Live Running Meter" data-kn="ಮೀಟರ್ ಜಿಪಿಎಸ್ ಲೈವ್ ಮೀಟರ್">ಮೀಟರ್ ಜಿಪಿಎಸ್ ಲೈವ್ ಮೀಟರ್</span>
         </button>
 
         <button class="action-btn-card btn-admin-panel" onclick="openPage('adminSection')">
-          <span style="font-size: 1.5rem;">🔐</span><span data-en="Admin Panel" data-kn="ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್">ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್</span>
+          <span style="font-size: 1.8rem;">🔐</span><span data-en="Admin Panel" data-kn="ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್">ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್</span>
         </button>
       </div>
     </div>
@@ -313,22 +371,22 @@
       <button class="back-home-btn" onclick="goBackToHome()" data-en="⬅ Back to Home" data-kn="⬅ ಮುಖಪುಟಕ್ಕೆ (Back to Home)">⬅ ಮುಖಪುಟಕ್ಕೆ (Back to Home)</button>
 
       <div class="header">
-        <div style="display:flex; align-items:center; gap:6px;">
-          <span style="font-size: 1.4rem;">🛺</span>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-size: 1.6rem;">🛺</span>
           <div>
             <div class="mainTitle" data-en="A R Taxi Booking Go Fast" data-kn="A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್">A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್</div>
-            <div style="font-size: 0.7rem; color: #7f8c8d;" data-en="Local Bike, Auto & Taxi Booking" data-kn="ಸ್ಥಳೀಯ ಬೈಕ್, ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್">ಸ್ಥಳೀಯ ಬೈಕ್, ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್</div>
+            <div style="font-size: 0.75rem; color: #7f8c8d;" data-en="Local Bike, Auto & Taxi Booking" data-kn="ಸ್ಥಳೀಯ ಬೈಕ್, ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್">ಸ್ಥಳೀಯ ಬೈಕ್, ಆಟೋ ಹಾಗೂ ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್</div>
           </div>
         </div>
       </div>
 
       <div class="whatsapp-box">
-        <div style="font-size: 0.7rem; font-weight: bold; color: #065f46;" data-en="Attention Drivers only: Please join this WhatsApp group." data-kn="ದಯವಿಟ್ಟು ಡ್ರೈವರ್‌ಗಳು ಮಾತ್ರ ಈ ವಾಟ್ಸಾಪ್ ಗುಂಪಿಗೆ ಜಾಯಿನ್ ಆಗಿ.">ದಯವಿಟ್ಟು ಡ್ರೈವರ್‌ಗಳು ಮಾತ್ರ ಈ ವಾಟ್ಸಾಪ್ ಗುಂಪಿಗೆ ಜಾಯಿನ್ ಆಗಿ.</div>
+        <div style="font-size: 0.75rem; font-weight: bold; color: #065f46;" data-en="Attention Drivers only: Please join this WhatsApp group." data-kn="ದಯವಿಟ್ಟು ಡ್ರೈವರ್‌ಗಳು ಮಾತ್ರ ಈ ವಾಟ್ಸಾಪ್ ಗುಂಪಿಗೆ ಜಾಯಿನ್ ಆಗಿ.">ದಯವಿಟ್ಟು ಡ್ರೈವರ್‌ಗಳು ಮಾತ್ರ ಈ ವಾಟ್ಸಾಪ್ ಗುಂಪಿಗೆ ಜಾಯಿನ್ ಆಗಿ.</div>
         <a href="https://chat.whatsapp.com/G11Yw7T0QxwKS5Njv8gReI?s=cl&p=a&mlu=4&ilr=4" target="_blank" class="whatsapp-btn" data-en="💬 Join Driver WhatsApp Group" data-kn="💬 ಜಾಯಿನ್ ಡ್ರೈವರ್ ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್">💬 ಜಾಯಿನ್ ಡ್ರೈವರ್ ವಾಟ್ಸಾಪ್ ಗ್ರೂಪ್</a>
       </div>
 
       <div class="support-box">
-        <div style="font-size: 0.7rem; font-weight: bold; color: #9b2c2c;" data-en="For emergency help, call and share vehicle number:" data-kn="ತುರ್ತು ಸಹಾಯ ಬೇಕಿದ್ದರೆ ಕಾಲ್ ಮಾಡಿ ವೆಹಿಕಲ್ ನಂಬರ್ ತಿಳಿಸಿ:">ತುರ್ತು ಸಹಾಯ ಬೇಕಿದ್ದರೆ ಕಾಲ್ ಮಾಡಿ ವೆಹಿಕಲ್ ನಂಬರ್ ತಿಳಿಸಿ:</div>
+        <div style="font-size: 0.75rem; font-weight: bold; color: #9b2c2c;" data-en="For emergency help, call and share vehicle number:" data-kn="ತುರ್ತು ಸಹಾಯ ಬೇಕಿದ್ದರೆ ಕಾಲ್ ಮಾಡಿ ವೆಹಿಕಲ್ ನಂಬರ್ ತಿಳಿಸಿ:">ತುರ್ತು ಸಹಾಯ ಬೇಕಿದ್ದರೆ ಕಾಲ್ ಮಾಡಿ ವೆಹಿಕಲ್ ನಂಬರ್ ತಿಳಿಸಿ:</div>
         <a href="tel:8105010768" class="support-btn" data-en="📞 24/7 Emergency Call" data-kn="📞 24/7 ತುರ್ತು ಕಾಲ್ (Emergency Call)">📞 24/7 ತುರ್ತು ಕಾಲ್ (Emergency Call)</a>
       </div>
 
@@ -338,22 +396,31 @@
           <div class="form-group">
             <label data-en="Select Vehicle (Click on image):" data-kn="ವಾಹನ ಆಯ್ಕೆಮಾಡಿ (ಚಿತ್ರದ ಮೇಲೆ ಕ್ಲಿಕ್ ಮಾಡಿ):">ವಾಹನ ಆಯ್ಕೆಮಾಡಿ (ಚಿತ್ರದ ಮೇಲೆ ಕ್ಲಿಕ್ ಮಾಡಿ):</label>
             <div class="vehicle-logo-grid">
-              <div class="vehicle-card" id="cardBike" onclick="selectVehicle('Bike')"><span style="font-size: 2rem; display: block;">🏍️</span><span style="font-size: 0.75rem; font-weight: bold;">ಬೈಕ್</span></div>
-              <div class="vehicle-card selected" id="cardAuto" onclick="selectVehicle('Auto')"><span style="font-size: 2rem; display: block;">🛺</span><span style="font-size: 0.75rem; font-weight: bold;">ಆಟೋ</span></div>
-              <div class="vehicle-card" id="cardCar" onclick="selectVehicle('Car')"><span style="font-size: 2rem; display: block;">🚗</span><span style="font-size: 0.75rem; font-weight: bold;">ಕಾರ್</span></div>
+              <div class="vehicle-card" id="cardBike" onclick="selectVehicle('Bike')">
+                <span style="font-size: 2.3rem; display: block;">🏍️</span>
+                <span style="font-size: 0.8rem; font-weight: bold;" data-en="Bike" data-kn="ಬೈಕ್ (Bike)">ಬೈಕ್ (Bike)</span>
+              </div>
+              <div class="vehicle-card selected" id="cardAuto" onclick="selectVehicle('Auto')">
+                <span style="font-size: 2.3rem; display: block;">🛺</span>
+                <span style="font-size: 0.8rem; font-weight: bold;" data-en="Auto" data-kn="ಆಟೋ (Auto)">ಆಟೋ (Auto)</span>
+              </div>
+              <div class="vehicle-card" id="cardCar" onclick="selectVehicle('Car')">
+                <span style="font-size: 2.3rem; display: block;">🚗</span>
+                <span style="font-size: 0.8rem; font-weight: bold;" data-en="Car" data-kn="ಕಾರ್ (Car)">ಕಾರ್ (Car)</span>
+              </div>
             </div>
             <input type="hidden" id="vehicleType" value="Auto">
           </div>
 
           <div class="form-group">
             <label data-en="Your Name" data-kn="ನಿಮ್ಮ ಹೆಸರು">ನಿಮ್ಮ ಹೆಸರು</label>
-            <input type="text" id="custName" placeholder="ಹೆಸರು ನಮೂದಿಸಿ">
-            <div id="errCustName" class="error-msg">ದಯವಿಟ್ಟು ನಿಮ್ಮ ಸರಿಯಾದ ಹೆಸರು ನಮೂದಿಸಿ</div>
+            <input type="text" id="custName" data-en-placeholder="Enter your name" placeholder="ಹೆಸರು ನಮೂದಿಸಿ">
+            <div id="errCustName" class="error-msg" data-en="Please enter your valid name" data-kn="ದಯವಿಟ್ಟು ನಿಮ್ಮ ಸರಿಯಾದ ಹೆಸರು ನಮೂದಿಸಿ">ದಯವಿಟ್ಟು ನಿಮ್ಮ ಸರಿಯಾದ ಹೆಸರು ನಮೂದಿಸಿ</div>
           </div>
           <div class="form-group">
             <label data-en="Mobile Number" data-kn="ಮೊಬೈಲ್ ಸಂಖ್ಯೆ">ಮೊಬೈಲ್ ಸಂಖ್ಯೆ</label>
-            <input type="tel" id="custPhone" placeholder="ಫೋನ್ ನಂಬರ್">
-            <div id="errCustPhone" class="error-msg">ದಯವಿಟ್ಟು ಸರಿಯಾದ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ ನಮೂದಿಸಿ</div>
+            <input type="tel" id="custPhone" data-en-placeholder="Phone number" placeholder="ಫೋನ್ ನಂಬರ್">
+            <div id="errCustPhone" class="error-msg" data-en="Please enter a valid mobile number" data-kn="ದಯವಿಟ್ಟು ಸರಿಯಾದ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ ನಮೂದಿಸಿ">ದಯವಿಟ್ಟು ಸರಿಯಾದ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ ನಮೂದಿಸಿ</div>
           </div>
           <div class="form-group">
             <label data-en="Number of Passengers" data-kn="ಪ್ರಯಾಣಿಕರ ಸಂಖ್ಯೆ">ಪ್ರಯಾಣಿಕರ ಸಂಖ್ಯೆ</label>
@@ -361,20 +428,20 @@
           </div>
           <div class="form-group">
             <label data-en="Current Location (Pickup details)" data-kn="ನೀವು ಈಗ ಎಲ್ಲಿದ್ದೀರಿ (ಪಿಕಪ್ ಸ್ಥಳದ ವಿವರ)">ನೀವು ಈಗ ಎಲ್ಲಿದ್ದೀರಿ (ಪಿಕಪ್ ಸ್ಥಳದ ವಿವರ)</label>
-            <input type="text" id="currentLoc" placeholder="ಉದಾ: ಬಸ್ ಸ್ಟ್ಯಾಂಡ್ ಹತ್ತಿರ, ಹೋಟೆಲ್ ಎದುರು">
+            <input type="text" id="currentLoc" data-en-placeholder="Ex: Near Bus Stand" placeholder="ಉದಾ: ಬಸ್ ಸ್ಟ್ಯಾಂಡ್ ಹತ್ತಿರ, ಹೋಟೆಲ್ ಎದುರು">
           </div>
           <div class="form-group">
             <label data-en="Pickup Location (GPS Mandatory)" data-kn="ಪಿಕೋಪ್ ಲೊಕೇಶನ್ (GPS ಕಡ್ಡಾಯ)">ಪಿಕೋಪ್ ಲೊಕೇಶನ್ (GPS ಕಡ್ಡಾಯ)</label>
-            <input type="text" id="pickuploc" placeholder="ಸ್ಥಳದ ಹೆಸರು ಅಥವಾ ಜಿಪಿಎಸ್ ಬಳಸಿ" readonly>
-            <button type="button" class="btn-gps" onclick="getLocation()" style="margin-top:4px;">📍 ಲೈವ್ ಜಿಪಿಎಸ್ ಆನ್ ಮಾಡಿ (2KM ಮಿತಿಗಾಗಿ)</button>
-            <div id="errPickup" class="error-msg">ದಯವಿಟ್ಟು ಲೈವ್ ಜಿಪಿಎಸ್ ಆನ್ ಮಾಡಿ</div>
+            <input type="text" id="pickuploc" data-en-placeholder="Location name or use GPS" placeholder="ಸ್ಥಳದ ಹೆಸರು ಅಥವಾ ಜಿಪಿಎಸ್ ಬಳಸಿ" readonly>
+            <button type="button" class="btn-gps" onclick="getLocation()" style="margin-top:6px;" data-en="📍 Turn on Live GPS (For 2KM limit)" data-kn="📍 ಲೈವ್ ಜಿಪಿಎಸ್ ಆನ್ ಮಾಡಿ (2KM ಮಿತಿಗಾಗಿ)">📍 ಲೈವ್ ಜಿಪಿಎಸ್ ಆನ್ ಮಾಡಿ (2KM ಮಿತಿಗಾಗಿ)</button>
+            <div id="errPickup" class="error-msg" data-en="Please turn on live GPS" data-kn="ದಯವಿಟ್ಟು ಲೈವ್ ಜಿಪಿಎಸ್ ಆನ್ ಮಾಡಿ">ದಯವಿಟ್ಟು ಲೈವ್ ಜಿಪಿಎಸ್ ಆನ್ ಮಾಡಿ</div>
           </div>
           <div class="form-group">
             <label data-en="Drop Location" data-kn="ಡ್ರಾಪ್ ಲೊಕೇಶನ್">ಡ್ರಾಪ್ ಲೊಕೇಶನ್</label>
-            <input type="text" id="droploc" placeholder="ತಲುಪಬೇಕಾದ ಸ್ಥಳ">
-            <div id="errDrop" class="error-msg">ದಯವಿಟ್ಟು ಡ್ರಾಪ್ ಸ್ಥಳ ನಮೂದಿಸಿ</div>
+            <input type="text" id="droploc" data-en-placeholder="Destination place" placeholder="ತಲುಪಬೇಕಾದ ಸ್ಥಳ">
+            <div id="errDrop" class="error-msg" data-en="Please enter drop location" data-kn="ದಯವಿಟ್ಟು ಡ್ರಾಪ್ ಸ್ಥಳ ನಮೂದಿಸಿ">ದಯವಿಟ್ಟು ಡ್ರಾಪ್ ಸ್ಥಳ ನಮೂದಿಸಿ</div>
           </div>
-          <button class="btn-submit" onclick="submitBooking()">ಬುಕ್ ಮಾಡಿ</button>
+          <button class="btn-submit" onclick="submitBooking()" data-en="Book Now" data-kn="ಬುಕ್ ಮಾಡಿ">ಬುಕ್ ಮಾಡಿ</button>
         </div>
         <div id="customerStatusContainer" style="margin-top: 10px;"></div>
       </div>
@@ -384,82 +451,112 @@
         <div class="form-group">
           <label data-en="Select Vehicle Type:" data-kn="ವಾಹನ ಆಯ್ಕೆ ಮಾಡಿ:">ವಾಹನ ಆಯ್ಕೆ ಮಾಡಿ:</label>
           <select id="meterVehicleType" onchange="resetMeterRate()">
-            <option value="Bike">🏍️ ಬೈಕ್ / Bike (2 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 30 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 10)</option>
-            <option value="Auto" selected>🛺 ಆಟೋ / Auto (2 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 50 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 12)</option>
-            <option value="Car">🚗 ಕಾರ್ / Car (3 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 200 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 15)</option>
+            <option value="Bike" data-en="🏍️ Bike (Fix Rs.30 up to 2km, then Rs.10/km)" data-kn="🏍️ ಬೈಕ್ / Bike (2 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 30 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 10)">🏍️ ಬೈಕ್ / Bike (2 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 30 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 10)</option>
+            <option value="Auto" selected data-en="🛺 Auto (Fix Rs.50 up to 2km, then Rs.12/km)" data-kn="🛺 ಆಟೋ / Auto (2 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 50 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 12)">🛺 ಆಟೋ / Auto (2 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 50 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 12)</option>
+            <option value="Car" data-en="🚗 Car (Fix Rs.200 up to 3km, then Rs.15/km)" data-kn="🚗 ಕಾರ್ / Car (3 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 200 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 15)">🚗 ಕಾರ್ / Car (3 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 200 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 15)</option>
           </select>
         </div>
-        <button class="btn-submit" onclick="startMeter()" style="background:#3182ce; margin-bottom:6px;">ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
+        <button class="btn-submit" onclick="startMeter()" style="background:#3182ce; margin-bottom:8px;" data-en="Start Meter" data-kn="ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ">ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
         <div class="card" style="text-align:center; background:#f7fafc;">
-          <p style="font-size:0.75rem; color:#718096;">ಪ್ರಯಾಣಿಸಿದ ದೂರ: <span id="distCount">0.0</span> ಕಿ.ಮೀ</p>
-          <p style="font-size:0.85rem; font-weight:bold; color:#d69e2e; margin: 3px 0;" id="meterStatusMsg">ವಾಹನ ನಿಂತಿದೆ</p>
-          <p style="font-size:1.1rem; font-weight:bold; color:#0fb05b;">ಅಂದಾಜು ಶುಲ್ಕ: ₹<span id="liveAmount">50</span></p>
-          <p style="font-size:0.7rem; color:#4a5568; margin-top:4px;" id="liveGpsCoord">GPS: Waiting...</p>
+          <p style="font-size:0.8rem; color:#718096;"><span data-en="Distance Covered:" data-kn="ಪ್ರಯಾಣಿಸಿದ ದೂರ:">ಪ್ರಯಾಣಿಸಿದ ದೂರ:</span> <span id="distCount">0.0</span> <span data-en="KM" data-kn="ಕಿ.ಮೀ">ಕಿ.ಮೀ</span></p>
+          <p style="font-size:0.9rem; font-weight:bold; color:#d69e2e; margin: 4px 0;" id="meterStatusMsg" data-en="Vehicle Stopped" data-kn="ವಾಹನ ನಿಂತಿದೆ">ವಾಹನ ನಿಂತಿದೆ</p>
+          <p style="font-size:1.2rem; font-weight:bold; color:#0fb05b;"><span data-en="Estimated Fare: ₹" data-kn="ಅಂದಾಜು ಶುಲ್ಕ: ₹">ಅಂದಾಜು ಶುಲ್ಕ: ₹</span><span id="liveAmount">50</span></p>
+          <p style="font-size:0.75rem; color:#4a5568; margin-top:5px;" id="liveGpsCoord">GPS: Waiting...</p>
         </div>
-        <button class="btn-submit" onclick="stopMeterOnly()" style="background:#e53e3e;">ಮೀಟರ್ ಆಫ್ ಮಾಡಿ</button>
+        <button class="btn-submit" onclick="stopMeterOnly()" style="background:#e53e3e;" data-en="Stop Meter" data-kn="ಮೀಟರ್ ಆಫ್ ಮಾಡಿ">ಮೀಟರ್ ಆಫ್ ಮಾಡಿ</button>
       </div>
 
       <div id="profileSection" class="section">
         <h2 data-en="Driver Registration / Profile" data-kn="ಡ್ರೈವರ್ ರಜಿಸ್ಟ್ರೇಷನ್ / ಪ್ರೊಫೈಲ್">ಡ್ರೈವರ್ ರಜಿಸ್ಟ್ರೇಷನ್ / ಪ್ರೊಫೈಲ್</h2>
-        <div class="form-group"><label>ಡ್ರೈವರ್ ಹೆಸರು:</label><input type="text" id="drvName" placeholder="ನಿಮ್ಮ ಹೆಸರು"></div>
-        <div class="form-group"><label>ಮೊಬೈಲ್ ನಂಬರ್:</label><input type="tel" id="drvPhone" placeholder="ಮೊಬೈಲ್ ನಂಬರ್"></div>
-        <div class="form-group"><label>ವಾಹನ ನಂಬರ್:</label><input type="text" id="drvVehNo" placeholder="ಉದಾ: KA-33-..."></div>
         <div class="form-group">
-          <label>ವಾಹನ ಪ್ರಭೇದ:</label>
+          <label data-en="Driver Name:" data-kn="ಡ್ರೈವರ್ ಹೆಸರು:">ಡ್ರೈವರ್ ಹೆಸರು:</label>
+          <input type="text" id="drvName" data-en-placeholder="Your Name" placeholder="ನಿಮ್ಮ ಹೆಸರು">
+        </div>
+        <div class="form-group">
+          <label data-en="Mobile Number:" data-kn="ಮೊಬೈಲ್ ನಂಬರ್:">ಮೊಬೈಲ್ ನಂಬರ್:</label>
+          <input type="tel" id="drvPhone" data-en-placeholder="Mobile Number" placeholder="ಮೊಬೈಲ್ ನಂಬರ್">
+        </div>
+        <div class="form-group">
+          <label data-en="Vehicle Number:" data-kn="ವಾಹನ ನಂಬರ್:">ವಾಹನ ನಂಬರ್:</label>
+          <input type="text" id="drvVehNo" data-en-placeholder="Ex: KA-33-..." placeholder="ಉದಾ: KA-33-...">
+        </div>
+        <div class="form-group">
+          <label data-en="Vehicle Type:" data-kn="ವಾಹನ ಪ್ರಭೇದ:">ವಾಹನ ಪ್ರಭೇದ:</label>
           <select id="drvVehType">
-            <option value="Bike">🏍️ ಬೈಕ್ (Bike)</option>
-            <option value="Auto">🛺 ಆಟೋ (Auto)</option>
-            <option value="Car">🚗 ಕಾರ್ (Car)</option>
+            <option value="Bike" data-en="🏍️ Bike" data-kn="🏍️ ಬೈಕ್ (Bike)">🏍️ ಬೈಕ್ (Bike)</option>
+            <option value="Auto" data-en="🛺 Auto" data-kn="🛺 ಆಟೋ (Auto)">🛺 ಆಟೋ (Auto)</option>
+            <option value="Car" data-en="🚗 Car" data-kn="🚗 ಕಾರ್ (Car)">🚗 ಕಾರ್ (Car)</option>
           </select>
         </div>
-        <div class="form-group"><label>📷 ವಾಹನ ಫೋಟೋ:</label><input type="file" id="vehPhotoFile" accept="image/*" capture="environment"></div>
-        <div class="form-group"><label>📷 ಆರ್ ಸಿ ಕಾರ್ಡ್ ಫೋಟೋ:</label><input type="file" id="rcPhotoFile" accept="image/*" capture="environment"></div>
-        <div class="form-group"><label>📷 ಡಿ ಎಲ್ ಫೋಟೋ:</label><input type="file" id="dlPhotoFile" accept="image/*" capture="environment"></div>
-        <div class="form-group"><label>🤳 ಡ್ರೈವರ್ ಸೆಲ್ಫಿ ಫೋಟೋ:</label><input type="file" id="selfiePhotoFile" accept="image/*" capture="user"></div>
-        <div class="form-group"><label>🪪 ಆಧಾರ್ ಕಾರ್ಡ್ ಫೋಟೋ:</label><input type="file" id="aadharPhotoFile" accept="image/*" capture="environment"></div>
-        <button class="btn-submit" onclick="registerDriver()" id="btnRegisterDriver">ಲಾಗಿನ್ / ರಜಿಸ್ಟರ್ ಮಾಡಿ</button>
+        <div class="form-group">
+          <label data-en="📷 Vehicle Photo (Take via Camera):" data-kn="📷 ವಾಹನ ಫೋಟೋ (ಕ್ಯಾಮೆರಾದಲ್ಲಿ ತೆಗೆಯಿರಿ):">📷 ವಾಹನ ಫೋಟೋ (ಕ್ಯಾಮೆರಾದಲ್ಲಿ ತೆಗೆಯಿರಿ):</label>
+          <input type="file" id="vehPhotoFile" accept="image/*" capture="environment">
+        </div>
+        <div class="form-group">
+          <label data-en="📷 RC Card Photo:" data-kn="📷 ಆರ್ ಸಿ ಕಾರ್ಡ್ ಫೋಟೋ:">📷 ಆರ್ ಸಿ ಕಾರ್ಡ್ ಫೋಟೋ:</label>
+          <input type="file" id="rcPhotoFile" accept="image/*" capture="environment">
+        </div>
+        <div class="form-group">
+          <label data-en="📷 DL Photo:" data-kn="📷 ಡಿ ಎಲ್ ಫೋಟೋ:">📷 ಡಿ ಎಲ್ ಫೋಟೋ:</label>
+          <input type="file" id="dlPhotoFile" accept="image/*" capture="environment">
+        </div>
+        <div class="form-group">
+          <label data-en="🤳 Driver Selfie Photo:" data-kn="🤳 ಡ್ರೈವರ್ ಸೆಲ್ಫಿ ಫೋಟೋ:">🤳 ಡ್ರೈವರ್ ಸೆಲ್ಫಿ ಫೋಟೋ:</label>
+          <input type="file" id="selfiePhotoFile" accept="image/*" capture="user">
+        </div>
+        <div class="form-group">
+          <label data-en="🪪 Aadhar Card Photo:" data-kn="🪪 ಆಧಾರ್ ಕಾರ್ಡ್ ಫೋಟೋ (ಕೊನೆಯಲ್ಲಿ):">🪪 ಆಧಾರ್ ಕಾರ್ಡ್ ಫೋಟೋ (ಕೊನೆಯಲ್ಲಿ):</label>
+          <input type="file" id="aadharPhotoFile" accept="image/*" capture="environment">
+        </div>
+        <button class="btn-submit" onclick="registerDriver()" id="btnRegisterDriver" data-en="Login / Register" data-kn="ಲಾಗಿನ್ / ರಜಿಸ್ಟರ್ ಮಾಡಿ">ಲಾಗಿನ್ / ರಜಿಸ್ಟರ್ ಮಾಡಿ</button>
       </div>
 
       <div id="liveSection" class="section">
-        <h2>📢 ಡ್ರೈವರ್ ಐಡಿ ಪ್ಯಾನಲ್ ಹಾಗೂ ಲೈವ್ ಬುಕಿಂಗ್‌ಗಳು</h2>
+        <h2 data-en="📢 Driver ID Panel & Live Bookings" data-kn="📢 ಡ್ರೈವರ್ ಐಡಿ ಪ್ಯಾನಲ್ ಹಾಗೂ ಲೈವ್ ಬುಕಿಂಗ್‌ಗಳು">📢 ಡ್ರೈವರ್ ಐಡಿ ಪ್ಯಾನಲ್ ಹಾಗೂ ಲೈವ್ ಬುಕಿಂಗ್‌ಗಳು</h2>
         <div class="form-group">
-          <label>ಬುಕಿಂಗ್ ವೀಕ್ಷಿಸಲು ನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ:</label>
+          <label data-en="Enter your 4-digit Driver ID to view bookings:" data-kn="ಬುಕಿಂಗ್ ವೀಕ್ಷಿಸಲು ನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ:">ಬುಕಿಂಗ್ ವೀಕ್ಷಿಸಲು ನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ:</label>
           <input type="text" id="driverInputId" placeholder="4 digit ID" maxlength="4" inputmode="numeric" autocomplete="off" oninput="checkDriverIdAndListen()">
         </div>
 
         <div id="driverPersonalDash" style="display: none;" class="dashboard-grid">
-          <div class="dash-box"><div class="dash-box-title">ಇಂದಿನ ಒಟ್ಟು ಗಳಿಕೆ</div><div class="dash-box-val">₹<span id="dashTodayEarnings">0</span></div></div>
-          <div class="dash-box"><div class="dash-box-title">ಇಂದಿನ ಒಟ್ಟು ಓಟ</div><div class="dash-box-val"><span id="dashTodayKm">0.0</span> ಕಿ.ಮೀ</div></div>
+          <div class="dash-box">
+            <div class="dash-box-title" data-en="Today Total Earnings" data-kn="ಇಂದಿನ ಒಟ್ಟು ಗಳಿಕೆ">ಇಂದಿನ ಒಟ್ಟು ಗಳಿಕೆ</div>
+            <div class="dash-box-val">₹<span id="dashTodayEarnings">0</span></div>
+          </div>
+          <div class="dash-box">
+            <div class="dash-box-title" data-en="Today Total KM" data-kn="ಇಂದಿನ ಒಟ್ಟು ಓಟ">ಇಂದಿನ ಒಟ್ಟು ಓಟ</div>
+            <div class="dash-box-val"><span id="dashTodayKm">0.0</span> ಕಿ.ಮೀ</div>
+          </div>
         </div>
 
         <div id="driverBookingsList">
-          <p style="color: #e53e3e; font-weight: bold;">ಬುಕಿಂಗ್ ನೋಡಲು ದಯವಿಟ್ಟು ನಿಮ್ಮ ಸರಿಯಾದ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ.</p>
+          <p style="color: #e53e3e; font-weight: bold;" data-en="Please enter your correct 4-digit driver ID to view bookings." data-kn="ಬುಕಿಂಗ್ ನೋಡಲು ದಯವಿಟ್ಟು ನಿಮ್ಮ ಸರಿಯಾದ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ.">ಬುಕಿಂಗ್ ನೋಡಲು ದಯವಿಟ್ಟು ನಿಮ್ಮ ಸರಿಯಾದ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ ನಮೂದಿಸಿ.</p>
         </div>
       </div>
 
       <div id="adminSection" class="section">
-        <h2>🔐 ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್</h2>
+        <h2 data-en="🔐 Admin Panel" data-kn="🔐 ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್">🔐 ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್</h2>
         
-        <div class="card" style="background:#e8f8f0; border:2px solid #0fb05b; margin-bottom:10px;">
-          <h3 style="font-size:0.85rem; color:#065f46; margin-bottom:6px;">📢 ಜಾಹೀರಾತು ನಿರ್ವಹಣೆ (ಫೋಟೋ / ವಿಡಿಯೋ)</h3>
+        <div class="card" style="background:#e8f8f0; border:2px solid #0fb05b; margin-bottom:12px;">
+          <h3 style="font-size:0.9rem; color:#065f46; margin-bottom:8px;" data-en="📢 Advertisement Management (Photo / Video)" data-kn="📢 ಜಾಹೀರಾತು ನಿರ್ವಹಣೆ (ಫೋಟೋ / 5-10 ಸೆಕೆಂಡ್ ವಿಡಿಯೋ)">📢 ಜಾಹೀರಾತು ನಿರ್ವಹಣೆ (ಫೋಟೋ / 5-10 ಸೆಕೆಂಡ್ ವಿಡಿಯೋ)</h3>
           <div class="form-group">
-            <label>ಜಾಹೀರಾತು ಫೋಟೋ ಅಥವಾ ವಿಡಿಯೋ ಆಯ್ಕೆಮಾಡಿ:</label>
+            <label data-en="Select Ad Photo or Video:" data-kn="ಜಾಹೀರಾತು ಫೋಟೋ ಅಥವಾ ವಿಡಿಯೋ ಆಯ್ಕೆಮಾಡಿ (ಚಿತ್ರ/ವಿಡಿಯೋ ಅಪ್‌ಲೋಡ್ ಆದ ಕೂಡಲೇ ತಿಳಿಯುತ್ತದೆ):">ಜಾಹೀರಾತು ಫೋಟೋ ಅಥವಾ ವಿಡಿಯೋ ಆಯ್ಕೆಮಾಡಿ (ಚಿತ್ರ/ವಿಡಿಯೋ ಅಪ್‌ಲೋಡ್ ಆದ ಕೂಡಲೇ ತಿಳಿಯುತ್ತದೆ):</label>
             <input type="file" id="adMediaFile" accept="image/*,video/*" onchange="previewAdFile(this)">
           </div>
-          <div id="adPreviewStatus" style="font-size:0.75rem; font-weight:bold; color:#2b6cb0; margin:3px 0;"></div>
-          <button class="btn-submit" onclick="uploadAdvertisement()" style="background:#0fb05b; margin-top:4px;">ಜಾಹೀರಾತು ಅಪ್ಲೋಡ್ ಮಾಡಿ</button>
-          <button class="btn-submit" onclick="deleteAdvertisement()" style="background:#e53e3e; margin-top:5px;">ಜಾಹೀರಾತು ಡಿಲೀಟ್ ಮಾಡಿ</button>
+          <div id="adPreviewStatus" style="font-size:0.8rem; font-weight:bold; color:#2b6cb0; margin:4px 0;"></div>
+          <button class="btn-submit" onclick="uploadAdvertisement()" style="background:#0fb05b; margin-top:5px;" data-en="Upload Advertisement" data-kn="ಜಾಹೀರಾತು ಅಪ್ಲೋಡ್ ಮಾಡಿ">ಜಾಹೀರಾತು ಅಪ್ಲೋಡ್ ಮಾಡಿ</button>
+          <button class="btn-submit" onclick="deleteAdvertisement()" style="background:#e53e3e; margin-top:6px;" data-en="Delete Advertisement" data-kn="ಜಾಹೀರಾತು ಡಿಲೀಟ್ ಮಾಡಿ">ಜಾಹೀರಾತು ಡಿಲೀಟ್ ಮಾಡಿ</button>
         </div>
 
-        <div class="form-group" style="margin-bottom: 10px;">
-          <input type="text" id="adminSearchInput" placeholder="ಮೊಬೈಲ್ ನಂಬರ್ ಅಥವಾ ಐಡಿ ನಂಬರ್ ಮೂಲಕ ಹುಡುಕಿ..." oninput="filterAdminDrivers()">
+        <div class="form-group" style="margin-bottom: 12px;">
+          <input type="text" id="adminSearchInput" data-en-placeholder="Search by mobile number or ID..." data-kn="ಮೊಬೈಲ್ ನಂಬರ್ ಅಥವಾ ಐಡಿ ನಂಬರ್ ಮೂಲಕ ಹುಡುಕಿ..." placeholder="ಮೊಬೈಲ್ ನಂಬರ್ ಅಥವಾ ಐಡಿ ನಂಬರ್ ಮೂಲಕ ಹುಡುಕಿ..." oninput="filterAdminDrivers()">
         </div>
 
-        <div id="adminTotalCountBox" style="border: 2px solid #0fb05b; background:#e8f8f0; padding:8px; border-radius:8px; text-align:center; font-weight:bold; color:#065f46; margin-bottom:10px;">
-          🛺 ಒಟ್ಟು ನೋಂದಾಯಿತ ಡ್ರೈವರ್‌ಗಳು: <span id="adminTotalDriversCount">0</span>
+        <div id="adminTotalCountBox" style="border: 2px solid #0fb05b; background:#e8f8f0; padding:10px; border-radius:8px; text-align:center; font-weight:bold; color:#065f46; margin-bottom:12px;">
+          <span data-en="🛺 Total Registered Drivers: " data-kn="🛺 ಒಟ್ಟು ನೋಂದಾಯಿತ ಡ್ರೈವರ್‌ಗಳು: ">🛺 ಒಟ್ಟು ನೋಂದಾಯಿತ ಡ್ರೈವರ್‌ಗಳು: </span><span id="adminTotalDriversCount">0</span>
         </div>
 
-        <div id="adminDriversList">ಡ್ರೈವರ್‌ಗಳ ಮಾಹಿತಿ ಲೋಡ್ ಆಗುತ್ತಿದೆ...</div>
+        <div id="adminDriversList" data-en="Loading drivers info..." data-kn="ಡ್ರೈವರ್‌ಗಳ ಮಾಹಿತಿ ಲೋಡ್ ಆಗುತ್ತಿದೆ...">ಡ್ರೈವರ್‌ಗಳ ಮಾಹಿತಿ ಲೋಡ್ ಆಗುತ್ತಿದೆ...</div>
       </div>
 
       <div class="footer">
@@ -485,6 +582,14 @@
           el.innerText = el.getAttribute('data-kn');
         }
       });
+
+      document.querySelectorAll('[data-en-placeholder]').forEach(el => {
+        if (currentLang === 'en') {
+          el.setAttribute('placeholder', el.getAttribute('data-en-placeholder'));
+        } else {
+          el.setAttribute('placeholder', el.getAttribute('data-kn-placeholder') || el.getAttribute('placeholder'));
+        }
+      });
     }
 
     let distanceKm = 0;
@@ -498,14 +603,14 @@
     let isAdminUnlocked = false;
     let allDriversData = []; 
     let custMeterWatchId = null;
+    let lastCustPos = null;
+    
     let sirenInterval = null;
     let audioCtx = null;
     let adTimer = null;
     let activeDriverDataGlobal = null;
     let deferredPrompt = null;
     let bookingTimeoutTimer = null;
-    let pendingSecurityAction = null;
-    let pendingSecurityParam = null;
 
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
@@ -517,10 +622,12 @@
       if (deferredPrompt) {
         deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
-        if (outcome === 'accepted') document.getElementById('installAppBanner').style.display = 'none';
+        if (outcome === 'accepted') {
+          document.getElementById('installAppBanner').style.display = 'none';
+        }
         deferredPrompt = null;
       } else {
-        alert("ನಿಮ್ಮ ಕ್ರೋಮ್ ಬ್ರೌಸರ್ ಮೆನು (⋮) ಕ್ಲಿಕ್ ಮಾಡಿ 'Install App' ಆಯ್ಕೆಮಾಡಿ.");
+        alert("ನಿಮ್ಮ ಕ್ರೋಮ್ ಬ್ರೌಸರ್ ಮೆನು (⋮) ಕ್ಲಿಕ್ ಮಾಡಿ 'Install App' ಅಥವಾ 'Add to Home screen' ಆಯ್ಕೆಮಾಡಿ.");
       }
     });
 
@@ -538,18 +645,24 @@
           if (adData && adData.mediaUrl) {
             const modal = document.getElementById('splashAdModal');
             const container = document.getElementById('splashMediaContainer');
+            
             if (adData.mediaType && adData.mediaType.includes('video')) {
               container.innerHTML = `<video src="${adData.mediaUrl}" autoplay muted controls style="width:100%; height:100%; object-fit:contain;"></video>`;
             } else {
               container.innerHTML = `<img src="${adData.mediaUrl}" style="width:100%; height:100%; object-fit:contain;">`;
             }
+
             modal.style.display = 'flex';
             let timeLeft = 10;
             document.getElementById('adTimerCount').innerText = timeLeft;
+
             adTimer = setInterval(() => {
               timeLeft--;
               document.getElementById('adTimerCount').innerText = timeLeft;
-              if (timeLeft <= 0) { clearInterval(adTimer); closeSplashAd(); }
+              if (timeLeft <= 0) {
+                clearInterval(adTimer);
+                closeSplashAd();
+              }
             }, 1000);
           }
         }
@@ -564,24 +677,29 @@
     function previewAdFile(input) {
       if (input.files && input.files[0]) {
         const file = input.files[0];
-        document.getElementById('adPreviewStatus').innerText = `ಆಯ್ಕೆಮಾಡಲಾಗಿದೆ: ${file.name} - ಸಕ್ಸಸ್! ಅಪ್ಲೋಡ್ ಬಟನ್ ಒತ್ತಿ.`;
+        const statusEl = document.getElementById('adPreviewStatus');
+        statusEl.innerText = currentLang === 'en' ? `Selected: ${file.name} - Success!` : `ಆಯ್ಕೆಮಾಡಲಾಗಿದೆ: ${file.name} - ಸಕ್ಸಸ್ ಆಗಿದೆ! ಅಪ್ಲೋಡ್ ಬಟನ್ ಒತ್ತಿ.`;
       }
     }
 
     async function uploadAdvertisement() {
       const fileInput = document.getElementById('adMediaFile');
-      if (fileInput.files.length === 0) { alert("ದಯವಿಟ್ಟು ಫೋಟೋ ಅಥವಾ ವಿಡಿಯೋ ಆಯ್ಕೆಮಾಡಿ!"); return; }
+      if (fileInput.files.length === 0) { alert(currentLang === 'en' ? "Please select photo or video!" : "ದಯವಿಟ್ಟು ಫೋಟೋ ಅಥವಾ ವಿಡಿಯೋ ಆಯ್ಕೆಮಾಡಿ!"); return; }
       const file = fileInput.files[0];
+      
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = async function(e) {
         let base64Data = e.target.result;
-        if (base64Data.length > 1048487) { alert("ಎಚ್ಚರಿಕೆ: ಫೈಲ್ ತುಂಬಾ ದೊಡ್ಡದಾಗಿದೆ!"); return; }
+        if (base64Data.length > 1048487) {
+          alert(currentLang === 'en' ? "File too large!" : "ಎಚ್ಚರಿಕೆ: ಫೈಲ್ ತುಂಬಾ ದೊಡ್ಡದಾಗಿದೆ!");
+          return;
+        }
         try {
           await window.setDoc(window.doc(window.db, "settings", "advertisement"), {
             mediaUrl: base64Data, mediaType: file.type, timestamp: window.serverTimestamp()
           });
-          alert("ಜಾಹೀರಾತು ಯಶಸ್ವಿಯಾಗಿ ಅಪ್ಲೋಡ್ ಆಗಿದೆ!");
+          alert(currentLang === 'en' ? "Ad uploaded successfully!" : "ಜಾಹೀರಾತು ಯಶಸ್ವಿಯಾಗಿ ಅಪ್ಲೋಡ್ ಆಗಿದೆ!");
           fileInput.value = '';
           document.getElementById('adPreviewStatus').innerText = '';
         } catch(err) { alert("Error: " + err.message); }
@@ -589,10 +707,10 @@
     }
 
     async function deleteAdvertisement() {
-      if (confirm("ಖಚಿತವಾಗಿ ಜಾಹೀರಾತು ಡಿಲೀಟ್ ಮಾಡಲು ಬಯಸುತ್ತೀರಾ?")) {
+      if (confirm(currentLang === 'en' ? "Delete advertisement?" : "ಖಚಿತವಾಗಿ ಜಾಹೀರಾತು ಡಿಲೀಟ್ ಮಾಡಲು ಬಯಸುತ್ತೀರಾ?")) {
         try {
           await window.deleteDoc(window.doc(window.db, "settings", "advertisement"));
-          alert("ಜಾಹೀರಾತು ಡಿಲೀಟ್ ಮಾಡಲಾಗಿದೆ.");
+          alert(currentLang === 'en' ? "Ad deleted." : "ಜಾಹೀರಾತು ಡಿಲೀಟ್ ಮಾಡಲಾಗಿದೆ.");
         } catch(e) { alert("Error: " + e.message); }
       }
     }
@@ -609,8 +727,10 @@
           osc.frequency.exponentialRampToValueAtTime(450, audioCtx.currentTime + 0.4);
           gain.gain.setValueAtTime(1, audioCtx.currentTime);
           gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
-          osc.connect(gain); gain.connect(audioCtx.destination);
-          osc.start(); osc.stop(audioCtx.currentTime + 0.4);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + 0.4);
         } catch(e) {}
       }, 600);
     }
@@ -619,11 +739,39 @@
       if (sirenInterval) { clearInterval(sirenInterval); sirenInterval = null; }
     }
 
+    function convertFileToBase64(file) {
+      return new Promise((resolve) => {
+        if (!file) resolve('');
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (event) => {
+          const img = new Image();
+          img.src = event.target.result;
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const maxDim = 800;
+            let w = img.width, h = img.height;
+            if (w > h && w > maxDim) { h *= maxDim / w; w = maxDim; }
+            else if (h > maxDim) { w *= maxDim / h; h = maxDim; }
+            canvas.width = w; canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, w, h);
+            resolve(canvas.toDataURL('image/jpeg', 0.7));
+          };
+        };
+        reader.onerror = () => resolve('');
+      });
+    }
+
     function openPage(sectionId) {
       if (sectionId === 'adminSection' && !isAdminUnlocked) {
-        document.getElementById('adminCodeInput').value = '';
-        document.getElementById('adminLoginModal').style.display = 'block';
-        return;
+        let enteredCode = prompt(currentLang === 'en' ? "Enter Admin Code:" : "ಅಡ್ಮಿನ್ ಕೋಡ್ ನಮೂದಿಸಿ:");
+        if (enteredCode === "9353444070") {
+          isAdminUnlocked = true;
+        } else {
+          if (enteredCode !== null) alert(currentLang === 'en' ? "Wrong Code!" : "ತಪ್ಪಾದ ಕೋಡ್!");
+          return;
+        }
       }
 
       document.getElementById('roleSelectionScreen').style.display = 'none';
@@ -632,51 +780,6 @@
       document.getElementById(sectionId).classList.add('active');
 
       if (sectionId === 'adminSection') loadAdminDrivers();
-    }
-
-    function submitAdminCode() {
-      const enteredCode = document.getElementById('adminCodeInput').value.trim();
-      if (enteredCode === "9353444070") {
-        isAdminUnlocked = true;
-        document.getElementById('adminLoginModal').style.display = 'none';
-        openPage('adminSection');
-      } else {
-        alert("ತಪ್ಪಾದ ಕೋಡ್!");
-      }
-    }
-
-    function requestSecurityCode(actionType, param) {
-      pendingSecurityAction = actionType;
-      pendingSecurityParam = param;
-      document.getElementById('securityCodeInput').value = '';
-      document.getElementById('securityCodeModal').style.display = 'block';
-    }
-
-    function confirmSecurityAction() {
-      const code = document.getElementById('securityCodeInput').value.trim();
-      if (code === "9353444070") {
-        document.getElementById('securityCodeModal').style.display = 'none';
-        if (pendingSecurityAction === 'downloadPDF') {
-          executeDownloadPDF(pendingSecurityParam);
-        } else if (pendingSecurityAction === 'deleteRecord') {
-          executeDeleteRecord(pendingSecurityParam);
-        }
-        pendingSecurityAction = null;
-        pendingSecurityParam = null;
-      } else {
-        alert("ತಪ್ಪಾದ ಕೋಡ್! ಸರಿಯಾದ ಕೋಡ್ (9353444070) ನಮೂದಿಸಿ.");
-      }
-    }
-
-    function openImageViewer(imgSrc, titleText) {
-      document.getElementById('fullSizeImage').src = imgSrc;
-      document.getElementById('imageViewerTitle').innerText = titleText;
-      document.getElementById('downloadImageBtn').href = imgSrc;
-      document.getElementById('imageViewerModal').style.display = 'block';
-    }
-
-    function closeImageViewer() {
-      document.getElementById('imageViewerModal').style.display = 'none';
     }
 
     function goBackToHome() {
@@ -705,10 +808,16 @@
       const vehicleType = document.getElementById('vehicleType').value;
       const sel = document.getElementById('passengerCount');
       sel.innerHTML = '';
-      let maxPassengers = (vehicleType === 'Bike') ? 1 : (vehicleType === 'Auto' ? 3 : 4);
+      
+      let maxPassengers = 3;
+      if (vehicleType === 'Bike') maxPassengers = 1;
+      else if (vehicleType === 'Auto') maxPassengers = 3;
+      else if (vehicleType === 'Car') maxPassengers = 4;
+
       for (let i = 1; i <= maxPassengers; i++) {
         let opt = document.createElement('option');
-        opt.value = i; opt.text = `${i} ಪ್ರಯಾಣಿಕರು`;
+        opt.value = i;
+        opt.text = currentLang === 'en' ? `${i} Passenger(s)` : `${i} ಪ್ರಯಾಣಿಕರು`;
         sel.appendChild(opt);
       }
     }
@@ -718,10 +827,10 @@
         navigator.geolocation.getCurrentPosition((position) => {
           currentCustomerLat = position.coords.latitude;
           currentCustomerLng = position.coords.longitude;
-          document.getElementById('pickuploc').value = `ಸ್ಥಳ ಲಭ್ಯವಿದೆ (Lat: ${currentCustomerLat.toFixed(4)}, Lng: ${currentCustomerLng.toFixed(4)})`;
+          document.getElementById('pickuploc').value = (currentLang === 'en' ? `Location Available (Lat: ${currentCustomerLat.toFixed(4)}, Lng: ${currentCustomerLng.toFixed(4)})` : `ಸ್ಥಳ ಲಭ್ಯವಿದೆ (Lat: ${currentCustomerLat.toFixed(4)}, Lng: ${currentCustomerLng.toFixed(4)})`);
           document.getElementById('errPickup').style.display = 'none';
         }, (error) => {
-          document.getElementById('errPickup').innerText = 'ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಆನ್ ಮಾಡಿ.';
+          document.getElementById('errPickup').innerText = currentLang === 'en' ? 'Turn on GPS location.' : 'ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಆನ್ ಮಾಡಿ.';
           document.getElementById('errPickup').style.display = 'block';
         }, { enableHighAccuracy: true });
       }
@@ -729,6 +838,7 @@
 
     async function submitBooking() {
       document.querySelectorAll('.error-msg').forEach(e => e.style.display = 'none');
+
       const vehicleType = document.getElementById('vehicleType').value;
       const name = document.getElementById('custName').value.trim();
       const phone = document.getElementById('custPhone').value.trim();
@@ -742,6 +852,7 @@
       if (!phone || phone.length < 10) { document.getElementById('errCustPhone').style.display = 'block'; hasError = true; }
       if (!pickup || currentCustomerLat === null) { document.getElementById('errPickup').style.display = 'block'; hasError = true; }
       if (!drop) { document.getElementById('errDrop').style.display = 'block'; hasError = true; }
+
       if (hasError) return;
 
       const pickupOtp = Math.floor(1000 + Math.random() * 9000).toString();
@@ -756,18 +867,34 @@
         });
 
         myActiveBookingId = docRef.id;
-        showCustomAlert("ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸಲ್ಲಿಸಲಾಗಿದೆ! ಡ್ರೈವರ್ ಸ್ವೀಕರಿಸಿದಾಗ ಲೈವ್ ಮಾಹಿತಿ ಸಿಗುತ್ತದೆ.");
+        showCustomAlert(currentLang === 'en' ? "Booking submitted successfully!" : "ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸಲ್ಲಿಸಲಾಗಿದೆ! ಡ್ರೈವರ್ ಸ್ವೀಕರಿಸಿದಾಗ ಲೈವ್ ಮಾಹಿತಿ ಸಿಗುತ್ತದೆ.");
 
         document.getElementById('bookingFormContainer').style.display = 'none';
         document.getElementById('customerStatusContainer').innerHTML = `
           <div class="card" style="text-align:center; background:#e8f8f0; border:2px solid #0fb05b;">
-            <p style="font-weight:bold; color:#065f46; margin-bottom:6px;">🎉 ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿದೆ!</p>
-            <p style="font-size:1.1rem; color:#d69e2e; font-weight:bold; margin-bottom:6px;">OTP: ${pickupOtp}</p>
-            <p style="font-size:0.75rem; color:#2d3748; margin-bottom:8px;">ಡ್ರೈವರ್ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಲು ಕಾಯಲಾಗುತ್ತಿದೆ...</p>
-            <button class="btn-submit" onclick="cancelCustomerBooking()" style="background:#e53e3e;">ಬುಕಿಂಗ್ ರದ್ದುಗೊಳಿಸಿ</button>
+            <p style="font-weight:bold; color:#065f46; margin-bottom:8px;">🎉 ${currentLang === 'en' ? 'Booking Successful!' : 'ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸಲ್ಲಿಸಲಾಗಿದೆ!'}</p>
+            <p style="font-size:1.1rem; color:#d69e2e; font-weight:bold; margin-bottom:8px;">OTP: ${pickupOtp}</p>
+            <p style="font-size:0.8rem; color:#2d3748; margin-bottom:10px;" id="custWaitText">${currentLang === 'en' ? 'Waiting for driver to accept...' : 'ಡ್ರೈವರ್ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಲು ಕಾಯಲಾಗುತ್ತಿದೆ...'}</p>
+            <button class="btn-submit" onclick="cancelCustomerBooking()" style="background:#e53e3e;">${currentLang === 'en' ? 'Cancel Booking' : 'ಬುಕಿಂಗ್ ರದ್ದುಗೊಳಿಸಿ'}</button>
           </div>
         `;
         listenToMyBookingStatus(myActiveBookingId);
+
+        if (bookingTimeoutTimer) clearTimeout(bookingTimeoutTimer);
+        bookingTimeoutTimer = setTimeout(async () => {
+          try {
+            const snap = await window.getDoc(window.doc(window.db, "bookings", myActiveBookingId));
+            if (snap.exists() && snap.data().status === 'Pending') {
+              await window.deleteDoc(window.doc(window.db, "bookings", myActiveBookingId));
+              document.getElementById('customerStatusContainer').innerHTML = `
+                <div class="card" style="text-align:center; background:#fff5f5; border:2px solid #e53e3e;">
+                  <p style="font-weight:bold; color:#9b2c2c; margin-bottom:8px;">❌ ಡ್ರೈವರ್‌ಗಳು ಬಿಸಿಯಾಗಿದ್ದಾರೆ, ಯಾರು ಸ್ವೀಕರಿಸಿಲ್ಲ, ಮತ್ತೊಮ್ಮೆ ಪ್ರಯತ್ನಿಸಿ</p>
+                  <button class="btn-submit" onclick="resetCustomerBookingForm()" style="background:#0fb05b; margin-top:8px;">ಮತ್ತೊಮ್ಮೆ ಪ್ರಯತ್ನಿಸಿ</button>
+                </div>
+              `;
+            }
+          } catch(e) {}
+        }, 300000);
 
       } catch (e) { alert('Error: ' + e.message); }
     }
@@ -779,26 +906,49 @@
     function closeCustomAlert() { document.getElementById('customAlertModal').style.display = 'none'; }
     function closeMeterResultModal() { 
       document.getElementById('meterResultModal').style.display = 'none'; 
-      openPage('liveSection');
+      if (activeDriverDataGlobal) {
+        openPage('liveSection');
+        document.getElementById('driverInputId').value = activeDriverDataGlobal.driverId;
+        checkDriverIdAndListen();
+      } else {
+        openPage('liveSection');
+      }
     }
+    function closeRideFinishModal() { document.getElementById('rideFinishModal').style.display = 'none'; }
+
+    function viewFullImage(src, title) {
+      document.getElementById('fullSizeImage').src = src;
+      document.getElementById('downloadImageBtn').href = src;
+      document.getElementById('imageViewerTitle').innerText = title || 'ಫೋಟೋ ವೀಕ್ಷಣೆ';
+      document.getElementById('imageViewerModal').style.display = 'block';
+    }
+    function closeImageViewer() { document.getElementById('imageViewerModal').style.display = 'none'; }
 
     function listenToMyBookingStatus(bookingId) {
       window.onSnapshot(window.doc(window.db, "bookings", bookingId), (docSnap) => {
         if (docSnap.exists()) {
           const data = docSnap.data();
           if (data.status === 'Accepted' || data.status === 'Started') {
-            let gpsMapBtn = data.driverLat && data.driverLng ? `<a href="https://www.google.com/maps?q=${data.driverLat},${data.driverLng}" target="_blank" class="btn-submit" style="display:block; text-decoration:none; background:#2b6cb0; margin-top:6px; text-align:center; font-size:0.8rem;">📍 ಡ್ರೈವರ್ ಲೈವ್ ಜಿಪಿಎಸ್ ನೋಡಿ</a>` : '';
+            if (bookingTimeoutTimer) { clearTimeout(bookingTimeoutTimer); bookingTimeoutTimer = null; }
+            let gpsMapBtn = '';
+            if (data.driverLat && data.driverLng) {
+              gpsMapBtn = `<a href="https://www.google.com/maps?q=${data.driverLat},${data.driverLng}" target="_blank" class="btn-submit" style="display:block; text-decoration:none; background:#2b6cb0; margin-top:8px; text-align:center;">📍 ${currentLang === 'en' ? 'View Driver Live GPS' : 'ಡ್ರೈವರ್ ಲೈವ್ ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ನೋಡಿ'}</a>`;
+            } else {
+              gpsMapBtn = `<p style="font-size:0.8rem; color:#d69e2e; margin-top:6px;">${currentLang === 'en' ? 'Getting driver GPS signal...' : 'ಡ್ರೈವರ್ ಜಿಪಿಎಸ್ ಸಿಗ್ನಲ್ ಪಡೆಯಲಾಗುತ್ತಿದೆ...'}</p>`;
+            }
+
             document.getElementById('customerStatusContainer').innerHTML = `
               <div class="card" style="text-align:center; background:#f0fff4; border:2px solid #38a169;">
-                <p style="font-size:0.9rem; font-weight:bold; color:#22543d; margin-bottom:4px;">✅ ಡ್ರೈವರ್ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿದ್ದಾರೆ!</p>
-                <div style="background:#fff3cd; padding:6px; border-radius:6px; margin: 6px 0;">
-                   <span style="font-size:0.75rem; color:#856404; font-weight:bold;">OTP: </span>
-                   <span style="font-size:1.1rem; color:#d69e2e; font-weight:bold;">${data.otp || ''}</span>
+                <p style="font-size:1rem; font-weight:bold; color:#22543d; margin-bottom:5px;">✅ ${currentLang === 'en' ? 'Driver Accepted Booking!' : 'ಡ್ರೈವರ್ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿದ್ದಾರೆ!'}</p>
+                <div style="background:#fff3cd; padding:8px; border-radius:6px; margin: 8px 0;">
+                   <span style="font-size:0.85rem; color:#856404; font-weight:bold;">OTP: </span>
+                   <span style="font-size:1.2rem; color:#d69e2e; font-weight:bold;">${data.otp || ''}</span>
                 </div>
-                <p style="font-size:0.8rem;"><b>ಡ್ರೈವರ್ ಹೆಸರು:</b> ${data.driverName || ''}</p>
-                <p style="font-size:0.8rem;"><b>ಮೊಬೈಲ್:</b> <a href="tel:${data.driverPhone}">${data.driverPhone || ''}</a></p>
-                <p style="font-size:0.8rem;"><b>ವಾಹನ ನಂಬರ್:</b> ${data.driverVehNo || ''}</p>
-                <a href="tel:${data.driverPhone}" class="btn-submit" style="display:block; text-decoration:none; background:#3182ce; margin-top:6px; text-align:center; font-size:0.8rem;">📞 ಕಾಲ್ ಮಾಡಿ</a>
+                <p style="font-size:0.85rem;"><b>ಡ್ರೈವರ್ ಹೆಸರು:</b> ${data.driverName || ''}</p>
+                <p style="font-size:0.85rem;"><b>ಐಡಿ ನಂಬರ್:</b> ${data.driverIdNum || ''}</p>
+                <p style="font-size:0.85rem;"><b>ಮೊಬೈಲ್:</b> <a href="tel:${data.driverPhone}">${data.driverPhone || ''}</a></p>
+                <p style="font-size:0.85rem;"><b>ವಾಹನ ನಂಬರ್:</b> ${data.driverVehNo || ''}</p>
+                <a href="tel:${data.driverPhone}" class="btn-submit" style="display:block; text-decoration:none; background:#3182ce; margin-top:8px; text-align:center;">📞 ಕಾಲ್ ಮಾಡಿ</a>
                 ${gpsMapBtn}
               </div>
             `;
@@ -816,6 +966,7 @@
 
     function resetCustomerBookingForm() {
       myActiveBookingId = null;
+      if (bookingTimeoutTimer) { clearTimeout(bookingTimeoutTimer); bookingTimeoutTimer = null; }
       document.getElementById('bookingFormContainer').style.display = 'block';
       document.getElementById('customerStatusContainer').innerHTML = '';
       document.getElementById('custName').value = '';
@@ -823,7 +974,8 @@
       document.getElementById('currentLoc').value = '';
       document.getElementById('pickuploc').value = '';
       document.getElementById('droploc').value = '';
-      currentCustomerLat = null; currentCustomerLng = null;
+      currentCustomerLat = null;
+      currentCustomerLng = null;
     }
 
     async function checkDriverIdAndListen() {
@@ -890,10 +1042,15 @@
             const qActive = window.query(window.collection(window.db, "bookings"), window.where("driverIdNum", "==", driverData.driverId), window.where("status", "in", ["Accepted", "Started"]));
             const activeSnap = await window.getDocs(qActive);
             activeSnap.forEach(async (actDoc) => {
-              await window.updateDoc(window.doc(window.db, "bookings", actDoc.id), { driverLat: currentDriverLat, driverLng: currentDriverLng });
+              await window.updateDoc(window.doc(window.db, "bookings", actDoc.id), {
+                driverLat: currentDriverLat, driverLng: currentDriverLng
+              });
             });
           } catch(e) {}
-          if (!bookingsUnsubscribe) listenToBookingsForDriver(driverData);
+          
+          if (!bookingsUnsubscribe) {
+            listenToBookingsForDriver(driverData);
+          }
         }, (error) => {}, { enableHighAccuracy: true });
       }
     }
@@ -913,100 +1070,83 @@
           const b = docSnap.data();
           if ((b.dateKey || '') !== todayStr) return;
           if (b.vehicleType !== driverData.drvVehType) return;
-          if ((b.ignoredDrivers || []).includes(driverData.driverId)) return;
 
-          let vehLogo = b.vehicleType === 'Bike' ? '🏍️' : (b.vehicleType === 'Car' ? '🚗' : '🛺');
+          const ignoredDrivers = b.ignoredDrivers || [];
+          if (ignoredDrivers.includes(driverData.driverId)) return;
 
-          if (b.status === 'Pending') {
-            hasPendingToAccept = true;
-            pendingHtml += `
-              <div class="card" style="border: 2px solid #0fb05b; background:#f7fafc; margin-bottom:8px;">
-                <p style="background:#e8f8f0; padding:5px; border-radius:4px; margin-bottom:5px; font-weight:bold; color:#065f46;">⚠️ ಹೊಸ ${b.vehicleType} ಬುಕಿಂಗ್!</p>
-                <p style="font-size: 0.95rem;"><b>ವಾಹನ:</b> ${vehLogo} ${b.vehicleType}</p>
-                <p style="font-size:0.85rem;"><b>ಗ್ರಾಹಕರು:</b> ${b.customerName}</p>
-                <p style="font-size:0.85rem;"><b>ಫೋನ್:</b> <a href="tel:${b.customerPhone}">${b.customerPhone}</a></p>
-                <p style="font-size:0.85rem;"><b>ಪಿಕಪ್:</b> ${b.pickupLocation}</p>
-                <p style="font-size:0.85rem;"><b>ಡ್ರಾಪ್:</b> <strong style="color:#d69e2e;">${b.dropLocation}</strong></p>
-                <div style="display:flex; gap:6px; margin-top:8px;">
-                  <button class="btn-submit" onclick="acceptBooking('${docSnap.id}', '${driverData.drvName}', '${driverData.drvPhone}', '${driverData.drvVehNo}', '${driverData.driverId}')" style="font-size:0.8rem; padding:8px;">📢 ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ</button>
-                  <button class="btn-submit" onclick="driverCancelBooking('${docSnap.id}', '${driverData.driverId}')" style="background:#e53e3e; font-size:0.8rem; padding:8px; width:100px;">❌ ರದ್ದು</button>
-                </div>
-              </div>
-            `;
-          } else if (b.status === 'Accepted' && b.driverIdNum === driverData.driverId) {
-            // ಸಂಪೂರ್ಣ ಲಾಕ್ ಆಗಿರುವ ಕಾರ್ಡ್ (ಯಾವುದೇ ಡಿಲೀಟ್ ಅಥವಾ ಡೌನ್‌ಲೋಡ್ ಆಪ್ಷನ್ ಇಲ್ಲ)
-            acceptedHtml += `
-              <div class="card" style="border: 2px solid #38a169; background:#edf2f7; margin-bottom:8px;">
-                <p style="background:#d4edda; padding:5px; border-radius:4px; margin-bottom:5px; font-weight:bold; color:#155724;">🔒 ಬುಕಿಂಗ್ ಸಂಪೂರ್ಣ ಲಾಕ್ ಆಗಿದೆ!</p>
-                <p style="font-size:0.85rem;"><b>ಕಸ್ಟಮರ್ ಹೆಸರು:</b> ${b.customerName}</p>
-                <p style="font-size:0.85rem;"><b>ಕಸ್ಟಮರ್ ಮೊಬೈಲ್ ನಂಬರ್:</b> <a href="tel:${b.customerPhone}">${b.customerPhone}</a></p>
-                <p style="font-size:0.85rem;"><b>ಪಿಕಪ್ ಸ್ಥಳ:</b> ${b.pickupLocation}</p>
-                <p style="font-size:0.85rem;"><b>ಡ್ರಾಪ್ ಸ್ಥಳ:</b> ${b.dropLocation}</p>
-                <p style="font-size:0.85rem;"><b>ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಡಾಟಾ:</b> Lat: ${b.pickupLat ? b.pickupLat.toFixed(4) : ''}, Lng: ${b.pickupLng ? b.pickupLng.toFixed(4) : ''}</p>
-                <a href="tel:${b.customerPhone}" class="btn-submit" style="display:block; text-decoration:none; background:#2b6cb0; margin-top:6px; text-align:center; font-size:0.8rem;">📞 ಕಸ್ಟಮರ್ ಗೆ ಕಾಲ್ ಮಾಡಿ</a>
-                <div style="margin-top:8px; padding:6px; background:#fff; border-radius:6px; border:1px solid #cbd5e0;">
-                   <p style="font-size:0.75rem; font-weight:bold; margin-bottom:3px;">ಒಟಿಪಿ ನಮೂದಿಸಿ:</p>
-                   <input type="text" id="otpInput_${docSnap.id}" placeholder="OTP" maxlength="4" inputmode="numeric" style="margin-bottom:5px; text-align:center; font-weight:bold; font-size:1rem;">
-                   <button class="btn-submit" onclick="verifyOtpAndStartRide('${docSnap.id}', '${b.otp}')" style="background:#3182ce; padding:8px; font-size:0.85rem;">ಒಟಿಪಿ ಪರಿಶೀಲಿಸಿ ಮೀಟರ್ ಸ್ಟಾರ್ಟ್</button>
-                </div>
-              </div>
-            `;
-          } else if (b.status === 'Started' && b.driverIdNum === driverData.driverId) {
-            // ಸಂಪೂರ್ಣ ಲಾಕ್ ಆಗಿರುವ ಕಾರ್ಡ್ (ಯಾವುದೇ ಡಿಲೀಟ್ ಅಥವಾ ಡೌನ್‌ಲೋಡ್ ಆಪ್ಷನ್ ಇಲ್ಲ)
-            acceptedHtml += `
-              <div class="card" style="border: 2px solid #3182ce; background:#ebf8ff; margin-bottom:8px;">
-                <p style="background:#bee3f8; padding:5px; border-radius:4px; margin-bottom:5px; font-weight:bold; color:#2b6cb0;">🏁 ಪ್ರಯಾಣ ನಡೆಯುತ್ತಿದೆ (ಲಾಕ್ ಆಗಿದೆ)</p>
-                <p style="font-size:0.85rem;"><b>ಕಸ್ಟಮರ್ ಹೆಸರು:</b> ${b.customerName}</p>
-                <p style="font-size:0.85rem;"><b>ಕಸ್ಟಮರ್ ಮೊಬೈಲ್ ನಂಬರ್:</b> <a href="tel:${b.customerPhone}">${b.customerPhone}</a></p>
-                <p style="font-size:0.85rem;"><b>ಪಿಕಪ್ ಸ್ಥಳ:</b> ${b.pickupLocation}</p>
-                <p style="font-size:0.85rem;"><b>ಡ್ರಾಪ್ ಸ್ಥಳ:</b> ${b.dropLocation}</p>
-                <p style="font-size:0.85rem;"><b>ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಡಾಟಾ:</b> Lat: ${b.pickupLat ? b.pickupLat.toFixed(4) : ''}, Lng: ${b.pickupLng ? b.pickupLng.toFixed(4) : ''}</p>
-                <a href="tel:${b.customerPhone}" class="btn-submit" style="display:block; text-decoration:none; background:#2b6cb0; margin-top:6px; text-align:center; font-size:0.8rem;">📞 ಕಸ್ಟಮರ್ ಗೆ ಕಾಲ್ ಮಾಡಿ</a>
-                <button class="btn-submit" onclick="finishRide('${docSnap.id}', '${driverData.driverId}', '${b.customerName}', '${b.customerPhone}', '${b.pickupLocation}', '${b.dropLocation}')" style="background:#e53e3e; margin-top:8px; padding:8px; font-size:0.85rem;">ಪ್ರಯಾಣ ಮುಕ್ತಾಯಗೊಳಿಸಿ ಹಣ ನಮೂದಿಸಿ</button>
-              </div>
-            `;
+          if (b.pickupLat && b.pickupLng && currentDriverLat && currentDriverLng) {
+            const dist = calculateDistance(currentDriverLat, currentDriverLng, b.pickupLat, b.pickupLng);
+            
+            if (dist <= 5.0) {
+              let vehLogo = '🛺';
+              if (b.vehicleType === 'Bike') vehLogo = '🏍️';
+              else if (b.vehicleType === 'Car') vehLogo = '🚗';
+
+              if (b.status === 'Pending') {
+                hasPendingToAccept = true;
+                pendingHtml += `
+                  <div class="card" id="bookingPdfCard_${docSnap.id}" style="border: 2px solid #0fb05b; background:#f7fafc; margin-bottom:10px;">
+                    <p style="background:#e8f8f0; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#065f46;">⚠️ ಹೊಸ ${b.vehicleType} ಬುಕಿಂಗ್ ಬಂದಿದೆ!</p>
+                    <p style="font-size: 1.1rem; margin-bottom: 4px;"><b>ವಾಹನ:</b> ${vehLogo} ${b.vehicleType}</p>
+                    <p style="font-size:0.95rem;"><b>ಗ್ರಾಹಕರು:</b> ${b.customerName}</p>
+                    <p style="font-size:0.95rem;"><b>ಫೋನ್ ನಂಬರ್:</b> <a href="tel:${b.customerPhone}">${b.customerPhone}</a></p>
+                    <p style="font-size:0.95rem;"><b>ಪ್ರಯಾಣಿಕರು:</b> ${b.passengers}</p>
+                    <p style="font-size:0.95rem;"><b>ಪಿಕಪ್ ಸ್ಥಳ:</b> <a href="https://www.google.com/maps/search/?api=1&query=${b.pickupLat},${b.pickupLng}" target="_blank" style="color:#3182ce;">${b.pickupLocation}</a> (~${dist.toFixed(2)} ಕಿ.ಮೀ)</p>
+                    <p style="font-size:0.95rem;"><b>ಡ್ರಾಪ್ ಸ್ಥಳ:</b> <strong style="color:#d69e2e;">${b.dropLocation}</strong></p>
+                    <div style="display:flex; gap:6px; margin-top:10px;">
+                      <button class="btn-submit" onclick="acceptBooking('${docSnap.id}', '${driverData.drvName}', '${driverData.drvPhone}', '${driverData.drvVehNo}', '${driverData.driverId}', ${b.pickupLat}, ${b.pickupLng})" style="font-size:0.9rem; padding:10px;">📢 ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ</button>
+                      <button class="btn-submit" onclick="driverCancelBooking('${docSnap.id}', '${driverData.driverId}')" style="background:#e53e3e; font-size:0.9rem; padding:10px; width:120px;">❌ ರದ್ದುಮಾಡಿ</button>
+                    </div>
+                  </div>
+                `;
+              } else if (b.status === 'Accepted' && b.driverIdNum === driverData.driverId) {
+                acceptedHtml += `
+                  <div class="card" style="border: 2px solid #38a169; background:#edf2f7; margin-bottom:10px;">
+                    <p style="background:#d4edda; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#155724;">🔒 ನಿಮ್ಮ ಐಡಿಗೆ ಲಾಕ್ ಮಾಡಲಾಗಿದೆ!</p>
+                    <p style="font-size:0.95rem;"><b>ಗ್ರಾಹಕರು:</b> ${b.customerName} (<a href="tel:${b.customerPhone}">${b.customerPhone}</a>)</p>
+                    <p style="font-size:0.95rem;"><b>ಪಿಕಪ್ ಸ್ಥಳ:</b> ${b.pickupLocation}</p>
+                    <p style="font-size:0.95rem;"><b>ಡ್ರಾಪ್ ಸ್ಥಳ:</b> <strong style="color:#d69e2e;">${b.dropLocation}</strong></p>
+                    <div style="margin-top:10px; padding:8px; background:#fff; border-radius:6px; border:1px solid #cbd5e0;">
+                       <p style="font-size:0.85rem; font-weight:bold; margin-bottom:4px;">ಒಟಿಪಿ ನಮೂದಿಸಿ (OTP ಹಾಕಿದ ಕೂಡಲೇ ಇದು ಮಾಯವಾಗುತ್ತದೆ):</p>
+                       <input type="text" id="otpInput_${docSnap.id}" placeholder="ಒಟಿಪಿ ನಮೂದಿಸಿ" maxlength="4" inputmode="numeric" style="margin-bottom:6px; text-align:center; font-weight:bold; font-size:1.1rem;">
+                       <button class="btn-submit" onclick="verifyOtpAndStartRide('${docSnap.id}', '${b.otp}', '${b.vehicleType}')" style="background:#3182ce; padding:12px; font-size:1rem;">ಒಟಿಪಿ ಪರಿಶೀಲಿಸಿ ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
+                    </div>
+                  </div>
+                `;
+              } else if (b.status === 'Started' && b.driverIdNum === driverData.driverId) {
+                acceptedHtml += `
+                  <div class="card" style="border: 2px solid #3182ce; background:#ebf8ff; margin-bottom:10px;">
+                    <p style="background:#bee3f8; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#2b6cb0;">🏁 ಪ್ರಯಾಣ ನಡೆಯುತ್ತಿದೆ</p>
+                    <p style="font-size:0.95rem;"><b>ಗ್ರಾಹಕರು:</b> ${b.customerName} (<a href="tel:${b.customerPhone}">${b.customerPhone}</a>)</p>
+                    <p style="font-size:0.95rem;"><b>ಪಿಕಪ್:</b> ${b.pickupLocation}</p>
+                    <p style="font-size:0.95rem;"><b>ಡ್ರಾಪ್:</b> ${b.dropLocation}</p>
+                    <button class="btn-submit" onclick="finishRide('${docSnap.id}', '${driverData.driverId}', '${b.customerName}', '${b.customerPhone}', '${b.pickupLocation}', '${b.dropLocation}')" style="background:#e53e3e; margin-top:10px; padding:12px; font-size:1rem;">ಪ್ರಯಾಣ ಮುಕ್ತಾಯಗೊಳಿಸಿ ಹಣ ನಮೂದಿಸಿ</button>
+                  </div>
+                `;
+              }
+            }
           }
         });
 
         if (hasPendingToAccept) startSirenLoop(); else stopSirenLoop();
 
-        let combinedHtml = pendingHtml || `<p style="color: #718096; font-weight: bold; margin-bottom: 8px;">ನಿಮ್ಮ ವಾಹನಕ್ಕೆ ಲೈವ್ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.</p>`;
-        if (acceptedHtml !== '') combinedHtml += `<hr style="margin: 10px 0;">` + acceptedHtml;
+        let combinedHtml = pendingHtml || `<p style="color: #718096; font-weight: bold; margin-bottom: 10px;">ನಿಮ್ಮ ವಾಹನಕ್ಕೆ (${driverData.drvVehType}) ತಕ್ಕಂತೆ ಲೈವ್ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.</p>`;
+        if (acceptedHtml !== '') combinedHtml += `<hr style="margin: 15px 0;">` + acceptedHtml;
 
         const ridesQuery = window.query(window.collection(window.db, "completed_rides"), window.where("driverIdNum", "==", driverData.driverId));
         const ridesSnap = await window.getDocs(ridesQuery);
 
         if (!ridesSnap.empty) {
-          combinedHtml += `<hr style="margin: 10px 0;"><h3 style="font-size: 0.85rem; margin-bottom: 6px;">ಬುಕಿಂಗ್ ವಿವರಗಳು ಹಾಗೂ ಪೊಲೀಸ್ ಪರಿಶೀಲನೆ (PDF Download & Delete):</h3>`;
-          let idx = 1;
+          combinedHtml += `<hr style="margin: 15px 0;"><h3 style="font-size: 0.9rem; margin-bottom: 8px;">ಹಿಂದಿನ ಪ್ರಯಾಣದ ಇತಿಹಾಸ (Police Verification & PDF Download):</h3>`;
           ridesSnap.forEach(rDoc => {
             const r = rDoc.data();
-            
-            // 15 ದಿನಗಳ ನೋಟಿಫಿಕೇಶನ್ ಮತ್ತು ಆಟೋ ಡಿಲೀಟ್ ಲಾಜಿಕ್
-            let warningHtml = '';
-            if (r.timestamp) {
-              const rideDate = r.timestamp.toDate ? r.timestamp.toDate() : new Date(r.timestamp);
-              const diffDays = Math.floor((new Date() - rideDate) / (1000 * 60 * 60 * 24));
-              if (diffDays >= 15) {
-                // 15 ದಿನ ದಾಟಿದರೆ ಆಟೋಮ್ಯಾಟಿಕ್ ಡಿಲೀಟ್
-                window.deleteDoc(window.doc(window.db, "completed_rides", rDoc.id)).catch(e => {});
-                return;
-              } else if (diffDays === 14) {
-                // 14 ನೇ ದಿನಕ್ಕೆ ನೋಟಿಫಿಕೇಶನ್ ಎಚ್ಚರಿಕೆ
-                warningHtml = `<p style="color:red; font-weight:bold; font-size:0.75rem; margin-bottom:4px;">⚠️ ಐಡಿಯಾ: ನಾಳೆ ಈ ಡಾಟಾವನ್ನು ಡಿಲೀಟ್ ಆಗುತ್ತದೆ!</p>`;
-              }
-            }
-
             combinedHtml += `
-              <div class="card" id="driverHistoryCard_${rDoc.id}" style="border: 1px solid #cbd5e0; background:#fff; margin-bottom:6px;">
-                ${warningHtml}
-                <p style="font-size:0.8rem;"><b>ಕ್ರಮ ಸಂಖ್ಯೆ:</b> #${idx++}</p>
-                <p style="font-size:0.8rem;"><b>ಗ್ರಾಹಕರು:</b> ${r.customerName} (${r.customerPhone})</p>
-                <p style="font-size:0.8rem;"><b>ಪಿಕಪ್ ಸ್ಥಳ:</b> ${r.pickupLocation}</p>
-                <p style="font-size:0.8rem;"><b>ಡ್ರಾಪ್ ಸ್ಥಳ:</b> ${r.dropLocation}</p>
-                <p style="font-size:0.8rem;"><b>ದೂರ:</b> ${r.distance} ಕಿ.ಮೀ | <b>ಹಣ:</b> ₹${r.fare}</p>
-                <button class="btn-pdf-download" onclick="requestSecurityCode('downloadPDF', '${rDoc.id}')">📥 PDF ಡೌನ್‌ಲೋಡ್ (ನ್ಯೂ ಬುಕಿಂಗ್)</button>
-                <button class="btn-delete-record" onclick="requestSecurityCode('deleteRecord', '${rDoc.id}')">🗑️ ಈ ದಾಖಲೆ ಡಿಲೀಟ್ ಮಾಡಿ</button>
+              <div class="card" id="driverHistoryCard_${rDoc.id}" style="border: 1px solid #cbd5e0; background:#fff; margin-bottom:8px;">
+                <p style="font-size:0.85rem;"><b>ಗ್ರಾಹಕರು:</b> ${r.customerName} (${r.customerPhone})</p>
+                <p style="font-size:0.85rem;"><b>ಪಿಕಪ್ ಸ್ಥಳ:</b> ${r.pickupLocation}</p>
+                <p style="font-size:0.85rem;"><b>ಡ್ರಾಪ್ ಸ್ಥಳ:</b> ${r.dropLocation}</p>
+                <p style="font-size:0.85rem;"><b>ದೂರ:</b> ${r.distance} ಕಿ.ಮೀ | <b>ಹಣ:</b> ₹${r.fare}</p>
+                <button class="btn-pdf-download" onclick="downloadDriverHistoryPDF('${driverData.driverId}', '${driverData.drvName}', '${rDoc.id}')">📥 ಪೊಲೀಸ್ ಪರಿಶೀಲನೆ PDF ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ</button>
               </div>
             `;
           });
@@ -1014,15 +1154,6 @@
 
         listDiv.innerHTML = combinedHtml;
       });
-    }
-
-    async function acceptBooking(bookingId, dName, dPhone, dVehNo, dIdNum) {
-      try {
-        await window.updateDoc(window.doc(window.db, "bookings", bookingId), {
-          status: 'Accepted', driverName: dName, driverPhone: dPhone, driverVehNo: dVehNo, driverIdNum: dIdNum
-        });
-        showCustomAlert("ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸ್ವೀಕರಿಸಲಾಗಿದೆ!");
-      } catch(e) { alert("Error: " + e.message); }
     }
 
     async function driverCancelBooking(bookingId, driverId) {
@@ -1039,86 +1170,152 @@
       } catch(e) {}
     }
 
-    async function verifyOtpAndStartRide(bookingId, correctOtp) {
-      const enteredOtp = document.getElementById(`otpInput_${bookingId}`).value.trim();
-      if (enteredOtp !== correctOtp) { alert("ತಪ್ಪಾದ ಒಟಿಪಿ! ಸರಿಯಾದ ಒಟಿಪಿ ನಮೂದಿಸಿ."); return; }
+    async function acceptBooking(bookingId, drvName, drvPhone, drvVehNo, driverId, pLat, pLng) {
       try {
-        await window.updateDoc(window.doc(window.db, "bookings", bookingId), { status: 'Started' });
-        showCustomAlert("ಒಟಿಪಿ ಸರಿಯಾಗಿದೆ! ಪ್ರಯಾಣ ಆರಂಭವಾಯಿತು.");
-      } catch(e) { alert("Error: " + e.message); }
+        const docRef = window.doc(window.db, "bookings", bookingId);
+        const docSnap = await window.getDoc(docRef);
+        if (docSnap.exists() && docSnap.data().status === 'Pending') {
+          await window.updateDoc(docRef, {
+            status: 'Accepted',
+            driverName: drvName,
+            driverPhone: drvPhone,
+            driverVehNo: drvVehNo,
+            driverIdNum: driverId,
+            driverLat: currentDriverLat || pLat,
+            driverLng: currentDriverLng || pLng
+          });
+          stopSirenLoop();
+          alert("ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸ್ವೀಕರಿಸಲಾಗಿದೆ!");
+        } else {
+          alert("ಈ ಬುಕಿಂಗ್ ಅನ್ನು ಈಗಾಗಲೇ ಬೇರೆ ಡ್ರೈವರ್ ಸ್ವೀಕರಿಸಿದ್ದಾರೆ.");
+        }
+      } catch (e) { alert("Error: " + e.message); }
     }
 
-    async function finishRide(bookingId, driverIdNum, custName, custPhone, pickupLoc, dropLoc) {
-      let distanceInput = prompt("ಪ್ರಯಾಣಿಸಿದ ಒಟ್ಟು ದೂರವನ್ನು (KM) ನಮೂದಿಸಿ:", "2.0");
-      let fareInput = prompt("ಪಡೆದ ಒಟ್ಟು ಚಾರ್ಜಸ್ (₹) ನಮೂದಿಸಿ:", "50");
-      if (!distanceInput || !fareInput) return;
-
-      const todayStr = new Date().toISOString().split('T')[0];
+    async function verifyOtpAndStartRide(bookingId, correctOtp, vehicleType) {
+      const inputOtp = document.getElementById(`otpInput_${bookingId}`).value.trim();
+      if (inputOtp !== correctOtp) {
+        alert("ತಪ್ಪಾದ ಒಟಿಪಿ! ದಯವಿಟ್ಟು ಗ್ರಾಹಕರನ್ನು ಕೇಳಿ ಸರಿಯಾದ ಒಟಿಪಿ ನಮೂದಿಸಿ.");
+        return;
+      }
       try {
+        await window.updateDoc(window.doc(window.db, "bookings", bookingId), {
+          status: 'Started'
+        });
+        alert("ಒಟಿಪಿ ಪರಿಶೀಲಿಸಲಾಗಿದೆ. ಪ್ರಯಾಣ ಆರಂಭವಾಗಿದೆ!");
+      } catch (e) { alert("Error: " + e.message); }
+    }
+
+    async function finishRide(bookingId, driverId, custName, custPhone, pickupLoc, dropLoc) {
+      let fareInput = prompt("ಪ್ರಯಾಣ ಮುಕ್ತಾಯಗೊಂಡಿದೆ. ತಲುಪಿದ ದೂರದ ಆಧಾರದ ಮೇಲೆ ಒಟ್ಟು ಹಣ (₹) ನಮೂದಿಸಿ:", "100");
+      if (fareInput === null) return;
+      let fare = parseFloat(fareInput) || 0;
+
+      let kmInput = prompt("ಪ್ರಯಾಣಿಸಿದ ಒಟ್ಟು ದೂರ (ಕಿ.ಮೀ) ನಮೂದಿಸಿ:", "2.0");
+      if (kmInput === null) return;
+      let distance = parseFloat(kmInput) || 0;
+
+      try {
+        const todayStr = new Date().toISOString().split('T')[0];
         await window.addDoc(window.collection(window.db, "completed_rides"), {
-          driverIdNum, customerName: custName, customerPhone: custPhone,
-          pickupLocation: pickupLoc, dropLocation: dropLoc,
-          distance: parseFloat(distanceInput), fare: parseFloat(fareInput),
-          dateKey: todayStr, timestamp: window.serverTimestamp()
+          bookingId, driverIdNum: driverId, customerName: custName, customerPhone: custPhone,
+          pickupLocation: pickupLoc, dropLocation: dropLoc, fare, distance, dateKey: todayStr, timestamp: window.serverTimestamp()
         });
         await window.deleteDoc(window.doc(window.db, "bookings", bookingId));
-        showCustomAlert("ಪ್ರಯಾಣ ಯಶಸ್ವಿಯಾಗಿ ಮುಕ್ತಾಯಗೊಂಡಿದೆ ಮತ್ತು ದಾಖಲೆ ಸೇವ್ ಆಗಿದೆ!");
-        checkDriverIdAndListen();
+        
+        document.getElementById('rideFinishText').innerText = `ಪ್ರಯಾಣ ಯಶಸ್ವಿಯಾಗಿ ಮುಕ್ತಾಯಗೊಂಡಿದೆ! ಗಳಿಕೆ: ₹${fare} (${distance} ಕಿ.ಮೀ)`;
+        document.getElementById('rideFinishModal').style.display = 'flex';
+        loadDriverPersonalDashboard(driverId);
       } catch(e) { alert("Error: " + e.message); }
     }
 
-    async function executeDownloadPDF(recordId) {
-      try {
-        const docSnap = await window.getDoc(window.doc(window.db, "completed_rides", recordId));
-        if (!docSnap.exists()) { alert("ದಾಖಲೆ ಸಿಗಲಿಲ್ಲ!"); return; }
-        const data = docSnap.data();
-
-        const element = document.createElement('div');
-        element.style.padding = '20px';
-        element.style.background = '#fff';
-        element.style.color = '#000';
-        element.innerHTML = `
-          <h2 style="text-align:center; color:#0fb05b;">A R Taxi Go Fast - New Booking PDF Report</h2>
-          <hr style="margin:10px 0;">
-          <p><b>ದಿನಾಂಕ:</b> ${new Date().toLocaleDateString()}</p>
-          <p><b>ಡ್ರೈವರ್ ಐಡಿ ನಂಬರ್:</b> ${data.driverIdNum}</p>
-          <p><b>ಕಸ್ಟಮರ್ ಹೆಸರು:</b> ${data.customerName}</p>
-          <p><b>ಕಸ್ಟಮರ್ ಮೊಬೈಲ್ ನಂಬರ್:</b> ${data.customerPhone}</p>
-          <p><b>ಪಿಕಪ್ ಸ್ಥಳ:</b> ${data.pickupLocation}</p>
-          <p><b>ಡ್ರಾಪ್ ಸ್ಥಳ:</b> ${data.dropLocation}</p>
-          <p><b>ಪ್ರಯಾಣಿಸಿದ ದೂರ:</b> ${data.distance} ಕಿ.ಮೀ</p>
-          <p><b>ಚಾರ್ಜಸ್:</b> ₹${data.fare}</p>
-          <hr style="margin:10px 0;">
-          <p style="text-align:center; font-size:0.8rem;">Safe Data Record - Shahapur</p>
-        `;
-
-        const opt = {
-          margin: 10,
-          filename: `New_Booking_${recordId}.pdf`,
-          image: { type: 'jpeg', quality: 0.98 },
-          html2canvas: { scale: 2 },
-          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        };
-
-        html2pdf().from(element).set(opt).save();
-      } catch(e) { alert("PDF Error: " + e.message); }
+    function calculateDistance(lat1, lon1, lat2, lon2) {
+      const R = 6371;
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon/2) * Math.sin(dLon/2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      return R * c;
     }
 
-    async function executeDeleteRecord(recordId) {
-      try {
-        await window.deleteDoc(window.doc(window.db, "completed_rides", recordId));
-        showCustomAlert("ದಾಖಲೆ ಯಶಸ್ವಿಯಾಗಿ ಡಿಲೀಟ್ ಮಾಡಲಾಗಿದೆ!");
-        checkDriverIdAndListen();
-      } catch(e) { alert("Delete Error: " + e.message); }
+    function resetMeterRate() {
+      const type = document.getElementById('meterVehicleType').value;
+      if (type === 'Bike') document.getElementById('liveAmount').innerText = '30';
+      else if (type === 'Auto') document.getElementById('liveAmount').innerText = '50';
+      else document.getElementById('liveAmount').innerText = '200';
+    }
+
+    function startMeter() {
+      if (navigator.geolocation) {
+        distanceKm = 0;
+        document.getElementById('distCount').innerText = '0.0';
+        document.getElementById('meterStatusMsg').innerText = currentLang === 'en' ? 'Meter Running...' : 'ಮೀಟರ್ ಚಾಲಿಯಲ್ಲಿದೆ...';
+        
+        custMeterWatchId = navigator.geolocation.watchPosition((pos) => {
+          const lat = pos.coords.latitude;
+          const lng = pos.coords.longitude;
+          document.getElementById('liveGpsCoord').innerText = `GPS: ${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+
+          if (lastCustPos) {
+            const d = calculateDistance(lastCustPos.lat, lastCustPos.lng, lat, lng);
+            if (d > 0.005) {
+              distanceKm += d;
+              lastCustPos = { lat, lng };
+              document.getElementById('distCount').innerText = distanceKm.toFixed(1);
+              calculateMeterFareLive(distanceKm);
+            }
+          } else {
+            lastCustPos = { lat, lng };
+          }
+        }, (err) => {
+          document.getElementById('meterStatusMsg').innerText = "GPS Error!";
+        }, { enableHighAccuracy: true });
+      } else {
+        alert("GPS not supported!");
+      }
+    }
+
+    function calculateMeterFareLive(km) {
+      const type = document.getElementById('meterVehicleType').value;
+      let total = 50;
+      if (type === 'Bike') {
+        total = km <= 2 ? 30 : 30 + Math.ceil(km - 2) * 10;
+      } else if (type === 'Auto') {
+        total = km <= 2 ? 50 : 50 + Math.ceil(km - 2) * 12;
+      } else if (type === 'Car') {
+        total = km <= 3 ? 200 : 200 + Math.ceil(km - 3) * 15;
+      }
+      document.getElementById('liveAmount').innerText = total;
+    }
+
+    function stopMeterOnly() {
+      if (custMeterWatchId) {
+        navigator.geolocation.clearWatch(custMeterWatchId);
+        custMeterWatchId = null;
+      }
+      lastCustPos = null;
+      document.getElementById('meterStatusMsg').innerText = currentLang === 'en' ? 'Vehicle Stopped' : 'ವಾಹನ ನಿಂತಿದೆ';
+      const finalAmt = document.getElementById('liveAmount').innerText;
+      document.getElementById('meterResultText').innerText = `ಪ್ರಯಾಣ ಮುಕ್ತಾಯ! ದೂರ: ${distanceKm.toFixed(1)} ಕಿ.ಮೀ | ಒಟ್ಟು ಶುಲ್ಕ: ₹${finalAmt}`;
+      document.getElementById('meterResultModal').style.display = 'flex';
     }
 
     async function registerDriver() {
-      const drvName = document.getElementById('drvName').value.trim();
-      const drvPhone = document.getElementById('drvPhone').value.trim();
-      const drvVehNo = document.getElementById('drvVehNo').value.trim();
-      const drvVehType = document.getElementById('drvVehType').value;
+      const name = document.getElementById('drvName').value.trim();
+      const phone = document.getElementById('drvPhone').value.trim();
+      const vehNo = document.getElementById('drvVehNo').value.trim();
+      const vehType = document.getElementById('drvVehType').value;
 
-      if (!drvName || !drvPhone || !drvVehNo) { alert("ದಯವಿಟ್ಟು ಎಲ್ಲಾ ವಿವರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ!"); return; }
+      if (!name || !phone || !vehNo) {
+        alert("ದಯವಿಟ್ಟು ಎಲ್ಲಾ ಮಾಹಿತಿಯನ್ನು ಭರ್ತಿ ಮಾಡಿ.");
+        return;
+      }
+
+      const btn = document.getElementById('btnRegisterDriver');
+      btn.innerText = "ಫೋಟೋಗಳು ಅಪ್‌ಲೋಡ್ ಆಗುತ್ತಿವೆ...";
+      btn.disabled = true;
 
       const vehPhoto = await convertFileToBase64(document.getElementById('vehPhotoFile').files[0]);
       const rcPhoto = await convertFileToBase64(document.getElementById('rcPhotoFile').files[0]);
@@ -1130,39 +1327,20 @@
 
       try {
         await window.addDoc(window.collection(window.db, "drivers"), {
-          drvName, drvPhone, drvVehNo, drvVehType, driverId,
-          vehPhoto, rcPhoto, dlPhoto, selfiePhoto, aadharPhoto,
-          timestamp: window.serverTimestamp()
+          drvName: name, drvPhone: phone, drvVehNo: vehNo, drvVehType: vehType,
+          vehPhoto, rcPhoto, dlPhoto, selfiePhoto, aadharPhoto, driverId, timestamp: window.serverTimestamp()
         });
-        showCustomAlert(`ನೋಂದಣಿ ಯಶಸ್ವಿಯಾಗಿದೆ! ನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ: ${driverId}`);
+
+        alert(`ರಜಿಸ್ಟ್ರೇಷನ್ ಯಶಸ್ವಿಯಾಗಿದೆ! ನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ: ${driverId} (ದಯವಿಟ್ಟು ಇದನ್ನು ನೆನಪಿಡಿ)`);
         openPage('liveSection');
         document.getElementById('driverInputId').value = driverId;
         checkDriverIdAndListen();
-      } catch(e) { alert("Error: " + e.message); }
-    }
-
-    function convertFileToBase64(file) {
-      return new Promise((resolve) => {
-        if (!file) resolve('');
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = (event) => {
-          const img = new Image();
-          img.src = event.target.result;
-          img.onload = () => {
-            const canvas = document.createElement('canvas');
-            const maxDim = 800;
-            let w = img.width, h = img.height;
-            if (w > h && w > maxDim) { h *= maxDim / w; w = maxDim; }
-            else if (h > maxDim) { w *= maxDim / h; h = maxDim; }
-            canvas.width = w; canvas.height = h;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, w, h);
-            resolve(canvas.toDataURL('image/jpeg', 0.7));
-          };
-        };
-        reader.onerror = () => resolve('');
-      });
+      } catch (e) {
+        alert("Error: " + e.message);
+      } finally {
+        btn.innerText = "ಲಾಗಿನ್ / ರಜಿಸ್ಟರ್ ಮಾಡಿ";
+        btn.disabled = false;
+      }
     }
 
     async function loadAdminDrivers() {
@@ -1174,30 +1352,33 @@
         snap.forEach(d => allDriversData.push({ id: d.id, ...d.data() }));
         document.getElementById('adminTotalDriversCount').innerText = allDriversData.length;
         renderAdminDriversList(allDriversData);
-      } catch(e) { listDiv.innerHTML = "Error: " + e.message; }
+      } catch(e) {
+        listDiv.innerHTML = "Error loading drivers: " + e.message;
+      }
     }
 
-    function renderAdminDriversList(dataArr) {
+    function renderAdminDriversList(drivers) {
       const listDiv = document.getElementById('adminDriversList');
-      if (dataArr.length === 0) { listDiv.innerHTML = "ಯಾವ ಡ್ರೈವರ್‌ಗಳು ನೋಂದಾಯಿಸಿಲ್ಲ."; return; }
+      if (drivers.length === 0) {
+        listDiv.innerHTML = "<p>ಯಾವ ಡ್ರೈವರ್‌ಗಳು ನೋಂದಾಯಿಸಿಲ್ಲ.</p>";
+        return;
+      }
       let html = '';
-      let indexNum = 1;
-      dataArr.forEach(d => {
-        let photosHtml = '';
-        if (d.vehPhoto) photosHtml += `<img src="${d.vehPhoto}" class="thumb-img" onclick="openImageViewer('${d.vehPhoto}', 'ವಾಹನ ಫೋಟೋ')" title="ವಾಹನ ಫೋಟೋ">`;
-        if (d.rcPhoto) photosHtml += `<img src="${d.rcPhoto}" class="thumb-img" onclick="openImageViewer('${d.rcPhoto}', 'ಆರ್ ಸಿ ಕಾರ್ಡ್')" title="ಆರ್ ಸಿ">`;
-        if (d.dlPhoto) photosHtml += `<img src="${d.dlPhoto}" class="thumb-img" onclick="openImageViewer('${d.dlPhoto}', 'ಡಿ ಎಲ್ ಫೋಟೋ')" title="ಡಿ ಎಲ್">`;
-        if (d.selfiePhoto) photosHtml += `<img src="${d.selfiePhoto}" class="thumb-img" onclick="openImageViewer('${d.selfiePhoto}', 'ಡ್ರೈವರ್ ಸೆಲ್ಫಿ')" title="ಸೆಲ್ಫಿ">`;
-        if (d.aadharPhoto) photosHtml += `<img src="${d.aadharPhoto}" class="thumb-img" onclick="openImageViewer('${d.aadharPhoto}', 'ಆಧಾರ್ ಕಾರ್ಡ್')" title="ಆಧಾರ್">`;
-
+      drivers.forEach(d => {
         html += `
-          <div class="card" style="border:1px solid #cbd5e0; margin-bottom:8px;">
-            <p style="font-size:0.8rem; font-weight:bold; color:#0fb05b;">ಕ್ರಮ ಸಂಖ್ಯೆ: #${indexNum++}</p>
-            <p><b>ಹೆಸರು:</b> ${d.drvName} | <b>ಐಡಿ:</b> <span style="color:red; font-weight:bold;">${d.driverId}</span></p>
-            <p><b>ಫೋನ್:</b> <a href="tel:${d.drvPhone}">${d.drvPhone}</a> | <b>ವಾಹನ:</b> ${d.drvVehType} (${d.drvVehNo})</p>
-            <div style="margin-top:6px; display:flex; flex-wrap:wrap; gap:4px;">
-              ${photosHtml}
+          <div class="card" style="border: 1px solid #cbd5e0; margin-bottom:10px; background:#fff;">
+            <p><b>ಹೆಸರು:</b> ${d.drvName}</p>
+            <p><b>ಫೋನ್:</b> <a href="tel:${d.drvPhone}">${d.drvPhone}</a></p>
+            <p><b>ವಾಹನ ನಂಬರ್:</b> ${d.drvVehNo} (${d.drvVehType})</p>
+            <p><b>ಐಡಿ ನಂಬರ್:</b> <span style="color:#d69e2e; font-weight:bold; font-size:1.1rem;">${d.driverId}</span></p>
+            <div class="driver-photo-grid">
+               ${d.vehPhoto ? `<img src="${d.vehPhoto}" class="driver-thumb" onclick="viewFullImage('${d.vehPhoto}', 'ವಾಹನ ಫೋಟೋ')">` : ''}
+               ${d.rcPhoto ? `<img src="${d.rcPhoto}" class="driver-thumb" onclick="viewFullImage('${d.rcPhoto}', 'ಆರ್ ಸಿ ಕಾರ್ಡ್')">` : ''}
+               ${d.dlPhoto ? `<img src="${d.dlPhoto}" class="driver-thumb" onclick="viewFullImage('${d.dlPhoto}', 'ಡಿ ಎಲ್ ಫೋಟೋ')">` : ''}
+               ${d.selfiePhoto ? `<img src="${d.selfiePhoto}" class="driver-thumb" onclick="viewFullImage('${d.selfiePhoto}', 'ಸೆಲ್ಫಿ ಫೋಟೋ')">` : ''}
+               ${d.aadharPhoto ? `<img src="${d.aadharPhoto}" class="driver-thumb" onclick="viewFullImage('${d.aadharPhoto}', 'ಆಧಾರ್ ಕಾರ್ಡ್')">` : ''}
             </div>
+            <button class="btn-submit" onclick="deleteDriver('${d.id}')" style="background:#e53e3e; margin-top:6px; padding:6px; font-size:0.8rem;">ಡ್ರೈವರ್ ಡಿಲೀಟ್ ಮಾಡಿ</button>
           </div>
         `;
       });
@@ -1205,73 +1386,27 @@
     }
 
     function filterAdminDrivers() {
-      const queryText = document.getElementById('adminSearchInput').value.toLowerCase();
-      const filtered = allDriversData.filter(d => (d.drvPhone && d.drvPhone.includes(queryText)) || (d.driverId && d.driverId.includes(queryText)) || (d.drvName && d.drvName.toLowerCase().includes(queryText)));
+      const queryText = document.getElementById('adminSearchInput').value.trim().toLowerCase();
+      const filtered = allDriversData.filter(d => 
+        (d.drvPhone && d.drvPhone.toLowerCase().includes(queryText)) || 
+        (d.driverId && d.driverId.toLowerCase().includes(queryText)) ||
+        (d.drvName && d.drvName.toLowerCase().includes(queryText))
+      );
       renderAdminDriversList(filtered);
     }
 
-    function shareAppOnWhatsApp() {
-      const text = encodeURIComponent("ಕರ್ನಾಟಕ A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್! ಬೈಕ್, ಆಟೋ ಹಾಗೂ ಕಾರ್ ಬುಕಿಂಗ್‌ಗಾಗಿ ಈ ಆ್ಯಪ್ ಬಳಸಿ.");
-      window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
-    }
-
-    let meterInterval = null;
-    let meterStartCoords = null;
-
-    function resetMeterRate() {}
-
-    function startMeter() {
-      if (navigator.geolocation) {
-        document.getElementById('meterStatusMsg').innerText = "ಮೀಟರ್ ರನ್ ಆಗುತ್ತಿದೆ...";
-        navigator.geolocation.getCurrentPosition(pos => {
-          meterStartCoords = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-          distanceKm = 0;
-          if (custMeterWatchId) navigator.geolocation.clearWatch(custMeterWatchId);
-
-          custMeterWatchId = navigator.geolocation.watchPosition(p => {
-            const currentLat = p.coords.latitude;
-            const currentLng = p.coords.longitude;
-            document.getElementById('liveGpsCoord').innerText = `GPS: ${currentLat.toFixed(4)}, ${currentLng.toFixed(4)}`;
-            
-            if (meterStartCoords) {
-              const dist = calculateDistance(meterStartCoords.lat, meterStartCoords.lng, currentLat, currentLng);
-              distanceKm += dist;
-              meterStartCoords = { lat: currentLat, lng: currentLng };
-              
-              document.getElementById('distCount').innerText = distanceKm.toFixed(2);
-              
-              const vType = document.getElementById('meterVehicleType').value;
-              let fare = 50;
-              if (vType === 'Bike') fare = distanceKm <= 2 ? 30 : 30 + (distanceKm - 2) * 10;
-              else if (vType === 'Auto') fare = distanceKm <= 2 ? 50 : 50 + (distanceKm - 2) * 12;
-              else if (vType === 'Car') fare = distanceKm <= 3 ? 200 : 200 + (distanceKm - 3) * 15;
-
-              document.getElementById('liveAmount').innerText = Math.round(fare);
-            }
-          }, err => {}, { enableHighAccuracy: true });
-        });
-      } else { alert("GPS Not Supported"); }
-    }
-
-    function stopMeterOnly() {
-      if (custMeterWatchId) {
-        navigator.geolocation.clearWatch(custMeterWatchId);
-        custMeterWatchId = null;
+    async function deleteDriver(docId) {
+      if (confirm("ಖಚಿತವಾಗಿ ಈ ಡ್ರೈವರ್ ಅನ್ನು ಡಿಲೀಟ್ ಮಾಡಲು ಬಯಸುತ್ತೀರಾ?")) {
+        try {
+          await window.deleteDoc(window.doc(window.db, "drivers", docId));
+          loadAdminDrivers();
+        } catch(e) { alert("Error: " + e.message); }
       }
-      document.getElementById('meterStatusMsg').innerText = "ಮೀಟರ್ ನಿಲ್ಲಿಸಲಾಗಿದೆ.";
-      document.getElementById('meterResultText').innerText = `ಪ್ರಯಾಣಿಸಿದ ದೂರ: ${distanceKm.toFixed(2)} ಕಿ.ಮೀ | ಒಟ್ಟು ಶುಲ್ಕ: ₹${document.getElementById('liveAmount').innerText}`;
-      document.getElementById('meterResultModal').style.display = 'block';
     }
 
-    function calculateDistance(lat1, lon1, lat2, lon2) {
-      const R = 6371; 
-      const dLat = (lat2 - lat1) * Math.PI / 180;
-      const dLon = (lon2 - lon1) * Math.PI / 180;
-      const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-                Math.sin(dLon/2) * Math.sin(dLon/2);
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-      return R * c;
+    function shareAppOnWhatsApp() {
+      const text = encodeURIComponent("ಕರ್ನಾಟಕ A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್! ಶಹಾಪುರ ಹಾಗೂ ಸುತ್ತಮುತ್ತಲಿನ ಪ್ರದೇಶಗಳಲ್ಲಿ ಬೈಕ್, ಆಟೋ ಹಾಗೂ ಕಾರ್ ಬುಕಿಂಗ್ ಮಾಡಲು ಈ ಲಿಂಕ್ ಬಳಸಿ: " + window.location.href);
+      window.open("https://api.whatsapp.com/send?text=" + text, "_blank");
     }
   </script>
 </body>
