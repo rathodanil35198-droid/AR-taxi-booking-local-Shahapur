@@ -102,47 +102,41 @@
       position: relative;
     }
 
-    /* ಮೂರು ಲೋಗೋಗಳನ್ನು ಒಂದೇ ಸಾಲಿನಲ್ಲಿ ತೋರಿಸಲು ಹೊಸ ವಿನ್ಯಾಸ */
+    /* ರಿಯಲ್ ಅಪ್ಲಿಕೇಶನ್ ತರಹದ ಕಲರ್‌ಫುಲ್ ಆಪ್ ಲೋಗೋ ಬಾಕ್ಸ್ */
     .app-logo-box-wrapper {
       display: flex;
       flex-direction: column;
       align-items: center;
       margin-bottom: 10px;
     }
-    .triple-logo-container {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      align-items: center;
-    }
     .real-app-icon-card {
-      width: 62px;
-      height: 62px;
+      width: 75px;
+      height: 75px;
       background: linear-gradient(145deg, #ffffff, #e2e8f0);
-      border-radius: 14px;
+      border-radius: 18px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.8);
-      border: 2px solid #ffd700;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.8);
+      border: 2.5px solid #ffd700;
       position: relative;
       animation: pulseGlow 2s infinite;
     }
     @keyframes pulseGlow {
-      0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.6), 0 6px 15px rgba(0,0,0,0.3); }
-      70% { box-shadow: 0 0 0 8px rgba(255, 215, 0, 0), 0 6px 15px rgba(0,0,0,0.3); }
-      100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0), 0 6px 15px rgba(0,0,0,0.3); }
+      0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.6), 0 8px 20px rgba(0,0,0,0.3); }
+      70% { box-shadow: 0 0 0 10px rgba(255, 215, 0, 0), 0 8px 20px rgba(0,0,0,0.3); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0), 0 8px 20px rgba(0,0,0,0.3); }
     }
     .real-app-icon-title {
-      font-size: 0.55rem;
+      font-size: 0.65rem;
       font-weight: 900;
       color: #0f172a;
       letter-spacing: 0.5px;
       margin-top: 2px;
       background: #ffd700;
-      padding: 1px 4px;
-      border-radius: 4px;
+      padding: 1px 6px;
+      border-radius: 6px;
     }
 
     .flashing-title {
@@ -150,7 +144,7 @@
       font-weight: bold;
       animation: flashingText 1.5s infinite;
       line-height: 1.4;
-      margin-top: 8px;
+      margin-top: 5px;
       color: #ffffff;
     }
 
@@ -307,29 +301,16 @@
 
   <div class="container">
     
-    <!-- ಕಲರ್‌ಫುಲ್ ಹೆಡರ್ ಹಾಗೂ ಮೂರು ಲೋಗೋಗಳ ಬಾಕ್ಸ್ (Bike, Auto, Car Logos) -->
+    <!-- ಕಲರ್‌ಫುಲ್ ಹೆಡರ್ ಹಾಗೂ ಆಪ್ ಲೋಗೋ ಬಾಕ್ಸ್ (App Logo Box with Name) -->
     <div class="flashing-header-box">
       <div class="lang-toggle-container">
         <button id="langToggleBtn" class="lang-btn" onclick="toggleLanguage()">ENGLISH</button>
       </div>
       
       <div class="app-logo-box-wrapper">
-        <div class="triple-logo-container">
-          <!-- ಬೈಕ್ ಲೋಗೋ -->
-          <div class="real-app-icon-card">
-            <span style="font-size: 1.6rem; line-height: 1;">🏍️</span>
-            <div class="real-app-icon-title">BIKE</div>
-          </div>
-          <!-- ಆಟೋ ಲೋಗೋ -->
-          <div class="real-app-icon-card">
-            <span style="font-size: 1.6rem; line-height: 1;">🛺</span>
-            <div class="real-app-icon-title">AUTO</div>
-          </div>
-          <!-- ಕಾರ್ ಲೋಗೋ -->
-          <div class="real-app-icon-card">
-            <span style="font-size: 1.6rem; line-height: 1;">🚗</span>
-            <div class="real-app-icon-title">CAR</div>
-          </div>
+        <div class="real-app-icon-card">
+          <span style="font-size: 2.1rem; line-height: 1;">🛺</span>
+          <div class="real-app-icon-title">AR TAXI</div>
         </div>
       </div>
 
@@ -349,7 +330,12 @@
         </button>
 
         <button class="action-btn-card btn-driver-reg" onclick="openPage('profileSection')">
-          <span style="font-size: 1.8rem;">🚗 🛺 🏍️</span><span data-en="Driver Register & Login Page" data-kn="ಡ್ರೈವರ್ ರಿಜಿಸ್ಟರ್ ಲಾಗಿನ್ ಪೇಜ್">ಡ್ರೈವರ್ ರಿಜಿಸ್ಟರ್ ಲಾಗಿನ್ ಪೇಜ್</span>
+          <div style="display: flex; align-items: center; justify-content: center; gap: 6px; background: #fff; padding: 6px 12px; border-radius: 10px; border: 2px solid #ce93d8;">
+            <span style="font-size: 1.3rem;">🚗</span>
+            <span style="font-size: 1.3rem;">🛺</span>
+            <span style="font-size: 1.3rem;">🏍️</span>
+          </div>
+          <span data-en="Driver Register & Login Page" data-kn="ಡ್ರೈವರ್ ರಿಜಿಸ್ಟರ್ ಲಾಗಿನ್ ಪೇಜ್">ಡ್ರೈವರ್ ರಿಜಿಸ್ಟರ್ ಲಾಗಿನ್ ಪೇಜ್</span>
         </button>
 
         <button class="action-btn-card btn-driver-panel" onclick="openPage('liveSection')">
