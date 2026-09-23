@@ -888,14 +888,18 @@
                   <div class="card" style="border: 3px solid #3182ce; background:#ebf8ff; margin-bottom:10px;">
                     <p style="background:#bee3f8; padding:8px; border-radius:6px; margin-bottom:8px; font-weight:bold; color:#2b6cb0; text-align:center;">🏁 ಲೈವ್ ಜಿಪಿಎಸ್ ಮೀಟರ್ ಆನ್ ಇದೆ</p>
                     <p style="font-size:0.95rem;"><b>ಗ್ರಾಹಕರು:</b> ${b.customerName} (<a href="tel:${b.customerPhone}">${b.customerPhone}</a>)</p>
-                    <p style="font-size:0.85rem; color:#065f46; font-weight:bold; margin:6px 0;" id="activeRideStatusText">ವಾಹನ ರನ್ನಿಂಗ್ ಇದೆ (Vehicle Running)</p>
+                    <p style="font-size:0.85rem; color:#065f46; font-weight:bold; margin:6px 0;" id="activeRideStatusText">ವಾಹನ ನಿಂತಿದೆ (Vehicle Stopped)</p>
                     <p style="font-size:1.1rem; font-weight:bold; color:#0fb05b;">ಪ್ರಯಾಣಿಸಿದ ದೂರ: <span id="activeRideDist">0.0</span> ಕಿ.ಮೀ</p>
                     <button class="btn-submit" onclick="finishRide('${docSnap.id}', '${driverData.driverId}', '${b.customerName}', '${b.customerPhone}', '${b.pickupLocation}', '${b.dropLocation}')" style="background:#e53e3e; margin-top:12px; padding:12px; font-size:1rem;">ಪ್ರಯಾಣ ಮುಕ್ತಾಯಗೊಳಿಸಿ ಹಣ ನಮೂದಿಸಿ (ಮೀಟರ್ ಆಫ್ ಮಾಡಿ)</button>
                   </div>
                 `;
               }
             } else {
-              // ಈ ಬುಕಿಂಗ್ ಬೇರೆ ಡ್ರೈವರ್‌ಗೆ ಲಾಕ್ ಆಗಿರುವುದರಿಂದ ಇವರಿಗೆ ಕಾಣಿಸುವುದಿಲ್ಲ (ಖಾಲಿ ಬಿಡಲಾಗಿದೆ)
+              acceptedHtml += `
+                <div class="card" style="border: 2px solid #cbd5e0; background:#f1f5f9; margin-bottom:10px; opacity: 0.75;">
+                  <p style="background:#e2e8f0; padding:6px; border-radius:6px; font-weight:bold; color:#475569; text-align:center;">🔒 ಈ ಬುಕಿಂಗ್ ಈಗಾಗಲೇ ಬೇರೆ ಡ್ರೈವರ್‌ಗೆ ಲಾಕ್ ಆಗಿದೆ</p>
+                </div>
+              `;
             }
             return;
           }
@@ -932,7 +936,7 @@
         if (hasPendingToAccept) startSirenLoop(); else stopSirenLoop();
 
         let combinedHtml = pendingHtml || `<p style="color: #718096; font-weight: bold; margin-bottom: 10px;">ನಿಮ್ಮ ವಾಹನಕ್ಕೆ (${driverData.drvVehType}) ತಕ್ಕಂತೆ ಹೊಸ ಲೈವ್ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.</p>`;
-        if (acceptedHtml !== '') combinedHtml = acceptedHtml + `<hr style="margin: 15px 0;">` + combinedHtml;
+        if (acceptedHtml !== '') combinedHtml += `<hr style="margin: 15px 0;">` + acceptedHtml;
 
         const ridesQuery = window.query(window.collection(window.db, "completed_rides"), window.where("driverIdNum", "==", driverData.driverId));
         const ridesSnap = await window.getDocs(ridesQuery);
@@ -1008,7 +1012,7 @@
               rideDistanceKm += d;
               lastRidePos = { lat, lng };
               if (document.getElementById('activeRideDist')) document.getElementById('activeRideDist').innerText = rideDistanceKm.toFixed(1);
-              if (document.getElementById('activeRideStatusText')) document.getElementById('activeRideStatusText').innerText = "ವಾಹನ ರನ್ನಿಂಗ್ ಇದೆ (Vehicle Running)";
+              if (document.getElementById('activeRideStatusText')) document.getElementById('activeRideStatusText').innerText = "ವಾಹನ ರನ್ನಿಂಗ್ ಇದ್ದಂತೆ ತೋರಿಸುತ್ತಿದೆ (Vehicle Running)";
             }
           } else {
             lastRidePos = { lat, lng };
@@ -1047,10 +1051,9 @@
 
         await window.deleteDoc(window.doc(window.db, "bookings", bookingId));
 
-        // ಪಾಪ್-ಅಪ್ ಸಂದೇಶದಲ್ಲಿ ಕಿಲೋಮೀಟರ್ ಹಾಗೂ ಚಾರ್ಜಸ್ ತೋರಿಸಿ, ಓಕೆ ಒತ್ತಿದ ತಕ್ಷಣ ಬುಕಿಂಗ್ ಪೇಜ್‌ಗೆ ರೀಡೈರೆಕ್ಟ್ ಆಗುತ್ತದೆ
-        document.getElementById('meterResultText').innerHTML = `✅ ಪ್ರಯಾಣ ಯಶಸ್ವಿಯಾಗಿ ಮುಕ್ತಾಯಗೊಂಡಿದೆ!<br><br><b>ಪ್ರಯಾಣಿಸಿದ ದೂರ:</b> ${km.toFixed(1)} ಕಿ.ಮೀ<br><b>ಒಟ್ಟು ಚಾರ್ಜಸ್:</b> ₹${finalFare}`;
+        document.getElementById('meterResultText').innerText = `ಪ್ರಯಾಣ ಯಶಸ್ವಿಯಾಗಿ ಮುಕ್ತಾಯಗೊಂಡಿದೆ!\nದೂರ: ${km.toFixed(1)} ಕಿ.ಮೀ\nಗಳಿಕೆ: ₹${finalFare}`;
         document.getElementById('meterResultModal').style.display = 'block';
-        
+        checkDriverIdAndListen();
       } catch (e) { alert("Error: " + e.message); }
     }
 
