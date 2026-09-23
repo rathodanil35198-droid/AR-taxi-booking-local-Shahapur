@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title id="pageTitle">A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್ | ಬೈಕ್, ಆಟೋ & ಕಾರ್ ಬುಕಿಂಗ್</title>
-  <!-- PWA & Mobile App Settings -->
+  
   <meta name="theme-color" content="#0fb05b">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="A R Taxi Go Fast">
   <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3097/3097180.png">
-  <!-- Dynamic PWA Manifest Injection with App Name inside Box/Icon concept -->
+
   <script>
     const manifestData = {
       "name": "A R Taxi Booking Go Fast",
@@ -20,16 +20,8 @@
       "background_color": "#0f172a",
       "theme_color": "#0fb05b",
       "icons": [
-        {
-          "src": "https://cdn-icons-png.flaticon.com/512/3097/3097180.png",
-          "sizes": "192x192",
-          "type": "image/png"
-        },
-        {
-          "src": "https://cdn-icons-png.flaticon.com/512/3097/3097180.png",
-          "sizes": "512x512",
-          "type": "image/png"
-        }
+        { "src": "https://cdn-icons-png.flaticon.com/512/3097/3097180.png", "sizes": "192x192", "type": "image/png" },
+        { "src": "https://cdn-icons-png.flaticon.com/512/3097/3097180.png", "sizes": "512x512", "type": "image/png" }
       ]
     };
     const stringManifest = JSON.stringify(manifestData);
@@ -41,7 +33,6 @@
     document.head.appendChild(linkTag);
   </script>
 
-  <!-- PDF ಡೌನ್‌ಲೋಡ್ ಮಾಡಲು html2pdf ಲೈಬ್ರರಿ -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <script type="module">
@@ -80,7 +71,6 @@
     :root { --primary: #0fb05b; --secondary: #41c91d; --bg: #f4f7f6; --text: #333; }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; touch-action: manipulation; }
     
-    /* ಸಂಪೂರ್ಣ ಡಿಸ್ಪ್ಲೇ ಹಾಗೂ ಸ್ಕ್ರೋಲ್ ಸಮಸ್ಯೆ ಸರಿಪಡಿಸಲಾಗಿದೆ */
     html, body { 
       width: 100%; 
       min-height: 100%; 
@@ -246,13 +236,16 @@
 
     .driver-photo-grid { display: flex; gap: 6px; margin: 8px 0; overflow-x: auto; }
     .driver-thumb { width: 60px; height: 60px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e0; cursor: pointer; }
+    
+    /* ಸಂಪೂರ್ಣ ಲಾಕ್ ಶೈಲಿ */
+    .locked-card { pointer-events: none; opacity: 0.6; filter: grayscale(50%); }
+    .lock-badge { background: #e53e3e; color: white; font-weight: bold; font-size: 0.8rem; padding: 4px 8px; border-radius: 6px; display: inline-block; margin-bottom: 6px; }
   </style>
 </head>
 <body>
 
   <a href="javascript:void(0);" onclick="shareAppOnWhatsApp()" class="floating-share-btn">💬</a>
 
-  <!-- Install App Prompt Banner -->
   <div id="installAppBanner" class="install-app-banner" style="display: none;">
     <div style="display:flex; align-items:center; gap:8px;">
       <span style="font-size: 2rem;">📲</span>
@@ -313,7 +306,6 @@
 
   <div class="container">
     
-    <!-- ಹೆಡರ್ ಹಾಗೂ ಲೋಗೋಗಳು -->
     <div class="flashing-header-box">
       <div class="lang-toggle-container">
         <button id="langToggleBtn" class="lang-btn" onclick="toggleLanguage()">ENGLISH</button>
@@ -393,7 +385,6 @@
         <a href="tel:8105010768" class="support-btn">📞 24/7 ತುರ್ತು ಕಾಲ್ (Emergency Call)</a>
       </div>
 
-      <!-- ಗ್ರಾಹಕರ ಬುಕಿಂಗ್ ಸೆಕ್ಷನ್ -->
       <div id="customerSection" class="section">
         <h2>ಯಾತ್ರೆ ಬುಕ್ ಮಾಡಿ</h2>
         <div id="bookingFormContainer">
@@ -450,7 +441,6 @@
         <div id="customerStatusContainer" style="margin-top: 10px;"></div>
       </div>
 
-      <!-- ಮೀಟರ್ ಸೆಕ್ಷನ್ -->
       <div id="meterSection" class="section">
         <h2>ಲೈವ್ ರನ್ನಿಂಗ್ ಮೀಟರ್ (GPS Meter)</h2>
         <div class="form-group">
@@ -471,7 +461,6 @@
         <button class="btn-submit" onclick="stopMeterOnly()" style="background:#e53e3e;">ಮೀಟರ್ ಆಫ್ ಮಾಡಿ</button>
       </div>
 
-      <!-- ಡ್ರೈವರ್ ರಿಜಿಸ್ಟ್ರೇಷನ್ ಸೆಕ್ಷನ್ -->
       <div id="profileSection" class="section">
         <h2>ಡ್ರೈವರ್ ರಜಿಸ್ಟ್ರೇಷನ್ / ಪ್ರೊಫೈಲ್</h2>
         <div class="form-group">
@@ -511,13 +500,12 @@
           <input type="file" id="selfiePhotoFile" accept="image/*" capture="user">
         </div>
         <div class="form-group">
-          <label>🪪 ಆಧಾರ್ ಕಾರ್ಡ್ ಫೋಟೋ (ಕೊನೆಯಲ್ಲಿ):</label>
+          <label>🪪 [Aadhaar Redacted] ಕಾರ್ಡ್ ಫೋಟೋ (ಕೊನೆಯಲ್ಲಿ):</label>
           <input type="file" id="aadharPhotoFile" accept="image/*" capture="environment">
         </div>
         <button class="btn-submit" onclick="registerDriver()" id="btnRegisterDriver">ಲಾಗಿನ್ / ರಜಿಸ್ಟರ್ ಮಾಡಿ</button>
       </div>
 
-      <!-- ಡ್ರೈವರ್ ಐಡಿ ಪ್ಯಾನಲ್ ಹಾಗೂ ಲೈವ್ ಬುಕಿಂಗ್ ಸೆಕ್ಷನ್ -->
       <div id="liveSection" class="section">
         <h2>📢 ಡ್ರೈವರ್ ಐಡಿ ಪ್ಯಾನಲ್ ಹಾಗೂ ಲೈವ್ ಬುಕಿಂಗ್‌ಗಳು</h2>
         <div class="form-group">
@@ -541,7 +529,6 @@
         </div>
       </div>
 
-      <!-- ಅಡ್ಮಿನ್ ಸೆಕ್ಷನ್ -->
       <div id="adminSection" class="section">
         <h2>🔐 ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್</h2>
         
@@ -1036,7 +1023,16 @@
         let pendingHtml = '';
         let acceptedHtml = '';
         let hasPendingToAccept = false;
+        let driverHasActiveBooking = false;
         const todayStr = new Date().toISOString().split('T')[0];
+
+        // ಮೊದಲು ಈ ಡ್ರೈವರ್ ಈಗಾಗಲೇ ಯಾವುದಾದರೂ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿದ್ದಾರಾ ಎಂದು ಪರಿಶೀಲಿಸುವುದು
+        snapshot.forEach((docSnap) => {
+          const b = docSnap.data();
+          if ((b.dateKey || '') === todayStr && (b.status === 'Accepted' || b.status === 'Started') && b.driverIdNum === driverData.driverId) {
+            driverHasActiveBooking = true;
+          }
+        });
 
         snapshot.forEach((docSnap) => {
           const b = docSnap.data();
@@ -1055,26 +1051,40 @@
               else if (b.vehicleType === 'Car') vehLogo = '🚗';
 
               if (b.status === 'Pending') {
-                hasPendingToAccept = true;
-                pendingHtml += `
-                  <div class="card" style="border: 2px solid #0fb05b; background:#f7fafc; margin-bottom:10px;">
-                    <p style="background:#e8f8f0; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#065f46;">⚠️ ಹೊಸ ${b.vehicleType} ಬುಕಿಂಗ್ ಬಂದಿದೆ!</p>
-                    <p style="font-size: 1.1rem; margin-bottom: 4px;"><b>ವಾಹನ:</b> ${vehLogo} ${b.vehicleType}</p>
-                    <p style="font-size:0.95rem;"><b>ಗ್ರಾಹಕರು:</b> ${b.customerName}</p>
-                    <p style="font-size:0.95rem;"><b>ಫೋನ್ ನಂಬರ್:</b> <a href="tel:${b.customerPhone}">${b.customerPhone}</a></p>
-                    <p style="font-size:0.95rem;"><b>ಪ್ರಯಾಣಿಕರು:</b> ${b.passengers}</p>
-                    <p style="font-size:0.95rem;"><b>ಪಿಕಪ್ ಸ್ಥಳ:</b> <a href="https://www.google.com/maps/search/?api=1&query=${b.pickupLat},${b.pickupLng}" target="_blank" style="color:#3182ce;">${b.pickupLocation}</a> (~${dist.toFixed(2)} ಕಿ.ಮೀ)</p>
-                    <p style="font-size:0.95rem;"><b>ಡ್ರಾಪ್ ಸ್ಥಳ:</b> <strong style="color:#d69e2e;">${b.dropLocation}</strong></p>
-                    <div style="display:flex; gap:6px; margin-top:10px;">
-                      <button class="btn-submit" onclick="acceptBooking('${docSnap.id}', '${driverData.drvName}', '${driverData.drvPhone}', '${driverData.drvVehNo}', '${driverData.driverId}', ${b.pickupLat}, ${b.pickupLng})" style="font-size:0.9rem; padding:10px;">📢 ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ</button>
-                      <button class="btn-submit" onclick="driverCancelBooking('${docSnap.id}', '${driverData.driverId}')" style="background:#e53e3e; font-size:0.9rem; padding:10px; width:120px;">❌ ರದ್ದುಮಾಡಿ</button>
+                if (driverHasActiveBooking) {
+                  // ಈಗಾಗಲೇ ಬುಕಿಂಗ್ ಲಾಕ್ ಆಗಿದ್ದರೆ, ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು ಸಂಪೂರ್ಣ ಲಾಕ್ ಆಗಿ ಕಾಣಿಸಬೇಕು
+                  pendingHtml += `
+                    <div class="card locked-card" style="border: 2px solid #e53e3e; background:#fff5f5; margin-bottom:10px;">
+                      <div class="lock-badge">🔒 ಈ ರೋಡ್ ಮುಗಿದಿದೆ / ಸಂಪೂರ್ಣ ಲಾಕ್ ಆಗಿದೆ</div>
+                      <p style="font-size: 1.1rem; margin-bottom: 4px;"><b>ವಾಹನ:</b> ${vehLogo} ${b.vehicleType}</p>
+                      <p style="font-size:0.95rem;"><b>ಗ್ರಾಹಕರು:</b> ${b.customerName}</p>
+                      <p style="font-size:0.95rem;"><b>ಪಿಕಪ್ ಸ್ಥಳ:</b> ${b.pickupLocation}</p>
+                      <p style="font-size:0.95rem;"><b>ಡ್ರಾಪ್ ಸ್ಥಳ:</b> <strong>${b.dropLocation}</strong></p>
                     </div>
-                  </div>
-                `;
+                  `;
+                } else {
+                  hasPendingToAccept = true;
+                  pendingHtml += `
+                    <div class="card" style="border: 2px solid #0fb05b; background:#f7fafc; margin-bottom:10px;">
+                      <p style="background:#e8f8f0; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#065f46;">⚠️ ಹೊಸ ${b.vehicleType} ಬುಕಿಂಗ್ ಬಂದಿದೆ!</p>
+                      <p style="font-size: 1.1rem; margin-bottom: 4px;"><b>ವಾಹನ:</b> ${vehLogo} ${b.vehicleType}</p>
+                      <p style="font-size:0.95rem;"><b>ಗ್ರಾಹಕರು:</b> ${b.customerName}</p>
+                      <p style="font-size:0.95rem;"><b>ಫೋನ್ ನಂಬರ್:</b> <a href="tel:${b.customerPhone}">${b.customerPhone}</a></p>
+                      <p style="font-size:0.95rem;"><b>ಪ್ರಯಾಣಿಕರು:</b> ${b.passengers}</p>
+                      <p style="font-size:0.95rem;"><b>ಪಿಕಪ್ ಸ್ಥಳ:</b> <a href="https://www.google.com/maps/search/?api=1&query=${b.pickupLat},${b.pickupLng}" target="_blank" style="color:#3182ce;">${b.pickupLocation}</a> (~${dist.toFixed(2)} ಕಿ.ಮೀ)</p>
+                      <p style="font-size:0.95rem;"><b>ಡ್ರಾಪ್ ಸ್ಥಳ:</b> <strong style="color:#d69e2e;">${b.dropLocation}</strong></p>
+                      <div style="display:flex; gap:6px; margin-top:10px;">
+                        <button class="btn-submit" onclick="acceptBooking('${docSnap.id}', '${driverData.drvName}', '${driverData.drvPhone}', '${driverData.drvVehNo}', '${driverData.driverId}', ${b.pickupLat}, ${b.pickupLng})" style="font-size:0.9rem; padding:10px;">📢 ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ</button>
+                        <button class="btn-submit" onclick="driverCancelBooking('${docSnap.id}', '${driverData.driverId}')" style="background:#e53e3e; font-size:0.9rem; padding:10px; width:120px;">❌ ರದ್ದುಮಾಡಿ</button>
+                      </div>
+                    </div>
+                  `;
+                }
               } else if (b.status === 'Accepted' && b.driverIdNum === driverData.driverId) {
                 acceptedHtml += `
                   <div class="card" style="border: 2px solid #38a169; background:#edf2f7; margin-bottom:10px;">
-                    <p style="background:#d4edda; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#155724;">✅ ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸ್ವೀಕರಿಸಿದ್ದೀರಾ! ದಯವಿಟ್ಟು ಈ ಬುಕಿಂಗ್ ಅನ್ನು ಪಿಕಪ್ ಮಾಡಿ.</p>
+                    <div class="lock-badge">🔒 ಸಂಪೂರ್ಣ ಲಾಕ್ ಆಗಿದೆ (ಈ ರೋಡ್ ಮುಗಿಯುವವರೆಗೆ ಬೇರೆ ಬುಕಿಂಗ್ ಇಲ್ಲ)</div>
+                    <p style="background:#d4edda; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#155724;">✅ ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸ್ವೀಕರಿಸಲಾಗಿದೆ! ದಯವಿಟ್ಟು ಅಲ್ಲಿಯೇ ಪಿಕಪ್ ಮಾಡಿ.</p>
                     <p style="font-size:0.95rem;"><b>ಗ್ರಾಹಕರು:</b> ${b.customerName} (<a href="tel:${b.customerPhone}">${b.customerPhone}</a>)</p>
                     <p style="font-size:0.95rem;"><b>ಪಿಕಪ್ ಸ್ಥಳ:</b> ${b.pickupLocation}</p>
                     <p style="font-size:0.95rem;"><b>ಡ್ರಾಪ್ ಸ್ಥಳ:</b> <strong style="color:#d69e2e;">${b.dropLocation}</strong></p>
@@ -1090,6 +1100,7 @@
               } else if (b.status === 'Started' && b.driverIdNum === driverData.driverId) {
                 acceptedHtml += `
                   <div class="card" style="border: 2px solid #3182ce; background:#ebf8ff; margin-bottom:10px;">
+                    <div class="lock-badge">🔒 ಸಂಪೂರ್ಣ ಲಾಕ್ ಆಗಿದೆ (ರೈಡ್ ಚಾಲ್ತಿಯಲ್ಲಿದೆ)</div>
                     <p style="background:#bee3f8; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#2b6cb0;">🏁 ಜಿಪಿಎಸ್ ಲೈವ್ ಮೀಟರ್ ಓಡುತ್ತಿದೆ...</p>
                     <p style="font-size:0.95rem;"><b>ಗ್ರಾಹಕರು:</b> ${b.customerName} (<a href="tel:${b.customerPhone}">${b.customerPhone}</a>)</p>
                     <p style="font-size:0.95rem;"><b>ಪಿಕಪ್:</b> ${b.pickupLocation}</p>
@@ -1102,10 +1113,12 @@
           }
         });
 
-        if (hasPendingToAccept) startSirenLoop(); else stopSirenLoop();
+        if (hasPendingToAccept && !driverHasActiveBooking) startSirenLoop(); else stopSirenLoop();
 
-        let combinedHtml = pendingHtml || `<p style="color: #718096; font-weight: bold; margin-bottom: 10px;">ನಿಮ್ಮ ವಾಹನಕ್ಕೆ (${driverData.drvVehType}) ತಕ್ಕಂತೆ ಲೈವ್ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.</p>`;
-        if (acceptedHtml !== '') combinedHtml += `<hr style="margin: 15px 0;">` + acceptedHtml;
+        let combinedHtml = acceptedHtml !== '' ? acceptedHtml : (pendingHtml || `<p style="color: #718096; font-weight: bold; margin-bottom: 10px;">ನಿಮ್ಮ ವಾಹನಕ್ಕೆ (${driverData.drvVehType}) ತಕ್ಕಂತೆ ಲೈವ್ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.</p>`);
+        if (acceptedHtml !== '' && pendingHtml !== '') {
+          combinedHtml = acceptedHtml + `<hr style="margin: 15px 0;">` + pendingHtml;
+        }
 
         listDiv.innerHTML = combinedHtml;
       });
@@ -1140,7 +1153,7 @@
             driverLng: currentDriverLng || pLng
           });
           stopSirenLoop();
-          alert("ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸ್ವೀಕರಿಸಲಾಗಿದೆ!");
+          alert("ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸ್ವೀಕರಿಸಲಾಗಿದೆ! ದಯವಿಟ್ಟು ಅಲ್ಲಿಯೇ ಪಿಕಪ್ ಮಾಡಿ.");
         } else {
           alert("ಈ ಬುಕಿಂಗ್ ಅನ್ನು ಈಗಾಗಲೇ ಬೇರೆ ಡ್ರೈವರ್ ಸ್ವೀಕರಿಸಿದ್ದಾರೆ.");
         }
@@ -1178,7 +1191,7 @@
         });
         await window.deleteDoc(window.doc(window.db, "bookings", bookingId));
         
-        document.getElementById('rideFinishText').innerText = `ಪ್ರಯಾಣ ಯಶಸ್ವಿಯಾಗಿ ಮುಕ್ತಾಯಗೊಂಡಿದೆ! ಗಳಿಕೆ: ₹${fare} (${distance} ಕಿ.ಮೀ)`;
+        document.getElementById('rideFinishText').innerText = `ಪ್ರಯಾಣ ಯಶಸ್ವಿಯಾಗಿ ಮುಕ್ತಾಯಗೊಂಡಿದೆ! ಗಳಿಕೆ: ₹${fare} (${distance} ಕಿ.ಮೀ). ಹೊಸ ಬುಕಿಂಗ್ ನೋಡಲು ಮುಖಪುಟಕ್ಕೆ ಮರಳಲಾಗುತ್ತಿದೆ.`;
         document.getElementById('rideFinishModal').style.display = 'flex';
         loadDriverPersonalDashboard(driverId);
       } catch(e) { alert("Error: " + e.message); }
@@ -1329,7 +1342,7 @@
                ${d.rcPhoto ? `<img src="${d.rcPhoto}" class="driver-thumb" onclick="viewFullImage('${d.rcPhoto}', 'ಆರ್ ಸಿ ಕಾರ್ಡ್')">` : ''}
                ${d.dlPhoto ? `<img src="${d.dlPhoto}" class="driver-thumb" onclick="viewFullImage('${d.dlPhoto}', 'ಡಿ ಎಲ್ ಫೋಟೋ')">` : ''}
                ${d.selfiePhoto ? `<img src="${d.selfiePhoto}" class="driver-thumb" onclick="viewFullImage('${d.selfiePhoto}', 'ಸೆಲ್ಫಿ ಫೋಟೋ')">` : ''}
-               ${d.aadharPhoto ? `<img src="${d.aadharPhoto}" class="driver-thumb" onclick="viewFullImage('${d.aadharPhoto}', 'ಆಧಾರ್ ಕಾರ್ಡ್')">` : ''}
+               ${d.aadharPhoto ? `<img src="${d.aadharPhoto}" class="driver-thumb" onclick="viewFullImage('${d.aadharPhoto}', '[Aadhaar Redacted] ಕಾರ್ಡ್')">` : ''}
             </div>
             <button class="btn-submit" onclick="deleteDriver('${d.id}')" style="background:#e53e3e; margin-top:6px; padding:6px; font-size:0.8rem;">ಡ್ರೈವರ್ ಡಿಲೀಟ್ ಮಾಡಿ</button>
           </div>
