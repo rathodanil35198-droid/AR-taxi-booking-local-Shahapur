@@ -81,8 +81,9 @@
   <style>
     :root { --primary: #0fb05b; --secondary: #41c91d; --bg: #f4f7f6; --text: #333; }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; touch-action: manipulation; }
-    html, body { width: 100%; height: 100%; overflow-x: hidden; background-color: var(--bg); color: var(--text); padding: 8px; }
-    .container { width: 100%; max-width: 480px; margin: 0 auto; background: #fff; padding: 12px; border-radius: 12px; position: relative; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    /* ಬಟನ್‌ಗಳು ಕೆಳಗೆ ಕಟ್ ಆಗದಂತೆ ಹಾಗೂ ಸ್ಕ್ರೋಲ್ ಸರಿಯಾಗಿ ಬರುವಂತೆ ಪ್ಯಾಡಿಂಗ್ ಸರಿಪಡಿಸಲಾಗಿದೆ */
+    html, body { width: 100%; height: 100%; overflow-x: hidden; background-color: var(--bg); color: var(--text); padding: 8px 8px 40px 8px; }
+    .container { width: 100%; max-width: 480px; margin: 0 auto; background: #fff; padding: 12px; border-radius: 12px; position: relative; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 30px; }
 
     @keyframes flashingText {
       0% { opacity: 1; text-shadow: 0 0 8px #ffeb3b, 0 0 15px #ff9800; }
@@ -102,7 +103,6 @@
       position: relative;
     }
 
-    /* ಮೂರು ಲೋಗೋಗಳನ್ನು ಒಂದೇ ಸಾಲಿನಲ್ಲಿ ತೋರಿಸಲು ಹೊಸ ವಿನ್ಯಾಸ */
     .app-logo-box-wrapper {
       display: flex;
       flex-direction: column;
@@ -180,8 +180,8 @@
       z-index: 9999; cursor: pointer; text-decoration: none;
     }
 
-    #roleSelectionScreen { text-align: center; padding: 10px 5px; }
-    .home-buttons-grid { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
+    #roleSelectionScreen { text-align: center; padding: 10px 5px 30px 5px; }
+    .home-buttons-grid { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; margin-bottom: 20px; }
 
     .action-btn-card {
       display: flex; align-items: center; justify-content: center; gap: 10px;
@@ -225,7 +225,7 @@
     .btn-gps { background: #ebf8ff; color: #3182ce; border: 1px solid #bee3f8; }
     .btn-submit { background: linear-gradient(45deg, #0fb05b, #41c91d); color: white; box-shadow: 0 4px 10px rgba(15,176,91,0.25); }
     .card { background: #fff; border: 1px solid #cbd5e0; padding: 12px; border-radius: 10px; margin-bottom: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
-    .footer { text-align: center; font-size: 0.7rem; color: #7f8c8d; margin-top: 15px; border-top: 1px solid #eee; padding-top: 8px; }
+    .footer { text-align: center; font-size: 0.7rem; color: #7f8c8d; margin-top: 20px; border-top: 1px solid #eee; padding-top: 10px; }
     .back-home-btn { background: #718096; color: white; border: none; padding: 8px 14px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; margin-bottom: 12px; font-weight: bold; }
 
     #customAlertModal, #meterResultModal, #rideFinishModal, #imageViewerModal, #splashAdModal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); text-align: center; padding: 20px; overflow-y: auto; }
@@ -1100,9 +1100,10 @@
                   </div>
                 `;
               } else if (b.status === 'Accepted' && b.driverIdNum === driverData.driverId) {
+                // ಇಲ್ಲಿ ಯಾವುದೇ ಡೌನ್‌ಲೋಡ್ ಅಥವಾ ಡಿಲೀಟ್ ಆಪ್ಷನ್‌ಗಳಿಲ್ಲದೆ ಕೇವಲ ಲಾಕ್ ಮಾಡಿದ ಬಾಕ್ಸ್ ಮಾತ್ರ ತೋರಿಸಲಾಗಿದೆ
                 acceptedHtml += `
                   <div class="card" style="border: 2px solid #38a169; background:#edf2f7; margin-bottom:10px;">
-                    <p style="background:#d4edda; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#155724;">🔒 ನಿಮ್ಮ ಐಡಿಗೆ ಲಾಕ್ ಮಾಡಲಾಗಿದೆ!</p>
+                    <p style="background:#d4edda; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#155724;">🔒 ನಿಮ್ಮ ಐಡಿಗೆ ಸಂಪೂರ್ಣ ಲಾಕ್ ಮಾಡಲಾಗಿದೆ!</p>
                     <p style="font-size:0.95rem;"><b>ಗ್ರಾಹಕರು:</b> ${b.customerName} (<a href="tel:${b.customerPhone}">${b.customerPhone}</a>)</p>
                     <p style="font-size:0.95rem;"><b>ಪಿಕಪ್ ಸ್ಥಳ:</b> ${b.pickupLocation}</p>
                     <p style="font-size:0.95rem;"><b>ಡ್ರಾಪ್ ಸ್ಥಳ:</b> <strong style="color:#d69e2e;">${b.dropLocation}</strong></p>
@@ -1114,9 +1115,10 @@
                   </div>
                 `;
               } else if (b.status === 'Started' && b.driverIdNum === driverData.driverId) {
+                // ಇಲ್ಲಿಯೂ ಯಾವುದೇ ಡೌನ್‌ಲೋಡ್ ಅಥವಾ ಡಿಲೀಟ್ ಆಪ್ಷನ್‌ಗಳಿಲ್ಲ
                 acceptedHtml += `
                   <div class="card" style="border: 2px solid #3182ce; background:#ebf8ff; margin-bottom:10px;">
-                    <p style="background:#bee3f8; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#2b6cb0;">🏁 ಪ್ರಯಾಣ ನಡೆಯುತ್ತಿದೆ</p>
+                    <p style="background:#bee3f8; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#2b6cb0;">🏁 ಪ್ರಯಾಣ ನಡೆಯುತ್ತಿದೆ (ಸಂಪೂರ್ಣ ಲಾಕ್)</p>
                     <p style="font-size:0.95rem;"><b>ಗ್ರಾಹಕರು:</b> ${b.customerName} (<a href="tel:${b.customerPhone}">${b.customerPhone}</a>)</p>
                     <p style="font-size:0.95rem;"><b>ಪಿಕಪ್:</b> ${b.pickupLocation}</p>
                     <p style="font-size:0.95rem;"><b>ಡ್ರಾಪ್:</b> ${b.dropLocation}</p>
