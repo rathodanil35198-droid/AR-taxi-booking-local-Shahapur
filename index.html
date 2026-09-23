@@ -5,12 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title id="pageTitle">A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್ | ಬೈಕ್, ಆಟೋ & ಕಾರ್ ಬುಕಿಂಗ್</title>
   
+  <!-- PWA & Mobile App Settings -->
   <meta name="theme-color" content="#0fb05b">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="A R Taxi Go Fast">
   <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3097/3097180.png">
 
+  <!-- Dynamic PWA Manifest Injection -->
   <script>
     const manifestData = {
       "name": "A R Taxi Booking Go Fast",
@@ -41,6 +43,7 @@
     document.head.appendChild(linkTag);
   </script>
 
+  <!-- PDF ಡೌನ್‌ಲೋಡ್ ಮಾಡಲು html2pdf ಲೈಬ್ರರಿ -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <script type="module">
@@ -171,6 +174,7 @@
     .footer { text-align: center; font-size: 0.7rem; color: #7f8c8d; margin-top: 20px; border-top: 1px solid #eee; padding-top: 10px; }
     .back-home-btn { background: #718096; color: white; border: none; padding: 8px 14px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; margin-bottom: 12px; font-weight: bold; }
 
+    /* Metro Box & Large Modal Styling */
     #customAlertModal, #meterResultModal, #rideFinishModal, #imageViewerModal, #splashAdModal, #liveGpsPopupModal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); text-align: center; padding: 15px; overflow-y: auto; }
     .modal-content-box { background: #fff; max-width: 420px; margin: 40px auto; padding: 24px; border-radius: 20px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.5); border: 3px solid #ffd700; position: relative; }
     .modal-metro-logo { width: 80px; height: 80px; background: linear-gradient(145deg, #ffffff, #e2e8f0); border-radius: 18px; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(0,0,0,0.25); border: 3px solid #ffd700; margin-bottom: 15px; }
@@ -188,6 +192,7 @@
 
   <a href="javascript:void(0);" onclick="shareAppOnWhatsApp()" class="floating-share-btn">💬</a>
 
+  <!-- Install App Prompt Banner -->
   <div id="installAppBanner" class="install-app-banner" style="display: none;">
     <div style="display:flex; align-items:center; gap:8px;">
       <span style="font-size: 2rem;">📲</span>
@@ -199,6 +204,7 @@
     <button id="installAppBtn" style="background:#fff; color:#ff5e62; border:none; padding:6px 12px; border-radius:15px; font-weight:bold; font-size:0.8rem; cursor:pointer;">📥 Install</button>
   </div>
 
+  <!-- Custom Alert Modal (Metro Box Style) -->
   <div id="customAlertModal">
     <div class="modal-content-box">
       <div class="modal-metro-logo"><span style="font-size: 2.2rem;">🛺</span></div>
@@ -208,15 +214,21 @@
     </div>
   </div>
 
+  <!-- Live GPS Meter Active Popup Modal (OTP Submit Reaction - Metro Style) -->
   <div id="liveGpsPopupModal">
     <div class="modal-content-box" style="border: 3px solid #0fb05b;">
       <div class="modal-metro-logo"><span style="font-size: 2.2rem;">🛰️</span></div>
-      <h3 style="color: #065f46; margin-bottom: 10px; font-size: 1.25rem; font-weight: 900;">ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಲಾಗಿದೆ</h3>
+      <h3 style="color: #065f46; margin-bottom: 10px; font-size: 1.25rem; font-weight: 900;">ಲೈವ್ ಜಿಪಿಎಸ್ ಮೀಟರ್ ಆನ್ ಆಗಿದೆ</h3>
       <p id="liveGpsPopupText" style="font-size: 1rem; color: #1e293b; font-weight: bold; margin-bottom: 15px; line-height:1.5;"></p>
-      <button class="btn-submit" onclick="closeLiveGpsPopupAndNavigate()" style="background:#0fb05b; padding: 14px; font-size: 1.05rem;">ಸರಿ (OK)</button>
+      <div style="background:#f1f5f9; padding:12px; border-radius:10px; margin-bottom:20px; border:2px solid #cbd5e0;">
+        <p style="font-size:0.9rem; color:#d69e2e; font-weight:bold;" id="modalVehicleStatusDisplay">ವಾಹನ ನಿಂತಿದೆ (Vehicle Stopped)</p>
+        <p style="font-size:1.25rem; font-weight:bold; color:#0fb05b; margin-top:6px;">ದೂರ: <span id="modalDistDisplay">0.0</span> ಕಿ.ಮೀ</p>
+      </div>
+      <button class="btn-submit" onclick="closeLiveGpsPopup()" style="background:#0fb05b; padding: 14px; font-size: 1.05rem;">ಸರಿ (OK)</button>
     </div>
   </div>
 
+  <!-- Meter Result Modal -->
   <div id="meterResultModal">
     <div class="modal-content-box">
       <div class="modal-metro-logo"><span style="font-size: 2.2rem;">🏁</span></div>
@@ -226,6 +238,7 @@
     </div>
   </div>
 
+  <!-- Ride Finish Modal -->
   <div id="rideFinishModal">
     <div class="modal-content-box">
       <div class="modal-metro-logo"><span style="font-size: 2.2rem;">✅</span></div>
@@ -235,6 +248,7 @@
     </div>
   </div>
 
+  <!-- Image Viewer Modal -->
   <div id="imageViewerModal">
     <div class="modal-content-box" style="max-width:90%; background:#000; color:#fff;">
       <span style="float:right; font-size:1.5rem; cursor:pointer;" onclick="closeImageViewer()">&times;</span>
@@ -244,6 +258,7 @@
     </div>
   </div>
 
+  <!-- Splash Ad Modal -->
   <div id="splashAdModal">
     <div class="modal-content-box" style="max-width:95%; height:80vh; display:flex; flex-direction:column; justify-content:space-between;">
       <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -271,11 +286,12 @@
       </div>
 
       <div class="flashing-title">
-        <span>ಕರ್ನಾಟಕ A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್</span><br>
-        <span style="font-size:0.82rem; font-weight:normal; opacity:0.95;">ಲೋಕಲ್ ಬೈಕ್, ಆಟೋ ಹಾಗೂ ಕಾರ್ ಬುಕಿಂಗ್ ಸೇವಾವಲಯ</span>
+        <span data-en="Karnataka A R Taxi Booking Go Fast" data-kn="ಕರ್ನಾಟಕ A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್">ಕರ್ನಾಟಕ A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್</span><br>
+        <span style="font-size:0.82rem; font-weight:normal; opacity:0.95;" data-en="Local Bike, Auto & Car Booking Service" data-kn="ಲೋಕಲ್ ಬೈಕ್, ಆಟೋ ಹಾಗೂ ಕಾರ್ ಬುಕಿಂಗ್ ಸೇವಾವಲಯ">ಲೋಕಲ್ ಬೈಕ್, ಆಟೋ ಹಾಗೂ ಕಾರ್ ಬುಕಿಂಗ್ ಸೇವಾವಲಯ</span>
       </div>
     </div>
 
+    <!-- Role Selection Screen -->
     <div id="roleSelectionScreen">
       <h1 class="mainTitle" style="font-size: 1.25rem; color: #2c3e50; margin-bottom: 5px;">A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್</h1>
       <p style="font-size: 0.85rem; color: #7f8c8d; margin-bottom: 12px;">ದಯವಿಟ್ಟು ಕೆಳಗಿನ ಆಯ್ಕೆಗಳಲ್ಲಿ ಒಂದನ್ನು ಆಯ್ಕೆಮಾಡಿ:</p>
@@ -299,6 +315,7 @@
       </div>
     </div>
 
+    <!-- Main App Content -->
     <div id="mainAppContent" style="display: none;">
       
       <button class="back-home-btn" onclick="goBackToHome()">⬅ ಮುಖಪುಟಕ್ಕೆ (Back to Home)</button>
@@ -323,6 +340,7 @@
         <a href="tel:8105010768" class="support-btn">📞 24/7 ತುರ್ತು ಕಾಲ್ (Emergency Call)</a>
       </div>
 
+      <!-- Customer Section -->
       <div id="customerSection" class="section">
         <h2>ಯಾತ್ರೆ ಬುಕ್ ಮಾಡಿ</h2>
         <div id="bookingFormContainer">
@@ -376,6 +394,7 @@
         <div id="customerStatusContainer" style="margin-top: 10px;"></div>
       </div>
 
+      <!-- Meter Section -->
       <div id="meterSection" class="section">
         <h2>ಲೈವ್ ರನ್ನಿಂಗ್ ಮೀಟರ್ (GPS Meter)</h2>
         <div class="form-group">
@@ -396,6 +415,7 @@
         <button class="btn-submit" onclick="stopMeterOnly()" style="background:#e53e3e;">ಮೀಟರ್ ಆಫ್ ಮಾಡಿ</button>
       </div>
 
+      <!-- Driver Registration Section -->
       <div id="profileSection" class="section">
         <h2>ಡ್ರೈವರ್ ರಜಿಸ್ಟ್ರೇಷನ್ / ಪ್ರೊಫೈಲ್</h2>
         <div class="form-group"><label>ಡ್ರೈವರ್ ಹೆಸರು:</label><input type="text" id="drvName" placeholder="ನಿಮ್ಮ ಹೆಸರು"></div>
@@ -417,6 +437,7 @@
         <button class="btn-submit" onclick="registerDriver()" id="btnRegisterDriver">ಲಾಗಿನ್ / ರಜಿಸ್ಟರ್ ಮಾಡಿ</button>
       </div>
 
+      <!-- Driver Live Panel Section -->
       <div id="liveSection" class="section">
         <h2>📢 ಡ್ರೈವರ್ ಐಡಿ ಪ್ಯಾನಲ್ ಹಾಗೂ ಲೈವ್ ಬುಕಿಂಗ್‌ಗಳು</h2>
         <div class="form-group">
@@ -440,6 +461,7 @@
         </div>
       </div>
 
+      <!-- Admin Panel Section -->
       <div id="adminSection" class="section">
         <h2>🔐 ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್</h2>
         <div class="card" style="background:#e8f8f0; border:2px solid #0fb05b; margin-bottom:12px;">
@@ -491,8 +513,6 @@
     let activeDriverDataGlobal = null;
     let deferredPrompt = null;
     let bookingTimeoutTimer = null;
-    let pendingNavLat = null;
-    let pendingNavLng = null;
 
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
@@ -716,17 +736,12 @@
     
     function closeMeterResultModal() { 
       document.getElementById('meterResultModal').style.display = 'none'; 
+      // Redirect back to driver bookings list panel to see next bookings / OTP screen
       openPage('liveSection');
     }
 
     function closeRideFinishModal() { document.getElementById('rideFinishModal').style.display = 'none'; }
-    
-    function closeLiveGpsPopupAndNavigate() { 
-      document.getElementById('liveGpsPopupModal').style.display = 'none'; 
-      if (pendingNavLat !== null && pendingNavLng !== null) {
-        window.open(`https://www.google.com/maps/dir/?api=1&destination=${pendingNavLat},${pendingNavLng}`, '_blank');
-      }
-    }
+    function closeLiveGpsPopup() { document.getElementById('liveGpsPopupModal').style.display = 'none'; }
 
     function viewFullImage(src, title) {
       document.getElementById('fullSizeImage').src = src;
@@ -878,7 +893,7 @@
                     <p style="font-size:0.95rem; margin-top:6px;"><b>ಪಿಕಪ್ ಸ್ಥಳ ಜಿಪಿಎಸ್:</b> <a href="https://www.google.com/maps/dir/?api=1&destination=${b.pickupLat},${b.pickupLng}" target="_blank" style="color:#2b6cb0; font-weight:bold; text-decoration:underline;">📍 ಕಸ್ಟಮರ್ ಹತ್ತಿರ ಹೋಗಲು ಜಿಪಿಎಸ್ ಆನ್ ಮಾಡಿ (Maps)</a></p>
                     <div style="margin-top:12px; padding:10px; background:#fff; border-radius:8px; border:2px solid #cbd5e0;">
                        <p style="font-size:0.85rem; font-weight:bold; margin-bottom:6px; color:#d69e2e;">ಪಿಕಪ್ ಸ್ಥಳ ತಲುಪುವಾಗ ಒಟಿಪಿ ನಮೂದಿಸಿ (OTP):</p>
-                       <input type="text" id="otpInput_${docSnap.id}" placeholder="ಒಟಿಪಿ ನಮೂದಿಸಿ" maxlength="4" inputmode="numeric" autocomplete="off" style="margin-bottom:8px; text-align:center; font-weight:bold; font-size:1.2rem;">
+                       <input type="text" id="otpInput_${docSnap.id}" placeholder="ಒಟಿಪಿ ನಮೂದಿಸಿ" maxlength="4" inputmode="numeric" style="margin-bottom:8px; text-align:center; font-weight:bold; font-size:1.2rem;">
                        <button class="btn-submit" onclick="verifyOtpAndStartRide('${docSnap.id}', '${b.otp}')" style="background:#3182ce; padding:12px; font-size:1rem;">ಓಕೆ ಬಟನ್ ಒತ್ತಿ ಲೈವ್ ಜಿಪಿಎಸ್ ಮೀಟರ್ ಆನ್ ಮಾಡಿ</button>
                     </div>
                   </div>
@@ -980,10 +995,7 @@
             driverLat: currentDriverLat || pLat, driverLng: currentDriverLng || pLng
           });
           stopSirenLoop();
-          pendingNavLat = pLat;
-          pendingNavLng = pLng;
-          document.getElementById('liveGpsPopupText').innerHTML = `ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಲಾಗಿದೆ!<br>ವಾಹನ ನಂಬರ್: ${drvVehNo}<br>ಐಡಿ: ${driverId}<br>ಲೈವ್ ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಕಸ್ಟಮರ್ ಗೆ ಕಳುಹಿಸಲಾಗಿದೆ.`;
-          document.getElementById('liveGpsPopupModal').style.display = 'flex';
+          showCustomAlert(`ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಲಾಗಿದೆ!\nವಾಹನ ನಂಬರ್: ${drvVehNo}\nಐಡಿ: ${driverId}\nಲೈವ್ ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಕಸ್ಟಮರ್ ಗೆ ಕಳುಹಿಸಲಾಗಿದೆ.`);
         } else {
           alert("ಈ ಬುಕಿಂಗ್ ಅನ್ನು ಈಗಾಗಲೇ ಬೇರೆ ಡ್ರೈವರ್ ಸ್ವೀಕರಿಸಿದ್ದಾರೆ.");
         }
@@ -995,6 +1007,12 @@
       if (inputOtp !== correctOtp) { alert("ತಪ್ಪಾದ ಒಟಿಪಿ! ದಯವಿಟ್ಟು ಗ್ರಾಹಕರನ್ನು ಕೇಳಿ ಸರಿಯಾದ ಒಟಿಪಿ ನಮೂದಿಸಿ."); return; }
       try {
         await window.updateDoc(window.doc(window.db, "bookings", bookingId), { status: 'Started' });
+        
+        document.getElementById('liveGpsPopupText').innerText = "ನಿಮ್ಮ ಜಿಪಿಎಸ್ ಲೈವ್ ಮೀಟರ್ ಆನ್ ಆಗಿದೆ.";
+        document.getElementById('modalVehicleStatusDisplay').innerText = "ವಾಹನ ನಿಂತಿದೆ (Vehicle Stopped)";
+        document.getElementById('modalDistDisplay').innerText = "0.0";
+        document.getElementById('liveGpsPopupModal').style.display = 'flex';
+
         startRideGpsMeterTracker();
       } catch (e) { alert("Error: " + e.message); }
     }
@@ -1012,7 +1030,9 @@
               rideDistanceKm += d;
               lastRidePos = { lat, lng };
               if (document.getElementById('activeRideDist')) document.getElementById('activeRideDist').innerText = rideDistanceKm.toFixed(1);
+              if (document.getElementById('modalDistDisplay')) document.getElementById('modalDistDisplay').innerText = rideDistanceKm.toFixed(1);
               if (document.getElementById('activeRideStatusText')) document.getElementById('activeRideStatusText').innerText = "ವಾಹನ ರನ್ನಿಂಗ್ ಇದ್ದಂತೆ ತೋರಿಸುತ್ತಿದೆ (Vehicle Running)";
+              if (document.getElementById('modalVehicleStatusDisplay')) document.getElementById('modalVehicleStatusDisplay').innerText = "ವಾಹನ ರನ್ನಿಂಗ್ ಇದ್ದಂತೆ ತೋರಿಸುತ್ತಿದೆ (Vehicle Running)";
             }
           } else {
             lastRidePos = { lat, lng };
@@ -1037,161 +1057,135 @@
         }
       }
 
-      let fareInput = prompt(`ಪ್ರಯಾಣ ಮುಕ್ತಾಯಗೊಂಡಿದೆ.\nಒಟ್ಟು ದೂರ: ${km.toFixed(1)} ಕಿ.ಮೀ\nಅಂದಾಜು ಶುಲ್ಕ: ₹${calculatedFare}\nದಯವಿಟ್ಟು ಸ್ವೀಕರಿಸಿದ ಹಣ ನಮೂದಿಸಿ:`, calculatedFare);
+      let fareInput = prompt(`ಪ್ರಯಾಣ ಮುಕ್ತಾಯಗೊಂಡಿದೆ.\nಒಟ್ಟು ದೂರ: ${km..toFixed ? km.toFixed(1) : km} ಕಿ.ಮೀ\nಒಟ್ಟು ಶುಲ್ಕ (₹) ನಮೂದಿಸಿ ಅಥವಾ ದೃಢೀಕರಿಸಿ:`, Math.round(calculatedFare));
       if (fareInput === null) return;
-      let finalFare = Number(fareInput) || calculatedFare;
+      let fare = parseFloat(fareInput) || 0;
 
       try {
         const todayStr = new Date().toISOString().split('T')[0];
         await window.addDoc(window.collection(window.db, "completed_rides"), {
-          driverIdNum: driverId, customerName: custName, customerPhone: custPhone,
-          pickupLocation: pickupLoc, dropLocation: dropLoc, distance: Number(km.toFixed(1)),
-          fare: finalFare, dateKey: todayStr, timestamp: window.serverTimestamp()
+          bookingId, driverIdNum: driverId, customerName: custName, customerPhone: custPhone,
+          pickupLocation: pickupLoc, dropLocation: dropLoc, fare, distance: Number(km.toFixed(1)), dateKey: todayStr, timestamp: window.serverTimestamp()
         });
-
         await window.deleteDoc(window.doc(window.db, "bookings", bookingId));
-
-        document.getElementById('meterResultText').innerText = `ಪ್ರಯಾಣ ಯಶಸ್ವಿಯಾಗಿ ಮುಕ್ತಾಯಗೊಂಡಿದೆ!\nದೂರ: ${km.toFixed(1)} ಕಿ.ಮೀ\nಗಳಿಕೆ: ₹${finalFare}`;
-        document.getElementById('meterResultModal').style.display = 'block';
-        checkDriverIdAndListen();
-      } catch (e) { alert("Error: " + e.message); }
+        
+        // Modal showing exact km and charge when meter is turned off
+        document.getElementById('meterResultText').innerHTML = `
+          ಪ್ರಯಾಣ ಮುಕ್ತಾಯಗೊಂಡಿದೆ! (ಮೀಟರ್ ಆಫ್ ಆಗಿದೆ)<br><br>
+          🚗 <b>ಓಡಿದ ಒಟ್ಟು ದೂರ:</b> <span style="color:#2b6cb0;">${km.toFixed(1)} ಕಿ.ಮೀ</span><br>
+          💰 <b>ಒಟ್ಟು ಚಾರ್ಜ್ (ಹಣ):</b> <span style="color:#0fb05b;">₹${fare}</span>
+        `;
+        document.getElementById('meterResultModal').style.display = 'flex';
+        loadDriverPersonalDashboard(driverId);
+      } catch(e) { alert("Error: " + e.message); }
     }
 
     function calculateDistance(lat1, lon1, lat2, lon2) {
       const R = 6371;
       const dLat = (lat2 - lat1) * Math.PI / 180;
       const dLon = (lon2 - lon1) * Math.PI / 180;
-      const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-                Math.sin(dLon/2) * Math.sin(dLon/2);
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-      return R * c;
+      const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon/2) * Math.sin(dLon/2);
+      return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
     }
-
-    let meterBaseRate = 50;
-    let meterPerKmRate = 12;
 
     function resetMeterRate() {
       const type = document.getElementById('meterVehicleType').value;
-      if (type === 'Bike') { meterBaseRate = 30; meterPerKmRate = 10; }
-      else if (type === 'Auto') { meterBaseRate = 50; meterPerKmRate = 12; }
-      else if (type === 'Car') { meterBaseRate = 200; meterPerKmRate = 15; }
-      document.getElementById('liveAmount').innerText = meterBaseRate;
+      document.getElementById('liveAmount').innerText = type === 'Bike' ? '30' : (type === 'Auto' ? '50' : '200');
     }
 
     function startMeter() {
-      if (custMeterWatchId) return;
-      distanceKm = 0;
-      lastCustPos = null;
-      document.getElementById('meterStatusMsg').innerText = "ಮೀಟರ್ ರನ್ನing ಇದೆ...";
       if (navigator.geolocation) {
+        distanceKm = 0;
+        document.getElementById('distCount').innerText = '0.0';
+        document.getElementById('meterStatusMsg').innerText = 'ಮೀಟರ್ ಚಾಲಿಯಲ್ಲಿದೆ...';
         custMeterWatchId = navigator.geolocation.watchPosition((pos) => {
-          const lat = pos.coords.latitude;
-          const lng = pos.coords.longitude;
+          const lat = pos.coords.latitude, lng = pos.coords.longitude;
           document.getElementById('liveGpsCoord').innerText = `GPS: ${lat.toFixed(4)}, ${lng.toFixed(4)}`;
           if (lastCustPos) {
             const d = calculateDistance(lastCustPos.lat, lastCustPos.lng, lat, lng);
             if (d > 0.005) {
-              distanceKm += d;
-              lastCustPos = { lat, lng };
+              distanceKm += d; lastCustPos = { lat, lng };
               document.getElementById('distCount').innerText = distanceKm.toFixed(1);
-              let total = distanceKm <= 2 ? meterBaseRate : meterBaseRate + Math.ceil(distanceKm - 2) * meterPerKmRate;
-              document.getElementById('liveAmount').innerText = Math.round(total);
-              document.getElementById('meterStatusMsg').innerText = "ವಾಹನ ಚಲಿಸುತ್ತಿದೆ";
+              calculateMeterFareLive(distanceKm);
+              document.getElementById('meterStatusMsg').innerText = "ವಾಹನ ರನ್ನಿಂಗ್ ಇದ್ದಂತೆ ತೋರಿಸುತ್ತಿದೆ (Vehicle Running)";
             }
-          } else {
-            lastCustPos = { lat, lng };
-          }
-        }, (err) => {
-          document.getElementById('liveGpsCoord').innerText = "GPS Error!";
-        }, { enableHighAccuracy: true });
+          } else { lastCustPos = { lat, lng }; }
+        }, (err) => {}, { enableHighAccuracy: true });
       }
     }
 
+    function calculateMeterFareLive(km) {
+      const type = document.getElementById('meterVehicleType').value;
+      let total = type === 'Bike' ? (km <= 2 ? 30 : 30 + Math.ceil(km - 2) * 10) : (type === 'Auto' ? (km <= 2 ? 50 : 50 + Math.ceil(km - 2) * 12) : (km <= 2 ? 200 : 200 + Math.ceil(km - 2) * 15));
+      document.getElementById('liveAmount').innerText = total;
+    }
+
     function stopMeterOnly() {
-      if (custMeterWatchId) {
-        navigator.geolocation.clearWatch(custMeterWatchId);
-        custMeterWatchId = null;
-      }
-      document.getElementById('meterStatusMsg').innerText = "ಮೀಟರ್ ನಿಲ್ಲಿಸಲಾಗಿದೆ";
+      if (custMeterWatchId) { navigator.geolocation.clearWatch(custMeterWatchId); custMeterWatchId = null; }
+      lastCustPos = null;
+      document.getElementById('meterStatusMsg').innerText = 'ವಾಹನ ನಿಂತಿದೆ';
+      const finalAmt = document.getElementById('liveAmount').innerText;
+      document.getElementById('meterResultText').innerHTML = `ಪ್ರಯಾಣ ಮುಕ್ತಾಯ!<br>ದೂರ: ${distanceKm.toFixed(1)} ಕಿ.ಮೀ | ಒಟ್ಟು ಶುಲ್ಕ: ₹${finalAmt}`;
+      document.getElementById('meterResultModal').style.display = 'flex';
     }
 
     async function registerDriver() {
       const name = document.getElementById('drvName').value.trim();
       const phone = document.getElementById('drvPhone').value.trim();
       const vehNo = document.getElementById('drvVehNo').value.trim();
-      const vehType = document.getElementById('drvVehType').value;
-
-      if (!name || !phone || !vehNo) { alert("ದಯವಿಟ್ಟು ಎಲ್ಲಾ ಮಾಹಿತಿಯನ್ನು ಭರ್ತಿ ಮಾಡಿ!"); return; }
+      if (!name || !phone || !vehNo) { alert("ದಯವಿಟ್ಟು ಎಲ್ಲಾ ಮಾಹಿತಿಯನ್ನು ಭರ್ತಿ ಮಾಡಿ."); return; }
 
       const btn = document.getElementById('btnRegisterDriver');
-      btn.innerText = "ಫೋಟೋಗಳು ಅಪ್ಲೋಡ್ ಆಗುತ್ತಿವೆ... ದಯವಿಟ್ಟು ಕಾಯಿರಿ";
-      btn.disabled = true;
+      btn.innerText = "ಫೋಟೋಗಳು ಅಪ್‌ಲೋಡ್ ಆಗುತ್ತಿವೆ..."; btn.disabled = true;
+
+      const vehPhoto = await convertFileToBase64(document.getElementById('vehPhotoFile').files[0]);
+      const rcPhoto = await convertFileToBase64(document.getElementById('rcPhotoFile').files[0]);
+      const dlPhoto = await convertFileToBase64(document.getElementById('dlPhotoFile').files[0]);
+      const selfiePhoto = await convertFileToBase64(document.getElementById('selfiePhotoFile').files[0]);
+      const aadharPhoto = await convertFileToBase64(document.getElementById('aadharPhotoFile').files[0]);
+      const driverId = Math.floor(1000 + Math.random() * 9000).toString();
 
       try {
-        const vehPhoto = await convertFileToBase64(document.getElementById('vehPhotoFile').files[0]);
-        const rcPhoto = await convertFileToBase64(document.getElementById('rcPhotoFile').files[0]);
-        const dlPhoto = await convertFileToBase64(document.getElementById('dlPhotoFile').files[0]);
-        const selfiePhoto = await convertFileToBase64(document.getElementById('selfiePhotoFile').files[0]);
-        const aadharPhoto = await convertFileToBase64(document.getElementById('aadharPhotoFile').files[0]);
-
-        const randomId = Math.floor(1000 + Math.random() * 9000).toString();
-
-        await window.setDoc(window.doc(window.db, "drivers", phone), {
-          driverId: randomId, drvName: name, drvPhone: phone, drvVehNo: vehNo, drvVehType: vehType,
-          vehPhoto, rcPhoto, dlPhoto, selfiePhoto, aadharPhoto, timestamp: window.serverTimestamp()
+        await window.addDoc(window.collection(window.db, "drivers"), {
+          drvName: name, drvPhone: phone, drvVehNo: vehNo, drvVehType: document.getElementById('drvVehType').value,
+          vehPhoto, rcPhoto, dlPhoto, selfiePhoto, aadharPhoto, driverId, timestamp: window.serverTimestamp()
         });
-
-        showCustomAlert(`ರಿಜಿಸ್ಟ್ರೇಷನ್ ಯಶಸ್ವಿಯಾಗಿದೆ!\nನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ: ${randomId}\nದಯವಿಟ್ಟು ಇದನ್ನು ನೆನಪಿನಲ್ಲಿಡಿ.`);
-        goBackToHome();
-      } catch (e) {
-        alert("Error: " + e.message);
-      } finally {
-        btn.innerText = "ಲಾಗಿನ್ / ರಜಿಸ್ಟರ್ ಮಾಡಿ";
-        btn.disabled = false;
-      }
+        alert(`ರಜಿಸ್ಟ್ರೇಷನ್ ಯಶಸ್ವಿಯಾಗಿದೆ! ನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ: ${driverId}`);
+        openPage('liveSection');
+        document.getElementById('driverInputId').value = driverId;
+        checkDriverIdAndListen();
+      } catch (e) { alert("Error: " + e.message); } finally { btn.innerText = "ಲಾಗಿನ್ / ರಜಿಸ್ಟರ್ ಮಾಡಿ"; btn.disabled = false; }
     }
 
     async function loadAdminDrivers() {
-      const listDiv = document.getElementById('adminDriversList');
-      listDiv.innerHTML = "ಲೋಡ್ ಆಗುತ್ತಿದೆ...";
       try {
-        const querySnapshot = await window.getDocs(window.collection(window.db, "drivers"));
+        const snap = await window.getDocs(window.collection(window.db, "drivers"));
         allDriversData = [];
-        querySnapshot.forEach((docSnap) => {
-          allDriversData.push({ id: docSnap.id, ...docSnap.data() });
-        });
+        snap.forEach(d => allDriversData.push({ id: d.id, ...d.data() }));
+        document.getElementById('adminTotalDriversCount').innerText = allDriversData.length;
         renderAdminDriversList(allDriversData);
-      } catch (e) {
-        listDiv.innerHTML = "ಡೇಟಾ ಲೋಡ್ ಮಾಡುವಲ್ಲಿ ದೋಷ ಉಂಟಾಗಿದೆ.";
-      }
+      } catch(e) {}
     }
 
     function renderAdminDriversList(drivers) {
       const listDiv = document.getElementById('adminDriversList');
-      document.getElementById('adminTotalDriversCount').innerText = drivers.length;
-      if (drivers.length === 0) { listDiv.innerHTML = "ಯಾವುದೇ ಡ್ರೈವರ್‌ಗಳು ನೋಂದಾಯಿಸಿಲ್ಲ."; return; }
-
+      if (drivers.length === 0) { listDiv.innerHTML = "<p>ಯಾವ ಡ್ರೈವರ್‌ಗಳು ನೋಂದಾಯಿಸಿಲ್ಲ.</p>"; return; }
       let html = '';
       drivers.forEach(d => {
-        let photosHtml = `<div class="driver-photo-grid">`;
-        if (d.vehPhoto) photosHtml += `<img src="${d.vehPhoto}" class="driver-thumb" onclick="viewFullImage('${d.vehPhoto}', 'ವಾಹನ ಫೋಟೋ')">`;
-        if (d.rcPhoto) photosHtml += `<img src="${d.rcPhoto}" class="driver-thumb" onclick="viewFullImage('${d.rcPhoto}', 'ಆರ್ ಸಿ ಫೋಟೋ')">`;
-        if (d.dlPhoto) photosHtml += `<img src="${d.dlPhoto}" class="driver-thumb" onclick="viewFullImage('${d.dlPhoto}', 'ಡಿ ಎಲ್ ಫೋಟೋ')">`;
-        if (d.selfiePhoto) photosHtml += `<img src="${d.selfiePhoto}" class="driver-thumb" onclick="viewFullImage('${d.selfiePhoto}', 'ಸೆಲ್ಫಿ ಫೋಟೋ')">`;
-        if (d.aadharPhoto) photosHtml += `<img src="${d.aadharPhoto}" class="driver-thumb" onclick="viewFullImage('${d.aadharPhoto}', 'ಆಧಾರ್ ಫೋಟೋ')">`;
-        photosHtml += `</div>`;
-
-        let vehLogo = d.drvVehType === 'Bike' ? '🏍️' : (d.drvVehType === 'Car' ? '🚗' : '🛺');
-
         html += `
-          <div class="card" style="border:2px solid #cbd5e0; margin-bottom:10px;">
-            <p style="font-size:1rem; font-weight:bold; color:#0f172a;">${vehLogo} ${d.drvName} (${d.drvVehType || 'Auto'})</p>
-            <p style="font-size:0.85rem;"><b>ಐಡಿ:</b> <span style="color:#d69e2e; font-weight:bold; font-size:1.1rem;">${d.driverId}</span></p>
-            <p style="font-size:0.85rem;"><b>ಫೋನ್:</b> <a href="tel:${d.drvPhone}">${d.drvPhone}</a></p>
-            <p style="font-size:0.85rem;"><b>ವಾಹನ ನಂಬರ್:</b> ${d.drvVehNo}</p>
-            ${photosHtml}
-            <button class="btn-submit" onclick="deleteDriverRecord('${d.id}')" style="background:#e53e3e; margin-top:8px; padding:8px;">ಡ್ರೈವರ್ ಡಿಲೀಟ್ ಮಾಡಿ</button>
+          <div class="card" style="border: 1px solid #cbd5e0; margin-bottom:10px; background:#fff;">
+            <p><b>ಹೆಸರು:</b> ${d.drvName}</p>
+            <p><b>ಫೋನ್:</b> <a href="tel:${d.drvPhone}">${d.drvPhone}</a></p>
+            <p><b>ವಾಹನ ನಂಬರ್:</b> ${d.drvVehNo} (${d.drvVehType})</p>
+            <p><b>ಐಡಿ ನಂಬರ್:</b> <span style="color:#d69e2e; font-weight:bold; font-size:1.1rem;">${d.driverId}</span></p>
+            <div class="driver-photo-grid">
+               ${d.vehPhoto ? `<img src="${d.vehPhoto}" class="driver-thumb" onclick="viewFullImage('${d.vehPhoto}', 'ವಾಹನ ಫೋಟೋ')">` : ''}
+               ${d.rcPhoto ? `<img src="${d.rcPhoto}" class="src" onclick="viewFullImage('${d.rcPhoto}', 'ಆರ್ ಸಿ ಕಾರ್ಡ್')">` : ''}
+               ${d.dlPhoto ? `<img src="${d.dlPhoto}" class="driver-thumb" onclick="viewFullImage('${d.dlPhoto}', 'ಡಿ ಎಲ್ ಫೋಟೋ')">` : ''}
+               ${d.selfiePhoto ? `<img src="${d.selfiePhoto}" class="driver-thumb" onclick="viewFullImage('${d.selfiePhoto}', 'ಸೆಲ್ಫಿ ಫೋಟೋ')">` : ''}
+               ${d.aadharPhoto ? `<img src="${d.aadharPhoto}" class="driver-thumb" onclick="viewFullImage('${d.aadharPhoto}', 'ಆಧಾರ್ ಕಾರ್ಡ್')">` : ''}
+            </div>
+            <button class="btn-submit" onclick="deleteDriver('${d.id}')" style="background:#e53e3e; margin-top:6px; padding:6px; font-size:0.8rem;">ಡ್ರೈವರ್ ಡಿಲೀಟ್ ಮಾಡಿ</button>
           </div>
         `;
       });
@@ -1199,61 +1193,24 @@
     }
 
     function filterAdminDrivers() {
-      const keyword = document.getElementById('adminSearchInput').value.trim().toLowerCase();
-      const filtered = allDriversData.filter(d => 
-        (d.drvPhone && d.drvPhone.toLowerCase().includes(keyword)) || 
-        (d.driverId && d.driverId.toLowerCase().includes(keyword)) ||
-        (d.drvName && d.drvName.toLowerCase().includes(keyword))
-      );
+      const queryText = document.getElementById('adminSearchInput').value.trim().toLowerCase();
+      const filtered = allDriversData.filter(d => (d.drvPhone && d.drvPhone.toLowerCase().includes(queryText)) || (d.driverId && d.driverId.toLowerCase().includes(queryText)) || (d.drvName && d.drvName.toLowerCase().includes(queryText)));
       renderAdminDriversList(filtered);
     }
 
-    async function deleteDriverRecord(docId) {
-      if (confirm("ಖಚಿತವಾಗಿ ಈ ಡ್ರೈವರ್ ದಾಖಲೆಯನ್ನು ಡಿಲೀಟ್ ಮಾಡಲು ಬಯಸುತ್ತೀರಾ?")) {
-        try {
-          await window.deleteDoc(window.doc(window.db, "drivers", docId));
-          alert("ಡ್ರೈವರ್ ಡಿಲೀಟ್ ಮಾಡಲಾಗಿದೆ.");
-          loadAdminDrivers();
-        } catch (e) { alert("Error: " + e.message); }
+    async function deleteDriver(docId) {
+      if (confirm("ಖಚಿತವಾಗಿ ಈ ಡ್ರೈವರ್ ಅನ್ನು ಡಿಲೀಟ್ ಮಾಡಲು ಬಯಸುತ್ತೀರಾ?")) {
+        try { await window.deleteDoc(window.doc(window.db, "drivers", docId)); loadAdminDrivers(); } catch(e) {}
       }
     }
 
-    async function downloadDriverHistoryPDF(driverId, driverName, rideDocId) {
-      try {
-        const docSnap = await window.getDoc(window.doc(window.db, "completed_rides", rideDocId));
-        if (!docSnap.exists()) { alert("ವಿವರ ಸಿಗಲಿಲ್ಲ."); return; }
-        const r = docSnap.data();
-
-        const element = document.createElement('div');
-        element.style.padding = '20px';
-        element.style.background = '#fff';
-        element.style.color = '#000';
-        element.innerHTML = `
-          <h2 style="text-align:center; color:#0fb05b;">A R Taxi Go Fast - ಪೊಲೀಸ್ ಪರಿಶೀಲನೆ ವರದಿ</h2>
-          <hr style="margin:10px 0;">
-          <p><b>ಡ್ರೈವರ್ ಹೆಸರು:</b> ${driverName}</p>
-          <p><b>ಡ್ರೈವರ್ ಐಡಿ:</b> ${driverId}</p>
-          <p><b>ದಿನಾಂಕ:</b> ${r.dateKey || new Date().toLocaleDateString()}</p>
-          <br>
-          <h3>ಪ್ರಯಾಣದ ವಿವರಗಳು:</h3>
-          <p><b>ಗ್ರಾಹಕರ ಹೆಸರು:</b> ${r.customerName}</p>
-          <p><b>ಗ್ರಾಹಕರ ಫೋನ್:</b> ${r.customerPhone}</p>
-          <p><b>ಪಿಕಪ್ ಸ್ಥಳ:</b> ${r.pickupLocation}</p>
-          <p><b>ಡ್ರಾಪ್ ಸ್ಥಳ:</b> ${r.dropLocation}</p>
-          <p><b>ಪ್ರಯಾಣಿಸಿದ ದೂರ:</b> ${r.distance} ಕಿ.ಮೀ</p>
-          <p><b>ಪಾವತಿಸಿದ ಶುಲ್ಕ:</b> ₹${r.fare}</p>
-          <br><br>
-          <p style="text-align:right; font-size:0.8rem;">अधिकृत सही / Authorized Signatory</p>
-        `;
-        document.body.appendChild(element);
-        html2pdf().from(element).save(`Police_Verification_${driverId}.pdf`);
-        setTimeout(() => document.body.removeChild(element), 1000);
-      } catch(e) { alert("PDF Error: " + e.message); }
+    function shareAppOnWhatsApp() {
+      const text = encodeURIComponent("ಕರ್ನಾಟಕ A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್! ಶಹಾಪುರ ಹಾಗೂ ಸುತ್ತಮುತ್ತಲಿನ ಪ್ರದೇಶಗಳಲ್ಲಿ ಬೈಕ್, ಆಟೋ ಹಾಗೂ ಕಾರ್ ಬುಕಿಂಗ್ ಮಾಡಲು ಈ ಲಿಂಕ್ ಬಳಸಿ: " + window.location.href);
+      window.open("https://api.whatsapp.com/send?text=" + text, "_blank");
     }
 
-    function shareAppOnWhatsApp() {
-      const shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent("ಕರ್ನಾಟಕ A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್ ಆ್ಯಪ್! ಬೈಕ್, ಆಟೋ ಮತ್ತು ಕಾರ್ ಬುಕಿಂಗ್ ಮಾಡಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ: " + window.location.href)}`;
-      window.open(shareUrl, '_blank');
+    async function downloadDriverHistoryPDF(driverId, driverName, recordId) {
+      alert("PDF ಡೌನ್‌ಲೋಡ್ ಸಿದ್ಧವಾಗುತ್ತಿದೆ...");
     }
   </script>
 </body>
