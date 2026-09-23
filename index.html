@@ -695,14 +695,13 @@
         });
 
         myActiveBookingId = docRef.id;
-        showCustomAlert("ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸಲ್ಲಿಸಲಾಗಿದೆ! ಡ್ರೈವರ್ ಸ್ವೀಕರಿಸಿದಾಗ ಲೈವ್ ಮಾಹಿತಿ ಸಿಗುತ್ತದೆ.");
+        showCustomAlert("ನಿಮ್ಮ ಬುಕಿಂಗ್ ಅನ್ನು ಡ್ರೈವರ್‌ಗೆ ಕಳುಹಿಸಲಾಗಿದೆ. ದಯವಿಟ್ಟು ವೇಟ್ ಮಾಡಿ, ಡ್ರೈವರ್ ಸ್ವೀಕರಿಸಿದ ಕೂಡಲೇ ವಿವರಗಳು ಇಲ್ಲಿ ಕಾಣಿಸಿಕೊಳ್ಳುತ್ತವೆ.");
 
         document.getElementById('bookingFormContainer').style.display = 'none';
         document.getElementById('customerStatusContainer').innerHTML = `
           <div class="card" style="text-align:center; background:#e8f8f0; border:2px solid #0fb05b;">
-            <p style="font-weight:bold; color:#065f46; margin-bottom:8px;">🎉 ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸಲ್ಲಿಸಲಾಗಿದೆ!</p>
+            <p style="font-weight:bold; color:#065f46; margin-bottom:8px;">ನಿಮ್ಮ ಬುಕಿಂಗ್ ಅನ್ನು ಡ್ರೈವರ್‌ಗೆ ಕಳುಹಿಸಲಾಗಿದೆ. ವೇಟ್ ಮಾಡಿ...</p>
             <p style="font-size:1.1rem; color:#d69e2e; font-weight:bold; margin-bottom:8px;">OTP: ${pickupOtp}</p>
-            <p style="font-size:0.8rem; color:#2d3748; margin-bottom:10px;">ಡ್ರೈವರ್ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಲು ಕಾಯಲಾಗುತ್ತಿದೆ...</p>
             <button class="btn-submit" onclick="cancelCustomerBooking()" style="background:#e53e3e;">ಬುಕಿಂಗ್ ರದ್ದುಗೊಳಿಸಿ</button>
           </div>
         `;
@@ -737,19 +736,19 @@
         if (docSnap.exists()) {
           const data = docSnap.data();
           if (data.status === 'Accepted' || data.status === 'Started') {
-            let gpsMapBtn = data.driverLat && data.driverLng ? `<a href="https://www.google.com/maps?q=${data.driverLat},${data.driverLng}" target="_blank" class="btn-submit" style="display:block; text-decoration:none; background:#2b6cb0; margin-top:8px; text-align:center;">📍 ಡ್ರೈವರ್ ಲೈವ್ ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ನೋಡಿ</a>` : `<p style="font-size:0.8rem; color:#d69e2e; margin-top:6px;">ಡ್ರೈವರ್ ಜಿಪಿಎಸ್ ಸಿಗ್ನಲ್ ಪಡೆಯಲಾಗುತ್ತಿದೆ...</p>`;
+            let gpsMapBtn = data.driverLat && data.driverLng ? `<a href="https://www.google.com/maps?q=${data.driverLat},${data.driverLng}" target="_blank" class="btn-submit" style="display:block; text-decoration:none; background:#2b6cb0; margin-top:8px; text-align:center;">📍 ಡ್ರೈವರ್ ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ನೋಡಿ</a>` : `<p style="font-size:0.8rem; color:#d69e2e; margin-top:6px;">ಡ್ರೈವರ್ ಜಿಪಿಎಸ್ ಸಿಗ್ನಲ್ ಪಡೆಯಲಾಗುತ್ತಿದೆ...</p>`;
 
             document.getElementById('customerStatusContainer').innerHTML = `
               <div class="card" style="text-align:center; background:#f0fff4; border:2px solid #38a169;">
-                <p style="font-size:1rem; font-weight:bold; color:#22543d; margin-bottom:5px;">✅ ಡ್ರೈವರ್ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿದ್ದಾರೆ!</p>
+                <p style="font-size:1rem; font-weight:bold; color:#22543d; margin-bottom:5px;">✅ ಡ್ರೈವರ್ ನಿಮ್ಮ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿದ್ದಾರೆ!</p>
                 <div style="background:#fff3cd; padding:8px; border-radius:6px; margin: 8px 0;">
-                   <span style="font-size:0.85rem; color:#856404; font-weight:bold;">OTP: </span><span style="font-size:1.2rem; color:#d69e2e; font-weight:bold;">${data.otp || ''}</span>
+                   <span style="font-size:0.85rem; color:#856404; font-weight:bold;">ನಿಮ್ಮ ಒಟಿಪಿ (OTP): </span><span style="font-size:1.2rem; color:#d69e2e; font-weight:bold;">${data.otp || ''}</span>
                 </div>
-                <p style="font-size:0.85rem;"><b>ಡ್ರೈವರ್ ಹೆಸರು:</b> ${data.driverName || ''}</p>
-                <p style="font-size:0.85rem;"><b>ಐಡಿ ನಂಬರ್:</b> ${data.driverIdNum || ''}</p>
-                <p style="font-size:0.85rem;"><b>ಮೊಬೈಲ್:</b> <a href="tel:${data.driverPhone}">${data.driverPhone || ''}</a></p>
-                <p style="font-size:0.85rem;"><b>ವಾಹನ ನಂಬರ್:</b> ${data.driverVehNo || ''}</p>
-                <a href="tel:${data.driverPhone}" class="btn-submit" style="display:block; text-decoration:none; background:#3182ce; margin-top:8px; text-align:center;">📞 ಕಾಲ್ ಮಾಡಿ</a>
+                <p style="font-size:0.9rem;"><b>ಡ್ರೈವರ್ ಹೆಸರು:</b> ${data.driverName || ''}</p>
+                <p style="font-size:0.9rem;"><b>ಐಡಿ ನಂಬರ್:</b> ${data.driverIdNum || ''}</p>
+                <p style="font-size:0.9rem;"><b>ವಾಹನ ನಂಬರ್:</b> ${data.driverVehNo || ''}</p>
+                <p style="font-size:0.9rem;"><b>ಮೊಬೈಲ್ ನಂಬರ್:</b> <a href="tel:${data.driverPhone}">${data.driverPhone || ''}</a></p>
+                <a href="tel:${data.driverPhone}" class="btn-submit" style="display:block; text-decoration:none; background:#3182ce; margin-top:8px; text-align:center;">📞 ಕಾಲ್ ಮಾಡಿ (Call Driver)</a>
                 ${gpsMapBtn}
               </div>
             `;
