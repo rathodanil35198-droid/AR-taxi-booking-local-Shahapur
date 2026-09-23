@@ -237,8 +237,7 @@
     .driver-photo-grid { display: flex; gap: 6px; margin: 8px 0; overflow-x: auto; }
     .driver-thumb { width: 60px; height: 60px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e0; cursor: pointer; }
     
-    /* ಸಂಪೂರ್ಣ ಲಾಕ್ ಶೈಲಿ */
-    .locked-card { pointer-events: none; opacity: 0.6; filter: grayscale(50%); }
+    .locked-card { opacity: 0.5; filter: grayscale(80%); pointer-events: none; display: none !important; }
     .lock-badge { background: #e53e3e; color: white; font-weight: bold; font-size: 0.8rem; padding: 4px 8px; border-radius: 6px; display: inline-block; margin-bottom: 6px; }
   </style>
 </head>
@@ -1026,7 +1025,7 @@
         let driverHasActiveBooking = false;
         const todayStr = new Date().toISOString().split('T')[0];
 
-        // ಮೊದಲು ಈ ಡ್ರೈವರ್ ಈಗಾಗಲೇ ಯಾವುದಾದರೂ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿದ್ದಾರಾ ಎಂದು ಪರಿಶೀಲಿಸುವುದು
+        // ಈ ಡ್ರೈವರ್ ಈಗಾಗಲೇ ಯಾವುದಾದರೂ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿದ್ದಾರಾ ಎಂದು ಪರಿಶೀಲಿಸುವುದು
         snapshot.forEach((docSnap) => {
           const b = docSnap.data();
           if ((b.dateKey || '') === todayStr && (b.status === 'Accepted' || b.status === 'Started') && b.driverIdNum === driverData.driverId) {
@@ -1052,24 +1051,16 @@
 
               if (b.status === 'Pending') {
                 if (driverHasActiveBooking) {
-                  // ಈಗಾಗಲೇ ಬುಕಿಂಗ್ ಲಾಕ್ ಆಗಿದ್ದರೆ, ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು ಸಂಪೂರ್ಣ ಲಾಕ್ ಆಗಿ ಕಾಣಿಸಬೇಕು
-                  pendingHtml += `
-                    <div class="card locked-card" style="border: 2px solid #e53e3e; background:#fff5f5; margin-bottom:10px;">
-                      <div class="lock-badge">🔒 ಈ ರೋಡ್ ಮುಗಿದಿದೆ / ಸಂಪೂರ್ಣ ಲಾಕ್ ಆಗಿದೆ</div>
-                      <p style="font-size: 1.1rem; margin-bottom: 4px;"><b>ವಾಹನ:</b> ${vehLogo} ${b.vehicleType}</p>
-                      <p style="font-size:0.95rem;"><b>ಗ್ರಾಹಕರು:</b> ${b.customerName}</p>
-                      <p style="font-size:0.95rem;"><b>ಪಿಕಪ್ ಸ್ಥಳ:</b> ${b.pickupLocation}</p>
-                      <p style="font-size:0.95rem;"><b>ಡ್ರಾಪ್ ಸ್ಥಳ:</b> <strong>${b.dropLocation}</strong></p>
-                    </div>
-                  `;
+                  // ಈಗಾಗಲೇ ಡ್ರೈವರ್ ರೈಡ್‌ನಲ್ಲಿ ಇದ್ದರೆ ಹೊಸ ಬುಕಿಂಗ್‌ಗಳನ್ನು ಸಂಪೂರ್ಣ ಮರೆಮಾಚಲಾಗುತ್ತದೆ (ಹಳೆ ಬುಕಿಂಗ್‌ಗಳು ಸಂಪೂರ್ಣ ಮಾಯ)
+                  // ಯಾವುದೇ ಲಾಕ್ ಕಾರ್ಡ್ ಪ್ರದರ್ಶಿಸುವುದಿಲ್ಲ
                 } else {
+                  // ಬೇರೆ ಯಾರಾದರೂ ಈ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿದ್ದರೆ ಅಥವಾ ಇದು ಹೊಸದಾಗಿದ್ದರೆ
                   hasPendingToAccept = true;
                   pendingHtml += `
                     <div class="card" style="border: 2px solid #0fb05b; background:#f7fafc; margin-bottom:10px;">
                       <p style="background:#e8f8f0; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#065f46;">⚠️ ಹೊಸ ${b.vehicleType} ಬುಕಿಂಗ್ ಬಂದಿದೆ!</p>
                       <p style="font-size: 1.1rem; margin-bottom: 4px;"><b>ವಾಹನ:</b> ${vehLogo} ${b.vehicleType}</p>
                       <p style="font-size:0.95rem;"><b>ಗ್ರಾಹಕರು:</b> ${b.customerName}</p>
-                      <p style="font-size:0.95rem;"><b>ಫೋನ್ ನಂಬರ್:</b> <a href="tel:${b.customerPhone}">${b.customerPhone}</a></p>
                       <p style="font-size:0.95rem;"><b>ಪ್ರಯಾಣಿಕರು:</b> ${b.passengers}</p>
                       <p style="font-size:0.95rem;"><b>ಪಿಕಪ್ ಸ್ಥಳ:</b> <a href="https://www.google.com/maps/search/?api=1&query=${b.pickupLat},${b.pickupLng}" target="_blank" style="color:#3182ce;">${b.pickupLocation}</a> (~${dist.toFixed(2)} ಕಿ.ಮೀ)</p>
                       <p style="font-size:0.95rem;"><b>ಡ್ರಾಪ್ ಸ್ಥಳ:</b> <strong style="color:#d69e2e;">${b.dropLocation}</strong></p>
