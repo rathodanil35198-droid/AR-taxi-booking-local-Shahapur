@@ -207,13 +207,13 @@
     <button id="installAppBtn" style="background:#fff; color:#ff5e62; border:none; padding:6px 12px; border-radius:15px; font-weight:bold; font-size:0.8rem; cursor:pointer;" data-en="Install" data-kn="📥 Install">📥 Install</button>
   </div>
 
-  <!-- Custom Alert Modal -->
+  <!-- Custom Alert Modal (Driver Acceptance Popup) -->
   <div id="customAlertModal">
     <div class="modal-content-box">
       <div style="font-size: 2.5rem; margin-bottom: 10px;">🛺</div>
       <h3 style="color: #2d3748; margin-bottom: 10px;">A R Taxi Go Fast</h3>
       <p id="customAlertText" style="font-size: 0.9rem; color: #4a5568; line-height: 1.6; margin-bottom: 20px;"></p>
-      <button class="btn-submit" onclick="closeCustomAlert()">ಸರಿ (OK)</button>
+      <button class="btn-submit" onclick="closeCustomAlertAndNavigate()">ಸರಿ (OK)</button>
     </div>
   </div>
 
@@ -232,7 +232,7 @@
     </div>
   </div>
 
-  <!-- Ride Summary Modal (Stop Button Popup) -->
+  <!-- Ride Summary Modal (Stop Button Popup with KM & Charges) -->
   <div id="rideSummaryModal" style="display:none; position:fixed; z-index:10000; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.85); text-align:center; padding:20px; overflow-y:auto;">
     <div class="modal-content-box" style="border: 3px solid #d69e2e;">
       <div style="font-size: 2.5rem; margin-bottom: 10px;">📊</div>
@@ -525,6 +525,7 @@
     let pendingFinishCustPhone = null;
     let pendingFinishPickupLoc = null;
     let pendingFinishDropLoc = null;
+    let pendingNavigationUrl = null; // ನ್ಯಾವಿಗೇಷನ್ ಲಿಂಕ್ ಸ್ಟೋರ್ ಮಾಡಲು
 
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
@@ -686,10 +687,20 @@
       } catch (e) { alert('Error: ' + e.message); }
     }
 
-    function showCustomAlert(msg) {
+    function showCustomAlert(msg, navUrl) {
       document.getElementById('customAlertText').innerText = msg;
+      pendingNavigationUrl = navUrl; // ಜಿಪಿಎಸ್ ಮ್ಯಾಪ್ ಲಿಂಕ್ ಉಳಿಸಿಕೊಳ್ಳಿ
       document.getElementById('customAlertModal').style.display = 'block';
     }
+    
+    function closeCustomAlertAndNavigate() {
+      document.getElementById('customAlertModal').style.display = 'none';
+      if (pendingNavigationUrl) {
+        window.open(pendingNavigationUrl, '_blank'); // ಓಕೆ ಒತ್ತಿದ ತಕ್ಷಣ ರೋಡ್ ಮ್ಯಾಪ್ ಓಪನ್ ಆಗುತ್ತದೆ
+        pendingNavigationUrl = null;
+      }
+    }
+
     function closeCustomAlert() { document.getElementById('customAlertModal').style.display = 'none'; }
     function closeMeterResultModal() { 
       document.getElementById('meterResultModal').style.display = 'none'; 
@@ -829,7 +840,16 @@
         let pendingHtml = '';
         let acceptedHtml = '';
         let hasPendingToAccept = false;
+        let hasActiveOrAcceptedByMe = false; // ಬೇರೆ ಹಳೇ ಬುಕಿಂಗ್‌ಗಳನ್ನು ಲಾಕ್ ಮಾಡಲು
         const todayStr = new Date().toISOString().split('T')[0];
+
+        // ಮೊದಲು ಈ ಡ್ರೈವರ್‌ಗೆ ಯಾವುದಾದರೂ ಅಕ್ಸೆಪ್ಟ್ ಅಥವಾ ಸ್ಟಾರ್ಟ್ ಆದ ಬುಕಿಂಗ್ ಇದೆಯಾ ಎಂದು ಚೆಕ್ ಮಾಡಿ
+        snapshot.forEach((docSnap) => {
+          const b = docSnap.data();
+          if ((b.status === 'Accepted' || b.status === 'Started') && b.driverIdNum === driverData.driverId) {
+            hasActiveOrAcceptedByMe = true;
+          }
+        });
 
         snapshot.forEach((docSnap) => {
           const b = docSnap.data();
@@ -843,6 +863,9 @@
               let vehLogo = b.vehicleType === 'Bike' ? '🏍️' : (b.vehicleType === 'Car' ? '🚗' : '🛺');
 
               if (b.status === 'Pending') {
+                // ಒಂದು ವೇಳೆ ಡ್ರೈವರ್ ಹತ್ತಿರ ಈಗಾಗಲೇ ಆಕ್ಟಿವ್ ಬುಕಿಂಗ್ ಇದ್ದರೆ ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು ಲಾಕ್ ಆಗಿರಬೇಕು (ಕಾರ್ಯನಿರ್ವಹಿಸಬಾರದು)
+                if (hasActiveOrAcceptedByMe) return; 
+
                 hasPendingToAccept = true;
                 pendingHtml += `
                   <div class="card" style="border: 2px solid #0fb05b; background:#f7fafc; margin-bottom:10px;">
@@ -890,9 +913,16 @@
           }
         });
 
-        if (hasPendingToAccept) startSirenLoop(); else stopSirenLoop();
+        if (hasPendingToAccept && !hasActiveOrAcceptedByMe) startSirenLoop(); else stopSirenLoop();
 
-        let combinedHtml = pendingHtml || `<p style="color: #718096; font-weight: bold; margin-bottom: 10px;">${currentLang === 'kn' ? `ನಿಮ್ಮ ವಾಹನಕ್ಕೆ (${driverData.drvVehType}) ತಕ್ಕಂತೆ ಲೈವ್ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.` : `No live bookings for your vehicle (${driverData.drvVehType}).`}</p>`;
+        // ಒಂದು ವೇಳೆ ಆಕ್ಟಿವ್ ಬುಕಿಂಗ್ ಇದ್ದರೆ ಹೊಸ ಬುಕಿಂಗ್ ಜಾಗದಲ್ಲಿ ಲಾಕ್ ಸಂದೇಶ ತೋರಿಸಿ
+        let combinedHtml = '';
+        if (hasActiveOrAcceptedByMe) {
+          combinedHtml = `<div class="card" style="background:#fff3cd; border:2px solid #ffeeba; text-align:center; padding:15px; margin-bottom:10px;"><p style="font-weight:bold; color:#856404; font-size:0.95rem;">🔒 ${currentLang === 'kn' ? 'ನಿಮ್ಮ ಪ್ರಸ್ತುತ ಬುಕಿಂಗ್ ಮುಗಿಯುವವರೆಗೆ ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು ಲಾಕ್ ಆಗಿರುತ್ತವೆ (ಕಾಣಿಸುವುದಿಲ್ಲ).' : 'New bookings are locked until current trip finishes.'}</p></div>`;
+        } else {
+          combinedHtml = pendingHtml || `<p style="color: #718096; font-weight: bold; margin-bottom: 10px;">${currentLang === 'kn' ? `ನಿಮ್ಮ ವಾಹನಕ್ಕೆ (${driverData.drvVehType}) ತಕ್ಕಂತೆ ಲೈವ್ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.` : `No live bookings for your vehicle (${driverData.drvVehType}).`}</p>`;
+        }
+
         if (acceptedHtml !== '') combinedHtml += `<hr style="margin: 15px 0;">` + acceptedHtml;
 
         const ridesQuery = window.query(window.collection(window.db, "completed_rides"), window.where("driverIdNum", "==", driverData.driverId));
@@ -937,9 +967,13 @@
             driverLat: currentDriverLat || pLat, driverLng: currentDriverLng || pLng
           });
           stopSirenLoop();
+          
+          // ಗೂಗಲ್ ಮ್ಯಾಪ್ ನ್ಯಾವಿಗೇಷನ್ ಲಿಂಕ್ ಸಿದ್ಧಪಡಿಸುವುದು
+          let navMapUrl = `https://www.google.com/maps/dir/?api=1&destination=${pLat},${pLng}`;
+
           showCustomAlert(currentLang === 'kn' ? 
-            `ಗ್ರಾಹಕರಿಗೆ ನಿಮ್ಮ ಮೊಬೈಲ್ ನಂಬರ್: ${drvPhone}, ಐಡಿ ನಂಬರ್: ${driverId} ಮತ್ತೆ ನಿಮ್ಮ ಹೆಸರು: ${drvName} ಹಾಗೂ ನಿಮ್ಮ ಜಿಪಿಎಸ್ ಅನ್ನು ಸಂಪೂರ್ಣ ಅಳಿಸಲಾಗಿದೆ. ಪಿಕಪ್ ಮಾಡಿ.` : 
-            `Customer mobile: ${drvPhone}, ID: ${driverId}, Name: ${drvName} and GPS shared. Please pickup.`);
+            `ಬುಕಿಂಗ್ ಅನ್ನು ನೀವು ಸ್ವೀಕರಿಸಿಬಿಡಿ ನಿಮ್ಮ ಮೊಬೈಲ್ ನಂಬರ್: ${drvPhone}, ಐಡಿ ನಂಬರ್: ${driverId} ಮತ್ತು ವಾಹನ ನಂಬರ್: ${drvVehNo} ನಿಮ್ಮ ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಕಸ್ಟಮರ್ ಗೆ ಕಳಿಸಲಾಗಿದೆ ಪಿಕಪ್ ಮಾಡಿ.` : 
+            `Booking accepted. Mobile: ${drvPhone}, ID: ${driverId}, Vehicle: ${drvVehNo} and GPS shared. Please pickup.`, navMapUrl);
         } else {
           alert(currentLang === 'kn' ? "ಈ ಬುಕಿಂಗ್ ಅನ್ನು ಈಗಾಗಲೇ ಬೇರೆ ಡ್ರೈವರ್ ಸ್ವೀಕರಿಸಿದ್ದಾರೆ." : "Booking already accepted by another driver.");
         }
@@ -961,7 +995,7 @@
           else initialFare = 200;
         }
 
-        document.getElementById('liveGpsPopupText').innerText = currentLang === 'kn' ? "ನಿಮ್ಮ ಜಿಪಿಎಸ್ ಲೈವ್ ಮೀಟರ್ ಆನ್ ಆಗಿದೆ." : "Live GPS meter is active.";
+        document.getElementById('liveGpsPopupText').innerText = currentLang === 'kn' ? "ಜಿಪಿಎಸ್ ಮೀಟರ್ ಆನ್ ಆಗಿದೆ. ಲೈವ್ ರನ್ನಿಂಗ್ ಮೀಟರ್ ಶುರುವಾಗಿದೆ." : "Live GPS meter is active.";
         document.getElementById('modalVehicleStatusDisplay').innerText = "Vehicle Running";
         document.getElementById('modalDistDisplay').innerText = "0.0";
         document.getElementById('modalFareDisplay').innerText = initialFare;
@@ -1030,9 +1064,10 @@
       pendingFinishPickupLoc = pickupLoc;
       pendingFinishDropLoc = dropLoc;
 
+      // ಸ್ಟಾಪ್ ಒತ್ತಿದ ತಕ್ಷಣ ಕಿಲೋಮೀಟರ್ ಮತ್ತು ಚಾರ್ಜಸ್ ಕಾಣುವ ಪಾಪ್-ಅಪ್
       document.getElementById('rideSummaryText').innerText = currentLang === 'kn' ? 
-        `ನೀವು ಎಷ್ಟು ಕಿಲೋಮೀಟರ್ ಓಡಿದೆ: ${rideDistanceKm.toFixed(1)} ಕಿ.ಮೀ\nಎಷ್ಟು ಚಾರ್ಜಸ್ ಆಗಿದೆ: ₹${calculatedFare}\n(ಕಸ್ಟಮರ್‌ಗೆ ತೋರಿಸಲು)` : 
-        `Distance covered: ${rideDistanceKm.toFixed(1)} KM\nTotal Charges: ₹${calculatedFare}`;
+        `ಪ್ರಯಾಣ ಮುಕ್ತಾಯ!\nಕಿಲೋಮೀಟರ್: ${rideDistanceKm.toFixed(1)} ಕಿ.ಮೀ\nಚಾರ್ಜಸ್ ಎಲ್ಲವೂ: ₹${calculatedFare}` : 
+        `Trip Summary:\nDistance: ${rideDistanceKm.toFixed(1)} KM\nTotal Charges: ₹${calculatedFare}`;
       document.getElementById('rideSummaryModal').style.display = 'flex';
     }
 
@@ -1051,7 +1086,8 @@
         });
         await window.deleteDoc(window.doc(window.db, "bookings", pendingFinishBookingId));
         
-        document.getElementById('meterResultText').innerText = currentLang === 'kn' ? `ಪ್ರಯಾಣ ಮುಕ್ತಾಯ!\nಪ್ರಯಾಣಿಸಿದ ದೂರ: ${rideDistanceKm.toFixed(1)} ಕಿ.ಮೀ\nಒಟ್ಟು ಚಾರ್ಜ್: ₹${calculatedFare}` : `Ride Finished!\nDistance: ${rideDistanceKm.toFixed(1)} KM\nFare: ₹${calculatedFare}`;
+        // ಬುಕಿಂಗ್‌ಗಳು ಮಾಯವಾಗಿ ಹೊಸ ಬುಕಿಂಗ್ ನೋಡಲು ಬರುವಂತೆ ನಿರ್ವಹಿಸುವುದು
+        document.getElementById('meterResultText').innerText = currentLang === 'kn' ? `ಪ್ರಯಾಣ ಮುಕ್ತಾಯ!\nದೂರ: ${rideDistanceKm.toFixed(1)} ಕಿ.ಮೀ\nಚಾರ್ಜ್: ₹${calculatedFare}\nಈ ಬುಕಿಂಗ್ ಮುಗಿದಿದೆ, ಈಗ ಹೊಸ ಬುಕಿಂಗ್ ನೋಡಬಹುದು.` : `Ride Finished! Distance: ${rideDistanceKm.toFixed(1)} KM | Fare: ₹${calculatedFare}`;
         document.getElementById('meterResultModal').style.display = 'flex';
         loadDriverPersonalDashboard(pendingFinishDriverId);
       } catch(e) { alert("Error: " + e.message); }
