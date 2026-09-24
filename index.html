@@ -5,14 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title id="pageTitle">A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್ | ಬೈಕ್, ಆಟೋ & ಕಾರ್ ಬುಕಿಂಗ್</title>
   
-  <!-- PWA & Mobile App Settings -->
   <meta name="theme-color" content="#0fb05b">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="A R Taxi Go Fast">
   <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3097/3097180.png">
 
-  <!-- Dynamic PWA Manifest Injection -->
   <script>
     const manifestData = {
       "name": "A R Taxi Booking Go Fast",
@@ -22,16 +20,8 @@
       "background_color": "#0f172a",
       "theme_color": "#0fb05b",
       "icons": [
-        {
-          "src": "https://cdn-icons-png.flaticon.com/512/3097/3097180.png",
-          "sizes": "192x192",
-          "type": "image/png"
-        },
-        {
-          "src": "https://cdn-icons-png.flaticon.com/512/3097/3097180.png",
-          "sizes": "512x512",
-          "type": "image/png"
-        }
+        { "src": "https://cdn-icons-png.flaticon.com/512/3097/3097180.png", "sizes": "192x192", "type": "image/png" },
+        { "src": "https://cdn-icons-png.flaticon.com/512/3097/3097180.png", "sizes": "512x512", "type": "image/png" }
       ]
     };
     const stringManifest = JSON.stringify(manifestData);
@@ -43,7 +33,6 @@
     document.head.appendChild(linkTag);
   </script>
 
-  <!-- PDF ಡೌನ್‌ಲೋಡ್ ಮಾಡಲು html2pdf ಲೈಬ್ರರಿ -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <script type="module">
@@ -91,15 +80,9 @@
     }
     
     .flashing-header-box {
-      text-align: center;
-      background: linear-gradient(135deg, #0f172a, #1e293b, #0fb05b);
-      padding: 16px;
-      border-radius: 16px;
-      margin-bottom: 15px;
-      color: white;
-      box-shadow: 0 8px 25px rgba(15, 176, 91, 0.25);
-      border: 2px solid #ffd700;
-      position: relative;
+      text-align: center; background: linear-gradient(135deg, #0f172a, #1e293b, #0fb05b);
+      padding: 16px; border-radius: 16px; margin-bottom: 15px; color: white;
+      box-shadow: 0 8px 25px rgba(15, 176, 91, 0.25); border: 2px solid #ffd700; position: relative;
     }
 
     .app-logo-box-wrapper { display: flex; flex-direction: column; align-items: center; margin-bottom: 10px; }
@@ -118,8 +101,7 @@
 
     .install-app-banner {
       background: linear-gradient(135deg, #ff9966, #ff5e62); color: white; padding: 10px 14px;
-      border-radius: 12px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;
-      border: 2px solid #fff;
+      border-radius: 12px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; border: 2px solid #fff;
     }
 
     .floating-share-btn {
@@ -174,7 +156,6 @@
     .footer { text-align: center; font-size: 0.7rem; color: #7f8c8d; margin-top: 20px; border-top: 1px solid #eee; padding-top: 10px; }
     .back-home-btn { background: #718096; color: white; border: none; padding: 8px 14px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; margin-bottom: 12px; font-weight: bold; }
 
-    /* Metro Box & Large Modal Styling */
     #customAlertModal, #meterResultModal, #rideFinishModal, #imageViewerModal, #splashAdModal, #liveGpsPopupModal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); text-align: center; padding: 15px; overflow-y: auto; }
     .modal-content-box { background: #fff; max-width: 420px; margin: 40px auto; padding: 24px; border-radius: 20px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.5); border: 3px solid #ffd700; position: relative; }
     .modal-metro-logo { width: 80px; height: 80px; background: linear-gradient(145deg, #ffffff, #e2e8f0); border-radius: 18px; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(0,0,0,0.25); border: 3px solid #ffd700; margin-bottom: 15px; }
@@ -192,7 +173,6 @@
 
   <a href="javascript:void(0);" onclick="shareAppOnWhatsApp()" class="floating-share-btn">💬</a>
 
-  <!-- Install App Prompt Banner -->
   <div id="installAppBanner" class="install-app-banner" style="display: none;">
     <div style="display:flex; align-items:center; gap:8px;">
       <span style="font-size: 2rem;">📲</span>
@@ -204,7 +184,6 @@
     <button id="installAppBtn" style="background:#fff; color:#ff5e62; border:none; padding:6px 12px; border-radius:15px; font-weight:bold; font-size:0.8rem; cursor:pointer;">📥 Install</button>
   </div>
 
-  <!-- Custom Alert Modal (Metro Box Style) -->
   <div id="customAlertModal">
     <div class="modal-content-box">
       <div class="modal-metro-logo"><span style="font-size: 2.2rem;">🛺</span></div>
@@ -214,7 +193,6 @@
     </div>
   </div>
 
-  <!-- Live GPS Meter Active Popup Modal (OTP Submit Reaction - Metro Style) -->
   <div id="liveGpsPopupModal">
     <div class="modal-content-box" style="border: 3px solid #0fb05b;">
       <div class="modal-metro-logo"><span style="font-size: 2.2rem;">🛰️</span></div>
@@ -228,7 +206,6 @@
     </div>
   </div>
 
-  <!-- Meter Result Modal -->
   <div id="meterResultModal">
     <div class="modal-content-box">
       <div class="modal-metro-logo"><span style="font-size: 2.2rem;">🏁</span></div>
@@ -238,7 +215,6 @@
     </div>
   </div>
 
-  <!-- Ride Finish Modal -->
   <div id="rideFinishModal">
     <div class="modal-content-box">
       <div class="modal-metro-logo"><span style="font-size: 2.2rem;">✅</span></div>
@@ -248,7 +224,6 @@
     </div>
   </div>
 
-  <!-- Image Viewer Modal -->
   <div id="imageViewerModal">
     <div class="modal-content-box" style="max-width:90%; background:#000; color:#fff;">
       <span style="float:right; font-size:1.5rem; cursor:pointer;" onclick="closeImageViewer()">&times;</span>
@@ -258,7 +233,6 @@
     </div>
   </div>
 
-  <!-- Splash Ad Modal -->
   <div id="splashAdModal">
     <div class="modal-content-box" style="max-width:95%; height:80vh; display:flex; flex-direction:column; justify-content:space-between;">
       <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -286,12 +260,11 @@
       </div>
 
       <div class="flashing-title">
-        <span data-en="Karnataka A R Taxi Booking Go Fast" data-kn="ಕರ್ನಾಟಕ A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್">ಕರ್ನಾಟಕ A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್</span><br>
-        <span style="font-size:0.82rem; font-weight:normal; opacity:0.95;" data-en="Local Bike, Auto & Car Booking Service" data-kn="ಲೋಕಲ್ ಬೈಕ್, ಆಟೋ ಹಾಗೂ ಕಾರ್ ಬುಕಿಂಗ್ ಸೇವಾವಲಯ">ಲೋಕಲ್ ಬೈಕ್, ಆಟೋ ಹಾಗೂ ಕಾರ್ ಬುಕಿಂಗ್ ಸೇವಾವಲಯ</span>
+        <span>ಕರ್ನಾಟಕ A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್</span><br>
+        <span style="font-size:0.82rem; font-weight:normal; opacity:0.95;">ಲೋಕಲ್ ಬೈಕ್, ಆಟೋ ಹಾಗೂ ಕಾರ್ ಬುಕಿಂಗ್ ಸೇವಾವಲಯ</span>
       </div>
     </div>
 
-    <!-- Role Selection Screen -->
     <div id="roleSelectionScreen">
       <h1 class="mainTitle" style="font-size: 1.25rem; color: #2c3e50; margin-bottom: 5px;">A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್</h1>
       <p style="font-size: 0.85rem; color: #7f8c8d; margin-bottom: 12px;">ದಯವಿಟ್ಟು ಕೆಳಗಿನ ಆಯ್ಕೆಗಳಲ್ಲಿ ಒಂದನ್ನು ಆಯ್ಕೆಮಾಡಿ:</p>
@@ -315,7 +288,6 @@
       </div>
     </div>
 
-    <!-- Main App Content -->
     <div id="mainAppContent" style="display: none;">
       
       <button class="back-home-btn" onclick="goBackToHome()">⬅ ಮುಖಪುಟಕ್ಕೆ (Back to Home)</button>
@@ -340,7 +312,6 @@
         <a href="tel:8105010768" class="support-btn">📞 24/7 ತುರ್ತು ಕಾಲ್ (Emergency Call)</a>
       </div>
 
-      <!-- Customer Section -->
       <div id="customerSection" class="section">
         <h2>ಯಾತ್ರೆ ಬುಕ್ ಮಾಡಿ</h2>
         <div id="bookingFormContainer">
@@ -394,7 +365,6 @@
         <div id="customerStatusContainer" style="margin-top: 10px;"></div>
       </div>
 
-      <!-- Meter Section -->
       <div id="meterSection" class="section">
         <h2>ಲೈವ್ ರನ್ನಿಂಗ್ ಮೀಟರ್ (GPS Meter)</h2>
         <div class="form-group">
@@ -415,7 +385,6 @@
         <button class="btn-submit" onclick="stopMeterOnly()" style="background:#e53e3e;">ಮೀಟರ್ ಆಫ್ ಮಾಡಿ</button>
       </div>
 
-      <!-- Driver Registration Section -->
       <div id="profileSection" class="section">
         <h2>ಡ್ರೈವರ್ ರಜಿಸ್ಟ್ರೇಷನ್ / ಪ್ರೊಫೈಲ್</h2>
         <div class="form-group"><label>ಡ್ರೈವರ್ ಹೆಸರು:</label><input type="text" id="drvName" placeholder="ನಿಮ್ಮ ಹೆಸರು"></div>
@@ -437,7 +406,6 @@
         <button class="btn-submit" onclick="registerDriver()" id="btnRegisterDriver">ಲಾಗಿನ್ / ರಜಿಸ್ಟರ್ ಮಾಡಿ</button>
       </div>
 
-      <!-- Driver Live Panel Section -->
       <div id="liveSection" class="section">
         <h2>📢 ಡ್ರೈವರ್ ಐಡಿ ಪ್ಯಾನಲ್ ಹಾಗೂ ಲೈವ್ ಬುಕಿಂಗ್‌ಗಳು</h2>
         <div class="form-group">
@@ -461,7 +429,6 @@
         </div>
       </div>
 
-      <!-- Admin Panel Section -->
       <div id="adminSection" class="section">
         <h2>🔐 ಅಡ್ಮಿನ್ ಪ್ಯಾನಲ್</h2>
         <div class="card" style="background:#e8f8f0; border:2px solid #0fb05b; margin-bottom:12px;">
@@ -859,7 +826,13 @@
             });
           } catch(e) {}
           if (!bookingsUnsubscribe) listenToBookingsForDriver(driverData);
-        }, (error) => {}, { enableHighAccuracy: true });
+        }, (error) => {
+          // Fallback if GPS fails or takes time: still listen to bookings even if coordinates aren't fixed immediately
+          currentDriverLat = 0; currentDriverLng = 0;
+          if (!bookingsUnsubscribe) listenToBookingsForDriver(driverData);
+        }, { enableHighAccuracy: true });
+      } else {
+        listenToBookingsForDriver(driverData);
       }
     }
 
@@ -878,10 +851,8 @@
           if ((b.dateKey || '') !== todayStr) return;
           if (b.vehicleType !== driverData.drvVehType) return;
 
-          // If already accepted/started by ANOTHER driver, lock/hide it completely or show locked status for others
           if (b.status === 'Accepted' || b.status === 'Started') {
             if (b.driverIdNum === driverData.driverId) {
-              // Assigned to THIS driver
               if (b.status === 'Accepted') {
                 acceptedHtml += `
                   <div class="card" style="border: 3px solid #38a169; background:#edf2f7; margin-bottom:10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
@@ -909,7 +880,6 @@
                 `;
               }
             } else {
-              // Locked for other drivers (completely locked, no action buttons)
               acceptedHtml += `
                 <div class="card" style="border: 2px solid #cbd5e0; background:#f1f5f9; margin-bottom:10px; opacity: 0.75;">
                   <p style="background:#e2e8f0; padding:6px; border-radius:6px; font-weight:bold; color:#475569; text-align:center;">🔒 ಈ ಬುಕಿಂಗ್ ಈಗಾಗಲೇ ಬೇರೆ ಡ್ರೈವರ್‌ಗೆ ಲಾಕ್ ಆಗಿದೆ</p>
@@ -919,33 +889,34 @@
             return;
           }
 
-          // For Pending Bookings
           if ((b.ignoredDrivers || []).includes(driverData.driverId)) return;
 
-          if (b.pickupLat && b.pickupLng && currentDriverLat && currentDriverLng) {
+          // **FIXED LOGIC**: If driver GPS is not ready yet (null), show the booking anyway so drivers don't miss orders!
+          let showBooking = true;
+          let distText = "ಸ್ಥಳೀಯ ಬುಕಿಂಗ್";
+          if (b.pickupLat && b.pickupLng && currentDriverLat && currentDriverLng && currentDriverLat !== 0) {
             const dist = calculateDistance(currentDriverLat, currentDriverLng, b.pickupLat, b.pickupLng);
-            if (dist <= 5.0) {
-              let vehLogo = b.vehicleType === 'Bike' ? '🏍️' : (b.vehicleType === 'Car' ? '🚗' : '🛺');
+            distText = `~${dist.toFixed(2)} ಕಿ.ಮೀ ದೂರದಲ್ಲಿದೆ`;
+          }
 
-              if (b.status === 'Pending') {
-                hasPendingToAccept = true;
-                pendingHtml += `
-                  <div class="card" style="border: 3px solid #0fb05b; background:#f7fafc; margin-bottom:10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-                    <p style="background:#e8f8f0; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#065f46; text-align:center;">⚠️ ಹೊಸ ${b.vehicleType} ಬುಕಿಂಗ್ ಬಂದಿದೆ!</p>
-                    <p style="font-size: 1.1rem; margin-bottom: 4px;"><b>ವಾಹನ:</b> ${vehLogo} ${b.vehicleType}</p>
-                    <p style="font-size:0.95rem;"><b>ಗ್ರಾಹಕರು:</b> ${b.customerName}</p>
-                    <p style="font-size:0.95rem;"><b>ಫೋನ್ ನಂಬರ್:</b> <a href="tel:${b.customerPhone}">${b.customerPhone}</a></p>
-                    <p style="font-size:0.95rem;"><b>ಪ್ರಯಾಣಿಕರು:</b> ${b.passengers}</p>
-                    <p style="font-size:0.95rem;"><b>ಪಿಕಪ್ ಸ್ಥಳ:</b> <a href="https://www.google.com/maps/search/?api=1&query=${b.pickupLat},${b.pickupLng}" target="_blank" style="color:#3182ce;">${b.pickupLocation}</a> (~${dist.toFixed(2)} ಕಿ.ಮೀ)</p>
-                    <p style="font-size:0.95rem;"><b>ಡ್ರಾಪ್ ಸ್ಥಳ:</b> <strong style="color:#d69e2e;">${b.dropLocation}</strong></p>
-                    <div style="display:flex; gap:6px; margin-top:10px;">
-                      <button class="btn-submit" onclick="acceptBooking('${docSnap.id}', '${driverData.drvName}', '${driverData.drvPhone}', '${driverData.drvVehNo}', '${driverData.driverId}', ${b.pickupLat}, ${b.pickupLng})" style="font-size:0.9rem; padding:12px;">📢 ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ</button>
-                      <button class="btn-submit" onclick="driverCancelBooking('${docSnap.id}', '${driverData.driverId}')" style="background:#e53e3e; font-size:0.9rem; padding:12px; width:120px;">❌ ರದ್ದುಮಾಡಿ</button>
-                    </div>
-                  </div>
-                `;
-              }
-            }
+          if (b.status === 'Pending' && showBooking) {
+            hasPendingToAccept = true;
+            let vehLogo = b.vehicleType === 'Bike' ? '🏍️' : (b.vehicleType === 'Car' ? '🚗' : '🛺');
+            pendingHtml += `
+              <div class="card" style="border: 3px solid #0fb05b; background:#f7fafc; margin-bottom:10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                <p style="background:#e8f8f0; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#065f46; text-align:center;">⚠️ ಹೊಸ ${b.vehicleType} ಬುಕಿಂಗ್ ಬಂದಿದೆ!</p>
+                <p style="font-size: 1.1rem; margin-bottom: 4px;"><b>ವಾಹನ:</b> ${vehLogo} ${b.vehicleType}</p>
+                <p style="font-size:0.95rem;"><b>ಗ್ರಾಹಕರು:</b> ${b.customerName}</p>
+                <p style="font-size:0.95rem;"><b>ಫೋನ್ ನಂಬರ್:</b> <a href="tel:${b.customerPhone}">${b.customerPhone}</a></p>
+                <p style="font-size:0.95rem;"><b>ಪ್ರಯಾಣಿಕರು:</b> ${b.passengers}</p>
+                <p style="font-size:0.95rem;"><b>ಪಿಕಪ್ ಸ್ಥಳ:</b> <a href="https://www.google.com/maps/search/?api=1&query=${b.pickupLat},${b.pickupLng}" target="_blank" style="color:#3182ce;">${b.pickupLocation}</a> (${distText})</p>
+                <p style="font-size:0.95rem;"><b>ಡ್ರಾಪ್ ಸ್ಥಳ:</b> <strong style="color:#d69e2e;">${b.dropLocation}</strong></p>
+                <div style="display:flex; gap:6px; margin-top:10px;">
+                  <button class="btn-submit" onclick="acceptBooking('${docSnap.id}', '${driverData.drvName}', '${driverData.drvPhone}', '${driverData.drvVehNo}', '${driverData.driverId}', ${b.pickupLat}, ${b.pickupLng})" style="font-size:0.9rem; padding:12px;">📢 ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ</button>
+                  <button class="btn-submit" onclick="driverCancelBooking('${docSnap.id}', '${driverData.driverId}')" style="background:#e53e3e; font-size:0.9rem; padding:12px; width:120px;">❌ ರದ್ದುಮಾಡಿ</button>
+                </div>
+              </div>
+            `;
           }
         });
 
@@ -996,7 +967,7 @@
             driverLat: currentDriverLat || pLat, driverLng: currentDriverLng || pLng
           });
           stopSirenLoop();
-          showCustomAlert(`ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಲಾಗಿದೆ!\nವಾಹನ ನಂಬರ್: ${drvVehNo}\nಐಡಿ: ${driverId}\nಲೈವ್ ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಕಸ್ಟಮರ್ ಗೆ ಕಳುಹಿಸಲಾಗಿದೆ.`);
+          showCustomAlert(`ಬುಕಿంగ్ ಸ್ವೀಕರಿಸಲಾಗಿದೆ!\nವಾಹನ ನಂಬರ್: ${drvVehNo}\nಐಡಿ: ${driverId}\nಲೈವ್ ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಕಸ್ಟಮರ್ ಗೆ ಕಳುಹಿಸಲಾಗಿದೆ.`);
         } else {
           alert("ಈ ಬುಕಿಂಗ್ ಅನ್ನು ಈಗಾಗಲೇ ಬೇರೆ ಡ್ರೈವರ್ ಸ್ವೀಕರಿಸಿದ್ದಾರೆ.");
         }
@@ -1009,7 +980,6 @@
       try {
         await window.updateDoc(window.doc(window.db, "bookings", bookingId), { status: 'Started' });
         
-        // Show Metro Style Large Popup
         document.getElementById('liveGpsPopupText').innerText = "ನಿಮ್ಮ ಜಿಪಿಎಸ್ ಲೈವ್ ಮೀಟರ್ ಆನ್ ಆಗಿದೆ.";
         document.getElementById('modalVehicleStatusDisplay').innerText = "ವಾಹನ ನಿಂತಿದೆ (Vehicle Stopped)";
         document.getElementById('modalDistDisplay').innerText = "0.0";
