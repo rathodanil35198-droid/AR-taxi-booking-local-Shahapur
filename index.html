@@ -656,6 +656,9 @@
 
         myActiveBookingId = docRef.id;
         
+        // ಯಶಸ್ವಿ ಬುಕಿಂಗ್ ಸಂದೇಶ ಮತ್ತು ಪಾಪ್-ಅಪ್ ತೋರಿಸಲು
+        showCustomAlert(currentLang === 'kn' ? `ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿದೆ! ನಿಮ್ಮ OTP: ${pickupOtp}` : `Booking Successful! Your OTP: ${pickupOtp}`);
+
         document.getElementById('bookingFormContainer').style.display = 'none';
         document.getElementById('customerStatusContainer').innerHTML = `
           <div class="card" style="text-align:center; background:#e8f8f0; border:2px solid #0fb05b;">
@@ -1068,90 +1071,11 @@
           vehPhoto, rcPhoto, dlPhoto, selfiePhoto, aadharPhoto, driverId, timestamp: window.serverTimestamp()
         });
         showCustomAlert(currentLang === 'kn' ? `ನೋಂದಣಿ ಯಶಸ್ವಿಯಾಗಿದೆ!\nನಿಮ್ಮ ಡ್ರೈವರ್ ಐಡಿ: ${driverId}\nದಯವಿಟ್ಟು ಈ ಐಡಿಯನ್ನು ನೆನಪಿನಲ್ಲಿಡಿ.` : `Registration Successful!\nYour Driver ID: ${driverId}`);
-        goBackToHome();
-      } catch (e) { alert("Error: " + e.message); }
-      btn.innerText = currentLang === 'kn' ? "ಲಾಗಿನ್ / ರಜಿಸ್ಟರ್ ಮಾಡಿ" : "Login / Register"; btn.disabled = false;
-    }
-
-    async function loadAdminDrivers() {
-      const listDiv = document.getElementById('adminDriversList');
-      listDiv.innerHTML = currentLang === 'kn' ? "ಡ್ರೈವರ್‌ಗಳ ಮಾಹಿತಿ ಲೋಡ್ ಆಗುತ್ತಿದೆ..." : "Loading drivers info...";
-      try {
-        const snap = await window.getDocs(window.collection(window.db, "drivers"));
-        allDriversData = [];
-        snap.forEach(docSnap => { allDriversData.push({ id: docSnap.id, ...docSnap.data() }); });
-        renderAdminDrivers(allDriversData);
-      } catch(e) { listDiv.innerHTML = "Error: " + e.message; }
-    }
-
-    function renderAdminDrivers(drivers) {
-      document.getElementById('adminTotalDriversCount').innerText = drivers.length;
-      const listDiv = document.getElementById('adminDriversList');
-      if (drivers.length === 0) { listDiv.innerHTML = `<p>${currentLang === 'kn' ? 'ಯಾವುದೇ ಡ್ರೈವರ್‌ಗಳು ನೋಂದಾಯಿಸಿಲ್ಲ.' : 'No drivers registered.'}</p>`; return; }
-
-      let html = '';
-      drivers.forEach(d => {
-        let thumbs = '';
-        if (d.vehPhoto) thumbs += `<img src="${d.vehPhoto}" class="driver-thumb" onclick="viewFullImage('${d.vehPhoto}', 'Vehicle Photo')">`;
-        if (d.rcPhoto) thumbs += `<img src="${d.rcPhoto}" class="driver-thumb" onclick="viewFullImage('${d.rcPhoto}', 'RC Photo')">`;
-        if (d.dlPhoto) thumbs += `<img src="${d.dlPhoto}" class="driver-thumb" onclick="viewFullImage('${d.dlPhoto}', 'DL Photo')">`;
-        if (d.selfiePhoto) thumbs += `<img src="${d.selfiePhoto}" class="driver-thumb" onclick="viewFullImage('${d.selfiePhoto}', 'Selfie Photo')">`;
-        if (d.aadharPhoto) thumbs += `<img src="${d.aadharPhoto}" class="driver-thumb" onclick="viewFullImage('${d.aadharPhoto}', 'Aadhar Photo')">`;
-
-        html += `
-          <div class="card" style="border:1px solid #cbd5e0; margin-bottom:10px; background:#fff;">
-            <p style="font-weight:bold; font-size:1rem; color:#2c3e50;">${d.drvName} (${d.drvVehType || 'Auto'})</p>
-            <p style="font-size:0.85rem;"><b>ID:</b> <span style="color:#d69e2e; font-weight:bold; font-size:1.1rem;">${d.driverId}</span></p>
-            <p style="font-size:0.85rem;"><b>Phone:</b> <a href="tel:${d.drvPhone}">${d.drvPhone}</a></p>
-            <p style="font-size:0.85rem;"><b>Vehicle No:</b> ${d.drvVehNo}</p>
-            <div class="driver-photo-grid">${thumbs}</div>
-            <button class="btn-submit" onclick="deleteDriverRecord('${d.id}')" style="background:#e53e3e; padding:6px; font-size:0.8rem; margin-top:6px;">${currentLang === 'kn' ? 'ಡ್ರೈವರ್ ಡಿಲೀಟ್ ಮಾಡಿ' : 'Delete Driver'}</button>
-          </div>
-        `;
-      });
-      listDiv.innerHTML = html;
-    }
-
-    function filterAdminDrivers() {
-      const queryText = document.getElementById('adminSearchInput').value.trim().toLowerCase();
-      const filtered = allDriversData.filter(d => 
-        (d.drvPhone && d.drvPhone.includes(queryText)) || 
-        (d.driverId && d.driverId.includes(queryText)) ||
-        (d.drvName && d.drvName.toLowerCase().includes(queryText))
-      );
-      renderAdminDrivers(filtered);
-    }
-
-    async function deleteDriverRecord(docId) {
-      if (confirm(currentLang === 'kn' ? "ಖಂಡಿತವಾಗಿ ಈ ಡ್ರೈವರ್ ಅನ್ನು ಡಿಲೀಟ್ ಮಾಡಲು ಬಯಸುವಿರಾ?" : "Are you sure you want to delete this driver?")) {
-        try {
-          await window.deleteDoc(window.doc(window.db, "drivers", docId));
-          loadAdminDrivers();
-        } catch(e) { alert("Error: " + e.message); }
+        btn.innerText = currentLang === 'kn' ? "ಲಾಗಿನ್ / ರಜಿಸ್ಟರ್ ಮಾಡಿ" : "Login / Register"; btn.disabled = false;
+      } catch (e) {
+        alert("Error: " + e.message);
+        btn.innerText = currentLang === 'kn' ? "ಲಾಗಿನ್ / ರಜಿಸ್ಟರ್ ಮಾಡಿ" : "Login / Register"; btn.disabled = false;
       }
-    }
-
-    function downloadDriverHistoryPDF(driverId, driverName, rideDocId) {
-      const element = document.createElement('div');
-      element.innerHTML = `
-        <div style="padding:20px; font-family:sans-serif; color:#333;">
-          <h2 style="text-align:center; color:#0fb05b;">A R Taxi Go Fast - Police Verification Certificate</h2>
-          <hr style="margin:10px 0;">
-          <p><b>Driver Name / ಡ್ರೈವರ್ ಹೆಸರು:</b> ${driverName}</p>
-          <p><b>Driver ID / ಡ್ರೈವರ್ ಐಡಿ:</b> ${driverId}</p>
-          <p><b>Ride ID / ರೈಡ್ ಐಡಿ:</b> ${rideDocId}</p>
-          <p><b>Date / ದಿನಾಂಕ:</b> ${new Date().toLocaleDateString()}</p>
-          <p style="margin-top:20px; font-size:0.9rem; line-height:1.5;">
-            This is to certify that the above-mentioned driver is registered under A R Taxi Go Fast service with verified documents.
-          </p>
-        </div>
-      `;
-      html2pdf().from(element).save(`Police_Verification_${driverName}_${driverId}.pdf`);
-    }
-
-    function shareAppOnWhatsApp() {
-      const text = encodeURIComponent("A R Taxi Go Fast - Local Bike, Auto & Car Booking App. Download and book now!");
-      window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
     }
   </script>
 </body>
