@@ -440,6 +440,22 @@
         </div>
         <div id="customerStatusContainer" style="margin-top: 10px;"></div>
       </div>
+    <div id="driverDetailsBox" style="display: none; margin-top: 15px; padding: 15px; background: #fff; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border-top: 1px solid #e2e8f0;">
+        <h3 id="bookingStatusTitle" style="color: #2d3748; font-size: 1.1rem; text-align: center; margin-bottom: 10px;">ಡ್ರೈವರ್ ವಿವರಗಳು</h3>
+        <p style="margin: 5px 0;"><b>ಡ್ರೈವರ್ ಹೆಸರು:</b> <span id="lblDrvName">-</span></p>
+        <p style="margin: 5px 0;"><b>ಮೊಬೈಲ್ ನಂಬರ್:</b> <span id="lblDrvPhone">-</span></p>
+        <p style="margin: 5px 0;"><b>ವಾಹನ ನಂಬರ್:</b> <span id="lblDrvVehNo">-</span></p>
+        <p style="margin: 5px 0;"><b>ಡ್ರೈವರ್ ಐಡಿ:</b> <span id="lblDrvId">-</span></p>
+        <p style="margin: 5px 0;"><b>ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್:</b> <span id="lblDrvGPS">-</span></p>
+        
+        <!-- 4 ಡಿಜಿಟ್ ಒಟಿಪಿ ಬಾಕ್ಸ್ -->
+        <div style="margin-top: 15px; background: #edf2f7; padding: 12px; border-radius: 6px; text-align: center;">
+            <p style="font-size: 0.9rem; margin-bottom: 5px; color: #2d3748;"><b>ಡ್ರೈವರ್ ಒಟಿಪಿ (OTP):</b></p>
+            <h2 id="lblCustomerOTP" style="color: #3182ce; letter-spacing: 4px; margin: 5px 0;">----</h2>
+            <input type="text" id="enteredOtp" placeholder="4 ಅಂಕಿಗಳ ಒಟಿಪಿ ನಮೂದಿಸಿ" style="padding: 8px; width: 85%; margin-top: 8px; border: 1px solid #cbd5e0; border-radius: 4px; text-align: center; font-size: 1rem;">
+            <button onclick="verifyDriverOTP()" style="margin-top: 10px; background: #38a169; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; width: 90%; font-weight: bold;">ಒಟಿಪಿ ಪರಿಶೀಲಿಸಿ</button>
+        </div>
+    </div>
 
       <div id="meterSection" class="section">
         <h2>ಲೈವ್ ರನ್ನಿಂಗ್ ಮೀಟರ್ (GPS Meter)</h2>
