@@ -48,6 +48,13 @@
     linkTag.href = manifestURL;
     document.head.appendChild(linkTag);
   </script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js');
+    });
+  }
+</script>
 
   <!-- PDF ಡೌನ್‌ಲೋಡ್ ಮಾಡಲು html2pdf ಲೈಬ್ರರಿ -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
