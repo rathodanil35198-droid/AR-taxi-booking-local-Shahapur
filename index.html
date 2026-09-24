@@ -5,14 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title id="pageTitle">A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್ | ಬೈಕ್, ಆಟೋ & ಕಾರ್ ಬುಕಿಂಗ್</title>
   
-  <!-- PWA & Mobile App Settings -->
   <meta name="theme-color" content="#0fb05b">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="A R Taxi Go Fast">
   <link rel="apple-touch-icon" href="AR_Taxi_Booking_Go_Fast_512x512.png">
 
-  <!-- Dynamic PWA Manifest Injection -->
   <script>
     const manifestData = {
       "name": "A R Taxi Booking Go Fast",
@@ -51,7 +49,6 @@
     }
   </script>
 
-  <!-- PDF ಡೌನ್‌ಲೋಡ್ ಮಾಡಲು html2pdf ಲೈಬ್ರರಿ -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <script type="module">
@@ -479,7 +476,6 @@
       document.getElementById('langToggleBtn').innerText = currentLang === 'kn' ? 'ENGLISH' : 'ಕನ್ನಡ';
       document.getElementById('htmlRoot').setAttribute('lang', currentLang);
       
-      // Update all elements with data-en and data-kn attributes
       document.querySelectorAll('[data-en]').forEach(el => {
         const text = el.getAttribute('data-' + currentLang);
         if (text) {
@@ -931,7 +927,9 @@
     }
 
     async function verifyOtpAndStartRide(bookingId, correctOtp) {
-      const inputOtp = document.getElementById(`otpInput_${bookingId}`).value.trim();
+      const otpInputEl = document.getElementById(`otpInput_${bookingId}`);
+      if (!otpInputEl) return;
+      const inputOtp = otpInputEl.value.trim();
       if (inputOtp !== correctOtp) { alert(currentLang === 'kn' ? "ತಪ್ಪಾದ ಒಟಿಪಿ! ದಯವಿಟ್ಟು ಸರಿಯಾದ ಒಟಿಪಿ ನಮೂದಿಸಿ." : "Incorrect OTP!"); return; }
       try {
         await window.updateDoc(window.doc(window.db, "bookings", bookingId), { status: 'Started' });
