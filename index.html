@@ -225,8 +225,7 @@
       <p id="liveGpsPopupText" style="font-size: 0.95rem; color: #2d3748; font-weight: bold; margin-bottom: 15px; line-height:1.5;"></p>
       <div style="background:#f7fafc; padding:8px; border-radius:8px; margin-bottom:15px; border:1px solid #cbd5e0;">
         <p style="font-size:0.85rem; color:#d69e2e; font-weight:bold;" id="modalVehicleStatusDisplay">ವಾಹನ ನಿಂತಿದೆ (Vehicle Stopped)</p>
-        <p style="font-size:1.0rem; font-weight:bold; color:#0fb05b; margin-top:4px;">ದೂರ: <span id="modalDistDisplay">0.0</span> ಕಿ.ಮೀ</p>
-        <p style="font-size:1.1rem; font-weight:bold; color:#d69e2e; margin-top:4px;">ಅಂದಾಜು ಶುಲ್ಕ: ₹<span id="modalFareDisplay">50</span></p>
+        <p style="font-size:1.1rem; font-weight:bold; color:#0fb05b; margin-top:4px;" data-en="Distance: " data-kn="ದೂರ: ">ದೂರ: <span id="modalDistDisplay">0.0</span> <span data-en="KM" data-kn="ಕಿ.ಮೀ">ಕಿ.ಮೀ</span></p>
       </div>
       <button class="btn-submit" onclick="closeLiveGpsPopup()" style="background:#0fb05b;">ಸರಿ (OK)</button>
     </div>
@@ -394,7 +393,7 @@
           <select id="meterVehicleType" onchange="resetMeterRate()">
             <option value="Bike" data-en="Bike (Rs. 30 fixed up to 2KM, then Rs. 10/KM)" data-kn="🏍️ ಬೈಕ್ / Bike (2 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 30 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 10)">🏍️ ಬೈಕ್ / Bike (2 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 30 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 10)</option>
             <option value="Auto" selected data-en="Auto (Rs. 50 fixed up to 2KM, then Rs. 12/KM)" data-kn="🛺 ಆಟೋ / Auto (2 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 50 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 12)">🛺 ಆಟೋ / Auto (2 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 50 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 12)</option>
-            <option value="Car" data-en="Car (Rs. 200 fixed up to 2KM, then Rs. 15/KM)" data-kn="🚗 ಕಾರ್ / Car (2 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 200 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 15)">🚗 ಕಾರ್ / Car (2 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 200 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 15)</option>
+            <option value="Car" data-en="Car (Rs. 200 fixed up to 3KM, then Rs. 15/KM)" data-kn="🚗 ಕಾರ್ / Car (3 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 200 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 15)">🚗 ಕಾರ್ / Car (3 ಕಿ.ಮೀ ವರೆಗೆ ರೂ. 200 ಫಿಕ್ಸ್, ನಂತರ ಪ್ರತಿ ಕಿ.ಮೀ ಗೆ ರೂ. 15)</option>
           </select>
         </div>
         <button class="btn-submit" onclick="startMeter()" style="background:#3182ce; margin-bottom:8px;" data-en="Start Meter" data-kn="ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ">ಮೀಟರ್ ಸ್ಟಾರ್ಟ್ ಮಾಡಿ</button>
@@ -864,9 +863,8 @@
                     <p style="background:#bee3f8; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#2b6cb0;">🏁 ${currentLang === 'kn' ? 'ಲೈವ್ ಜಿಪಿಎಸ್ ಮೀಟರ್ ಆನ್ ಇದೆ' : 'Live GPS Meter Active'}</p>
                     <p style="font-size:0.95rem;"><b>${currentLang === 'kn' ? 'ಗ್ರಾಹಕರು:' : 'Customer:'}</b> ${b.customerName} (<a href="tel:${b.customerPhone}">${b.customerPhone}</a>)</p>
                     <p style="font-size:0.85rem; color:#065f46; font-weight:bold; margin:4px 0;" id="activeRideStatusText">Vehicle Running</p>
-                    <p style="font-size:1rem; font-weight:bold; color:#0fb05b;">${currentLang === 'kn' ? 'ಪ್ರಯಾಣಿಸಿದ ದೂರ:' : 'Distance:'} <span id="activeRideDist">0.0</span> ಕಿ.ಮೀ</p>
-                    <p style="font-size:1.1rem; font-weight:bold; color:#d69e2e; margin-top:2px;">${currentLang === 'kn' ? 'ಪ್ರಸ್ತುತ ಚಾರ್ಜ್:' : 'Current Fare:'} ₹<span id="activeRideFare">50</span></p>
-                    <button class="btn-submit" onclick="finishRide('${docSnap.id}', '${driverData.driverId}', '${b.customerName}', '${b.customerPhone}', '${b.pickupLocation}', '${b.dropLocation}')" style="background:#e53e3e; margin-top:10px; padding:12px; font-size:1rem;">🛑 ${currentLang === 'kn' ? 'ಪ್ರಯಾಣ ಮುಕ್ತಾಯಗೊಳಿಸಿ (Stop & Finish)' : 'Finish Ride'}</button>
+                    <p style="font-size:1rem; font-weight:bold; color:#0fb05b;">${currentLang === 'kn' ? 'ಪ್ರಯಾಣಿಸಿದ ದೂರ:' : 'Distance:'} <span id="activeRideDist">0.0</span> KM</p>
+                    <button class="btn-submit" onclick="finishRide('${docSnap.id}', '${driverData.driverId}', '${b.customerName}', '${b.customerPhone}', '${b.pickupLocation}', '${b.dropLocation}')" style="background:#e53e3e; margin-top:10px; padding:12px; font-size:1rem;">${currentLang === 'kn' ? 'ಪ್ರಯಾಣ ಮುಕ್ತಾಯಗೊಳಿಸಿ ಹಣ ನಮೂದಿಸಿ' : 'Finish Ride & Enter Fare'}</button>
                   </div>
                 `;
               }
@@ -936,33 +934,13 @@
       try {
         await window.updateDoc(window.doc(window.db, "bookings", bookingId), { status: 'Started' });
         
-        let initialFare = 50;
-        if (activeDriverDataGlobal) {
-          if (activeDriverDataGlobal.drvVehType === 'Bike') initialFare = 30;
-          else if (activeDriverDataGlobal.drvVehType === 'Auto') initialFare = 50;
-          else initialFare = 200;
-        }
-
         document.getElementById('liveGpsPopupText').innerText = currentLang === 'kn' ? "ನಿಮ್ಮ ಜಿಪಿಎಸ್ ಲೈವ್ ಮೀಟರ್ ಆನ್ ಆಗಿದೆ." : "Live GPS meter is active.";
-        document.getElementById('modalVehicleStatusDisplay').innerText = "Vehicle Running";
+        document.getElementById('modalVehicleStatusDisplay').innerText = "Vehicle Stopped";
         document.getElementById('modalDistDisplay').innerText = "0.0";
-        document.getElementById('modalFareDisplay').innerText = initialFare;
         document.getElementById('liveGpsPopupModal').style.display = 'flex';
 
         startRideGpsMeterTracker();
       } catch (e) { alert("Error: " + e.message); }
-    }
-
-    function calculateFareByType(vehType, km) {
-      let fare = 50;
-      if (vehType === 'Bike') {
-        fare = km <= 2 ? 30 : 30 + Math.ceil(km - 2) * 10;
-      } else if (vehType === 'Auto') {
-        fare = km <= 2 ? 50 : 50 + Math.ceil(km - 2) * 12;
-      } else if (vehType === 'Car') {
-        fare = km <= 2 ? 200 : 200 + Math.ceil(km - 2) * 15;
-      }
-      return fare;
     }
 
     function startRideGpsMeterTracker() {
@@ -977,16 +955,8 @@
             if (d > 0.005) {
               rideDistanceKm += d;
               lastRidePos = { lat, lng };
-              
-              let currentFare = 50;
-              if (activeDriverDataGlobal) {
-                currentFare = calculateFareByType(activeDriverDataGlobal.drvVehType, rideDistanceKm);
-              }
-
               if (document.getElementById('activeRideDist')) document.getElementById('activeRideDist').innerText = rideDistanceKm.toFixed(1);
-              if (document.getElementById('activeRideFare')) document.getElementById('activeRideFare').innerText = currentFare;
               if (document.getElementById('modalDistDisplay')) document.getElementById('modalDistDisplay').innerText = rideDistanceKm.toFixed(1);
-              if (document.getElementById('modalFareDisplay')) document.getElementById('modalFareDisplay').innerText = currentFare;
               if (document.getElementById('activeRideStatusText')) document.getElementById('activeRideStatusText').innerText = "Vehicle Running";
               if (document.getElementById('modalVehicleStatusDisplay')) document.getElementById('modalVehicleStatusDisplay').innerText = "Vehicle Running";
             }
@@ -1002,18 +972,25 @@
       
       let calculatedFare = 50;
       if (activeDriverDataGlobal) {
-        calculatedFare = calculateFareByType(activeDriverDataGlobal.drvVehType, rideDistanceKm);
+        let km = rideDistanceKm;
+        if (activeDriverDataGlobal.drvVehType === 'Bike') calculatedFare = km <= 2 ? 30 : 30 + Math.ceil(km - 2) * 10;
+        else if (activeDriverDataGlobal.drvVehType === 'Auto') calculatedFare = km <= 2 ? 50 : 50 + Math.ceil(km - 2) * 12;
+        else calculatedFare = km <= 3 ? 200 : 200 + Math.ceil(km - 3) * 15;
       }
+
+      let fareInput = prompt(currentLang === 'kn' ? `ಪ್ರಯಾಣ ಮುಕ್ತಾಯ! ದೂರ: ${rideDistanceKm.toFixed(1)} ಕಿ.ಮೀ\nಶುಲ್ಕ (₹) ನಮೂದಿಸಿ:` : `Ride Finished! Distance: ${rideDistanceKm.toFixed(1)} KM\nEnter Fare (₹):`, Math.round(calculatedFare));
+      if (fareInput === null) return;
+      let fare = parseFloat(fareInput) || 0;
 
       try {
         const todayStr = new Date().toISOString().split('T')[0];
         await window.addDoc(window.collection(window.db, "completed_rides"), {
           bookingId, driverIdNum: driverId, customerName: custName, customerPhone: custPhone,
-          pickupLocation: pickupLoc, dropLocation: dropLoc, fare: calculatedFare, distance: Number(rideDistanceKm.toFixed(1)), dateKey: todayStr, timestamp: window.serverTimestamp()
+          pickupLocation: pickupLoc, dropLocation: dropLoc, fare, distance: Number(rideDistanceKm.toFixed(1)), dateKey: todayStr, timestamp: window.serverTimestamp()
         });
         await window.deleteDoc(window.doc(window.db, "bookings", bookingId));
         
-        document.getElementById('meterResultText').innerText = currentLang === 'kn' ? `ಪ್ರಯಾಣ ಮುಕ್ತಾಯ!\nಪ್ರಯಾಣಿಸಿದ ದೂರ: ${rideDistanceKm.toFixed(1)} ಕಿ.ಮೀ\nಒಟ್ಟು ಚಾರ್ಜ್: ₹${calculatedFare}` : `Ride Finished!\nDistance: ${rideDistanceKm.toFixed(1)} KM\nFare: ₹${calculatedFare}`;
+        document.getElementById('meterResultText').innerText = currentLang === 'kn' ? `ಪ್ರಯಾಣ ಮುಕ್ತಾಯ!\nದೂರ: ${rideDistanceKm.toFixed(1)} ಕಿ.ಮೀ\nಹಣ: ₹${fare}` : `Ride Finished!\nDistance: ${rideDistanceKm.toFixed(1)} KM\nFare: ₹${fare}`;
         document.getElementById('meterResultModal').style.display = 'flex';
         loadDriverPersonalDashboard(driverId);
       } catch(e) { alert("Error: " + e.message); }
@@ -1055,7 +1032,7 @@
 
     function calculateMeterFareLive(km) {
       const type = document.getElementById('meterVehicleType').value;
-      let total = calculateFareByType(type, km);
+      let total = type === 'Bike' ? (km <= 2 ? 30 : 30 + Math.ceil(km - 2) * 10) : (type === 'Auto' ? (km <= 2 ? 50 : 50 + Math.ceil(km - 2) * 12) : (km <= 3 ? 200 : 200 + Math.ceil(km - 3) * 15));
       document.getElementById('liveAmount').innerText = total;
     }
 
