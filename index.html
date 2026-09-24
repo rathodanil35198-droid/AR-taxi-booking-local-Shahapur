@@ -525,7 +525,7 @@
     let pendingFinishCustPhone = null;
     let pendingFinishPickupLoc = null;
     let pendingFinishDropLoc = null;
-    let pendingNavigationUrl = null; // ನ್ಯಾವಿಗೇಷನ್ ಲಿಂಕ್ ಸ್ಟೋರ್ ಮಾಡಲು
+    let pendingNavigationUrl = null;
 
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
@@ -689,14 +689,14 @@
 
     function showCustomAlert(msg, navUrl) {
       document.getElementById('customAlertText').innerText = msg;
-      pendingNavigationUrl = navUrl; // ಜಿಪಿಎಸ್ ಮ್ಯಾಪ್ ಲಿಂಕ್ ಉಳಿಸಿಕೊಳ್ಳಿ
+      pendingNavigationUrl = navUrl;
       document.getElementById('customAlertModal').style.display = 'block';
     }
     
     function closeCustomAlertAndNavigate() {
       document.getElementById('customAlertModal').style.display = 'none';
       if (pendingNavigationUrl) {
-        window.open(pendingNavigationUrl, '_blank'); // ಓಕೆ ಒತ್ತಿದ ತಕ್ಷಣ ರೋಡ್ ಮ್ಯಾಪ್ ಓಪನ್ ಆಗುತ್ತದೆ
+        window.open(pendingNavigationUrl, '_blank');
         pendingNavigationUrl = null;
       }
     }
@@ -840,10 +840,10 @@
         let pendingHtml = '';
         let acceptedHtml = '';
         let hasPendingToAccept = false;
-        let hasActiveOrAcceptedByMe = false; // ಬೇರೆ ಹಳೇ ಬುಕಿಂಗ್‌ಗಳನ್ನು ಲಾಕ್ ಮಾಡಲು
+        let hasActiveOrAcceptedByMe = false; 
         const todayStr = new Date().toISOString().split('T')[0];
 
-        // ಮೊದಲು ಈ ಡ್ರೈವರ್‌ಗೆ ಯಾವುದಾದರೂ ಅಕ್ಸೆಪ್ಟ್ ಅಥವಾ ಸ್ಟಾರ್ಟ್ ಆದ ಬುಕಿಂಗ್ ಇದೆಯಾ ಎಂದು ಚೆಕ್ ಮಾಡಿ
+        // 1. ಈ ಡ್ರೈವರ್ ಈಗಾಗಲೇ ಯಾವುದಾದರೂ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿದ್ದಾರೆಯೇ ಎಂದು ಪರಿಶೀಲಿಸಿ
         snapshot.forEach((docSnap) => {
           const b = docSnap.data();
           if ((b.status === 'Accepted' || b.status === 'Started') && b.driverIdNum === driverData.driverId) {
@@ -863,7 +863,7 @@
               let vehLogo = b.vehicleType === 'Bike' ? '🏍️' : (b.vehicleType === 'Car' ? '🚗' : '🛺');
 
               if (b.status === 'Pending') {
-                // ಒಂದು ವೇಳೆ ಡ್ರೈವರ್ ಹತ್ತಿರ ಈಗಾಗಲೇ ಆಕ್ಟಿವ್ ಬುಕಿಂಗ್ ಇದ್ದರೆ ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು ಲಾಕ್ ಆಗಿರಬೇಕು (ಕಾರ್ಯನಿರ್ವಹಿಸಬಾರದು)
+                // 2. ಡ್ರೈವರ್ ಬಳಿ ಈಗಾಗಲೇ ಆಕ್ಟಿವ್/ಸ್ವೀಕರಿಸಿದ ಬುಕಿಂಗ್ ಇದ್ದರೆ ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು ಬ್ಲಾಕ್ ಆಗಬೇಕು (ಪ್ರದರ್ಶಿಸಬಾರದು ಅಥವಾ ನಿರ್ಬಂಧಿಸಬೇಕು)
                 if (hasActiveOrAcceptedByMe) return; 
 
                 hasPendingToAccept = true;
@@ -883,9 +883,10 @@
                   </div>
                 `;
               } else if (b.status === 'Accepted' && b.driverIdNum === driverData.driverId) {
+                // 3. ಈಗಾಗಲೇ ಸ್ವೀಕರಿಸಿದ ಹಳೆಯ ಬುಕಿಂಗ್‌ಗಳು ಈ ಡ್ರೈವರ್ ಐಡಿಗೆ ಕಟ್ಟುನಿಟ್ಟಾಗಿ ಲಾಕ್ ಆಗಿರುತ್ತವೆ
                 acceptedHtml += `
                   <div class="card" style="border: 2px solid #38a169; background:#edf2f7; margin-bottom:10px;">
-                    <p style="background:#d4edda; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#155724;">🔒 ${currentLang === 'kn' ? 'ನಿಮ್ಮ ಐಡಿಗೆ ಲಾಕ್ ಮಾಡಲಾಗಿದೆ!' : 'Locked to your ID!'}</p>
+                    <p style="background:#d4edda; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#155724;">🔒 ${currentLang === 'kn' ? 'ನಿಮ್ಮ ಐಡಿಗೆ ಲಾಕ್ ಮಾಡಲಾಗಿದೆ (ಹಳೆಯ ಬುಕಿಂಗ್ ಸುರಕ್ಷಿತವಾಗಿದೆ)!' : 'Locked to your ID!'}</p>
                     <p style="font-size:0.95rem;"><b>${currentLang === 'kn' ? 'ಗ್ರಾಹಕರು:' : 'Customer:'}</b> ${b.customerName} (<a href="tel:${b.customerPhone}">${b.customerPhone}</a>)</p>
                     <p style="font-size:0.95rem;"><b>${currentLang === 'kn' ? 'ವಾಹನ ನಂಬರ್:' : 'Vehicle No:'}</b> ${driverData.drvVehNo}</p>
                     <p style="font-size:0.95rem;"><b>${currentLang === 'kn' ? 'ಡ್ರೈವರ್ ಐಡಿ:' : 'Driver ID:'}</b> ${driverData.driverId}</p>
@@ -900,12 +901,12 @@
               } else if (b.status === 'Started' && b.driverIdNum === driverData.driverId) {
                 acceptedHtml += `
                   <div class="card" style="border: 2px solid #3182ce; background:#ebf8ff; margin-bottom:10px;">
-                    <p style="background:#bee3f8; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#2b6cb0;">🏁 ${currentLang === 'kn' ? 'ಲೈವ್ ಜಿಪಿಎಸ್ ಮೀಟರ್ ಆನ್ ಇದೆ' : 'Live GPS Meter Active'}</p>
+                    <p style="background:#bee3f8; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#2b6cb0;">🏁 ${currentLang === 'kn' ? 'ಲೈವ್ ಜಿಪಿಎಸ್ ಮೀಟರ್ ಆನ್ ಇದೆ (ಲಾಕ್ ಮಾಡಲಾಗಿದೆ)' : 'Live GPS Meter Active & Locked'}</p>
                     <p style="font-size:0.95rem;"><b>${currentLang === 'kn' ? 'ಗ್ರಾಹಕರು:' : 'Customer:'}</b> ${b.customerName} (<a href="tel:${b.customerPhone}">${b.customerPhone}</a>)</p>
                     <p style="font-size:0.85rem; color:#065f46; font-weight:bold; margin:4px 0;" id="activeRideStatusText">Vehicle Running</p>
                     <p style="font-size:1rem; font-weight:bold; color:#0fb05b;">${currentLang === 'kn' ? 'ಪ್ರಯಾಣಿಸಿದ ದೂರ:' : 'Distance:'} <span id="activeRideDist">0.0</span> ಕಿ.ಮೀ</p>
                     <p style="font-size:1.1rem; font-weight:bold; color:#d69e2e; margin-top:2px;">${currentLang === 'kn' ? 'ಪ್ರಸ್ತುತ ಚಾರ್ಜ್:' : 'Current Fare:'} ₹<span id="activeRideFare">50</span></p>
-                    <button class="btn-submit" onclick="triggerRideSummary('${docSnap.id}', '${driverData.driverId}', '${b.customerName}', '${b.customerPhone}', '${b.pickupLocation}', '${b.dropLocation}')" style="background:#e53e3e; margin-top:10px; padding:12px; font-size:1rem;">🛑 ${currentLang === 'kn' ? 'ಸ್ಟಾಪ್' : 'Stop'}</button>
+                    <button class="btn-submit" onclick="triggerRideSummary('${docSnap.id}', '${driverData.driverId}', '${b.customerName}', '${b.customerPhone}', '${b.pickupLocation}', '${b.dropLocation}')" style="background:#e53e3e; margin-top:10px;">⏹️ ${currentLang === 'kn' ? 'ರೈಡ್ ನಿಲ್ಲಿಸಿ (Stop Ride)' : 'Stop Ride'}</button>
                   </div>
                 `;
               }
@@ -913,37 +914,40 @@
           }
         });
 
-        if (hasPendingToAccept && !hasActiveOrAcceptedByMe) startSirenLoop(); else stopSirenLoop();
-
-        // ಒಂದು ವೇಳೆ ಆಕ್ಟಿವ್ ಬುಕಿಂಗ್ ಇದ್ದರೆ ಹೊಸ ಬುಕಿಂಗ್ ಜಾಗದಲ್ಲಿ ಲಾಕ್ ಸಂದೇಶ ತೋರಿಸಿ
-        let combinedHtml = '';
-        if (hasActiveOrAcceptedByMe) {
-          combinedHtml = `<div class="card" style="background:#fff3cd; border:2px solid #ffeeba; text-align:center; padding:15px; margin-bottom:10px;"><p style="font-weight:bold; color:#856404; font-size:0.95rem;">🔒 ${currentLang === 'kn' ? 'ನಿಮ್ಮ ಪ್ರಸ್ತುತ ಬುಕಿಂಗ್ ಮುಗಿಯುವವರೆಗೆ ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು ಲಾಕ್ ಆಗಿರುತ್ತವೆ (ಕಾಣಿಸುವುದಿಲ್ಲ).' : 'New bookings are locked until current trip finishes.'}</p></div>`;
+        if (hasPendingToAccept) {
+          startSirenLoop();
         } else {
-          combinedHtml = pendingHtml || `<p style="color: #718096; font-weight: bold; margin-bottom: 10px;">${currentLang === 'kn' ? `ನಿಮ್ಮ ವಾಹನಕ್ಕೆ (${driverData.drvVehType}) ತಕ್ಕಂತೆ ಲೈವ್ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.` : `No live bookings for your vehicle (${driverData.drvVehType}).`}</p>`;
+          stopSirenLoop();
         }
 
-        if (acceptedHtml !== '') combinedHtml += `<hr style="margin: 15px 0;">` + acceptedHtml;
-
-        const ridesQuery = window.query(window.collection(window.db, "completed_rides"), window.where("driverIdNum", "==", driverData.driverId));
-        const ridesSnap = await window.getDocs(ridesQuery);
-        if (!ridesSnap.empty) {
-          combinedHtml += `<hr style="margin: 15px 0;"><h3 style="font-size: 0.9rem; margin-bottom: 8px;">${currentLang === 'kn' ? 'ಹಿಂದಿನ ಪ್ರಯಾಣದ ಇತಿಹಾಸ (PDF Download):' : 'Ride History (PDF Download):'}</h3>`;
-          ridesSnap.forEach(rDoc => {
-            const r = rDoc.data();
-            combinedHtml += `
-              <div class="card" style="border: 1px solid #cbd5e0; background:#fff; margin-bottom:8px;">
-                <p style="font-size:0.85rem;"><b>${currentLang === 'kn' ? 'ಗ್ರಾಹಕರು:' : 'Customer:'}</b> ${r.customerName} (${r.customerPhone})</p>
-                <p style="font-size:0.85rem;"><b>${currentLang === 'kn' ? 'ಪಿಕಪ್ ಸ್ಥಳ:' : 'Pickup:'}</b> ${r.pickupLocation}</p>
-                <p style="font-size:0.85rem;"><b>${currentLang === 'kn' ? 'ಡ್ರಾಪ್ ಸ್ಥಳ:' : 'Drop:'}</b> ${r.dropLocation}</p>
-                <p style="font-size:0.85rem;"><b>${currentLang === 'kn' ? 'ದೂರ:' : 'Distance:'}</b> ${r.distance} KM | <b>${currentLang === 'kn' ? 'ಹಣ:' : 'Fare:'}</b> ₹${r.fare}</p>
-                <button class="btn-pdf-download" onclick="downloadDriverHistoryPDF('${driverData.driverId}', '${driverData.drvName}', '${rDoc.id}')">📥 ${currentLang === 'kn' ? 'ಪೊಲೀಸ್ ಪರಿಶೀಲನೆ PDF ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ' : 'Download Police Verification PDF'}</button>
-              </div>
-            `;
-          });
+        listDiv.innerHTML = acceptedHtml + pendingHtml;
+        if (!acceptedHtml && !pendingHtml) {
+          listDiv.innerHTML = `<p style="color: #718096; text-align:center;">${currentLang === 'kn' ? 'ಸದ್ಯಕ್ಕೆ ಯಾವುದೇ ಹೊಸ ಬುಕಿಂಗ್‌ಗಳು ಇಲ್ಲ.' : 'No active or new bookings available.'}</p>`;
         }
-        listDiv.innerHTML = combinedHtml;
       });
+    }
+
+    async function acceptBooking(bookingId, driverName, driverPhone, driverVehNo, driverIdNum, pickupLat, pickupLng) {
+      try {
+        const docRef = window.doc(window.db, "bookings", bookingId);
+        const docSnap = await window.getDoc(docRef);
+        if (docSnap.exists() && docSnap.data().status === 'Pending') {
+          await window.updateDoc(docRef, {
+            status: 'Accepted',
+            driverName: driverName,
+            driverPhone: driverPhone,
+            driverVehNo: driverVehNo,
+            driverIdNum: driverIdNum,
+            driverLat: currentDriverLat || 0,
+            driverLng: currentDriverLng || 0
+          });
+          stopSirenLoop();
+          let navUrl = `https://www.google.com/maps/dir/?api=1&destination=${pickupLat},${pickupLng}`;
+          showCustomAlert(currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸ್ವೀಕರಿಸಲಾಗಿದೆ! ಪಿಕಪ್ ಸ್ಥಳಕ್ಕೆ ತಲುಪಲು ಜಿಪಿಎಸ್ ಮ್ಯಾಪ್ ತೆರೆಯಲಾಗುತ್ತಿದೆ.' : 'Booking accepted successfully!', navUrl);
+        } else {
+          alert(currentLang === 'kn' ? 'ಈ ಬುಕಿಂಗ್ ಈಗಾಗಲೇ ಬೇರೆ ಡ್ರೈವರ್‌ಗೆ ಹೋಗಿದೆ!' : 'Booking already taken by another driver!');
+        }
+      } catch (e) { alert('Error: ' + e.message); }
     }
 
     async function driverCancelBooking(bookingId, driverId) {
@@ -951,112 +955,71 @@
         const docRef = window.doc(window.db, "bookings", bookingId);
         const docSnap = await window.getDoc(docRef);
         if (docSnap.exists()) {
-          let ignored = docSnap.data().ignoredDrivers || [];
-          if (!ignored.includes(driverId)) { ignored.push(driverId); await window.updateDoc(docRef, { ignoredDrivers: ignored }); }
+          const data = docSnap.data();
+          let ignored = data.ignoredDrivers || [];
+          if (!ignored.includes(driverId)) ignored.push(driverId);
+          await window.updateDoc(docRef, { ignoredDrivers: ignored });
         }
       } catch(e) {}
     }
 
-    async function acceptBooking(bookingId, drvName, drvPhone, drvVehNo, driverId, pLat, pLng) {
-      try {
-        const docRef = window.doc(window.db, "bookings", bookingId);
-        const docSnap = await window.getDoc(docRef);
-        if (docSnap.exists() && docSnap.data().status === 'Pending') {
-          await window.updateDoc(docRef, {
-            status: 'Accepted', driverName: drvName, driverPhone: drvPhone, driverVehNo: drvVehNo, driverIdNum: driverId,
-            driverLat: currentDriverLat || pLat, driverLng: currentDriverLng || pLng
-          });
-          stopSirenLoop();
-          
-          // ಗೂಗಲ್ ಮ್ಯಾಪ್ ನ್ಯಾವಿಗೇಷನ್ ಲಿಂಕ್ ಸಿದ್ಧಪಡಿಸುವುದು
-          let navMapUrl = `https://www.google.com/maps/dir/?api=1&destination=${pLat},${pLng}`;
-
-          showCustomAlert(currentLang === 'kn' ? 
-            `ಬುಕಿಂಗ್ ಅನ್ನು ನೀವು ಸ್ವೀಕರಿಸಿಬಿಡಿ ನಿಮ್ಮ ಮೊಬೈಲ್ ನಂಬರ್: ${drvPhone}, ಐಡಿ ನಂಬರ್: ${driverId} ಮತ್ತು ವಾಹನ ನಂಬರ್: ${drvVehNo} ನಿಮ್ಮ ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ಕಸ್ಟಮರ್ ಗೆ ಕಳಿಸಲಾಗಿದೆ ಪಿಕಪ್ ಮಾಡಿ.` : 
-            `Booking accepted. Mobile: ${drvPhone}, ID: ${driverId}, Vehicle: ${drvVehNo} and GPS shared. Please pickup.`, navMapUrl);
-        } else {
-          alert(currentLang === 'kn' ? "ಈ ಬುಕಿಂಗ್ ಅನ್ನು ಈಗಾಗಲೇ ಬೇರೆ ಡ್ರೈವರ್ ಸ್ವೀಕರಿಸಿದ್ದಾರೆ." : "Booking already accepted by another driver.");
-        }
-      } catch (e) { alert("Error: " + e.message); }
-    }
-
     async function verifyOtpAndStartRide(bookingId, correctOtp) {
-      const otpInputEl = document.getElementById(`otpInput_${bookingId}`);
-      if (!otpInputEl) return;
-      const inputOtp = otpInputEl.value.trim();
-      if (inputOtp !== correctOtp) { alert(currentLang === 'kn' ? "ತಪ್ಪಾದ ಒಟಿಪಿ! ದಯವಿಟ್ಟು ಸರಿಯಾದ ಒಟಿಪಿ ನಮೂದಿಸಿ." : "Incorrect OTP!"); return; }
+      const inputOtp = document.getElementById(`otpInput_${bookingId}`).value.trim();
+      if (inputOtp !== correctOtp) {
+        alert(currentLang === 'kn' ? 'ತಪ್ಪಾದ ಒಟಿಪಿ! ದಯವಿಟ್ಟು ಸರಿಯಾದ ಒಟಿಪಿ ನಮೂದಿಸಿ.' : 'Incorrect OTP! Please enter correct OTP.');
+        return;
+      }
+
       try {
         await window.updateDoc(window.doc(window.db, "bookings", bookingId), { status: 'Started' });
-        
-        let initialFare = 50;
-        if (activeDriverDataGlobal) {
-          if (activeDriverDataGlobal.drvVehType === 'Bike') initialFare = 30;
-          else if (activeDriverDataGlobal.drvVehType === 'Auto') initialFare = 50;
-          else initialFare = 200;
-        }
-
-        document.getElementById('liveGpsPopupText').innerText = currentLang === 'kn' ? "ಜಿಪಿಎಸ್ ಮೀಟರ್ ಆನ್ ಆಗಿದೆ. ಲೈವ್ ರನ್ನಿಂಗ್ ಮೀಟರ್ ಶುರುವಾಗಿದೆ." : "Live GPS meter is active.";
-        document.getElementById('modalVehicleStatusDisplay').innerText = "Vehicle Running";
-        document.getElementById('modalDistDisplay').innerText = "0.0";
-        document.getElementById('modalFareDisplay').innerText = initialFare;
-        document.getElementById('liveGpsPopupModal').style.display = 'flex';
-
-        startRideGpsMeterTracker();
-      } catch (e) { alert("Error: " + e.message); }
+        startRideGpsMeter(activeDriverDataGlobal.drvVehType);
+      } catch (e) { alert('Error: ' + e.message); }
     }
 
-    function calculateFareByType(vehType, km) {
-      let fare = 50;
-      if (vehType === 'Bike') {
-        fare = km <= 2 ? 30 : 30 + Math.ceil(km - 2) * 10;
-      } else if (vehType === 'Auto') {
-        fare = km <= 2 ? 50 : 50 + Math.ceil(km - 2) * 12;
-      } else if (vehType === 'Car') {
-        fare = km <= 2 ? 200 : 200 + Math.ceil(km - 2) * 15;
-      }
-      return fare;
-    }
+    function startRideGpsMeter(vehicleType) {
+      rideDistanceKm = 0;
+      lastRidePos = null;
+      document.getElementById('liveGpsPopupText').innerText = currentLang === 'kn' ? 'ರೈಡ್ ಪ್ರಾರಂಭವಾಯಿತು. ಜಿಪಿಎಸ್ ಮೀಟರ್ ರನ್ ಆಗುತ್ತಿದೆ.' : 'Ride started. GPS meter running.';
+      document.getElementById('liveGpsPopupModal').style.display = 'block';
 
-    function startRideGpsMeterTracker() {
-      if (navigator.geolocation && !rideGpsMeterWatchId) {
-        rideDistanceKm = 0;
-        lastRidePos = null;
-        rideGpsMeterWatchId = navigator.geolocation.watchPosition((pos) => {
-          const lat = pos.coords.latitude;
-          const lng = pos.coords.longitude;
+      if (navigator.geolocation) {
+        rideGpsMeterWatchId = navigator.geolocation.watchPosition((position) => {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
           if (lastRidePos) {
-            const d = calculateDistance(lastRidePos.lat, lastRidePos.lng, lat, lng);
-            if (d > 0.005) {
-              rideDistanceKm += d;
-              lastRidePos = { lat, lng };
-              
-              let currentFare = 50;
-              if (activeDriverDataGlobal) {
-                currentFare = calculateFareByType(activeDriverDataGlobal.drvVehType, rideDistanceKm);
-              }
-
-              if (document.getElementById('activeRideDist')) document.getElementById('activeRideDist').innerText = rideDistanceKm.toFixed(1);
-              if (document.getElementById('activeRideFare')) document.getElementById('activeRideFare').innerText = currentFare;
-              if (document.getElementById('modalDistDisplay')) document.getElementById('modalDistDisplay').innerText = rideDistanceKm.toFixed(1);
-              if (document.getElementById('modalFareDisplay')) document.getElementById('modalFareDisplay').innerText = currentFare;
-              if (document.getElementById('activeRideStatusText')) document.getElementById('activeRideStatusText').innerText = "Vehicle Running";
-              if (document.getElementById('modalVehicleStatusDisplay')) document.getElementById('modalVehicleStatusDisplay').innerText = "Vehicle Running";
+            const dist = calculateDistance(lastRidePos.lat, lastRidePos.lng, lat, lng);
+            if (dist > 0.005 && dist < 2.0) {
+              rideDistanceKm += dist;
+              document.getElementById('modalVehicleStatusDisplay').innerText = currentLang === 'kn' ? 'ವಾಹನ ಚಲಿಸುತ್ತಿದೆ (Vehicle Running)' : 'Vehicle Running';
+              document.getElementById('modalVehicleStatusDisplay').style.color = '#0fb05b';
+            } else {
+              document.getElementById('modalVehicleStatusDisplay').innerText = currentLang === 'kn' ? 'ವಾಹನ ನಿಂತಿದೆ (Vehicle Stopped)' : 'Vehicle Stopped';
+              document.getElementById('modalVehicleStatusDisplay').style.color = '#d69e2e';
             }
-          } else {
-            lastRidePos = { lat, lng };
           }
-        }, (err) => {}, { enableHighAccuracy: true });
+          lastRidePos = { lat, lng };
+
+          let fare = calculateFare(vehicleType, rideDistanceKm);
+          document.getElementById('modalDistDisplay').innerText = rideDistanceKm.toFixed(1);
+          document.getElementById('modalFareDisplay').innerText = Math.round(fare);
+
+          const elDist = document.getElementById('activeRideDist');
+          const elFare = document.getElementById('activeRideFare');
+          if (elDist) elDist.innerText = rideDistanceKm.toFixed(1);
+          if (elFare) elFare.innerText = Math.round(fare);
+        }, (error) => {}, { enableHighAccuracy: true });
       }
+    }
+
+    function calculateFare(vehicleType, km) {
+      let baseLimit = 2.0;
+      let baseFare = vehicleType === 'Bike' ? 30 : (vehicleType === 'Auto' ? 50 : 200);
+      let perKmRate = vehicleType === 'Bike' ? 10 : (vehicleType === 'Auto' ? 12 : 15);
+      if (km <= baseLimit) return baseFare;
+      return baseFare + ((km - baseLimit) * perKmRate);
     }
 
     function triggerRideSummary(bookingId, driverId, custName, custPhone, pickupLoc, dropLoc) {
-      if (rideGpsMeterWatchId) { navigator.geolocation.clearWatch(rideGpsMeterWatchId); rideGpsMeterWatchId = null; }
-      
-      let calculatedFare = 50;
-      if (activeDriverDataGlobal) {
-        calculatedFare = calculateFareByType(activeDriverDataGlobal.drvVehType, rideDistanceKm);
-      }
-
       pendingFinishBookingId = bookingId;
       pendingFinishDriverId = driverId;
       pendingFinishCustName = custName;
@@ -1064,33 +1027,39 @@
       pendingFinishPickupLoc = pickupLoc;
       pendingFinishDropLoc = dropLoc;
 
-      // ಸ್ಟಾಪ್ ಒತ್ತಿದ ತಕ್ಷಣ ಕಿಲೋಮೀಟರ್ ಮತ್ತು ಚಾರ್ಜಸ್ ಕಾಣುವ ಪಾಪ್-ಅಪ್
-      document.getElementById('rideSummaryText').innerText = currentLang === 'kn' ? 
-        `ಪ್ರಯಾಣ ಮುಕ್ತಾಯ!\nಕಿಲೋಮೀಟರ್: ${rideDistanceKm.toFixed(1)} ಕಿ.ಮೀ\nಚಾರ್ಜಸ್ ಎಲ್ಲವೂ: ₹${calculatedFare}` : 
-        `Trip Summary:\nDistance: ${rideDistanceKm.toFixed(1)} KM\nTotal Charges: ₹${calculatedFare}`;
-      document.getElementById('rideSummaryModal').style.display = 'flex';
+      let fare = calculateFare(activeDriverDataGlobal ? activeDriverDataGlobal.drvVehType : 'Auto', rideDistanceKm);
+      document.getElementById('rideSummaryText').innerHTML = `
+        ${currentLang === 'kn' ? 'ಪ್ರಯಾಣಿಸಿದ ದೂರ:' : 'Distance:'} <b>${rideDistanceKm.toFixed(1)} ಕಿ.ಮೀ</b><br>
+        ${currentLang === 'kn' ? 'ಒಟ್ಟು ಶುಲ್ಕ:' : 'Total Fare:'} <span style="color:#0fb05b; font-size:1.3rem;">₹${Math.round(fare)}</span>
+      `;
+      document.getElementById('rideSummaryModal').style.display = 'block';
     }
 
     async function confirmAndFinishRide() {
       document.getElementById('rideSummaryModal').style.display = 'none';
-      let calculatedFare = 50;
-      if (activeDriverDataGlobal) {
-        calculatedFare = calculateFareByType(activeDriverDataGlobal.drvVehType, rideDistanceKm);
-      }
+      if (rideGpsMeterWatchId) { navigator.geolocation.clearWatch(rideGpsMeterWatchId); rideGpsMeterWatchId = null; }
+
+      let fare = calculateFare(activeDriverDataGlobal ? activeDriverDataGlobal.drvVehType : 'Auto', rideDistanceKm);
+      const todayStr = new Date().toISOString().split('T')[0];
 
       try {
-        const todayStr = new Date().toISOString().split('T')[0];
         await window.addDoc(window.collection(window.db, "completed_rides"), {
-          bookingId: pendingFinishBookingId, driverIdNum: pendingFinishDriverId, customerName: pendingFinishCustName, customerPhone: pendingFinishCustPhone,
-          pickupLocation: pendingFinishPickupLoc, dropLocation: pendingFinishDropLoc, fare: calculatedFare, distance: Number(rideDistanceKm.toFixed(1)), dateKey: todayStr, timestamp: window.serverTimestamp()
+          bookingId: pendingFinishBookingId,
+          driverIdNum: pendingFinishDriverId,
+          customerName: pendingFinishCustName,
+          customerPhone: pendingFinishCustPhone,
+          pickupLocation: pendingFinishPickupLoc,
+          dropLocation: pendingFinishDropLoc,
+          distance: Number(rideDistanceKm.toFixed(2)),
+          fare: Math.round(fare),
+          dateKey: todayStr,
+          timestamp: window.serverTimestamp()
         });
+
         await window.deleteDoc(window.doc(window.db, "bookings", pendingFinishBookingId));
-        
-        // ಬುಕಿಂಗ್‌ಗಳು ಮಾಯವಾಗಿ ಹೊಸ ಬುಕಿಂಗ್ ನೋಡಲು ಬರುವಂತೆ ನಿರ್ವಹಿಸುವುದು
-        document.getElementById('meterResultText').innerText = currentLang === 'kn' ? `ಪ್ರಯಾಣ ಮುಕ್ತಾಯ!\nದೂರ: ${rideDistanceKm.toFixed(1)} ಕಿ.ಮೀ\nಚಾರ್ಜ್: ₹${calculatedFare}\nಈ ಬುಕಿಂಗ್ ಮುಗಿದಿದೆ, ಈಗ ಹೊಸ ಬುಕಿಂಗ್ ನೋಡಬಹುದು.` : `Ride Finished! Distance: ${rideDistanceKm.toFixed(1)} KM | Fare: ₹${calculatedFare}`;
-        document.getElementById('meterResultModal').style.display = 'flex';
         loadDriverPersonalDashboard(pendingFinishDriverId);
-      } catch(e) { alert("Error: " + e.message); }
+        alert(currentLang === 'kn' ? 'ರೈಡ್ ಯಶಸ್ವಿಯಾಗಿ ಮುಕ್ತಾಯಗೊಂಡಿದೆ!' : 'Ride finished successfully!');
+      } catch(e) { alert('Error: ' + e.message); }
     }
 
     function calculateDistance(lat1, lon1, lat2, lon2) {
@@ -1098,107 +1067,154 @@
       const dLat = (lat2 - lat1) * Math.PI / 180;
       const dLon = (lon2 - lon1) * Math.PI / 180;
       const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon/2) * Math.sin(dLon/2);
-      return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      return R * c;
     }
 
     function resetMeterRate() {
       const type = document.getElementById('meterVehicleType').value;
-      document.getElementById('liveAmount').innerText = type === 'Bike' ? '30' : (type === 'Auto' ? '50' : '200');
+      let initialFare = type === 'Bike' ? 30 : (type === 'Auto' ? 50 : 200);
+      document.getElementById('liveAmount').innerText = initialFare;
+      distanceKm = 0;
+      document.getElementById('distCount').innerText = '0.0';
     }
 
     function startMeter() {
+      distanceKm = 0;
+      lastCustPos = null;
+      const type = document.getElementById('meterVehicleType').value;
+      document.getElementById('meterStatusMsg').innerText = currentLang === 'kn' ? 'ವಾಹನ ಚಲಿಸುತ್ತಿದೆ...' : 'Vehicle Running...';
+
       if (navigator.geolocation) {
-        distanceKm = 0;
-        document.getElementById('distCount').innerText = '0.0';
-        document.getElementById('meterStatusMsg').innerText = currentLang === 'kn' ? 'ಮೀಟರ್ ಚಾಲಿಯಲ್ಲಿದೆ...' : 'Meter Running...';
-        custMeterWatchId = navigator.geolocation.watchPosition((pos) => {
-          const lat = pos.coords.latitude, lng = pos.coords.longitude;
+        custMeterWatchId = navigator.geolocation.watchPosition((position) => {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
           document.getElementById('liveGpsCoord').innerText = `GPS: ${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+
           if (lastCustPos) {
             const d = calculateDistance(lastCustPos.lat, lastCustPos.lng, lat, lng);
-            if (d > 0.005) {
-              distanceKm += d; lastCustPos = { lat, lng };
-              document.getElementById('distCount').innerText = distanceKm.toFixed(1);
-              calculateMeterFareLive(distanceKm);
-              document.getElementById('meterStatusMsg').innerText = "Vehicle Running";
+            if (d > 0.005 && d < 2.0) {
+              distanceKm += d;
+              document.getElementById('meterStatusMsg').innerText = currentLang === 'kn' ? 'ವಾಹನ ಚಲಿಸುತ್ತಿದೆ (Vehicle Running)' : 'Vehicle Running';
+              document.getElementById('meterStatusMsg').style.color = '#0fb05b';
+            } else {
+              document.getElementById('meterStatusMsg').innerText = currentLang === 'kn' ? 'ವಾಹನ ನಿಂತಿದೆ (Vehicle Stopped)' : 'Vehicle Stopped';
+              document.getElementById('meterStatusMsg').style.color = '#d69e2e';
             }
-          } else { lastCustPos = { lat, lng }; }
-        }, (err) => {}, { enableHighAccuracy: true });
+          }
+          lastCustPos = { lat, lng };
+
+          let currentFare = calculateFare(type, distanceKm);
+          document.getElementById('distCount').innerText = distanceKm.toFixed(1);
+          document.getElementById('liveAmount').innerText = Math.round(currentFare);
+        }, (error) => {
+          document.getElementById('liveGpsCoord').innerText = 'GPS Error: ' + error.message;
+        }, { enableHighAccuracy: true });
       }
     }
 
-    function calculateMeterFareLive(km) {
-      const type = document.getElementById('meterVehicleType').value;
-      let total = calculateFareByType(type, km);
-      document.getElementById('liveAmount').innerText = total;
-    }
-
     function stopMeterOnly() {
-      if (custMeterWatchId) { navigator.geolocation.clearWatch(custMeterWatchId); custMeterWatchId = null; }
-      lastCustPos = null;
-      document.getElementById('meterStatusMsg').innerText = currentLang === 'kn' ? 'ವಾಹನ ನಿಂತಿದೆ' : 'Vehicle Stopped';
-      const finalAmt = document.getElementById('liveAmount').innerText;
-      document.getElementById('meterResultText').innerText = currentLang === 'kn' ? `ಪ್ರಯಾಣ ಮುಕ್ತಾಯ! ದೂರ: ${distanceKm.toFixed(1)} ಕಿ.ಮೀ | ಒಟ್ಟು ಶುಲ್ಕ: ₹${finalAmt}` : `Ride Finished! Distance: ${distanceKm.toFixed(1)} KM | Total Fare: ₹${finalAmt}`;
-      document.getElementById('meterResultModal').style.display = 'flex';
+      if (custMeterWatchId) {
+        navigator.geolocation.clearWatch(custMeterWatchId);
+        custMeterWatchId = null;
+      }
+      const type = document.getElementById('meterVehicleType').value;
+      let finalFare = calculateFare(type, distanceKm);
+      document.getElementById('meterResultText').innerHTML = `
+        ${currentLang === 'kn' ? 'ಪ್ರಯಾಣಿಸಿದ ಒಟ್ಟು ದೂರ:' : 'Total Distance:'} <b>${distanceKm.toFixed(1)} ಕಿ.ಮೀ</b><br>
+        ${currentLang === 'kn' ? 'ಒಟ್ಟು ಶುಲ್ಕ:' : 'Total Fare:'} <span style="color:#0fb05b; font-size:1.3rem;">₹${Math.round(finalFare)}</span>
+      `;
+      document.getElementById('meterResultModal').style.display = 'block';
     }
 
     async function registerDriver() {
       const name = document.getElementById('drvName').value.trim();
       const phone = document.getElementById('drvPhone').value.trim();
       const vehNo = document.getElementById('drvVehNo').value.trim();
-      if (!name || !phone || !vehNo) { alert(currentLang === 'kn' ? "ದಯವಿಟ್ಟು ಎಲ್ಲಾ ಮಾಹಿತಿಯನ್ನು ಭರ್ತಿ ಮಾಡಿ." : "Please fill all details."); return; }
+      const vehType = document.getElementById('drvVehType').value;
+
+      if (!name || !phone || phone.length < 10 || !vehNo) {
+        alert(currentLang === 'kn' ? 'ದಯವಿಟ್ಟು ಎಲ್ಲಾ ಸರಿಯಾದ ವಿವರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ!' : 'Please fill all details correctly!');
+        return;
+      }
 
       const btn = document.getElementById('btnRegisterDriver');
-      btn.innerText = currentLang === 'kn' ? "ಫೋಟೋಗಳು ಅಪ್‌ಲೋಡ್ ಆಗುತ್ತಿವೆ..." : "Uploading Photos..."; btn.disabled = true;
-
-      const vehPhoto = await convertFileToBase64(document.getElementById('vehPhotoFile').files[0]);
-      const rcPhoto = await convertFileToBase64(document.getElementById('rcPhotoFile').files[0]);
-      const dlPhoto = await convertFileToBase64(document.getElementById('dlPhotoFile').files[0]);
-      const selfiePhoto = await convertFileToBase64(document.getElementById('selfiePhotoFile').files[0]);
-      const aadharPhoto = await convertFileToBase64(document.getElementById('aadharPhotoFile').files[0]);
-      const driverId = Math.floor(1000 + Math.random() * 9000).toString();
+      btn.innerText = currentLang === 'kn' ? 'ಫೋಟೋಗಳು ಅಪ್‌ಲೋಡ್ ಆಗುತ್ತಿವೆ...' : 'Uploading photos...';
+      btn.disabled = true;
 
       try {
-        await window.addDoc(window.collection(window.db, "drivers"), {
-          drvName: name, drvPhone: phone, drvVehNo: vehNo, drvVehType: document.getElementById('drvVehType').value,
-          vehPhoto, rcPhoto, dlPhoto, selfiePhoto, aadharPhoto, driverId, timestamp: window.serverTimestamp()
-        });
-        alert(currentLang === 'kn' ? `ರಜಿಸ್ಟ್ರೇಷನ್ ಯಶಸ್ವಿಯಾಗಿದೆ! ನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ: ${driverId}` : `Registration Successful! Your 4-digit Driver ID: ${driverId}`);
+        const vehPhoto = await convertFileToBase64(document.getElementById('vehPhotoFile').files[0]);
+        const rcPhoto = await convertFileToBase64(document.getElementById('rcPhotoFile').files[0]);
+        const dlPhoto = await convertFileToBase64(document.getElementById('dlPhotoFile').files[0]);
+        const selfiePhoto = await convertFileToBase64(document.getElementById('selfiePhotoFile').files[0]);
+        const aadharPhoto = await convertFileToBase64(document.getElementById('aadharPhotoFile').files[0]);
+
+        const q = window.query(window.collection(window.db, "drivers"), window.where("drvPhone", "==", phone));
+        const snap = await window.getDocs(q);
+
+        let driverId = '';
+        if (!snap.empty) {
+          driverId = snap.docs[0].data().driverId;
+          await window.updateDoc(window.doc(window.db, "drivers", snap.docs[0].id), {
+            drvName: name, drvVehNo: vehNo, drvVehType: vehType, vehPhoto, rcPhoto, dlPhoto, selfiePhoto, aadharPhoto
+          });
+        } else {
+          driverId = Math.floor(1000 + Math.random() * 9000).toString();
+          await window.addDoc(window.collection(window.db, "drivers"), {
+            driverId, drvName: name, drvPhone: phone, drvVehNo: vehNo, drvVehType: vehType, vehPhoto, rcPhoto, dlPhoto, selfiePhoto, aadharPhoto, timestamp: window.serverTimestamp()
+          });
+        }
+
+        alert(`${currentLang === 'kn' ? 'ನಿಮ್ಮ ಡ್ರೈವರ್ ಐಡಿ ನಂಬರ್:' : 'Your Driver ID Number:'} ${driverId}\n${currentLang === 'kn' ? 'ದಯವಿಟ್ಟು ಈ ಐಡಿ ನೆನಪಿನಲ್ಲಿಡಿ!' : 'Please remember this ID!'}`);
         openPage('liveSection');
         document.getElementById('driverInputId').value = driverId;
         checkDriverIdAndListen();
-      } catch (e) { alert("Error: " + e.message); } finally { btn.innerText = currentLang === 'kn' ? "ಲಾಗಿನ್ / ರಜಿಸ್ಟರ್ ಮಾಡಿ" : "Login / Register"; btn.disabled = false; }
+      } catch (e) {
+        alert('Error: ' + e.message);
+      } finally {
+        btn.innerText = currentLang === 'kn' ? 'ಲಾಗಿನ್ / ರಜಿಸ್ಟರ್ ಮಾಡಿ' : 'Login / Register';
+        btn.disabled = false;
+      }
     }
 
     async function loadAdminDrivers() {
+      const listDiv = document.getElementById('adminDriversList');
+      listDiv.innerHTML = currentLang === 'kn' ? 'ಮಾಹಿತಿ ಲೋಡ್ ಆಗುತ್ತಿದೆ...' : 'Loading info...';
       try {
         const snap = await window.getDocs(window.collection(window.db, "drivers"));
         allDriversData = [];
         snap.forEach(d => allDriversData.push({ id: d.id, ...d.data() }));
         document.getElementById('adminTotalDriversCount').innerText = allDriversData.length;
         renderAdminDriversList(allDriversData);
-      } catch(e) {}
+      } catch (e) { listDiv.innerHTML = 'Error: ' + e.message; }
     }
 
     function renderAdminDriversList(drivers) {
       const listDiv = document.getElementById('adminDriversList');
-      if (drivers.length === 0) { listDiv.innerHTML = "<p>No drivers registered.</p>"; return; }
+      if (drivers.length === 0) {
+        listDiv.innerHTML = `<p style="text-align:center; color:#718096;">${currentLang === 'kn' ? 'ಯಾವುದೇ ಡ್ರೈವರ್‌ಗಳು ಇಲ್ಲ.' : 'No drivers found.'}</p>`;
+        return;
+      }
+
       let html = '';
       drivers.forEach(d => {
+        let photosHtml = '<div class="driver-photo-grid">';
+        if (d.vehPhoto) photosHtml += `<img src="${d.vehPhoto}" class="driver-thumb" onclick="viewFullImage('${d.vehPhoto}', 'Vehicle Photo')">`;
+        if (d.rcPhoto) photosHtml += `<img src="${d.rcPhoto}" class="driver-thumb" onclick="viewFullImage('${d.rcPhoto}', 'RC Photo')">`;
+        if (d.dlPhoto) photosHtml += `<img src="${d.dlPhoto}" class="driver-thumb" onclick="viewFullImage('${d.dlPhoto}', 'DL Photo')">`;
+        if (d.selfiePhoto) photosHtml += `<img src="${d.selfiePhoto}" class="driver-thumb" onclick="viewFullImage('${d.selfiePhoto}', 'Selfie Photo')">`;
+        if (d.aadharPhoto) photosHtml += `<img src="${d.aadharPhoto}" class="driver-thumb" onclick="viewFullImage('${d.aadharPhoto}', 'Aadhar Photo')">`;
+        photosHtml += '</div>';
+
         html += `
-          <div class="card" style="border: 1px solid #cbd5e0; margin-bottom:10px; background:#fff;">
-            <p><b>${currentLang === 'kn' ? 'ಹೆಸರು:' : 'Name:'}</b> ${d.drvName}</p>
-            <p><b>${currentLang === 'kn' ? 'ಫೋನ್:' : 'Phone:'}</b> <a href="tel:${d.drvPhone}">${d.drvPhone}</a></p>
+          <div class="card" style="border: 1px solid #cbd5e0; margin-bottom:10px;">
+            <p><b>${currentLang === 'kn' ? 'ಡ್ರೈವರ್ ಹೆಸರು:' : 'Name:'}</b> ${d.drvName}</p>
+            <p><b>${currentLang === 'kn' ? 'ಐಡಿ ನಂಬರ್:' : 'ID:'}</b> <span style="color:#d69e2e; font-weight:bold; font-size:1.1rem;">${d.driverId}</span></p>
+            <p><b>${currentLang === 'kn' ? 'ಮೊಬೈಲ್:' : 'Mobile:'}</b> <a href="tel:${d.drvPhone}">${d.drvPhone}</a></p>
             <p><b>${currentLang === 'kn' ? 'ವಾಹನ ನಂಬರ್:' : 'Vehicle No:'}</b> ${d.drvVehNo} (${d.drvVehType})</p>
-            <p><b>${currentLang === 'kn' ? 'ಐಡಿ ನಂಬರ್:' : 'ID Number:'}</b> <span style="color:#d69e2e; font-weight:bold; font-size:1.1rem;">${d.driverId}</span></p>
-            <div class="driver-photo-grid">
-               ${d.vehPhoto ? `<img src="${d.vehPhoto}" class="driver-thumb" onclick="viewFullImage('${d.vehPhoto}', 'Vehicle Photo')">` : ''}
-               ${d.rcPhoto ? `<img src="${d.rcPhoto}" class="driver-thumb" onclick="viewFullImage('${d.rcPhoto}', 'RC Card')">` : ''}
-               ${d.dlPhoto ? `<img src="${d.dlPhoto}" class="driver-thumb" onclick="viewFullImage('${d.dlPhoto}', 'DL Photo')">` : ''}
-               ${d.selfiePhoto ? `<img src="${d.selfiePhoto}" class="driver-thumb" onclick="viewFullImage('${d.selfiePhoto}', 'Selfie')">` : ''}
-               ${d.aadharPhoto ? `<img src="${d.aadharPhoto}" class="driver-thumb" onclick="viewFullImage('${d.aadharPhoto}', 'Aadhar')">` : ''}
-            </div>
-            <button class="btn-submit" onclick="deleteDriver('${d.id}')" style="background:#e53e3e; margin-top:6px; padding:6px; font-size:0.8rem;">${currentLang === 'kn' ? 'ಡ್ರೈವರ್ ಡಿಲೀಟ್ ಮಾಡಿ' : 'Delete Driver'}</button>
+            ${photosHtml}
+            <button class="btn-pdf-download" onclick="downloadDriverDetails('${d.driverId}', '${d.drvName}', '${d.drvPhone}', '${d.drvVehNo}', '${d.drvVehType}')">📥 PDF ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ</button>
+            <button class="btn-submit" onclick="deleteDriverRecord('${d.id}')" style="background:#e53e3e; margin-top:6px;">🗑️ ${currentLang === 'kn' ? 'ಡ್ರೈವರ್ ಡಿಲೀಟ್ ಮಾಡಿ' : 'Delete Driver'}</button>
           </div>
         `;
       });
@@ -1206,24 +1222,47 @@
     }
 
     function filterAdminDrivers() {
-      const queryText = document.getElementById('adminSearchInput').value.trim().toLowerCase();
-      const filtered = allDriversData.filter(d => (d.drvPhone && d.drvPhone.toLowerCase().includes(queryText)) || (d.driverId && d.driverId.toLowerCase().includes(queryText)) || (d.drvName && d.drvName.toLowerCase().includes(queryText)));
+      const keyword = document.getElementById('adminSearchInput').value.trim().toLowerCase();
+      const filtered = allDriversData.filter(d => 
+        (d.drvPhone && d.drvPhone.includes(keyword)) || 
+        (d.driverId && d.driverId.includes(keyword)) ||
+        (d.drvName && d.drvName.toLowerCase().includes(keyword))
+      );
       renderAdminDriversList(filtered);
     }
 
-    async function deleteDriver(docId) {
-      if (confirm(currentLang === 'kn' ? "ಖಚಿತವಾಗಿ ಈ ಡ್ರೈವರ್ ಅನ್ನು ಡಿಲೀಟ್ ಮಾಡಲು ಬಯಸುತ್ತೀರಾ?" : "Are you sure you want to delete this driver?")) {
-        try { await window.deleteDoc(window.doc(window.db, "drivers", docId)); loadAdminDrivers(); } catch(e) {}
+    async function deleteDriverRecord(docId) {
+      if (confirm(currentLang === 'kn' ? 'ಖಂಡಿತವಾಗಿ ಈ ಡ್ರೈವರ್ ಅನ್ನು ಡಿಲೀಟ್ ಮಾಡಲು ಬಯಸುತ್ತೀರಾ?' : 'Are you sure you want to delete this driver?')) {
+        try {
+          await window.deleteDoc(window.doc(window.db, "drivers", docId));
+          loadAdminDrivers();
+        } catch(e) { alert('Error: ' + e.message); }
       }
     }
 
-    function shareAppOnWhatsApp() {
-      const text = encodeURIComponent(currentLang === 'kn' ? "ಕರ್ನಾಟಕ A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್! ಶಹಾಪುರದಲ್ಲಿ ಬೈಕ್, ಆಟೋ ಹಾಗೂ ಕಾರ್ ಬುಕಿಂಗ್ ಮಾಡಲು ಈ ಲಿಂಕ್ ಬಳಸಿ: " + window.location.href : "Karnataka A R Taxi Booking Go Fast! Use this link to book Bike, Auto & Car: " + window.location.href);
-      window.open("https://api.whatsapp.com/send?text=" + text, "_blank");
+    function downloadDriverDetails(id, name, phone, vehNo, vehType) {
+      const element = document.createElement('div');
+      element.style.padding = '20px';
+      element.style.background = '#fff';
+      element.innerHTML = `
+        <h2 style="color: #0fb05b; text-align: center;">A R Taxi Go Fast - Driver Profile</h2>
+        <hr style="margin: 10px 0;">
+        <p><b>Driver ID:</b> ${id}</p>
+        <p><b>Name:</b> ${name}</p>
+        <p><b>Mobile:</b> ${phone}</p>
+        <p><b>Vehicle Number:</b> ${vehNo}</p>
+        <p><b>Vehicle Type:</b> ${vehType}</p>
+        <hr style="margin: 10px 0;">
+        <p style="text-align:center; font-size:12px; color:#666;">© 2026 A R Taxi Go Fast</p>
+      `;
+      html2pdf().from(element).save(`Driver_${id}_Profile.pdf`);
     }
 
-    async function downloadDriverHistoryPDF(driverId, driverName, recordId) {
-      alert(currentLang === 'kn' ? "PDF ಡೌನ್‌ಲೋಡ್ ಸಿದ್ಧವಾಗುತ್ತಿದೆ..." : "Preparing PDF download...");
+    function shareAppOnWhatsApp() {
+      const shareText = currentLang === 'kn' 
+        ? "ಕರ್ನಾಟಕ A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್ ಆ್ಯಪ್ ಬಳಸಿ ಬೈಕ್, ಆಟೋ ಹಾಗೂ ಕಾರ್ ಬುಕ್ ಮಾಡಿ ಅಥವಾ ಡ್ರೈವರ್ ಆಗಿ ಜಾಯಿನ್ ಆಗಿ!" 
+        : "Use Karnataka A R Taxi Booking Go Fast app to book Bike, Auto & Car or join as a driver!";
+      window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, '_blank');
     }
   </script>
 </body>
