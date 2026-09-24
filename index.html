@@ -5,14 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title id="pageTitle">A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್ | ಬೈಕ್, ಆಟೋ & ಕಾರ್ ಬುಕಿಂಗ್</title>
   
-  <!-- PWA & Mobile App Settings -->
   <meta name="theme-color" content="#0fb05b">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="A R Taxi Go Fast">
   <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3097/3097180.png">
 
-  <!-- Dynamic PWA Manifest Injection with App Name inside Box/Icon concept -->
   <script>
     const manifestData = {
       "name": "A R Taxi Booking Go Fast",
@@ -43,7 +41,6 @@
     document.head.appendChild(linkTag);
   </script>
 
-  <!-- PDF ಡೌನ್‌ಲೋಡ್ ಮಾಡಲು html2pdf ಲೈಬ್ರರಿ -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <script type="module">
@@ -245,7 +242,6 @@
 
   <a href="javascript:void(0);" onclick="shareAppOnWhatsApp()" class="floating-share-btn">💬</a>
 
-  <!-- Install App Prompt Banner -->
   <div id="installAppBanner" class="install-app-banner" style="display: none;">
     <div style="display:flex; align-items:center; gap:8px;">
       <span style="font-size: 2rem;">📲</span>
@@ -257,6 +253,7 @@
     <button id="installAppBtn" style="background:#fff; color:#ff5e62; border:none; padding:6px 12px; border-radius:15px; font-weight:bold; font-size:0.8rem; cursor:pointer;">📥 Install</button>
   </div>
 
+  <!-- Custom Alert Modal (ಸಂಪೂರ್ಣ ಪಾಪ್-ಅಪ್ ಸಂದೇಶಕ್ಕಾಗಿ) -->
   <div id="customAlertModal">
     <div class="modal-content-box">
       <div style="font-size: 2.5rem; margin-bottom: 10px;">🛺</div>
@@ -862,7 +859,9 @@
         });
 
         myActiveBookingId = docRef.id;
-        showCustomAlert(currentLang === 'en' ? "Booking submitted successfully!" : "ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಸಲ್ಲಿಸಲಾಗಿದೆ! ಡ್ರೈವರ್ ಸ್ವೀಕರಿಸಿದಾಗ ಲೈವ್ ಮಾಹಿತಿ ಸಿಗುತ್ತದೆ.");
+        
+        // **ಇಲ್ಲಿ ಕಸ್ಟಮರ್‌ಗೆ ತಕ್ಷಣವೇ ಪಾಪ್-ಅಪ್ ಸಂದೇಶ ಹಾಗೂ ಒಟಿಪಿ ತೋರಿಸಲಾಗುತ್ತದೆ**
+        showCustomAlert(`🎉 ನಿಮ್ಮ ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿದೆ!\n\nನಿಮ್ಮ ಒಟಿಪಿ (OTP) ಸಂಖ್ಯೆ: ${pickupOtp}\n\nಡ್ರೈವರ್ ಸ್ವೀಕರಿಸುವವರೆಗೆ ದಯವಿಟ್ಟು ಕಾಯಿರಿ.`);
 
         document.getElementById('bookingFormContainer').style.display = 'none';
         document.getElementById('customerStatusContainer').innerHTML = `
@@ -896,7 +895,7 @@
 
     function showCustomAlert(msg) {
       document.getElementById('customAlertText').innerText = msg;
-      document.getElementById('customAlertModal').style.display = 'block';
+      document.getElementById('customAlertModal').style.display = 'flex';
     }
     function closeCustomAlert() { document.getElementById('customAlertModal').style.display = 'none'; }
     function closeMeterResultModal() { 
@@ -915,7 +914,7 @@
       document.getElementById('fullSizeImage').src = src;
       document.getElementById('downloadImageBtn').href = src;
       document.getElementById('imageViewerTitle').innerText = title || 'ಫೋಟೋ ವೀಕ್ಷಣೆ';
-      document.getElementById('imageViewerModal').style.display = 'block';
+      document.getElementById('imageViewerModal').style.display = 'flex';
     }
     function closeImageViewer() { document.getElementById('imageViewerModal').style.display = 'none'; }
 
@@ -1180,7 +1179,6 @@
             driverLng: currentDriverLng || pLng
           });
           stopSirenLoop();
-          // ಇಲ್ಲಿ ನೀವು ಕೇಳಿದ ಪಾಪ್-ಅಪ್ ಸಂದೇಶ ಪ್ರದರ್ಶಿಸಲಾಗುತ್ತದೆ
           showCustomAlert("ಬುಕಿಂಗ್‌ಗಳು ನೀವು ಸ್ವೀಕರಿಸಿದ್ದೀರಿ, ಯಶಸ್ವಿಯಾಗಿ ಸ್ವೀಕರಿಸಲಾಗಿದೆ ದಯವಿಟ್ಟು ಪಿಕಪ್ ಮಾಡಿ");
         } else {
           alert("ಈ ಬುಕಿಂಗ್ ಅನ್ನು ಈಗಾಗಲೇ ಬೇರೆ ಡ್ರೈವರ್ ಸ್ವೀಕರಿಸಿದ್ದಾರೆ.");
