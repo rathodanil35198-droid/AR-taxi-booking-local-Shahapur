@@ -385,6 +385,22 @@
         </div>
         <div id="customerStatusContainer" style="margin-top: 10px;"></div>
       </div>
+    <!-- ಬುಕಿಂಗ್ ಮಾಡಿದ ತಕ್ಷಣ ಮತ್ತು ಡ್ರೈವರ್ ಸ್ವೀಕರಿಸಿದಾಗ ಕಾಣಿಸುವ ಮಾಹಿತಿ -->
+    <div id="bookingLiveStatus" style="margin-top: 15px; padding: 15px; background: #e8f4fd; border: 2px solid #0f0b5b; border-radius: 8px;">
+        <p id="bookingMessage" style="font-weight: bold; color: #0f0b5b; margin-bottom: 10px;" data-kn="ನಿಮ್ಮ ಬುಕಿಂಗ್ ಅನ್ನು ಹತ್ತಿರದ ಡ್ರೈವರ್‌ಗಳಿಗೆ ಕಳುಹಿಸಲಾಗಿದೆ. ಡ್ರೈವರ್‌ಗಳ ಎಲ್ಲಾ ಲೈವ್ ಡೇಟಾ ನಿಮ್ಮ ಹತ್ತಿರ ಬರುತ್ತದೆ, ದಯವಿಟ್ಟು ಕಾಯಿರಿ." data-en="Your booking has been sent to nearby drivers. Live data will appear soon, please wait.">ನಿಮ್ಮ ಬುಕಿಂಗ್ ಅನ್ನು ಹತ್ತಿರದ ಡ್ರೈವರ್‌ಗಳಿಗೆ ಕಳುಹಿಸಲಾಗಿದೆ. ಡ್ರೈವರ್‌ಗಳ ಎಲ್ಲಾ ಲೈವ್ ಡೇಟಾ ನಿಮ್ಮ ಹತ್ತಿರ ಬರುತ್ತದೆ, ದಯವಿಟ್ಟು ಕಾಯಿರಿ.</p>
+        
+        <!-- ಡ್ರೈವರ್ ಒಪ್ಪಿಕೊಂಡ ಮೇಲೆ ಕಾಣಿಸುವ ವಿವರಗಳು -->
+        <div id="driverDetailsContainer" style="display: none; margin-top: 10px; border-top: 1px dashed #0f0b5b; padding-top: 10px;">
+            <p><b>ಹೆಸರು (Name):</b> <span id="lblDriverName">-</span></p>
+            <p><b>ಮೊಬೈಲ್ ನಂಬರ್ (Mobile):</b> <span id="lblDriverPhone">-</span></p>
+            <p><b>ವಾಹನ ನಂಬರ್ (Vehicle No):</b> <span id="lblDriverVehicle">-</span></p>
+            <p><b>ಡ್ರೈವರ್ ಐಡಿ (ID):</b> <span id="lblDriverId">-</span></p>
+            <p style="font-size: 1.1rem; color: #d35400;"><b>ಒಟಿಪಿ (OTP):</b> <span id="lblBookingOtp">-</span></p>
+            
+            <!-- ಕಾಲ್ ಮಾಡಲು ಬಟನ್ -->
+            <a id="lblDriverCallBtn" href="#" class="btn-submit" style="display: inline-block; text-align: center; margin-top: 10px; background: #27ae60; color: white; text-decoration: none; padding: 10px; border-radius: 5px;" data-kn="ಕರೆ ಮಾಡಿ" data-en="Call Driver">ಕರೆ ಮಾಡಿ</a>
+        </div>
+    </div>
 
       <!-- Meter Section -->
       <div id="meterSection" class="section">
