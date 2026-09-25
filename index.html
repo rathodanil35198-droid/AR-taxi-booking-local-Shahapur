@@ -395,6 +395,27 @@
         </div>
         <div id="customerStatusContainer" style="margin-top: 10px;"></div>
       </div>
+<div id="customerStatusContainer" style="margin-top: 10px;">
+    <!-- ಬುಕಿಂಗ್ ಮಾಡಿದ ತಕ್ಷಣ ಕಾಣುವ ಸಂದೇಶ -->
+    <div id="bookingMessage" style="padding: 12px; background: #eef8ff; border: 1px solid #bee3f8; border-radius: 8px; margin-bottom: 10px;">
+        <p style="font-weight: bold; color: #2d3748;">ನಿಮ್ಮ ಬುಕಿಂಗ್ ಅನ್ನು ಹತ್ತಿರದ ಡ್ರೈವರ್‌ಗಳಿಗೆ ಕಳುಹಿಸಲಾಗಿದೆ.</p>
+        <p style="color: #4a5568; font-size: 0.9rem; margin-top: 4px;">ಡ್ರೈವರ್‌ಗಳು ಸ್ವೀಕರಿಸುವವರೆಗೆ ಕಾಯಿರಿ. ಡ್ರೈವರ್‌ಗಳು ಸ್ವೀಕರಿಸಿದಾಗ ನಿಮಗೆ ಡ್ರೈವರ್‌ರ ಎಲ್ಲಾ ಲೈವ್ ಡೇಟಾಗಳು ಬರುತ್ತವೆ, ದಯವಿಟ್ಟು ಕಾಯಿರಿ.</p>
+    </div>
+
+    <!-- ಡ್ರೈವರ್ ಒಪ್ಪಿಕೊಂಡ ಮೇಲೆ ಕಾಣುವ ಲೈವ್ ಮಾಹಿತಿ (ಶುರುವಿನಲ್ಲಿ ಇದು ಮರೆಮಾಚಿರುತ್ತದೆ) -->
+    <div id="driverDetailsBox" style="display: none; padding: 12px; background: #f0fff4; border: 1px solid #c6f6d5; border-radius: 8px;">
+        <p style="font-weight: bold; color: #22543d; font-size: 1.1rem;">OTP: <span id="displayOtp" style="color: #d69e2e;">####</span></p>
+        <p style="margin: 6px 0;"><b>ಡ್ರೈವರ್ ಹೆಸರು:</b> <span id="driverName">-</span></p>
+        <p style="margin: 6px 0;"><b>ಮೊಬೈಲ್ ನಂಬರ್:</b> <span id="driverPhone">-</span></p>
+        <p style="margin: 6px 0;"><b>ಐಡಿ ನಂಬರ್:</b> <span id="driverId">-</span></p>
+        <p style="margin: 6px 0;"><b>ವಾಹನ ನಂಬರ್:</b> <span id="vehicleNumber">-</span></p>
+        
+        <div style="margin-top: 10px; display: flex; gap: 8px;">
+            <a id="callDriverBtn" href="#" class="btn-submit" style="flex: 1; background: #3182ce; text-align: center; text-decoration: none; padding: 8px; border-radius: 6px; color: white;">ಕಾಲ್ ಮಾಡಿ</a>
+            <button id="trackDriverBtn" class="btn-submit" style="flex: 1; background: #38a169; padding: 8px; border-radius: 6px; color: white; border: none;">ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್</button>
+        </div>
+    </div>
+</div>
 
       <!-- Meter Section -->
       <div id="meterSection" class="section">
