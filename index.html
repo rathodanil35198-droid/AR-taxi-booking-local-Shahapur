@@ -3,29 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title id="pageTitle">A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್ | ಬೈಕ್, ಆಟೋ & ಕಾರ್ ಬುಕಿಂಗ್</title>
   
-  <!-- SEO & Search Engine Optimization Tags (Google, Chrome, Kannada, English, Hindi Search Support) -->
-  <title id="pageTitle">A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್ | A R Taxi Booking Go Fast | Bike, Auto & Car Booking</title>
-  <meta name="description" content="A R ಟೆಕ್ಸಿ ಗೋಕಾಸ್ಟ್, A R ಟೆಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್, ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್, A R Taxi Booking Go Fast Shahapur Karnataka - Best Bike, Auto and Car rental booking service.">
-  <meta name="keywords" content="A R ಟೆಕ್ಸಿ ಗೋಕಾಸ್ಟ್, A R ಟೆಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್, ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್, A R Taxi Booking Go Fast, AR Taxi Shahapur, Bike Booking, Auto Booking, Car Booking, Kannada Taxi App, Hindi Taxi App">
-  <meta name="author" content="A R Taxi Go Fast">
-
-  <!-- Open Graph / Social Media & Google Rich Results Meta Tags -->
-  <meta property="og:title" content="A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್ - A R Taxi Booking Go Fast">
-  <meta property="og:description" content="Book Bike, Auto & Car instantly with live GPS tracking and meter. A R ಟೆಕ್ಸಿ ಗೋಕಾಸ್ಟ್.">
-  <meta property="og:image" content="AR_Taxi_Booking_Go_Fast_512x512.png">
-  <meta property="og:type" content="website">
-
   <meta name="theme-color" content="#0fb05b">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="A R Taxi Go Fast">
   <link rel="apple-touch-icon" href="AR_Taxi_Booking_Go_Fast_512x512.png">
-  <link rel="icon" type="image/png" href="AR_Taxi_Booking_Go_Fast_512x512.png">
 
   <script>
     const manifestData = {
-      "name": "A R Taxi Booking Go Fast - A R ಟೆಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್",
+      "name": "A R Taxi Booking Go Fast",
       "short_name": "AR TAXI",
       "start_url": "./",
       "display": "standalone",
@@ -915,6 +903,7 @@
           }
         });
 
+        // FIX: ಡ್ರೈವರ್ ಆಕ್ಟಿವ್ ಆಗಿ ಒಟಿಪಿ ಹಾಕುವಾಗ ಬ್ಯಾಕ್‌ಗ್ರೌಂಡ್ ಸ್ನ್ಯಾಪ್‌ಶಾಟ್ ರಿಫ್ರೆಶ್‌ನಿಂದ ಕೀಪ್ಯಾಡ್ ಕ್ಲೋಸ್ ಆಗುವುದನ್ನು ತಡೆಯಲು ಚೆಕ್ ಮಾಡಲಾಗಿದೆ
         const activeOtpInput = document.querySelector('input[id^="otpInput_"]');
         if (activeBookingFound && activeOtpInput && document.activeElement === activeOtpInput) {
           return; 
@@ -1084,7 +1073,141 @@
         
         document.getElementById('meterResultText').innerText = currentLang === 'kn' ? `ಪ್ರಯಾಣ ಮುಕ್ತಾಯ!\nಪ್ರಯಾಣಿಸಿದ ದೂರ: ${rideDistanceKm.toFixed(1)} ಕಿ.ಮೀ\nಒಟ್ಟು ಚಾರ್ಜ್: ₹${calculatedFare}` : `Ride Finished!\nDistance: ${rideDistanceKm.toFixed(1)} KM\nFare: ₹${calculatedFare}`;
         document.getElementById('meterResultModal').style.display = 'flex';
+        loadDriverPersonalDashboard(pendingFinishDriverId);
       } catch(e) { alert("Error: " + e.message); }
+    }
+
+    function calculateDistance(lat1, lon1, lat2, lon2) {
+      const R = 6371;
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon/2) * Math.sin(dLon/2);
+      return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
+    }
+
+    function resetMeterRate() {
+      const type = document.getElementById('meterVehicleType').value;
+      document.getElementById('liveAmount').innerText = type === 'Bike' ? '30' : (type === 'Auto' ? '50' : '200');
+    }
+
+    function startMeter() {
+      if (navigator.geolocation) {
+        distanceKm = 0;
+        document.getElementById('distCount').innerText = '0.0';
+        document.getElementById('meterStatusMsg').innerText = currentLang === 'kn' ? 'ಮೀಟರ್ ಚಾಲಿಯಲ್ಲಿದೆ...' : 'Meter Running...';
+        custMeterWatchId = navigator.geolocation.watchPosition((pos) => {
+          const lat = pos.coords.latitude, lng = pos.coords.longitude;
+          document.getElementById('liveGpsCoord').innerText = `GPS: ${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+          if (lastCustPos) {
+            const d = calculateDistance(lastCustPos.lat, lastCustPos.lng, lat, lng);
+            if (d > 0.005) {
+              distanceKm += d; lastCustPos = { lat, lng };
+              document.getElementById('distCount').innerText = distanceKm.toFixed(1);
+              calculateMeterFareLive(distanceKm);
+              document.getElementById('meterStatusMsg').innerText = "Vehicle Running";
+            }
+          } else { lastCustPos = { lat, lng }; }
+        }, (err) => {}, { enableHighAccuracy: true });
+      }
+    }
+
+    function calculateMeterFareLive(km) {
+      const type = document.getElementById('meterVehicleType').value;
+      let total = calculateFareByType(type, km);
+      document.getElementById('liveAmount').innerText = total;
+    }
+
+    function stopMeterOnly() {
+      if (custMeterWatchId) { navigator.geolocation.clearWatch(custMeterWatchId); custMeterWatchId = null; }
+      lastCustPos = null;
+      document.getElementById('meterStatusMsg').innerText = currentLang === 'kn' ? 'ವಾಹನ ನಿಂತಿದೆ' : 'Vehicle Stopped';
+      const finalAmt = document.getElementById('liveAmount').innerText;
+      document.getElementById('meterResultText').innerText = currentLang === 'kn' ? `ಪ್ರಯಾಣ ಮುಕ್ತಾಯ! ದೂರ: ${distanceKm.toFixed(1)} ಕಿ.ಮೀ | ಒಟ್ಟು ಶುಲ್ಕ: ₹${finalAmt}` : `Ride Finished! Distance: ${distanceKm.toFixed(1)} KM | Total Fare: ₹${finalAmt}`;
+      document.getElementById('meterResultModal').style.display = 'flex';
+    }
+
+    async function registerDriver() {
+      const name = document.getElementById('drvName').value.trim();
+      const phone = document.getElementById('drvPhone').value.trim();
+      const vehNo = document.getElementById('drvVehNo').value.trim();
+      if (!name || !phone || !vehNo) { alert(currentLang === 'kn' ? "ದಯವಿಟ್ಟು ಎಲ್ಲಾ ಮಾಹಿತಿಯನ್ನು ಭರ್ತಿ ಮಾಡಿ." : "Please fill all details."); return; }
+
+      const btn = document.getElementById('btnRegisterDriver');
+      btn.innerText = currentLang === 'kn' ? "ಫೋಟೋಗಳು ಅಪ್‌ಲೋಡ್ ಆಗುತ್ತಿವೆ..." : "Uploading Photos..."; btn.disabled = true;
+
+      const vehPhoto = await convertFileToBase64(document.getElementById('vehPhotoFile').files[0]);
+      const rcPhoto = await convertFileToBase64(document.getElementById('rcPhotoFile').files[0]);
+      const dlPhoto = await convertFileToBase64(document.getElementById('dlPhotoFile').files[0]);
+      const selfiePhoto = await convertFileToBase64(document.getElementById('selfiePhotoFile').files[0]);
+      const aadharPhoto = await convertFileToBase64(document.getElementById('aadharPhotoFile').files[0]);
+      const driverId = Math.floor(1000 + Math.random() * 9000).toString();
+
+      try {
+        await window.addDoc(window.collection(window.db, "drivers"), {
+          drvName: name, drvPhone: phone, drvVehNo: vehNo, drvVehType: document.getElementById('drvVehType').value,
+          vehPhoto, rcPhoto, dlPhoto, selfiePhoto, aadharPhoto, driverId, timestamp: window.serverTimestamp()
+        });
+        alert(currentLang === 'kn' ? `ರಜಿಸ್ಟ್ರೇಷನ್ ಯಶಸ್ವಿಯಾಗಿದೆ! ನಿಮ್ಮ 4 ಅಂಕಿಯ ಡ್ರೈವರ್ ಐಡಿ: ${driverId}` : `Registration Successful! Your 4-digit Driver ID: ${driverId}`);
+        openPage('liveSection');
+        document.getElementById('driverInputId').value = driverId;
+        checkDriverIdAndListen();
+      } catch (e) { alert("Error: " + e.message); } finally { btn.innerText = currentLang === 'kn' ? "ಲಾಗಿನ್ / ರಜಿಸ್ಟರ್ ಮಾಡಿ" : "Login / Register"; btn.disabled = false; }
+    }
+
+    async function loadAdminDrivers() {
+      try {
+        const snap = await window.getDocs(window.collection(window.db, "drivers"));
+        allDriversData = [];
+        snap.forEach(d => allDriversData.push({ id: d.id, ...d.data() }));
+        document.getElementById('adminTotalDriversCount').innerText = allDriversData.length;
+        renderAdminDriversList(allDriversData);
+      } catch(e) {}
+    }
+
+    function renderAdminDriversList(drivers) {
+      const listDiv = document.getElementById('adminDriversList');
+      if (drivers.length === 0) { listDiv.innerHTML = "<p>No drivers registered.</p>"; return; }
+      let html = '';
+      drivers.forEach(d => {
+        html += `
+          <div class="card" style="border: 1px solid #cbd5e0; margin-bottom:10px; background:#fff;">
+            <p><b>${currentLang === 'kn' ? 'ಹೆಸರು:' : 'Name:'}</b> ${d.drvName}</p>
+            <p><b>${currentLang === 'kn' ? 'ಫೋನ್:' : 'Phone:'}</b> <a href="tel:${d.drvPhone}">${d.drvPhone}</a></p>
+            <p><b>${currentLang === 'kn' ? 'ವಾಹನ ನಂಬರ್:' : 'Vehicle No:'}</b> ${d.drvVehNo} (${d.drvVehType})</p>
+            <p><b>${currentLang === 'kn' ? 'ಐಡಿ ನಂಬರ್:' : 'ID Number:'}</b> <span style="color:#d69e2e; font-weight:bold; font-size:1.1rem;">${d.driverId}</span></p>
+            <div class="driver-photo-grid">
+               ${d.vehPhoto ? `<img src="${d.vehPhoto}" class="driver-thumb" onclick="viewFullImage('${d.vehPhoto}', 'Vehicle Photo')">` : ''}
+               ${d.rcPhoto ? `<img src="${d.rcPhoto}" class="driver-thumb" onclick="viewFullImage('${d.rcPhoto}', 'RC Card')">` : ''}
+               ${d.dlPhoto ? `<img src="${d.dlPhoto}" class="driver-thumb" onclick="viewFullImage('${d.dlPhoto}', 'DL Photo')">` : ''}
+               ${d.selfiePhoto ? `<img src="${d.selfiePhoto}" class="driver-thumb" onclick="viewFullImage('${d.selfiePhoto}', 'Selfie')">` : ''}
+               ${d.aadharPhoto ? `<img src="${d.aadharPhoto}" class="driver-thumb" onclick="viewFullImage('${d.aadharPhoto}', 'Aadhar')">` : ''}
+            </div>
+            <button class="btn-submit" onclick="deleteDriver('${d.id}')" style="background:#e53e3e; margin-top:6px; padding:6px; font-size:0.8rem;">${currentLang === 'kn' ? 'ಡ್ರೈವರ್ ಡಿಲೀಟ್ ಮಾಡಿ' : 'Delete Driver'}</button>
+          </div>
+        `;
+      });
+      listDiv.innerHTML = html;
+    }
+
+    function filterAdminDrivers() {
+      const queryText = document.getElementById('adminSearchInput').value.trim().toLowerCase();
+      const filtered = allDriversData.filter(d => (d.drvPhone && d.drvPhone.toLowerCase().includes(queryText)) || (d.driverId && d.driverId.toLowerCase().includes(queryText)) || (d.drvName && d.drvName.toLowerCase().includes(queryText)));
+      renderAdminDriversList(filtered);
+    }
+
+    async function deleteDriver(docId) {
+      if (confirm(currentLang === 'kn' ? "ಖಚಿತವಾಗಿ ಈ ಡ್ರೈವರ್ ಅನ್ನು ಡಿಲೀಟ್ ಮಾಡಲು ಬಯಸುತ್ತೀರಾ?" : "Are you sure you want to delete this driver?")) {
+        try { await window.deleteDoc(window.doc(window.db, "drivers", docId)); loadAdminDrivers(); } catch(e) {}
+      }
+    }
+
+    function shareAppOnWhatsApp() {
+      const text = encodeURIComponent(currentLang === 'kn' ? "ಕರ್ನಾಟಕ A R ಟ್ಯಾಕ್ಸಿ ಬುಕಿಂಗ್ ಗೋ ಫಾಸ್ಟ್! ಶಹಾಪುರದಲ್ಲಿ ಬೈಕ್, ಆಟೋ ಹಾಗೂ ಕಾರ್ ಬುಕಿಂಗ್ ಮಾಡಲು ಈ ಲಿಂಕ್ ಬಳಸಿ: " + window.location.href : "Karnataka A R Taxi Booking Go Fast! Use this link to book Bike, Auto & Car: " + window.location.href);
+      window.open("https://api.whatsapp.com/send?text=" + text, "_blank");
+    }
+
+    async function downloadDriverHistoryPDF(driverId, driverName, recordId) {
+      alert(currentLang === 'kn' ? "PDF ಡೌನ್‌ಲೋಡ್ ಸಿದ್ಧವಾಗುತ್ತಿದೆ..." : "Preparing PDF download...");
     }
   </script>
 </body>
