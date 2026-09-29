@@ -713,9 +713,12 @@
           if (data.status === 'Accepted' || data.status === 'Started') {
             let gpsMapBtn = data.driverLat && data.driverLng ? `<a href="https://www.google.com/maps?q=${data.driverLat},${data.driverLng}" target="_blank" class="btn-submit" style="display:block; text-decoration:none; background:#2b6cb0; margin-top:8px; text-align:center;">📍 ${currentLang === 'kn' ? 'ಡ್ರೈವರ್ ಲೈವ್ ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ನೋಡಿ' : 'View Driver Live GPS Location'}</a>` : `<p style="font-size:0.8rem; color:#d69e2e; margin-top:6px;">${currentLang === 'kn' ? 'ಡ್ರೈವರ್ ಜಿಪಿಎಸ್ ಸಿಗ್ನಲ್ ಪಡೆಯಲಾಗುತ್ತಿದೆ...' : 'Fetching driver GPS signal...'}</p>`;
 
+            let driverPhotoHtml = data.selfiePhoto ? `<div style="margin: 10px 0;"><img src="${data.selfiePhoto}" style="width:70px; height:70px; border-radius:50%; object-fit:cover; border:2px solid #0fb05b;" alt="Driver Photo"></div>` : '';
+
             document.getElementById('customerStatusContainer').innerHTML = `
               <div class="card" style="text-align:center; background:#f0fff4; border:2px solid #38a169;">
                 <p style="font-size:1rem; font-weight:bold; color:#22543d; margin-bottom:5px;">✅ ${currentLang === 'kn' ? 'ಡ್ರೈವರ್ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿದ್ದಾರೆ!' : 'Driver Accepted Booking!'}</p>
+                ${driverPhotoHtml}
                 <div style="background:#fff3cd; padding:8px; border-radius:6px; margin: 8px 0;">
                    <span style="font-size:0.85rem; color:#856404; font-weight:bold;">OTP: </span><span style="font-size:1.2rem; color:#d69e2e; font-weight:bold;">${data.otp || ''}</span>
                 </div>
@@ -854,12 +857,19 @@
                     <p style="font-size:0.95rem;"><b>${currentLang === 'kn' ? 'ಪಿಕಪ್ ಸ್ಥಳ:' : 'Pickup:'}</b> <a href="https://www.google.com/maps/search/?api=1&query=${b.pickupLat},${b.pickupLng}" target="_blank" style="color:#3182ce;">${b.pickupLocation}</a> (~${dist.toFixed(2)} KM)</p>
                     <p style="font-size:0.95rem;"><b>${currentLang === 'kn' ? 'ಡ್ರಾಪ್ ಸ್ಥಳ:' : 'Drop:'}</b> <strong style="color:#d69e2e;">${b.dropLocation}</strong></p>
                     <div style="display:flex; gap:6px; margin-top:10px;">
-                      <button class="btn-submit" onclick="acceptBooking('${docSnap.id}', '${driverData.drvName}', '${driverData.drvPhone}', '${driverData.drvVehNo}', '${driverData.driverId}', ${b.pickupLat}, ${b.pickupLng})" style="font-size:0.9rem; padding:10px;">📢 ${currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ' : 'Accept Booking'}</button>
+                      <button class="btn-submit" onclick="acceptBooking('${docSnap.id}', '${driverData.drvName}', '${driverData.drvPhone}', '${driverData.drvVehNo}', '${driverData.driverId}', '${driverData.selfiePhoto || ''}', ${b.pickupLat}, ${b.pickupLng})" style="font-size:0.9rem; padding:10px;">📢 ${currentLang === 'kn' ? 'ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿ' : 'Accept Booking'}</button>
                       <button class="btn-submit" onclick="driverCancelBooking('${docSnap.id}', '${driverData.driverId}')" style="background:#e53e3e; font-size:0.9rem; padding:10px; width:120px;">❌ ${currentLang === 'kn' ? 'ರದ್ದುಮಾಡಿ' : 'Ignore'}</button>
                     </div>
                   </div>
                 `;
               } else if (b.status === 'Accepted' && b.driverIdNum === driverData.driverId) {
+                // FIXED: Retain the exact entered OTP value using .value instead of re-rendering innerHTML over the input field
+                let existingOtpVal = '';
+                const existingInput = document.getElementById(`otpInput_${docSnap.id}`);
+                if (existingInput) {
+                  existingOtpVal = existingInput.value;
+                }
+
                 acceptedHtml += `
                   <div class="card" style="border: 2px solid #38a169; background:#edf2f7; margin-bottom:10px;">
                     <p style="background:#d4edda; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#155724;">🔒 ${currentLang === 'kn' ? 'ನಿಮ್ಮ ಐಡಿಗೆ ಲಾಕ್ ಮಾಡಲಾಗಿದೆ!' : 'Locked to your ID!'}</p>
@@ -869,7 +879,7 @@
                     <p style="font-size:0.95rem;"><b>${currentLang === 'kn' ? 'ಪಿಕಪ್ ಸ್ಥಳ ಜಿಪಿಎಸ್:' : 'Pickup GPS:'}</b> <a href="https://www.google.com/maps/dir/?api=1&destination=${b.pickupLat},${b.pickupLng}" target="_blank" style="color:#2b6cb0; font-weight:bold;">📍 ${currentLang === 'kn' ? 'ಕಸ್ಟಮರ್ ಹತ್ತಿರ ಹೋಗಲು ಜಿಪಿಎಸ್ ಆನ್ ಮಾಡಿ (Maps)' : 'Navigate to Customer'}</a></p>
                     <div style="margin-top:10px; padding:8px; background:#fff; border-radius:6px; border:1px solid #cbd5e0;">
                        <p style="font-size:0.85rem; font-weight:bold; margin-bottom:4px; color:#d69e2e;">${currentLang === 'kn' ? 'ಪಿಕಪ್ ಸ್ಥಳ ತಲುಪುವಾಗ ಓಟಿಪಿ ನಮೂದಿಸಿ (OTP):' : 'Enter OTP upon arrival:'}</p>
-                       <input type="text" id="otpInput_${docSnap.id}" placeholder="OTP" maxlength="4" inputmode="numeric" autocomplete="one-time-code" style="margin-bottom:6px; text-align:center; font-weight:bold; font-size:1.1rem;">
+                       <input type="text" id="otpInput_${docSnap.id}" value="${existingOtpVal}" placeholder="OTP" maxlength="4" inputmode="numeric" autocomplete="one-time-code" style="margin-bottom:6px; text-align:center; font-weight:bold; font-size:1.1rem;">
                        <button class="btn-submit" onclick="verifyOtpAndStartRide('${docSnap.id}', '${b.otp}')" style="background:#3182ce; padding:12px; font-size:1rem;">${currentLang === 'kn' ? 'ಓಕೆ ಬಟನ್ ಒತ್ತಿ ಲೈವ್ ಜಿಪಿಎಸ್ ಮೀಟರ್ ಆನ್ ಮಾಡಿ' : 'Start Live GPS Meter'}</button>
                     </div>
                   </div>
@@ -927,13 +937,14 @@
       } catch(e) {}
     }
 
-    async function acceptBooking(bookingId, drvName, drvPhone, drvVehNo, driverId, pLat, pLng) {
+    async function acceptBooking(bookingId, drvName, drvPhone, drvVehNo, driverId, selfiePhoto, pLat, pLng) {
       try {
         const docRef = window.doc(window.db, "bookings", bookingId);
         const docSnap = await window.getDoc(docRef);
         if (docSnap.exists() && docSnap.data().status === 'Pending') {
           await window.updateDoc(docRef, {
             status: 'Accepted', driverName: drvName, driverPhone: drvPhone, driverVehNo: drvVehNo, driverIdNum: driverId,
+            selfiePhoto: selfiePhoto || '',
             driverLat: currentDriverLat || pLat, driverLng: currentDriverLng || pLng
           });
           stopSirenLoop();
