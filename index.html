@@ -159,9 +159,6 @@
     .dash-box-title { font-size: 0.75rem; color: #4a5568; font-weight: bold; }
     .dash-box-val { font-size: 1.1rem; color: #2b6cb0; font-weight: bold; margin-top: 4px; }
     .btn-pdf-download { background: #d69e2e; color: white; padding: 10px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 8px; }
-
-    .driver-docs-preview { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
-    .driver-doc-thumb { width: 50px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e0; cursor: pointer; }
   </style>
 </head>
 <body>
@@ -225,13 +222,13 @@
     </div>
   </div>
 
-  <!-- Image Viewer Modal (Full Screen & Download) -->
+  <!-- Image Viewer Modal -->
   <div id="imageViewerModal">
     <div class="modal-content-box" style="max-width:90%; background:#000; color:#fff;">
-      <span style="float:right; font-size:1.8rem; cursor:pointer; color:#fff; padding:5px;" onclick="closeImageViewer()">&times;</span>
-      <h4 id="imageViewerTitle" style="margin-bottom:10px; color:#fff;">ಫೋಟೋ ವೀಕ್ಷಣೆ</h4>
+      <span style="float:right; font-size:1.5rem; cursor:pointer;" onclick="closeImageViewer()">&times;</span>
+      <h4 id="imageViewerTitle" style="margin-bottom:10px;">ಫೋಟೋ ವೀಕ್ಷಣೆ</h4>
       <img id="fullSizeImage" src="" style="width:100%; max-height:60vh; object-fit:contain; border-radius:8px; margin-bottom:12px;">
-      <a id="downloadImageBtn" href="" download="driver_document.jpg" class="btn-submit" style="display:block; text-decoration:none; background:#d69e2e; text-align:center;">📥 ಫೋಟೋ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ</a>
+      <a id="downloadImageBtn" href="" download="driver_document.jpg" class="btn-submit" style="display:block; text-decoration:none; background:#d69e2e;">📥 ಫೋಟೋ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ</a>
     </div>
   </div>
 
@@ -401,7 +398,7 @@
         <div class="form-group">
           <label>ವಾಹನ ಪ್ರಭೇದ:</label>
           <select id="drvVehType">
-            <option value="Bike">🏍️️ ಬೈಕ್ (Bike)</option>
+            <option value="Bike">🏍️ ಬೈಕ್ (Bike)</option>
             <option value="Auto">🛺 ಆಟೋ (Auto)</option>
             <option value="Car">🚗 ಕಾರ್ (Car)</option>
           </select>
@@ -422,19 +419,14 @@
           <input type="text" id="driverInputId" placeholder="4 digit ID" maxlength="4" inputmode="numeric" autocomplete="off" oninput="checkDriverIdAndListen()" onfocus="speakText('ನಿಮ್ಮ ನಾಲ್ಕು ಅಂಕಿಯ ಐಡಿ ನಂಬರ್ ನಮೂದಿಸಿ')">
         </div>
 
-        <div id="driverPersonalDash" style="display: none;">
-          <!-- Driver Profile Card with ID & Photos -->
-          <div id="driverProfileCard" class="card" style="border: 2px solid #0fb05b; background:#f8fafc; margin-bottom:12px;"></div>
-
-          <div class="dashboard-grid">
-            <div class="dash-box">
-              <div class="dash-box-title">ಇಂದಿನ ಒಟ್ಟು ಗಳಿಕೆ</div>
-              <div class="dash-box-val">₹<span id="dashTodayEarnings">0</span></div>
-            </div>
-            <div class="dash-box">
-              <div class="dash-box-title">ಇಂದಿನ ಒಟ್ಟು ಓಟ</div>
-              <div class="dash-box-val"><span id="dashTodayKm">0.0</span> ಕಿ.ಮೀ</div>
-            </div>
+        <div id="driverPersonalDash" style="display: none;" class="dashboard-grid">
+          <div class="dash-box">
+            <div class="dash-box-title">ಇಂದಿನ ಒಟ್ಟು ಗಳಿಕೆ</div>
+            <div class="dash-box-val">₹<span id="dashTodayEarnings">0</span></div>
+          </div>
+          <div class="dash-box">
+            <div class="dash-box-title">ಇಂದಿನ ಒಟ್ಟು ಓಟ</div>
+            <div class="dash-box-val"><span id="dashTodayKm">0.0</span> ಕಿ.ಮೀ</div>
           </div>
         </div>
 
@@ -588,89 +580,116 @@
       }
     }
 
-    function convertFileToBase64(file) {
-      return new Promise((resolve, reject) => {
-        if (!file) { resolve(''); return; }
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
-        reader.readAsDataURL(file);
-      });
-    }
-
-    async function registerDriver() {
+    async function submitBooking() {
       document.querySelectorAll('.error-msg').forEach(e => e.style.display = 'none');
-      const name = document.getElementById('drvName').value.trim();
-      const phone = document.getElementById('drvPhone').value.trim();
-      const vehNo = document.getElementById('drvVehNo').value.trim();
-      const vehType = document.getElementById('drvVehType').value;
+      const vehicleType = document.getElementById('vehicleType').value;
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+      const passengers = document.getElementById('passengerCount').value;
+      const currentLoc = document.getElementById('currentLoc').value.trim();
+      const pickup = document.getElementById('pickuploc').value.trim();
+      const drop = document.getElementById('droploc').value.trim();
 
       let hasError = false;
-      if (!name) { document.getElementById('errDrvName').style.display = 'block'; hasError = true; }
-      if (!phone || phone.length < 10) { document.getElementById('errDrvPhone').style.display = 'block'; hasError = true; }
-      if (!vehNo) { document.getElementById('errDrvVehNo').style.display = 'block'; hasError = true; }
+      if (!name) { document.getElementById('errCustName').style.display = 'block'; hasError = true; }
+      if (!phone || phone.length < 10) { document.getElementById('errCustPhone').style.display = 'block'; hasError = true; }
+      if (!pickup || currentCustomerLat === null) { document.getElementById('errPickup').style.display = 'block'; hasError = true; }
+      if (!drop) { document.getElementById('errDrop').style.display = 'block'; hasError = true; }
 
       if (hasError) {
-        speakText('ದಯವಿಟ್ಟು ಡ್ರೈವರ್ ವಿವರಗಳನ್ನು ಸರಿಯಾಗಿ ತುಂಬಿ');
+        speakText('ದಯವಿಟ್ಟು ಎಲ್ಲಾ ವಿವರಗಳನ್ನು ಸರಿಯಾಗಿ ತುಂಬಿ');
         return;
       }
 
-      const btnReg = document.getElementById('btnRegisterDriver');
-      btnReg.innerText = 'ನೋಂದಣಿ ಮಾಡಿಕೊಳ್ಳಲಾಗುತ್ತಿದೆ...';
-      btnReg.disabled = true;
+      const pickupOtp = Math.floor(1000 + Math.random() * 9000).toString();
 
       try {
-        const vehPhotoFile = document.getElementById('vehPhotoFile').files[0];
-        const rcPhotoFile = document.getElementById('rcPhotoFile').files[0];
-        const dlPhotoFile = document.getElementById('dlPhotoFile').files[0];
-        const selfiePhotoFile = document.getElementById('selfiePhotoFile').files[0];
-        const aadharPhotoFile = document.getElementById('aadharPhotoFile').files[0];
-
-        const vehPhoto = await convertFileToBase64(vehPhotoFile);
-        const rcPhoto = await convertFileToBase64(rcPhotoFile);
-        const dlPhoto = await convertFileToBase64(dlPhotoFile);
-        const selfiePhoto = await convertFileToBase64(selfiePhotoFile);
-        const aadharPhoto = await convertFileToBase64(aadharPhotoFile);
-
-        const fourDigitId = Math.floor(1000 + Math.random() * 9000).toString();
         const todayStr = new Date().toISOString().split('T')[0];
-
-        await window.addDoc(window.collection(window.db, "drivers"), {
-          driverId: fourDigitId,
-          drvName: name,
-          drvPhone: phone,
-          drvVehNo: vehNo,
-          drvVehType: vehType,
-          vehPhoto, rcPhoto, dlPhoto, selfiePhoto, aadharPhoto,
-          dateKey: todayStr,
-          timestamp: window.serverTimestamp()
+        const docRef = await window.addDoc(window.collection(window.db, "bookings"), {
+          vehicleType, customerName: name, customerPhone: phone, passengers,
+          currentLocationText: currentLoc, pickupLocation: (currentLoc ? currentLoc + ' - ' : '') + pickup, dropLocation: drop,
+          pickupLat: currentCustomerLat, pickupLng: currentCustomerLng,
+          otp: pickupOtp, status: 'Pending', ignoredDrivers: [], dateKey: todayStr, timestamp: window.serverTimestamp()
         });
 
-        btnReg.innerText = 'ಲಾಗಿನ್ / ರಜಿಸ್ಟರ್ ಮಾಡಿ';
-        btnReg.disabled = false;
-
-        speakText(`ನಿಮ್ಮ ನೋಂದಣಿ ಯಶಸ್ವಿಯಾಗಿದೆ. ನಿಮ್ಮ ನಾಲ್ಕು ಅಂಕಿಯ ಐಡಿ ${fourDigitId}`);
-        showCustomAlert(`✅ ಡ್ರೈವರ್ ನೋಂದಣಿ ಯಶಸ್ವಿಯಾಗಿದೆ!\n\nನಿಮ್ಮ 4 ಅಂಕಿಯ ಐಡಿ ಸಂಖ್ಯೆ: [ ${fourDigitId} ]\n\nಈ ನಾಲ್ಕು ಡಿಜಿಟಲ್ ಐಡಿಯನ್ನು ನಿಮ್ಮ ಗಮನದಲ್ಲಿ ಇಟ್ಟುಕೊಳ್ಳಿ. ನಿಮ್ಮ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸುವಾಗ ಮತ್ತು ಬುಕಿಂಗ್ ನೋಡಲು ಇದು ಕಡ್ಡಾಯವಾಗಿ ಬೇಕಾಗುತ್ತದೆ.`);
-      } catch (e) {
-        btnReg.innerText = 'ಲಾಗಿನ್ / ರಜಿಸ್ಟರ್ ಮಾಡಿ';
-        btnReg.disabled = false;
-        alert("Error: " + e.message);
-      }
+        myActiveBookingId = docRef.id;
+        speakText('ನಿಮ್ಮ ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿದೆ');
+        
+        document.getElementById('bookingFormContainer').style.display = 'none';
+        document.getElementById('customerStatusContainer').innerHTML = `
+          <div class="card" style="text-align:center; background:#e8f8f0; border:2px solid #0fb05b;">
+            <p style="font-weight:bold; color:#065f46; margin-bottom:8px;">🎉 ನಿಮ್ಮ ಬುಕಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿದೆ!</p>
+            <p style="font-size:1.1rem; color:#d69e2e; font-weight:bold; margin-bottom:8px;">OTP: ${pickupOtp}</p>
+            <p style="font-size:0.8rem; color:#2d3748; margin-bottom:10px;">ಡ್ರೈವರ್ ಸ್ವೀಕರಿಸುವವರೆಗೆ ದಯವಿಟ್ಟು ಕಾಯಿರಿ...</p>
+            <button class="btn-submit" onclick="cancelCustomerBooking()" style="background:#e53e3e;">ಬುಕಿಂಗ್ ರದ್ದುಗೊಳಿಸಿ</button>
+          </div>
+        `;
+        listenToMyBookingStatus(myActiveBookingId);
+      } catch (e) { alert('Error: ' + e.message); }
     }
 
-    function showImageViewer(imgSrc, titleText) {
-      document.getElementById('imageViewerTitle').innerText = titleText;
-      document.getElementById('fullSizeImage').src = imgSrc;
-      document.getElementById('downloadImageBtn').href = imgSrc;
-      document.getElementById('imageViewerModal').style.display = 'block';
+    function showCustomAlert(msg) {
+      document.getElementById('customAlertText').innerText = msg;
+      document.getElementById('customAlertModal').style.display = 'block';
     }
-    function closeImageViewer() { document.getElementById('imageViewerModal').style.display = 'none'; }
+    function closeCustomAlert() { document.getElementById('customAlertModal').style.display = 'none'; }
+    function closeMeterResultModal() { 
+      document.getElementById('meterResultModal').style.display = 'none'; 
+      openPage('liveSection');
+    }
+    function closeLiveGpsPopup() { document.getElementById('liveGpsPopupModal').style.display = 'none'; }
+
+    function listenToMyBookingStatus(bookingId) {
+      window.onSnapshot(window.doc(window.db, "bookings", bookingId), (docSnap) => {
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          if (data.status === 'Accepted' || data.status === 'Started') {
+            speakText('ಡ್ರೈವರ್ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿದ್ದಾರೆ');
+            let gpsMapBtn = data.driverLat && data.driverLng ? `<a href="https://www.google.com/maps?q=${data.driverLat},${data.driverLng}" target="_blank" class="btn-submit" style="display:block; text-decoration:none; background:#2b6cb0; margin-top:8px; text-align:center;">📍 ಡ್ರೈವರ್ ಲೈವ್ ಜಿಪಿಎಸ್ ಲೊಕೇಶನ್ ನೋಡಿ</a>` : `<p style="font-size:0.8rem; color:#d69e2e; margin-top:6px;">ಡ್ರೈವರ್ ಜಿಪಿಎಸ್ ಸಿಗ್ನಲ್ ಪಡೆಯಲಾಗುತ್ತಿದೆ...</p>`;
+
+            let driverPhotoHtml = data.selfiePhoto ? `<div style="margin: 10px 0;"><img src="${data.selfiePhoto}" style="width:70px; height:70px; border-radius:50%; object-fit:cover; border:2px solid #0fb05b;" alt="Driver Photo"></div>` : '';
+
+            document.getElementById('customerStatusContainer').innerHTML = `
+              <div class="card" style="text-align:center; background:#f0fff4; border:2px solid #38a169;">
+                <p style="font-size:1rem; font-weight:bold; color:#22543d; margin-bottom:5px;">✅ ಡ್ರೈವರ್ ಬುಕಿಂಗ್ ಸ್ವೀಕರಿಸಿದ್ದಾರೆ!</p>
+                ${driverPhotoHtml}
+                <div style="background:#fff3cd; padding:8px; border-radius:6px; margin: 8px 0;">
+                   <span style="font-size:0.85rem; color:#856404; font-weight:bold;">OTP: </span><span style="font-size:1.2rem; color:#d69e2e; font-weight:bold;">${data.otp || ''}</span>
+                </div>
+                <p style="font-size:0.85rem;"><b>ಡ್ರೈವರ್ ಹೆಸರು:</b> ${data.driverName || ''}</p>
+                <p style="font-size:0.85rem;"><b>ಐಡಿ ನಂಬರ್:</b> ${data.driverIdNum || ''}</p>
+                <p style="font-size:0.85rem;"><b>ಮೊಬೈಲ್:</b> <a href="tel:${data.driverPhone}">${data.driverPhone || ''}</a></p>
+                <p style="font-size:0.85rem;"><b>ವಾಹನ ನಂಬರ್:</b> ${data.driverVehNo || ''}</p>
+                <a href="tel:${data.driverPhone}" class="btn-submit" style="display:block; text-decoration:none; background:#3182ce; margin-top:8px; text-align:center;">📞 ಕಾಲ್ ಮಾಡಿ</a>
+                ${gpsMapBtn}
+              </div>
+            `;
+          }
+        }
+      });
+    }
+
+    async function cancelCustomerBooking() {
+      if (myActiveBookingId) { try { await window.deleteDoc(window.doc(window.db, "bookings", myActiveBookingId)); } catch (e) {} }
+      resetCustomerBookingForm();
+    }
+
+    function resetCustomerBookingForm() {
+      myActiveBookingId = null;
+      document.getElementById('bookingFormContainer').style.display = 'block';
+      document.getElementById('customerStatusContainer').innerHTML = '';
+      document.getElementById('custName').value = '';
+      document.getElementById('custPhone').value = '';
+      document.getElementById('currentLoc').value = '';
+      document.getElementById('pickuploc').value = '';
+      document.getElementById('droploc').value = '';
+      currentCustomerLat = null; currentCustomerLng = null;
+    }
 
     async function checkDriverIdAndListen() {
       const inputId = document.getElementById('driverInputId').value.trim();
       const listDiv = document.getElementById('driverBookingsList');
       const dashDiv = document.getElementById('driverPersonalDash');
-      const profileCard = document.getElementById('driverProfileCard');
 
       if (inputId.length !== 4) {
         stopSirenLoop();
@@ -695,31 +714,9 @@
 
         const driverData = snap.docs[0].data();
         activeDriverDataGlobal = driverData;
-        dashDiv.style.display = 'block';
-
-        let thumbsHtml = `<div class="driver-docs-preview">`;
-        if (driverData.selfiePhoto) thumbsHtml += `<img src="${driverData.selfiePhoto}" class="driver-doc-thumb" title="ಸೆಲ್ಫಿ" onclick="showImageViewer('${driverData.selfiePhoto}', 'ಡ್ರೈವರ್ ಸೆಲ್ಫಿ')">`;
-        if (driverData.vehPhoto) thumbsHtml += `<img src="${driverData.vehPhoto}" class="driver-doc-thumb" title="ವಾಹನ" onclick="showImageViewer('${driverData.vehPhoto}', 'ವಾಹನ ಫೋಟೋ')">`;
-        if (driverData.rcPhoto) thumbsHtml += `<img src="${driverData.rcPhoto}" class="driver-doc-thumb" title="ಆರ್.ಸಿ" onclick="showImageViewer('${driverData.rcPhoto}', 'ಆರ್ ಸಿ ಕಾರ್ಡ್')">`;
-        if (driverData.dlPhoto) thumbsHtml += `<img src="${driverData.dlPhoto}" class="driver-doc-thumb" title="ಡಿ.ಎಲ್" onclick="showImageViewer('${driverData.dlPhoto}', 'ಡಿ ಎಲ್ ಫೋಟೋ')">`;
-        if (driverData.aadharPhoto) thumbsHtml += `<img src="${driverData.aadharPhoto}" class="driver-doc-thumb" title="ಆಧಾರ್" onclick="showImageViewer('${driverData.aadharPhoto}', 'ಆಧಾರ್ ಕಾರ್ಡ್')">`;
-        thumbsHtml += `</div>`;
-
-        profileCard.innerHTML = `
-          <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px;">
-            ${driverData.selfiePhoto ? `<img src="${driverData.selfiePhoto}" style="width:55px; height:55px; border-radius:50%; object-fit:cover; border:2px solid #0fb05b; cursor:pointer;" onclick="showImageViewer('${driverData.selfiePhoto}', 'ಡ್ರೈವರ್ ಸೆಲ್ಫಿ')">` : '<span style="font-size:2rem;">👤</span>'}
-            <div>
-              <p style="font-size:1rem; font-weight:bold; color:#065f46;">${driverData.drvName} (${driverData.drvVehType})</p>
-              <p style="font-size:0.85rem; color:#2b6cb0;"><b>ಡ್ರೈವರ್ ಐಡಿ:</b> <span style="font-size:1.1rem; color:#d69e2e; font-weight:bold;">${driverData.driverId}</span></p>
-            </div>
-          </div>
-          <p style="font-size:0.85rem;"><b>ಮೊಬೈಲ್:</b> <a href="tel:${driverData.drvPhone}">${driverData.drvPhone}</a> | <b>ವಾಹನ ನಂಬರ್:</b> ${driverData.drvVehNo}</p>
-          <p style="font-size:0.75rem; color:#4a5568; margin-top:4px;">ಅಪ್ಲೋಡ್ ಮಾಡಿದ ಫೋಟೋಗಳ ಮೇಲೆ ಕ್ಲಿಕ್ ಮಾಡಿ ದೊಡ್ಡದಾಗಿ ವೀಕ್ಷಿಸಿ ಮತ್ತು ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ:</p>
-          ${thumbsHtml}
-        `;
-
+        dashDiv.style.display = 'grid';
         loadDriverPersonalDashboard(inputId);
-        listDiv.innerHTML = `<p style="color: #3182ce; font-weight: bold;">ಸ್ವಾಗತ ${driverData.drvName}!</p>`;
+        listDiv.innerHTML = `<p style="color: #3182ce; font-weight: bold;">ಸ್ವಾಗತ ${driverData.drvName} (${driverData.drvVehType})!</p>`;
         startDriverLocationTracking(driverData);
       } catch (e) { listDiv.innerHTML = `<p style="color: #e53e3e;">Error: ${e.message}</p>`; }
     }
@@ -771,6 +768,8 @@
         let hasPendingToAccept = false;
         const todayStr = new Date().toISOString().split('T')[0];
 
+        let activeBookingFound = false;
+
         snapshot.forEach((docSnap) => {
           const b = docSnap.data();
           if ((b.dateKey || '') !== todayStr) return;
@@ -800,6 +799,7 @@
                   </div>
                 `;
               } else if (b.status === 'Accepted' && b.driverIdNum === driverData.driverId) {
+                activeBookingFound = true;
                 let existingOtpVal = '';
                 const existingInput = document.getElementById(`otpInput_${docSnap.id}`);
                 if (existingInput) { existingOtpVal = existingInput.value; }
@@ -819,11 +819,12 @@
                   </div>
                 `;
               } else if (b.status === 'Started' && b.driverIdNum === driverData.driverId) {
+                activeBookingFound = true;
                 acceptedHtml += `
                   <div class="card" style="border: 2px solid #3182ce; background:#ebf8ff; margin-bottom:10px;">
                     <p style="background:#bee3f8; padding:6px; border-radius:6px; margin-bottom:6px; font-weight:bold; color:#2b6cb0;">🏁 ಲೈವ್ ಜಿಪಿಎಸ್ ಮೀಟರ್ ಆನ್ ಇದೆ</p>
                     <p style="font-size:0.95rem;"><b>ಗ್ರಾಹಕರು:</b> ${b.customerName} (<a href="tel:${b.customerPhone}">${b.customerPhone}</a>)</p>
-                    <p style="font-size:0.85rem; color:#065f46; font-weight:bold; margin:4px 0;">Vehicle Running</p>
+                    <p style="font-size:0.85rem; color:#065f46; font-weight:bold; margin:4px 0;" id="activeRideStatusText">Vehicle Running</p>
                     <p style="font-size:1rem; font-weight:bold; color:#0fb05b;">ಪ್ರಯಾಣಿಸಿದ ದೂರ: <span id="activeRideDist">0.0</span> ಕಿ.ಮೀ</p>
                     <p style="font-size:1.1rem; font-weight:bold; color:#d69e2e; margin-top:2px;">ಪ್ರಸ್ತುತ ಚಾರ್ಜ್: ₹<span id="activeRideFare">50</span></p>
                     <button class="btn-submit" onclick="triggerRideSummary('${docSnap.id}', '${driverData.driverId}', '${b.customerName}', '${b.customerPhone}', '${b.pickupLocation}', '${b.dropLocation}')" style="background:#e53e3e; margin-top:10px; padding:12px; font-size:1rem;">🛑 ಸ್ಟಾಪ್</button>
@@ -851,85 +852,13 @@
                 <p style="font-size:0.85rem;"><b>ಪಿಕಪ್ ಸ್ಥಳ:</b> ${r.pickupLocation}</p>
                 <p style="font-size:0.85rem;"><b>ಡ್ರಾಪ್ ಸ್ಥಳ:</b> ${r.dropLocation}</p>
                 <p style="font-size:0.85rem;"><b>ದೂರ:</b> ${r.distance} KM | <b>ಹಣ:</b> ₹${r.fare}</p>
-                <button class="btn-pdf-download" onclick="downloadDriverHistoryPDF('${driverData.driverId}', '${driverData.drvName}', '${rDoc.id}')">📥 ಪೊಲೀಸ್ ಪರಿಶೀಲನೆ PDF ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ</button>
+                <button class="btn-pdf-download" onclick="downloadDriverHistoryPDF('${driverData.driverId}', '${driverData.drvName}', '${rDoc.id}')">📥 ಪೊಲೀಸ್ ಪರಿಶೀಲನೆ PDF ಡೌನ್‌‌ಲೋಡ್ ಮಾಡಿ</button>
               </div>
             `;
           });
         }
-        
-        let profileHtml = listDiv.innerHTML.includes('driverProfileCard') ? '' : ''; 
-        // Keep personal dashboard profile card intact and update bookings section below it
-        let currentProfileBox = document.getElementById('driverProfileCard').outerHTML;
-        let currentDashGrid = document.getElementById('driverPersonalDash').children[1].outerHTML;
-        
-        document.getElementById('driverPersonalDash').innerHTML = `
-          <div id="driverProfileCard" class="card" style="border: 2px solid #0fb05b; background:#f8fafc; margin-bottom:12px;">${document.getElementById('driverProfileCard').innerHTML}</div>
-          <div class="dashboard-grid">${document.getElementById('driverPersonalDash').querySelector('.dashboard-grid').innerHTML}</div>
-        `;
         listDiv.innerHTML = combinedHtml;
       });
-    }
-
-    async function loadAdminDrivers() {
-      const listDiv = document.getElementById('adminDriversList');
-      listDiv.innerHTML = "ಡ್ರೈವರ್‌ಗಳ ಮಾಹಿತಿ ಲೋಡ್ ಆಗುತ್ತಿದೆ...";
-      try {
-        const snap = await window.getDocs(window.collection(window.db, "drivers"));
-        allDriversData = [];
-        snap.forEach(docSnap => {
-          allDriversData.push({ id: docSnap.id, ...docSnap.data() });
-        });
-        document.getElementById('adminTotalDriversCount').innerText = allDriversData.length;
-        renderAdminDrivers(allDriversData);
-      } catch(e) {
-        listDiv.innerHTML = `<p style="color:red;">Error loading drivers: ${e.message}</p>`;
-      }
-    }
-
-    function renderAdminDrivers(driversList) {
-      const listDiv = document.getElementById('adminDriversList');
-      if (driversList.length === 0) {
-        listDiv.innerHTML = `<p style="color:#718096; text-align:center;">ಯಾವ ಡ್ರೈವರ್‌ಗಳು ನೋಂದಾಯಿಸಿಲ್ಲ.</p>`;
-        return;
-      }
-
-      let html = '';
-      driversList.forEach(d => {
-        let thumbs = `<div class="driver-docs-preview">`;
-        if (d.selfiePhoto) thumbs += `<img src="${d.selfiePhoto}" class="driver-doc-thumb" title="ಸೆಲ್ಫಿ" onclick="showImageViewer('${d.selfiePhoto}', 'ಡ್ರೈವರ್ ಸೆಲ್ಫಿ')">`;
-        if (d.vehPhoto) thumbs += `<img src="${d.vehPhoto}" class="driver-doc-thumb" title="ವಾಹನ" onclick="showImageViewer('${d.vehPhoto}', 'ವಾಹನ ಫೋಟೋ')">`;
-        if (d.rcPhoto) thumbs += `<img src="${d.rcPhoto}" class="driver-doc-thumb" title="ಆರ್.ಸಿ" onclick="showImageViewer('${d.rcPhoto}', 'ಆರ್ ಸಿ ಕಾರ್ಡ್')">`;
-        if (d.dlPhoto) thumbs += `<img src="${d.dlPhoto}" class="driver-doc-thumb" title="ಡಿ.ಎಲ್" onclick="showImageViewer('${d.dlPhoto}', 'ಡಿ ಎಲ್ ಫೋಟೋ')">`;
-        if (d.aadharPhoto) thumbs += `<img src="${d.aadharPhoto}" class="driver-doc-thumb" title="ಆಧಾರ್" onclick="showImageViewer('${d.aadharPhoto}', 'ಆಧಾರ್ ಕಾರ್ಡ್')">`;
-        thumbs += `</div>`;
-
-        html += `
-          <div class="card" style="border: 2px solid #cbd5e0; background:#fff; margin-bottom:10px;">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <p style="font-size:1rem; font-weight:bold; color:#2c3e50;">${d.drvName} (${d.drvVehType})</p>
-              <p style="font-size:0.9rem; color:#d69e2e; font-weight:bold;">ID: ${d.driverId || 'N/A'}</p>
-            </div>
-            <p style="font-size:0.85rem; margin-top:2px;"><b>ಮೊಬೈಲ್:</b> <a href="tel:${d.drvPhone}">${d.drvPhone}</a> | <b>ವಾಹನ ನಂಬರ್:</b> ${d.drvVehNo}</p>
-            <p style="font-size:0.75rem; color:#4a5568; margin-top:4px;">ಅಪ್ಲೋಡ್ ಮಾಡಿದ ದಾಖಲೆಗಳು (ಫೋಟೋ ಮೇಲೆ ಕ್ಲಿಕ್ ಮಾಡಿ ವೀಕ್ಷಿಸಿ/ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ):</p>
-            ${thumbs}
-          </div>
-        `;
-      });
-      listDiv.innerHTML = html;
-    }
-
-    function filterAdminDrivers() {
-      const keyword = document.getElementById('adminSearchInput').value.trim().toLowerCase();
-      if (!keyword) {
-        renderAdminDrivers(allDriversData);
-        return;
-      }
-      const filtered = allDriversData.filter(d => 
-        (d.drvPhone && d.drvPhone.includes(keyword)) || 
-        (d.driverId && d.driverId.includes(keyword)) ||
-        (d.drvName && d.drvName.toLowerCase().includes(keyword))
-      );
-      renderAdminDrivers(filtered);
     }
 
     async function driverCancelBooking(bookingId, driverId) {
@@ -1067,16 +996,27 @@
       } catch(e) { alert("Error: " + e.message); }
     }
 
-    function showCustomAlert(msg) {
-      document.getElementById('customAlertText').innerText = msg;
-      document.getElementById('customAlertModal').style.display = 'block';
-    }
-    function closeCustomAlert() { document.getElementById('customAlertModal').style.display = 'none'; }
-    function closeMeterResultModal() { 
-      document.getElementById('meterResultModal').style.display = 'none'; 
+    async function registerDriver() {
+      document.querySelectorAll('.error-msg').forEach(e => e.style.display = 'none');
+      const name = document.getElementById('drvName').value.trim();
+      const phone = document.getElementById('drvPhone').value.trim();
+      const vehNo = document.getElementById('drvVehNo').value.trim();
+      const vehType = document.getElementById('drvVehType').value;
+
+      let hasError = false;
+      if (!name) { document.getElementById('errDrvName').style.display = 'block'; hasError = true; }
+      if (!phone || phone.length < 10) { document.getElementById('errDrvPhone').style.display = 'block'; hasError = true; }
+      if (!vehNo) { document.getElementById('errDrvVehNo').style.display = 'block'; hasError = true; }
+
+      if (hasError) {
+        speakText('ದಯವಿಟ್ಟು ಡ್ರೈವರ್ ವಿವರಗಳನ್ನು ಸರಿಯಾಗಿ ತುಂಬಿ');
+        return;
+      }
+
+      speakText('ಡ್ರೈವರ್ ನೋಂದಣಿ ಯಶಸ್ವಿಯಾಗಿದೆ');
+      alert("ಡ್ರೈವರ್ ನೋಂದಣಿ ಯಶಸ್ವಿಯಾಗಿದೆ!");
       openPage('liveSection');
     }
-    function closeLiveGpsPopup() { document.getElementById('liveGpsPopupModal').style.display = 'none'; }
 
     function calculateDistance(lat1, lon1, lat2, lon2) {
       const R = 6371; 
