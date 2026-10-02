@@ -1177,6 +1177,18 @@
             <p><b>${currentLang === 'kn' ? 'ಫೋನ್:' : 'Phone:'}</b> <a href="tel:${d.drvPhone}">${d.drvPhone}</a></p>
             <p><b>${currentLang === 'kn' ? 'ವಾಹನ ನಂಬರ್:' : 'Vehicle No:'}</b> ${d.drvVehNo} (${d.drvVehType})</p>
             <p><b>${currentLang === 'kn' ? 'ಐಡಿ ನಂಬರ್:' : 'ID Number:'}</b> <span style="color:#d69e2e; font-weight:bold; font-size:1.1rem;">${d.driverId}</span></p>
+            <p><b>ಕೆಲಸಕ್ಕೆ ಸೇರಿ:</b> ${Math.floor((new Date() - (d.timestamp ? d.timestamp.toDate() : new Date())) / (1000*60*60*24))} ದಿನಗಳು</p>
+<p><b>ಸ್ಟೇಟಸ್:</b> <span style="color: ${d.planExpiryDate && new Date(d.planExpiryDate) >= new Date() ? 'green' : 'red'}; font-weight: bold;">${d.planExpiryDate && new Date(d.planExpiryDate) >= new Date() ? 'ಪೇಮೆಂಟ್ ಆಗಿದೆ (' + (d.planDuration || '') + ')' : 'ಪ್ಲಾನ್ ಅವಧಿ ಮುಗಿದಿದೆ!'}</span></p>
+<div style="margin: 6px 0;">
+  <select id="plan_${d.id}">
+    <option value="1 ತಿಂಗಳು">1 ತಿಂಗಳು</option>
+    <option value="3 ತಿಂಗಳು">3 ತಿಂಗಳು</option>
+    <option value="6 ತಿಂಗಳು">6 ತಿಂಗಳು</option>
+    <option value="1 ವರ್ಷ">1 ವರ್ಷ</option>
+  </select>
+  <button onclick="updateDriverPlan('${d.id}')">OK</button>
+</div>
+
             <div class="driver-photo-grid">
                ${d.vehPhoto ? `<img src="${d.vehPhoto}" class="driver-thumb" onclick="viewFullImage('${d.vehPhoto}', 'Vehicle Photo')">` : ''}
                ${d.rcPhoto ? `<img src="${d.rcPhoto}" class="driver-thumb" onclick="viewFullImage('${d.rcPhoto}', 'RC Card')">` : ''}
@@ -1211,6 +1223,29 @@
     async function downloadDriverHistoryPDF(driverId, driverName, recordId) {
       alert(currentLang === 'kn' ? "PDF ಡೌನ್‌ಲೋಡ್ ಸಿದ್ಧವಾಗುತ್ತಿದೆ..." : "Preparing PDF download...");
     }
+    async function updateDriverPlan(docId) {
+  const planVal = document.getElementById(`plan_${docId}`).value;
+  let months = 1;
+  if (planVal === '3 ತಿಂಗಳು') months = 3;
+  if (planVal === '6 ತಿಂಗಳು') months = 6;
+  if (planVal === '1 ವರ್ಷ') months = 12;
+
+  const now = new Date();
+  now.setMonth(now.getMonth() + months);
+  const expiryStr = now.toISOString();
+
+  try {
+    await window.updateDoc(window.doc(window.db, "drivers", docId), {
+      planDuration: planVal,
+      planExpiryDate: expiryStr
+    });
+    alert("ಪ್ಲಾನ್ ಯಶಸ್ವಿಯಾಗಿ ಅಪ್‌ಡೇಟ್ ಆಗಿದೆ!");
+    loadAdminDrivers();
+  } catch (e) {
+    alert("Error: " + e.message);
+  }
+}
+
   </script>
 </body>
 </html>
