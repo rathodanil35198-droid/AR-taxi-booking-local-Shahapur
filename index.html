@@ -110,14 +110,16 @@ document.addEventListener('change', function(e) {
   }
 });
 
-// 3. ಒಪ್ಪಿಗೆಯನ್ನು ಮೊಬೈಲ್‌ನಲ್ಲಿ ಸೇವ್ ಮಾಡಿ ಮುಚ್ಚುವುದು
+// 3. ಒಪ್ಪಿಗೆಯನ್ನು ಮೆಮೊರಿಯಲ್ಲಿ ಸೇವ್ ಮಾಡಿ ಮುಚ್ಚುವುದು
 function submitTermsAgreement() {
-  const checkbox = document.getElementById('acceptTermsCheckbox');
-  if (checkbox && checkbox.checked) {
-    localStorage.setItem('ar_taxi_terms_accepted', 'true');
-    document.getElementById('termsModal').style.display = 'none';
-  }
+    const checkbox = document.getElementById('acceptTermsCheckbox');
+    if (checkbox && checkbox.checked) {
+        localStorage.setItem('ar_taxi_terms_accepted', 'true');
+        document.getElementById('termsModal').style.display = 'none';
+    }
 }
+    
+    
 
   </script>
 
