@@ -1229,9 +1229,9 @@
     async function updateDriverPlan(docId) {
   const planVal = document.getElementById(`plan_${docId}`).value;
   let months = 1;
-  if (planVal === '3 rs300 ತಿಂಗಳು') months = 3;
-  if (planVal === '6 rs500 ತಿಂಗಳು') months = 6;
-  if (planVal === '1 rs800 ವರ್ಷ') months = 12;
+  if (planVal === '3 ತಿಂಗಳು') months = 3;
+  if (planVal === '6 ತಿಂಗಳು') months = 6;
+  if (planVal === '1 ವರ್ಷ') months = 12;
 
   const now = new Date();
   now.setMonth(now.getMonth() + months);
