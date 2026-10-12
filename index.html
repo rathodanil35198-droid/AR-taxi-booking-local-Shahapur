@@ -625,14 +625,7 @@
       isAdminUnlocked = false;
     }
 // ಮೊಬೈಲ್ ಬ್ಯಾಕ್ ಬಟನ್ ಒತ್ತಿದಾಗ ಆ್ಯಪ್ ಕ್ಲೋಸ್ ಆಗದೆ ಮುಖಪುಟಕ್ಕೆ ಕರೆದೊಯ್ಯಲು
-history.pushState(null, null, location.href);
-window.addEventListener('popstate', function (event) {
-    history.pushState(null, null, location.href);
-    if (typeof goToHome === 'function') {
-        goToHome();
-    }
-});
-
+    
     function selectVehicle(type) {
       document.getElementById('vehicleType').value = type;
       ['Bike', 'Auto', 'Car'].forEach(t => document.getElementById('card' + t).classList.remove('selected'));
