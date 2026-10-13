@@ -199,100 +199,29 @@
 </head>
 <body>
 
-</script>
-<!-- Adsterra ರಿಯಲ್ ಜಾಹೀರಾತು ಮತ್ತು ಟೈಮರ್ ಕೋಡ್ -->
-<style>
-    #real-ad-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: #000;
-        z-index: 999999;
-        display: none;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        color: #fff;
-        text-align: center;
-        padding: 20px;
-    }
-    .ad-box {
-        background: #161b22;
-        border: 2px solid #30363d;
-        padding: 30px;
-        border-radius: 15px;
-        max-width: 400px;
-        width: 100%;
-    }
-    .ad-skip-btn {
-        background: #238636;
-        color: #fff;
-        border: none;
-        padding: 12px 25px;
-        border-radius: 25px;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-        margin-top: 20px;
-    }
-</style>
-
-<!-- ಜಾಹೀರಾತು ಪ್ರದರ್ಶನಗೊಳ್ಳುವ ಬಾಕ್ಸ್ -->
-<div id="real-ad-overlay">
-    <div class="ad-box">
-        <h3 style="color: #58a6ff; margin-top: 0;">ವಿಶೇಷ ಪ್ರಾಯೋಜಿತ ಜಾಹೀರಾತು</h3>
-        <p style="color: #8b949e; font-size: 14px;">ದಯವಿಟ್ಟು 5 ಸೆಕೆಂಡುಗಳು ಕಾಯಿರಿ...</p>
-        
-        <button id="skipAdBtn" class="ad-skip-btn" disabled>ಜಾಹೀರಾತು (5s)</button>
-    </div>
-</div>
-
-<!-- Adsterra ರಿಯಲ್ ಪಾಪ್‌ಅಂಡರ್ ಸ್ಕ್ರಿಪ್ಟ್ -->
-<script data-cfasync="false" src="https://afders.org/1/dcca239fe633cf4220bd93679dc82c2c"></script>
-
+<!-- Adsterra Real Fullscreen & Exit Intent Ad Integration -->
 <script>
-    let adTimeLeft = 5;
-    let adTimer;
-
-    function triggerRealAd() {
-        const overlay = document.getElementById('real-ad-overlay');
-        const skipBtn = document.getElementById('skipAdBtn');
-        
-        overlay.style.display = 'flex';
-        adTimeLeft = 5;
-        skipBtn.innerText = `ಜಾಹೀರಾತು (${adTimeLeft}s)`;
-        skipBtn.disabled = true;
-
-        adTimer = setInterval(() => {
-            adTimeLeft--;
-            if (adTimeLeft > 0) {
-                skipBtn.innerText = `ಜಾಹೀರಾತು (${adTimeLeft}s)`;
-            } else {
-                clearInterval(adTimer);
-                skipBtn.innerText = "❌ ಮುಚ್ಚಿ ಮುಂದುವರಿಯಿರಿ (Skip)";
-                skipBtn.disabled = false;
-            }
-        }, 1000);
+    function loadAdsterraAd() {
+        // ಪ್ರತಿ ಬಾರಿ ಹೊಸದಾಗಿ ಜಾಹೀರಾತು ಟ್ರಿಗ್ಗರ್ ಆಗಲು ಸ್ಕ್ರಿಪ್ಟ್ ಅಪೆಂಡ್ ಮಾಡುವುದು
+        const script = document.createElement('script');
+        script.setAttribute('data-cfasync', 'false');
+        script.src = 'https://afders.org/1/dcca239fe633cf4220bd93679dc82c2c';
+        document.body.appendChild(script);
     }
 
-    document.getElementById('skipAdBtn').onclick = function() {
-        if (adTimeLeft <= 0) {
-            document.getElementById('real-ad-overlay').style.display = 'none';
-        }
-    };
-
-    // 1. ಆಪ್ ಓಪನ್ ಆದ ತಕ್ಷಣ ಒಮ್ಮೆ ಜಾಹೀರಾತು ಬರುವುದು
+    // 1. ಆಪ್ ಓಪನ್ ಮಾಡಿದ ತಕ್ಷಣವೇ ಫುಲ್ ಸ್ಕ್ರೀನ್‌ನಲ್ಲಿ ಜಾಹೀರಾತು ಬರುವುದು
     window.addEventListener('DOMContentLoaded', (event) => {
         history.pushState(null, null, location.href);
-        triggerRealAd();
+        // ಸ್ವಲ್ಪ ಮೈಕ್ರೋ-ಸೆಕೆಂಡ್ ವಿಳಂಬದೊಂದಿಗೆ ಜಾಹೀರಾತು ಲೋಡ್ ಆಗುತ್ತದೆ
+        setTimeout(() => {
+            loadAdsterraAd();
+        }, 500);
     });
 
-    // 2. ಬಳಕೆದಾರರು ಬ್ಯಾಕ್ ಬಟನ್ ಒತ್ತಿ ಹಿಂದಕ್ಕೆ ಬರುವಾಗ ಜಾಹೀರಾತು ಬರುವುದು
+    // 2 & 3. ಬಳಕೆದಾರರು ಬ್ಯಾಕ್ ಬಟನ್ ಒತ್ತಿದಾಗ ಅಥವಾ ಆಪ್‌ನಿಂದ ಹೊರಹೋಗಲು ಪ್ರಯತ್ನಿಸುವಾಗ ಜಾಹೀರಾತು ಬರುವುದು
     window.addEventListener('popstate', function(event) {
+        loadAdsterraAd();
         history.pushState(null, null, location.href);
-        triggerRealAd();
     });
 </script>
 
